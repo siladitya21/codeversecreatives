@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Codeverse Creatives - Empowering India Through Affordable Web Solutions
+    </title>
+    <link rel="icon" type="image/png" href="logo.png" />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Archivo:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --forest-dark: #0d3b2e;
+        --forest-main: #1a5740;
+        --forest-light: #2d7554;
+        --cream: #f5f1e8;
+        --cream-light: #faf8f3;
+        --cream-dark: #e8e3d6;
+        --accent: #d4a373;
+        --text-dark: #1a2e1a;
+        --text-light: #4a5a4a;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        line-height: 1.7;
+        color: var(--text-dark);
+        background: var(--cream-light);
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Archivo", sans-serif;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      /* Navigation */
+      nav {
+        background: var(--forest-dark);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 20px rgba(13, 59, 46, 0.3);
+      }
+
+      .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+      }
+
+      .brand-logo {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        filter: brightness(0) invert(1);
+      }
+
+      .brand-info h1 {
+        color: var(--cream);
+        font-size: 1.5rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .brand-info p {
+        color: var(--accent);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin: 0;
+      }
+
+      .navbar-nav .nav-link {
+        color: var(--cream) !important;
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 0.5rem 1rem !important;
+        transition: color 0.3s;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: var(--accent) !important;
+      }
+
+      .navbar-toggler {
+        border-color: var(--accent);
+      }
+
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(212, 163, 115, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      /* Hero Section */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--forest-dark) 0%,
+          var(--forest-main) 100%
+        );
+        padding: 5rem 0;
+        text-align: center;
+        color: var(--cream);
+      }
+
+      .hero h2 {
+        font-size: clamp(2rem, 5vw, 4rem);
+        margin-bottom: 1.5rem;
+        color: var(--cream);
+      }
+
+      .hero .lead {
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+        margin-bottom: 1rem;
+        color: var(--accent);
+        font-weight: 600;
+      }
+
+      .hero p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        color: var(--cream-dark);
+      }
+
+      .cta-btn {
+        background: var(--accent);
+        color: var(--forest-dark);
+        padding: 1rem 2.5rem;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 1.125rem;
+        border-radius: 8px;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: inline-block;
+      }
+
+      .cta-btn:hover {
+        background: var(--cream);
+        color: var(--forest-dark);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(212, 163, 115, 0.3);
+      }
+
+      /* Section Styles */
+      section {
+        padding: 5rem 0;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        color: var(--forest-dark);
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      /* Mission Section */
+      .mission {
+        background: var(--cream-light);
+      }
+
+      .mission-header .subtitle {
+        font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+        color: var(--forest-main);
+        font-weight: 600;
+      }
+
+      .mission-text {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(13, 59, 46, 0.1);
+        margin-bottom: 2rem;
+      }
+
+      .mission-text h3 {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        color: var(--forest-dark);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .mission-text h3 i {
+        color: var(--accent);
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+      }
+
+      .mission-text p {
+        font-size: clamp(1rem, 2vw, 1.125rem);
+        line-height: 1.9;
+        color: var(--text-light);
+        margin-bottom: 1.25rem;
+      }
+
+      .stat-card {
+        background: linear-gradient(
+          135deg,
+          var(--forest-dark) 0%,
+          var(--forest-main) 100%
+        );
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        color: white;
+        margin-bottom: 1.5rem;
+      }
+
+      .stat-card .number {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 900;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-card .label {
+        font-size: clamp(0.875rem, 2vw, 1rem);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .pillar {
+        background: white;
+        padding: 2.5rem 2rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(13, 59, 46, 0.08);
+        border-left: 5px solid var(--forest-main);
+        transition: all 0.3s;
+        margin-bottom: 2rem;
+        height: 100%;
+      }
+
+      .pillar:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 50px rgba(13, 59, 46, 0.15);
+      }
+
+      .pillar-icon {
+        width: 70px;
+        height: 70px;
+        background: var(--cream);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        color: var(--forest-main);
+      }
+
+      .pillar h4 {
+        font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+        color: var(--forest-dark);
+        margin-bottom: 1rem;
+      }
+
+      .pillar p {
+        font-size: clamp(0.95rem, 2vw, 1rem);
+        line-height: 1.7;
+        color: var(--text-light);
+      }
+
+      .pillar ul {
+        list-style: none;
+        margin-top: 1.25rem;
+        padding: 0;
+      }
+
+      .pillar li {
+        padding: 0.5rem 0;
+        color: var(--text-light);
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        font-size: clamp(0.875rem, 2vw, 0.95rem);
+      }
+
+      .pillar li i {
+        color: var(--forest-main);
+        margin-top: 0.25rem;
+        flex-shrink: 0;
+      }
+
+      /* Impact Section */
+      .impact {
+        background: var(--forest-dark);
+        color: white;
+      }
+
+      .impact h2 {
+        color: var(--cream);
+      }
+
+      .impact-item {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        border: 2px solid rgba(212, 163, 115, 0.2);
+        margin-bottom: 1.5rem;
+        height: 100%;
+        transition: all 0.3s;
+      }
+
+      .impact-item:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .impact-item i {
+        font-size: 3rem;
+        color: var(--accent);
+        margin-bottom: 1rem;
+      }
+
+      .impact-item h3 {
+        font-size: clamp(1.125rem, 2vw, 1.375rem);
+        margin-bottom: 0.75rem;
+        color: var(--cream);
+      }
+
+      .impact-item p {
+        font-size: clamp(0.875rem, 1.5vw, 0.95rem);
+        color: var(--cream-dark);
+        line-height: 1.6;
+      }
+
+      /* Services Section */
+      .services {
+        background: white;
+      }
+
+      .service {
+        background: var(--cream-light);
+        padding: 2.5rem 2rem;
+        border-radius: 12px;
+        border: 2px solid var(--cream-dark);
+        transition: all 0.3s;
+        margin-bottom: 1.5rem;
+        height: 100%;
+      }
+
+      .service:hover {
+        border-color: var(--forest-main);
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(13, 59, 46, 0.1);
+      }
+
+      .service-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--forest-main);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        font-size: 2.375rem;
+        color: white;
+      }
+
+      .service h3 {
+        font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+        color: var(--forest-dark);
+        margin-bottom: 1rem;
+      }
+
+      .service p {
+        font-size: clamp(0.95rem, 2vw, 1rem);
+        line-height: 1.7;
+        color: var(--text-light);
+      }
+
+      /* Pricing Section */
+      .pricing {
+        background: var(--cream-light);
+      }
+
+      .pricing-intro {
+        text-align: center;
+        font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+        color: var(--text-light);
+        margin-bottom: 3rem;
+      }
+
+      .price-highlight {
+        background: var(--forest-main);
+        color: white;
+        padding: 2.5rem;
+        border-radius: 12px;
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      .price-highlight h3 {
+        font-size: clamp(1.75rem, 3vw, 2.375rem);
+        margin-bottom: 1rem;
+      }
+
+      .price-highlight .price {
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: 900;
+        color: var(--accent);
+        margin: 1.25rem 0;
+      }
+
+      .price-highlight p {
+        font-size: clamp(1rem, 2vw, 1.125rem);
+      }
+
+      .pricing-table {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(13, 59, 46, 0.1);
+      }
+
+      .table {
+        margin-bottom: 0;
+      }
+
+      .table thead th {
+        background: var(--forest-dark);
+        color: var(--cream);
+        padding: 1.5rem;
+        font-size: clamp(0.95rem, 2vw, 1.125rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: none;
+      }
+
+      .table tbody td {
+        padding: 1.5rem;
+        font-size: clamp(0.95rem, 2vw, 1.0625rem);
+        vertical-align: middle;
+        border-bottom: 1px solid var(--cream-dark);
+      }
+
+      .table tbody td:first-child {
+        font-weight: 600;
+        color: var(--forest-dark);
+      }
+
+      .table tbody td:last-child {
+        font-weight: 700;
+        color: var(--forest-main);
+      }
+
+      .table tbody tr:hover {
+        background: var(--cream-light);
+      }
+
+      /* Contact Section */
+      .contact {
+        background: white;
+      }
+
+      .contact-card {
+        background: var(--cream-light);
+        padding: 3rem 2rem;
+        border-radius: 12px;
+        text-align: center;
+        border: 2px solid var(--cream-dark);
+        transition: all 0.3s;
+        margin-bottom: 1.5rem;
+        height: 100%;
+      }
+
+      .contact-card:hover {
+        border-color: var(--forest-main);
+        transform: translateY(-5px);
+      }
+
+      .contact-card i {
+        font-size: 3rem;
+        color: var(--forest-main);
+        margin-bottom: 1.25rem;
+      }
+
+      .contact-card h3 {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: var(--forest-dark);
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .contact-card p {
+        font-size: clamp(1rem, 2vw, 1.125rem);
+        color: var(--text-light);
+        font-weight: 600;
+        margin: 0;
+      }
+
+      /* Footer */
+      footer {
+        background: var(--forest-dark);
+        color: var(--cream);
+        padding: 4rem 0 2rem;
+      }
+
+      .footer-about h3 {
+        font-size: clamp(1.5rem, 3vw, 1.75rem);
+        margin-bottom: 1.25rem;
+        color: var(--accent);
+      }
+
+      .footer-about p {
+        font-size: clamp(0.95rem, 2vw, 1rem);
+        line-height: 1.8;
+        color: var(--cream-dark);
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-links h4 {
+        font-size: clamp(1.125rem, 2vw, 1.25rem);
+        margin-bottom: 1.25rem;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .footer-links ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-links a {
+        color: var(--cream-dark);
+        text-decoration: none;
+        font-size: clamp(0.9rem, 2vw, 0.95rem);
+        transition: color 0.3s;
+      }
+
+      .footer-links a:hover {
+        color: var(--accent);
+      }
+
+      .language-selector {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 2px solid rgba(212, 163, 115, 0.2);
+      }
+
+      .language-selector h4 {
+        font-size: clamp(1.125rem, 2vw, 1.25rem);
+        margin-bottom: 1.25rem;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .lang-btn {
+        background: transparent;
+        border: 2px solid var(--cream-dark);
+        color: var(--cream);
+        padding: 0.75rem 1.25rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: clamp(0.875rem, 2vw, 0.95rem);
+        transition: all 0.3s;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+        margin-bottom: 0.75rem;
+      }
+
+      .lang-btn i {
+        color: var(--accent);
+      }
+
+      .lang-btn:hover {
+        background: rgba(212, 163, 115, 0.1);
+        border-color: var(--accent);
+      }
+
+      .lang-btn.active {
+        background: var(--accent);
+        color: var(--forest-dark);
+        border-color: var(--accent);
+      }
+
+      .lang-btn.active i {
+        color: var(--forest-dark);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 3rem;
+        border-top: 2px solid rgba(212, 163, 115, 0.2);
+      }
+
+      .footer-bottom p {
+        font-size: clamp(0.875rem, 2vw, 0.95rem);
+        color: var(--cream-dark);
+        margin-bottom: 0.5rem;
+      }
+
+      /* Mobile Specific */
+      @media (max-width: 576px) {
+        .hero {
+          padding: 3rem 0;
+        }
+
+        section {
+          padding: 3rem 0;
+        }
+
+        .mission-text {
+          padding: 1.5rem;
+        }
+
+        .stat-card {
+          padding: 1.5rem;
+        }
+
+        .pillar {
+          padding: 1.5rem;
+        }
+
+        .service {
+          padding: 1.5rem;
+        }
+
+        .contact-card {
+          padding: 2rem 1.5rem;
+        }
+
+        .language-selector {
+          padding: 1.5rem;
+        }
+      }
+
+      /* Tablet Specific */
+      @media (min-width: 768px) and (max-width: 991px) {
+        .brand-logo {
+          width: 65px;
+          height: 65px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid px-lg-5">
+        <a class="navbar-brand" href="#home">
+          <img src="logo.png" alt="Codeverse Creatives" class="brand-logo" />
+          <div class="brand-info">
+            <h1 data-lang="brand-name">Codeverse Creatives</h1>
+            <p data-lang="brand-tagline">Making India Digital</p>
+          </div>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#home"
+                ><i class="fas fa-home"></i>
+                <span data-lang="nav-home">Home</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#mission"
+                ><i class="fas fa-heart"></i>
+                <span data-lang="nav-mission">Our Mission</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#services"
+                ><i class="fas fa-cogs"></i>
+                <span data-lang="nav-services">Services</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#pricing"
+                ><i class="fas fa-tag"></i>
+                <span data-lang="nav-pricing">Pricing</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="gallery.html"
+                ><i class="fas fa-image"></i>
+                <span data-lang="nav-samples">Samples</span></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact"
+                ><i class="fas fa-envelope"></i>
+                <span data-lang="nav-contact">Contact</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h2 data-lang="hero-title">
+              Professional Websites for Every Indian
+            </h2>
+            <p class="lead" data-lang="hero-lead">
+              Starting at Just ₹2,000 ($24)
+            </p>
+            <p data-lang="hero-desc">
+              We believe that every person in India - whether you're a student
+              with a dream, a small vendor on the street, a startup founder, or
+              an established business - deserves a professional website. Your
+              economic background should never stop you from having a digital
+              presence. That's why we've made it our mission to provide
+              high-quality websites at prices everyone can afford.
+            </p>
+            <a href="#contact" class="cta-btn" data-lang="hero-cta"
+              >Get Your Website Today</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Section - DETAILED -->
+    <section class="mission" id="mission">
+      <div class="container">
+        <div class="mission-header text-center mb-5">
+          <h2 class="section-title" data-lang="mission-title">
+            Our Mission: Digital India for Everyone
+          </h2>
+          <p class="subtitle" data-lang="mission-subtitle">
+            Breaking down the cost barrier that keeps millions of talented
+            Indians offline
+          </p>
+        </div>
+
+        <div class="row mb-5">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="mission-text">
+              <h3>
+                <i class="fas fa-flag"></i>
+                <span data-lang="why-title">Why We Exist</span>
+              </h3>
+              <p data-lang="why-p1">
+                In India, there are millions of talented individuals with
+                incredible skills, innovative business ideas, and valuable
+                services to offer. But they remain invisible because they can't
+                afford the ₹30,000 - ₹50,000 that traditional web developers
+                charge. This isn't just about money - it's about opportunity,
+                dignity, and equality.
+              </p>
+              <p data-lang="why-p2">
+                We started Codeverse Creatives because we believe that in 2024,
+                no Indian should be left behind in the digital revolution.
+                Whether you're in a metro city or a small village, whether you
+                have ₹50,000 or ₹2,000, you deserve a professional website that
+                represents you with pride.
+              </p>
+              <p data-lang="why-p3">
+                Every day, talented craftspeople, dedicated teachers,
+                hardworking vendors, and ambitious entrepreneurs lose
+                opportunities simply because they don't have an online presence.
+                We're here to change that. We're not just building websites -
+                we're opening doors, creating opportunities, and empowering
+                dreams.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="number">₹2,000</div>
+                  <div class="label" data-lang="stat1">Starting Price</div>
+                </div>
+              </div>
+              <div class="col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="number">$24</div>
+                  <div class="label" data-lang="stat2">USD Equivalent</div>
+                </div>
+              </div>
+              <div class="col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="number">100%</div>
+                  <div class="label" data-lang="stat3">Quality Guaranteed</div>
+                </div>
+              </div>
+              <div class="col-sm-6 mb-3">
+                <div class="stat-card">
+                  <div class="number">0</div>
+                  <div class="label" data-lang="stat4">Hidden Charges</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-5">
+          <div class="col-lg-4 mb-4">
+            <div class="pillar">
+              <div class="pillar-icon">
+                <i class="fas fa-hand-holding-heart"></i>
+              </div>
+              <h4 data-lang="pillar1-title">Affordability as a Right</h4>
+              <p data-lang="pillar1-intro">
+                We believe affordable web design isn't charity - it's a right.
+                Every Indian deserves access to digital tools:
+              </p>
+              <ul>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar1-li1"
+                    >No compromise on quality despite low prices</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar1-li2"
+                    >Flexible payment plans for those who need them</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar1-li3"
+                    >Free consultation and advice, always</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar1-li4"
+                    >Transparent pricing - what you see is what you pay</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar1-li5"
+                    >Special rates for students and NGOs</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mb-4">
+            <div class="pillar">
+              <div class="pillar-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <h4 data-lang="pillar2-title">Serving All of India</h4>
+              <p data-lang="pillar2-intro">
+                From Kashmir to Kanyakumari, from villages to metros, we serve
+                every Indian:
+              </p>
+              <ul>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar2-li1"
+                    >Support in English, Hindi, Bengali, and regional
+                    languages</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar2-li2"
+                    >Understanding of local business cultures and needs</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar2-li3"
+                    >Remote service - you don't need to travel to us</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar2-li4"
+                    >Patient guidance for those new to technology</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar2-li5"
+                    >Respect for diverse backgrounds and budgets</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mb-4">
+            <div class="pillar">
+              <div class="pillar-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <h4 data-lang="pillar3-title">Excellence Without Compromise</h4>
+              <p data-lang="pillar3-intro">
+                Low price never means low quality. Every website we build
+                includes:
+              </p>
+              <ul>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar3-li1"
+                    >Professional, modern design that looks expensive</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar3-li2"
+                    >Mobile-responsive - perfect on all devices</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar3-li3"
+                    >Fast loading speed for better user experience</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar3-li4"
+                    >SEO-friendly to help people find you online</span
+                  >
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span data-lang="pillar3-li5"
+                    >Free lifetime support and guidance</span
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="impact">
+      <div class="container">
+        <h2 class="section-title" data-lang="impact-title">Who We Empower</h2>
+        <div class="row">
+          <div class="col-sm-6 col-lg-3 mb-4">
+            <div class="impact-item">
+              <i class="fas fa-graduation-cap"></i>
+              <h3 data-lang="impact1-title">Students</h3>
+              <p data-lang="impact1-desc">
+                Build your portfolio and showcase your skills to the world
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 mb-4">
+            <div class="impact-item">
+              <i class="fas fa-store"></i>
+              <h3 data-lang="impact2-title">Small Vendors</h3>
+              <p data-lang="impact2-desc">
+                Take your local business online and reach more customers
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 mb-4">
+            <div class="impact-item">
+              <i class="fas fa-rocket"></i>
+              <h3 data-lang="impact3-title">Startups</h3>
+              <p data-lang="impact3-desc">
+                Launch your business professionally without breaking the bank
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 mb-4">
+            <div class="impact-item">
+              <i class="fas fa-hands-helping"></i>
+              <h3 data-lang="impact4-title">NGOs</h3>
+              <p data-lang="impact4-desc">
+                Spread your message and increase your impact online
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 mb-4">
+            <div class="impact-item">
+              <i class="fas fa-paintbrush"></i>
+              <h3 data-lang="impact5-title">Artists & Creators</h3>
+              <p data-lang="impact5-desc">
+                Display your work beautifully to attract opportunities
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 mb-4">
+            <div class="impact-item">
+              <i class="fas fa-chalkboard-teacher"></i>
+              <h3 data-lang="impact6-title">Educators</h3>
+              <p data-lang="impact6-desc">
+                Reach more students and grow your teaching business
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 mb-4">
+            <div class="impact-item">
+              <i class="fas fa-home"></i>
+              <h3 data-lang="impact7-title">Local Services</h3>
+              <p data-lang="impact7-desc">
+                Let people find and trust your services easily
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3 mb-4">
+            <div class="impact-item">
+              <i class="fas fa-heartbeat"></i>
+              <h3 data-lang="impact8-title">Healthcare</h3>
+              <p data-lang="impact8-desc">
+                Make your clinic or practice visible to patients
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+      <div class="container">
+        <h2 class="section-title" data-lang="services-title">
+          What We Build For You
+        </h2>
+        <div class="row">
+          <div class="col-md-6 col-lg-3 mb-4">
+            <div class="service">
+              <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
+              <h3 data-lang="service1-title">Professional Website Design</h3>
+              <p data-lang="service1-desc">
+                Beautiful, modern websites that make you look professional and
+                trustworthy. Custom designs tailored to your brand.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 mb-4">
+            <div class="service">
+              <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+              <h3 data-lang="service2-title">Mobile-Responsive</h3>
+              <p data-lang="service2-desc">
+                Your website will work perfectly on all devices - smartphones,
+                tablets, and computers. Reach everyone, everywhere.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 mb-4">
+            <div class="service">
+              <div class="service-icon"><i class="fas fa-bolt"></i></div>
+              <h3 data-lang="service3-title">Fast & Reliable</h3>
+              <p data-lang="service3-desc">
+                Lightning-fast loading speeds and reliable performance. Your
+                visitors won't have to wait, keeping them engaged.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-3 mb-4">
+            <div class="service">
+              <div class="service-icon"><i class="fas fa-language"></i></div>
+              <h3 data-lang="service4-title">Multi-Language</h3>
+              <p data-lang="service4-desc">
+                Reach your audience in their language. We build websites in
+                English, Hindi, Bengali, and other Indian languages.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+      <div class="container">
+        <h2 class="section-title" data-lang="pricing-title">
+          Honest, Affordable Pricing
+        </h2>
+        <div class="row">
+          <div class="col-lg-10 mx-auto">
+            <p class="pricing-intro" data-lang="pricing-intro">
+              No hidden fees. No surprises. No pressure. Just honest work at
+              honest prices that respect your budget. We offer flexible payment
+              options for those who need them.
+            </p>
+
+            <div class="price-highlight">
+              <h3 data-lang="highlight-title">Starting From</h3>
+              <div class="price">₹2,000 / $24</div>
+              <p data-lang="highlight-desc">
+                Yes, really! Professional websites accessible to everyone
+              </p>
+            </div>
+
+            <div class="pricing-table table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th data-lang="table-type">Website Type</th>
+                    <th data-lang="table-price">Price Range (INR / USD)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td data-lang="type1">Personal Portfolio Website</td>
+                    <td>₹2,000 - ₹5,000 / $24 - $60</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type2">Small Business Website</td>
+                    <td>₹4,000 - ₹10,000 / $48 - $120</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type3">Product Showcase Website</td>
+                    <td>₹5,000 - ₹12,000 / $60 - $145</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type4">Restaurant/Cafe Menu Site</td>
+                    <td>₹4,000 - ₹9,000 / $48 - $108</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type5">Real Estate Listing Site</td>
+                    <td>₹6,000 - ₹14,000 / $72 - $168</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type6">Professional Services Website</td>
+                    <td>₹5,000 - ₹12,000 / $60 - $145</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type7">Educational Institute Website</td>
+                    <td>₹5,000 - ₹15,000 / $60 - $180</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type8">Event/Wedding Website</td>
+                    <td>₹2,500 - ₹7,000 / $30 - $84</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type9">Travel & Tourism Website</td>
+                    <td>₹5,000 - ₹12,000 / $60 - $145</td>
+                  </tr>
+                  <tr>
+                    <td data-lang="type10">Blog/Content Website</td>
+                    <td>₹3,000 - ₹8,000 / $36 - $96</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <h2 class="section-title" data-lang="contact-title">
+          Let's Build Your Website
+        </h2>
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="contact-card">
+              <i class="fas fa-envelope"></i>
+              <h3 data-lang="contact-email">Email Us</h3>
+              <p>codeversecreatives@gmail.com</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="contact-card">
+              <i class="fas fa-phone-alt"></i>
+              <h3 data-lang="contact-phone">Call Us</h3>
+              <p>+91 70769 77210</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12 mb-4">
+            <div class="contact-card">
+              <i class="fas fa-map-marker-alt"></i>
+              <h3 data-lang="contact-location">Location</h3>
+              <p data-lang="location-text">Kolkata, West Bengal, India</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+            <div class="footer-about">
+              <h3 data-lang="footer-about-title">Codeverse Creatives</h3>
+              <p data-lang="footer-about-text">
+                We're on a mission to make professional websites accessible to
+                every Indian, regardless of economic background. From ₹2,000,
+                we're breaking down barriers and building digital dreams across
+                India.
+              </p>
+              <p data-lang="footer-tagline">
+                Empowering India, One Website at a Time
+              </p>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+            <div class="footer-links">
+              <h4 data-lang="footer-links-title">Quick Links</h4>
+              <ul>
+                <li><a href="#home" data-lang="footer-home">Home</a></li>
+                <li>
+                  <a href="#mission" data-lang="footer-mission">Our Mission</a>
+                </li>
+                <li>
+                  <a href="#services" data-lang="footer-services">Services</a>
+                </li>
+                <li>
+                  <a href="#pricing" data-lang="footer-pricing">Pricing</a>
+                </li>
+                <li>
+                  <a href="#contact" data-lang="footer-contact">Contact</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-12">
+            <div class="language-selector">
+              <h4 data-lang="footer-lang-title">Choose Language</h4>
+              <button class="lang-btn active" onclick="switchLanguage('en')">
+                <i class="fas fa-globe"></i>
+                <span data-lang="lang-en">English</span>
+              </button>
+              <button class="lang-btn" onclick="switchLanguage('bn')">
+                <i class="fas fa-globe"></i>
+                <span data-lang="lang-bn">বাংলা (Bengali)</span>
+              </button>
+              <button class="lang-btn" onclick="switchLanguage('hi')">
+                <i class="fas fa-globe"></i>
+                <span data-lang="lang-hi">हिंदी (Hindi)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>
+            &copy; 2024 Codeverse Creatives.
+            <span data-lang="footer-rights">All Rights Reserved.</span>
+          </p>
+          <p data-lang="footer-made">Made with ❤️ for Every Indian</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Comprehensive translations
+      const translations = {
+        en: {
+          "brand-name": "Codeverse Creatives",
+          "brand-tagline": "Making India Digital",
+          "nav-home": "Home",
+          "nav-mission": "Our Mission",
+          "nav-services": "Services",
+          "nav-pricing": "Pricing",
+          "nav-samples": "Samples",
+          "nav-contact": "Contact",
+          "hero-title": "Professional Websites for Every Indian",
+          "hero-lead": "Starting at Just ₹2,000 ($24)",
+          "hero-desc":
+            "We believe that every person in India - whether you're a student with a dream, a small vendor on the street, a startup founder, or an established business - deserves a professional website. Your economic background should never stop you from having a digital presence. That's why we've made it our mission to provide high-quality websites at prices everyone can afford.",
+          "hero-cta": "Get Your Website Today",
+          "mission-title": "Our Mission: Digital India for Everyone",
+          "mission-subtitle":
+            "Breaking down the cost barrier that keeps millions of talented Indians offline",
+          "why-title": "Why We Exist",
+          "why-p1":
+            "In India, there are millions of talented individuals with incredible skills, innovative business ideas, and valuable services to offer. But they remain invisible because they can't afford the ₹30,000 - ₹50,000 that traditional web developers charge. This isn't just about money - it's about opportunity, dignity, and equality.",
+          "why-p2":
+            "We started Codeverse Creatives because we believe that in 2024, no Indian should be left behind in the digital revolution. Whether you're in a metro city or a small village, whether you have ₹50,000 or ₹2,000, you deserve a professional website that represents you with pride.",
+          "why-p3":
+            "Every day, talented craftspeople, dedicated teachers, hardworking vendors, and ambitious entrepreneurs lose opportunities simply because they don't have an online presence. We're here to change that. We're not just building websites - we're opening doors, creating opportunities, and empowering dreams.",
+          stat1: "Starting Price",
+          stat2: "USD Equivalent",
+          stat3: "Quality Guaranteed",
+          stat4: "Hidden Charges",
+          "pillar1-title": "Affordability as a Right",
+          "pillar1-intro":
+            "We believe affordable web design isn't charity - it's a right. Every Indian deserves access to digital tools:",
+          "pillar1-li1": "No compromise on quality despite low prices",
+          "pillar1-li2": "Flexible payment plans for those who need them",
+          "pillar1-li3": "Free consultation and advice, always",
+          "pillar1-li4": "Transparent pricing - what you see is what you pay",
+          "pillar1-li5": "Special rates for students and NGOs",
+          "pillar2-title": "Serving All of India",
+          "pillar2-intro":
+            "From Kashmir to Kanyakumari, from villages to metros, we serve every Indian:",
+          "pillar2-li1":
+            "Support in English, Hindi, Bengali, and regional languages",
+          "pillar2-li2": "Understanding of local business cultures and needs",
+          "pillar2-li3": "Remote service - you don't need to travel to us",
+          "pillar2-li4": "Patient guidance for those new to technology",
+          "pillar2-li5": "Respect for diverse backgrounds and budgets",
+          "pillar3-title": "Excellence Without Compromise",
+          "pillar3-intro":
+            "Low price never means low quality. Every website we build includes:",
+          "pillar3-li1": "Professional, modern design that looks expensive",
+          "pillar3-li2": "Mobile-responsive - perfect on all devices",
+          "pillar3-li3": "Fast loading speed for better user experience",
+          "pillar3-li4": "SEO-friendly to help people find you online",
+          "pillar3-li5": "Free lifetime support and guidance",
+          "impact-title": "Who We Empower",
+          "impact1-title": "Students",
+          "impact1-desc":
+            "Build your portfolio and showcase your skills to the world",
+          "impact2-title": "Small Vendors",
+          "impact2-desc":
+            "Take your local business online and reach more customers",
+          "impact3-title": "Startups",
+          "impact3-desc":
+            "Launch your business professionally without breaking the bank",
+          "impact4-title": "NGOs",
+          "impact4-desc": "Spread your message and increase your impact online",
+          "impact5-title": "Artists & Creators",
+          "impact5-desc":
+            "Display your work beautifully to attract opportunities",
+          "impact6-title": "Educators",
+          "impact6-desc": "Reach more students and grow your teaching business",
+          "impact7-title": "Local Services",
+          "impact7-desc": "Let people find and trust your services easily",
+          "impact8-title": "Healthcare",
+          "impact8-desc": "Make your clinic or practice visible to patients",
+          "services-title": "What We Build For You",
+          "service1-title": "Professional Website Design",
+          "service1-desc":
+            "Beautiful, modern websites that make you look professional and trustworthy. Custom designs tailored to your brand.",
+          "service2-title": "Mobile-Responsive",
+          "service2-desc":
+            "Your website will work perfectly on all devices - smartphones, tablets, and computers. Reach everyone, everywhere.",
+          "service3-title": "Fast & Reliable",
+          "service3-desc":
+            "Lightning-fast loading speeds and reliable performance. Your visitors won't have to wait, keeping them engaged.",
+          "service4-title": "Multi-Language",
+          "service4-desc":
+            "Reach your audience in their language. We build websites in English, Hindi, Bengali, and other Indian languages.",
+          "pricing-title": "Honest, Affordable Pricing",
+          "pricing-intro":
+            "No hidden fees. No surprises. No pressure. Just honest work at honest prices that respect your budget. We offer flexible payment options for those who need them.",
+          "highlight-title": "Starting From",
+          "highlight-desc":
+            "Yes, really! Professional websites accessible to everyone",
+          "table-type": "Website Type",
+          "table-price": "Price Range (INR / USD)",
+          type1: "Personal Portfolio Website",
+          type2: "Small Business Website",
+          type3: "Product Showcase Website",
+          type4: "Restaurant/Cafe Menu Site",
+          type5: "Real Estate Listing Site",
+          type6: "Professional Services Website",
+          type7: "Educational Institute Website",
+          type8: "Event/Wedding Website",
+          type9: "Travel & Tourism Website",
+          type10: "Blog/Content Website",
+          "contact-title": "Let's Build Your Website",
+          "contact-email": "Email Us",
+          "contact-phone": "Call Us",
+          "contact-location": "Location",
+          "location-text": "Kolkata, West Bengal, India",
+          "footer-about-title": "Codeverse Creatives",
+          "footer-about-text":
+            "We're on a mission to make professional websites accessible to every Indian, regardless of economic background. From ₹2,000, we're breaking down barriers and building digital dreams across India.",
+          "footer-tagline": "Empowering India, One Website at a Time",
+          "footer-links-title": "Quick Links",
+          "footer-home": "Home",
+          "footer-mission": "Our Mission",
+          "footer-services": "Services",
+          "footer-pricing": "Pricing",
+          "footer-contact": "Contact",
+          "footer-lang-title": "Choose Language",
+          "lang-en": "English",
+          "lang-bn": "বাংলা (Bengali)",
+          "lang-hi": "हिंदी (Hindi)",
+          "footer-rights": "All Rights Reserved.",
+          "footer-made": "Made with ❤️ for Every Indian",
+        },
+      };
+
+      function switchLanguage(lang) {
+        document.querySelectorAll("[data-lang]").forEach((element) => {
+          const key = element.getAttribute("data-lang");
+          if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+          }
+        });
+
+        document
+          .querySelectorAll(".lang-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        event.target.classList.add("active");
+        localStorage.setItem("preferredLanguage", lang);
+      }
+
+      window.addEventListener("DOMContentLoaded", function () {
+        const savedLang = localStorage.getItem("preferredLanguage");
+        if (savedLang && savedLang !== "en") {
+          document.querySelectorAll(".lang-btn").forEach((btn) => {
+            if (btn.getAttribute("onclick").includes(savedLang)) {
+              btn.click();
+            }
+          });
+        }
+      });
+
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+          // Close mobile menu after clicking
+          const navCollapse = document.getElementById("navbarNav");
+          if (navCollapse && navCollapse.classList.contains("show")) {
+            const bsCollapse = new bootstrap.Collapse(navCollapse);
+            bsCollapse.hide();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
