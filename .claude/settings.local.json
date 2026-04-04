@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"C:/Users/Siladitya Datta/Desktop/angular tutorial/css\")",
+      "Bash(mkdir -p \"C:/Users/Siladitya Datta/Desktop/angular tutorial/js\")"
+    ]
+  }
+}

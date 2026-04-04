@@ -1,0 +1,192 @@
+/* ─── Scrollbar ─────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+#sidebar::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #475569; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+/* ─── Typography ─────────────────────────────── */
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+.prose h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 1.5rem 0 0.5rem;
+}
+.prose p { color: #475569; line-height: 1.75; margin-bottom: 0.75rem; }
+.prose ul { list-style: none; padding: 0; margin: 0.5rem 0 1rem; }
+.prose ul li {
+  padding: 0.35rem 0 0.35rem 1.5rem;
+  position: relative;
+  color: #475569;
+  line-height: 1.7;
+}
+.prose ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: #6366f1;
+  font-size: 0.75rem;
+  top: 0.5rem;
+}
+.prose code {
+  background: #e2e8f0;
+  color: #7c3aed;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+}
+
+/* ─── Code Block ─────────────────────────────── */
+.code-wrapper { position: relative; }
+.code-wrapper pre {
+  margin: 0 !important;
+  border-radius: 10px !important;
+  font-size: 0.82rem !important;
+  line-height: 1.65 !important;
+}
+.code-wrapper pre code { font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace !important; }
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #374151;
+  color: #9ca3af;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: system-ui, sans-serif;
+}
+.copy-btn:hover { background: #4b5563; color: #e5e7eb; }
+.copy-btn.copied { background: #065f46; color: #6ee7b7; }
+
+/* ─── Sidebar Nav ────────────────────────────── */
+.module-btn {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  border: none;
+  letter-spacing: 0.01em;
+}
+.module-btn:hover { background: #1e293b; color: #e2e8f0; }
+.module-btn.open { color: #e2e8f0; background: #1e293b; }
+.module-btn .chevron { margin-left: auto; transition: transform 0.25s; font-size: 0.65rem; }
+.module-btn.open .chevron { transform: rotate(90deg); }
+
+.question-list { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
+.question-list.open { max-height: 1000px; }
+
+.q-btn {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 10px 6px 28px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  border: none;
+  line-height: 1.4;
+}
+.q-btn:hover { background: #1e293b; color: #cbd5e1; }
+.q-btn.active { background: #3730a3; color: #e0e7ff; font-weight: 600; }
+.q-btn .q-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #334155;
+  flex-shrink: 0;
+  margin-top: 5px;
+  transition: background 0.15s;
+}
+.q-btn.active .q-dot { background: #818cf8; }
+.q-btn.done .q-dot { background: #34d399; }
+.q-btn.done { color: #94a3b8; }
+
+/* ─── Content Card ───────────────────────────── */
+.content-card {
+  background: white;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* ─── Section Label ──────────────────────────── */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+/* ─── Diagram ────────────────────────────────── */
+.diagram-wrap {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+/* ─── Nav Buttons ────────────────────────────── */
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: none;
+}
+.nav-btn-prev { background: #f1f5f9; color: #64748b; }
+.nav-btn-prev:hover { background: #e2e8f0; color: #334155; }
+.nav-btn-next { background: #4f46e5; color: white; }
+.nav-btn-next:hover { background: #4338ca; }
+.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ─── Welcome Screen ─────────────────────────── */
+.welcome-module-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  background: white;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+.welcome-module-card:hover { border-color: #a5b4fc; background: #f5f3ff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99,102,241,0.08); }
+
+/* ─── Highlight.js override ──────────────────── */
+.hljs { background: #1a1d2e !important; }

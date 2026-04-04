@@ -1,582 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Codeverse Creatives - Starting at ₹500</title>
-  <link rel="icon" type="image/png" href="logo.png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Archivo:wght@400;500;600;700;800;900&display=swap"
-    rel="stylesheet">
-  <style>
-    :root {
-      --forest-dark: #0d3b2e;
-      --forest-main: #1a5740;
-      --cream: #f5f1e8;
-      --cream-light: #faf8f3;
-      --cream-dark: #e8e3d6;
-      --accent: #d4a373;
-      --text-dark: #1a2e1a;
-      --text-light: #4a5a4a;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      line-height: 1.7;
-      color: var(--text-dark);
-      background: var(--cream-light);
-    }
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: 'Archivo', sans-serif;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    nav {
-      background: var(--forest-dark);
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 4px 20px rgba(13, 59, 46, 0.3);
-    }
-
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      text-decoration: none;
-    }
-
-    .brand-logo {
-      width: 60px;
-      height: 60px;
-      object-fit: contain;
-      filter: brightness(0) invert(1);
-    }
-
-    .brand-info h1 {
-      color: var(--cream);
-      font-size: 1.5rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .brand-info p {
-      color: var(--accent);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin: 0;
-    }
-
-    .navbar-nav .nav-link {
-      color: var(--cream) !important;
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 0.5rem 1rem !important;
-      transition: color 0.3s;
-    }
-
-    .navbar-nav .nav-link:hover {
-      color: var(--accent) !important;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest-main) 100%);
-      padding: 5rem 0;
-      text-align: center;
-      color: var(--cream);
-    }
-
-    .hero h2 {
-      font-size: clamp(2rem, 5vw, 4rem);
-      margin-bottom: 1.5rem;
-    }
-
-    .hero .lead {
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      margin-bottom: 1rem;
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .cta-btn {
-      background: var(--accent);
-      color: var(--forest-dark);
-      padding: 1rem 2.5rem;
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 1.125rem;
-      border-radius: 8px;
-      transition: all 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      display: inline-block;
-    }
-
-    .cta-btn:hover {
-      background: var(--cream);
-      transform: translateY(-3px);
-      box-shadow: 0 10px 30px rgba(212, 163, 115, 0.3);
-    }
-
-    section {
-      padding: 5rem 0;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      color: var(--forest-dark);
-      margin-bottom: 3rem;
-      text-align: center;
-    }
-
-    .stat-card {
-      background: linear-gradient(135deg, var(--forest-dark) 0%, var(--forest-main) 100%);
-      padding: 2rem;
-      border-radius: 12px;
-      text-align: center;
-      color: white;
-      margin-bottom: 1.5rem;
-    }
-
-    .stat-card .number {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 900;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-
-    .price-highlight {
-      background: var(--forest-main);
-      color: white;
-      padding: 2.5rem;
-      border-radius: 12px;
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-
-    .price-highlight .price {
-      font-size: clamp(2.5rem, 5vw, 3.5rem);
-      font-weight: 900;
-      color: var(--accent);
-      margin: 1.25rem 0;
-    }
-
-    .table thead th {
-      background: var(--forest-dark);
-      color: var(--cream);
-      padding: 1.5rem;
-    }
-
-    .table tbody td {
-      padding: 1.5rem;
-    }
-
-    .lang-btn {
-      background: transparent;
-      border: 2px solid var(--cream-dark);
-      color: var(--cream);
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      cursor: pointer;
-      width: 100%;
-      margin-bottom: 0.75rem;
-      transition: all 0.3s;
-    }
-
-    .lang-btn.active {
-      background: var(--accent);
-      color: var(--forest-dark);
-      border-color: var(--accent);
-    }
-
-    .lang-btn:hover {
-      background: rgba(212, 163, 115, 0.1);
-      border-color: var(--accent);
-    }
-
-    footer {
-      background: var(--forest-dark);
-      color: var(--cream);
-      padding: 4rem 0 2rem;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Angular Tutorial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+  <link rel="stylesheet" href="css/style.css"/>
 </head>
+<body class="bg-slate-50 text-slate-800 flex h-screen overflow-hidden font-sans">
 
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid px-lg-5">
-      <a class="navbar-brand" href="#home">
-        <img src="logo.png" alt="Codeverse Creatives" class="brand-logo">
-        <div class="brand-info">
-          <h1 data-lang="brand-name">Codeverse Creatives</h1>
-          <p data-lang="brand-tagline">Making India Digital</p>
-        </div>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
+  <!-- Mobile overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="fixed lg:static z-30 w-72 bg-slate-900 text-slate-100 flex flex-col h-screen overflow-y-auto flex-shrink-0 -translate-x-full lg:translate-x-0 transition-transform duration-300">
+
+    <!-- Header -->
+    <div class="p-5 border-b border-slate-700/60 flex items-center gap-3">
+      <div class="w-9 h-9 bg-red-500 rounded-lg flex items-center justify-center shadow-md flex-shrink-0">
+        <svg class="w-5 h-5 text-white" viewBox="0 0 250 250" fill="currentColor">
+          <path d="M125 30L31.9 63.2l14.2 123.1L125 230l78.9-43.7 14.2-123.1z"/>
+          <path class="text-red-300" fill="currentColor" d="M125 30v22.2-.1V230l78.9-43.7 14.2-123.1L125 30z" opacity="0.4"/>
+          <path fill="white" d="M125 52.1L66.8 182.6h21.7l11.7-29.2h49.4l11.7 29.2H183L125 52.1zm17 83.3h-34l17-40.9 17 40.9z"/>
+        </svg>
+      </div>
+      <div>
+        <h1 class="font-bold text-base leading-tight text-white">Angular</h1>
+        <p class="text-slate-400 text-xs">Interview Guide</p>
+      </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="px-5 py-3 border-b border-slate-700/60">
+      <div class="flex justify-between text-xs text-slate-400 mb-1.5">
+        <span>Progress</span>
+        <span id="progress-count">0 / 0</span>
+      </div>
+      <div class="w-full bg-slate-700 rounded-full h-1.5">
+        <div id="progress-bar" class="bg-indigo-500 h-1.5 rounded-full transition-all duration-500" style="width:0%"></div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav id="module-nav" class="flex-1 py-4 px-3 overflow-y-auto space-y-1">
+      <!-- Rendered by JS -->
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+
+    <!-- Topbar -->
+    <header class="bg-white border-b border-slate-200 px-5 lg:px-8 py-3.5 flex items-center gap-4 flex-shrink-0 z-10">
+      <button onclick="toggleSidebar()" class="lg:hidden p-1.5 rounded-md text-slate-500 hover:bg-slate-100">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#home"><span data-lang="nav-home">Home</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="#mission"><span data-lang="nav-mission">Our Mission</span></a>
-          </li>
-          <li class="nav-item"><a class="nav-link" href="#pricing"><span data-lang="nav-pricing">Pricing</span></a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact"><span data-lang="nav-contact">Contact</span></a></li>
-        </ul>
+      <div id="breadcrumb" class="text-sm text-slate-400 flex items-center gap-2 truncate">
+        <span class="text-slate-300">Angular Tutorial</span>
       </div>
-    </div>
-  </nav>
+    </header>
 
-  <section class="hero" id="home">
-    <div class="container">
-      <h2 data-lang="hero-title">Professional Websites for Every Indian</h2>
-      <p class="lead" data-lang="hero-lead">Starting at Just ₹500 ($6)</p>
-      <p data-lang="hero-desc">We believe every person in India deserves a professional website. Your economic
-        background should never stop you from having a digital presence.</p>
-      <a href="#contact" class="cta-btn" data-lang="hero-cta">Get Your Website Today</a>
-    </div>
-  </section>
+    <!-- Content -->
+    <main id="content-area" class="flex-1 overflow-y-auto">
+      <!-- Rendered by JS -->
+    </main>
+  </div>
 
-  <section class="mission" id="mission" style="background: var(--cream-light);">
-    <div class="container">
-      <h2 class="section-title" data-lang="mission-title">Our Mission: Digital India for Everyone</h2>
-      <div class="row">
-        <div class="col-sm-6 col-lg-3 mb-3">
-          <div class="stat-card">
-            <div class="number">₹500</div>
-            <div class="label" data-lang="stat1">Starting Price</div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3 mb-3">
-          <div class="stat-card">
-            <div class="number">$6</div>
-            <div class="label" data-lang="stat2">USD Equivalent</div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3 mb-3">
-          <div class="stat-card">
-            <div class="number">100%</div>
-            <div class="label" data-lang="stat3">Quality Guaranteed</div>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3 mb-3">
-          <div class="stat-card">
-            <div class="number">0</div>
-            <div class="label" data-lang="stat4">Hidden Charges</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="pricing" id="pricing" style="background: var(--cream-light);">
-    <div class="container">
-      <h2 class="section-title" data-lang="pricing-title">Honest, Affordable Pricing</h2>
-      <div class="col-lg-10 mx-auto">
-        <div class="price-highlight">
-          <h3 data-lang="highlight-title">Starting From</h3>
-          <div class="price">₹500 / $6</div>
-          <p data-lang="highlight-desc">Yes, really! Professional websites accessible to everyone</p>
-        </div>
-        <div class="table-responsive" style="background: white; border-radius: 12px;">
-          <table class="table">
-            <thead>
-              <tr>
-                <th data-lang="table-type">Website Type</th>
-                <th data-lang="table-price">Price Range (INR / USD)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td data-lang="type1">Personal Portfolio Website</td>
-                <td>₹500 - ₹3,000 / $6 - $36</td>
-              </tr>
-              <tr>
-                <td data-lang="type2">Small Business Website</td>
-                <td>₹2,000 - ₹8,000 / $24 - $96</td>
-              </tr>
-              <tr>
-                <td data-lang="type3">Product Showcase Website</td>
-                <td>₹3,000 - ₹10,000 / $36 - $120</td>
-              </tr>
-              <tr>
-                <td data-lang="type4">Restaurant/Cafe Menu Site</td>
-                <td>₹2,000 - ₹7,000 / $24 - $84</td>
-              </tr>
-              <tr>
-                <td data-lang="type5">Real Estate Listing Site</td>
-                <td>₹4,000 - ₹12,000 / $48 - $145</td>
-              </tr>
-              <tr>
-                <td data-lang="type6">Professional Services Website</td>
-                <td>₹3,000 - ₹10,000 / $36 - $120</td>
-              </tr>
-              <tr>
-                <td data-lang="type7">Educational Institute Website</td>
-                <td>₹3,000 - ₹13,000 / $36 - $156</td>
-              </tr>
-              <tr>
-                <td data-lang="type8">Event/Wedding Website</td>
-                <td>₹1,000 - ₹5,000 / $12 - $60</td>
-              </tr>
-              <tr>
-                <td data-lang="type9">Travel & Tourism Website</td>
-                <td>₹3,000 - ₹10,000 / $36 - $120</td>
-              </tr>
-              <tr>
-                <td data-lang="type10">Blog/Content Website</td>
-                <td>₹1,500 - ₹6,000 / $18 - $72</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="contact" id="contact" style="background: white;">
-    <div class="container">
-      <h2 class="section-title" data-lang="contact-title">Let's Build Your Website</h2>
-      <div class="row">
-        <div class="col-lg-4 mb-4">
-          <div class="text-center p-4">
-            <i class="fas fa-envelope fa-3x mb-3" style="color: var(--forest-main);"></i>
-            <h3 data-lang="contact-email">Email Us</h3>
-            <p>codeversecreatives@gmail.com</p>
-          </div>
-        </div>
-        <div class="col-lg-4 mb-4">
-          <div class="text-center p-4">
-            <i class="fas fa-phone-alt fa-3x mb-3" style="color: var(--forest-main);"></i>
-            <h3 data-lang="contact-phone">Call Us</h3>
-            <p>+91 70769 77210</p>
-          </div>
-        </div>
-        <div class="col-lg-4 mb-4">
-          <div class="text-center p-4">
-            <i class="fas fa-map-marker-alt fa-3x mb-3" style="color: var(--forest-main);"></i>
-            <h3 data-lang="contact-location">Location</h3>
-            <p data-lang="location-text">Kolkata, West Bengal, India</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mb-4">
-          <h3 data-lang="footer-about-title">Codeverse Creatives</h3>
-          <p data-lang="footer-about-text">We're on a mission to make professional websites accessible to every Indian.
-            From ₹500, we're breaking down barriers and building digital dreams across India.</p>
-        </div>
-        <div class="col-lg-4">
-          <h4 data-lang="footer-lang-title" style="color: var(--accent); margin-bottom: 1rem;">Choose Language</h4>
-          <button class="lang-btn active" onclick="switchLanguage('en')"><span
-              data-lang="lang-en">English</span></button>
-          <button class="lang-btn" onclick="switchLanguage('bn')"><span data-lang="lang-bn">বাংলা
-              (Bengali)</span></button>
-          <button class="lang-btn" onclick="switchLanguage('hi')"><span data-lang="lang-hi">हिंदी
-              (Hindi)</span></button>
-        </div>
-      </div>
-      <div
-        style="text-align: center; padding-top: 2rem; margin-top: 2rem; border-top: 2px solid rgba(212, 163, 115, 0.2);">
-        <p>&copy; 2024 Codeverse Creatives. <span data-lang="footer-rights">All Rights Reserved.</span></p>
-        <p data-lang="footer-made">Made with ❤️ for Every Indian</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const translations = {
-      en: {
-        "brand-name": "Codeverse Creatives",
-        "brand-tagline": "Making India Digital",
-        "nav-home": "Home",
-        "nav-mission": "Our Mission",
-        "nav-pricing": "Pricing",
-        "nav-contact": "Contact",
-        "hero-title": "Professional Websites for Every Indian",
-        "hero-lead": "Starting at Just ₹500 ($6)",
-        "hero-desc": "We believe every person in India deserves a professional website. Your economic background should never stop you from having a digital presence.",
-        "hero-cta": "Get Your Website Today",
-        "mission-title": "Our Mission: Digital India for Everyone",
-        "stat1": "Starting Price",
-        "stat2": "USD Equivalent",
-        "stat3": "Quality Guaranteed",
-        "stat4": "Hidden Charges",
-        "pricing-title": "Honest, Affordable Pricing",
-        "highlight-title": "Starting From",
-        "highlight-desc": "Yes, really! Professional websites accessible to everyone",
-        "table-type": "Website Type",
-        "table-price": "Price Range (INR / USD)",
-        "type1": "Personal Portfolio Website",
-        "type2": "Small Business Website",
-        "type3": "Product Showcase Website",
-        "type4": "Restaurant/Cafe Menu Site",
-        "type5": "Real Estate Listing Site",
-        "type6": "Professional Services Website",
-        "type7": "Educational Institute Website",
-        "type8": "Event/Wedding Website",
-        "type9": "Travel & Tourism Website",
-        "type10": "Blog/Content Website",
-        "contact-title": "Let's Build Your Website",
-        "contact-email": "Email Us",
-        "contact-phone": "Call Us",
-        "contact-location": "Location",
-        "location-text": "Kolkata, West Bengal, India",
-        "footer-about-title": "Codeverse Creatives",
-        "footer-about-text": "We're on a mission to make professional websites accessible to every Indian. From ₹500, we're breaking down barriers and building digital dreams across India.",
-        "footer-lang-title": "Choose Language",
-        "lang-en": "English",
-        "lang-bn": "বাংলা (Bengali)",
-        "lang-hi": "हिंदी (Hindi)",
-        "footer-rights": "All Rights Reserved.",
-        "footer-made": "Made with ❤️ for Every Indian"
-      },
-      bn: {
-        "brand-name": "কোডভার্স ক্রিয়েটিভস",
-        "brand-tagline": "ভারতকে ডিজিটাল করছি",
-        "nav-home": "হোম",
-        "nav-mission": "আমাদের মিশন",
-        "nav-pricing": "মূল্য",
-        "nav-contact": "যোগাযোগ",
-        "hero-title": "প্রতিটি ভারতীয়ের জন্য পেশাদার ওয়েবসাইট",
-        "hero-lead": "মাত্র ₹৫০০ ($৬) থেকে শুরু",
-        "hero-desc": "আমরা বিশ্বাস করি ভারতের প্রতিটি মানুষ একটি পেশাদার ওয়েবসাইট পাওয়ার যোগ্য। আপনার অর্থনৈতিক পটভূমি আপনাকে কখনই ডিজিটাল উপস্থিতি থেকে বিরত রাখতে পারে না।",
-        "hero-cta": "আজই আপনার ওয়েবসাইট পান",
-        "mission-title": "আমাদের মিশন: সবার জন্য ডিজিটাল ইন্ডিয়া",
-        "stat1": "প্রারম্ভিক মূল্য",
-        "stat2": "USD সমতুল্য",
-        "stat3": "মান নিশ্চিত",
-        "stat4": "লুকানো খরচ",
-        "pricing-title": "সৎ, সাশ্রয়ী মূল্য",
-        "highlight-title": "থেকে শুরু",
-        "highlight-desc": "হ্যাঁ, সত্যিই! সবার জন্য অ্যাক্সেসযোগ্য পেশাদার ওয়েবসাইট",
-        "table-type": "ওয়েবসাইটের ধরন",
-        "table-price": "মূল্য পরিসীমা (INR / USD)",
-        "type1": "ব্যক্তিগত পোর্টফোলিও ওয়েবসাইট",
-        "type2": "ছোট ব্যবসা ওয়েবসাইট",
-        "type3": "পণ্য প্রদর্শন ওয়েবসাইট",
-        "type4": "রেস্টুরেন্ট/ক্যাফে মেনু সাইট",
-        "type5": "রিয়েল এস্টেট তালিকা সাইট",
-        "type6": "পেশাদার সেবা ওয়েবসাইট",
-        "type7": "শিক্ষা প্রতিষ্ঠান ওয়েবসাইট",
-        "type8": "ইভেন্ট/বিবাহ ওয়েবসাইট",
-        "type9": "ভ্রমণ ও পর্যটন ওয়েবসাইট",
-        "type10": "ব্লগ/কন্টেন্ট ওয়েবসাইট",
-        "contact-title": "চলুন আপনার ওয়েবসাইট তৈরি করি",
-        "contact-email": "আমাদের ইমেইল করুন",
-        "contact-phone": "আমাদের কল করুন",
-        "contact-location": "অবস্থান",
-        "location-text": "কলকাতা, পশ্চিমবঙ্গ, ভারত",
-        "footer-about-title": "কোডভার্স ক্রিয়েটিভস",
-        "footer-about-text": "আমরা প্রতিটি ভারতীয়ের জন্য পেশাদার ওয়েবসাইট অ্যাক্সেসযোগ্য করার মিশনে আছি। ₹৫০০ থেকে, আমরা বাধা ভেঙে ভারতে ডিজিটাল স্বপ্ন তৈরি করছি।",
-        "footer-lang-title": "ভাষা চয়ন করুন",
-        "lang-en": "English",
-        "lang-bn": "বাংলা (Bengali)",
-        "lang-hi": "हिंदी (Hindi)",
-        "footer-rights": "সমস্ত অধিকার সংরক্ষিত।",
-        "footer-made": "প্রতিটি ভারতীয়ের জন্য ❤️ দিয়ে তৈরি"
-      },
-      hi: {
-        "brand-name": "कोडवर्स क्रिएटिव्स",
-        "brand-tagline": "भारत को डिजिटल बना रहे हैं",
-        "nav-home": "होम",
-        "nav-mission": "हमारा मिशन",
-        "nav-pricing": "मूल्य",
-        "nav-contact": "संपर्क",
-        "hero-title": "हर भारतीय के लिए पेशेवर वेबसाइट",
-        "hero-lead": "केवल ₹500 ($6) से शुरू",
-        "hero-desc": "हम मानते हैं कि भारत का हर व्यक्ति एक पेशेवर वेबसाइट का हकदार है। आपकी आर्थिक पृष्ठभूमि आपको कभी भी डिजिटल उपस्थिति से नहीं रोकनी चाहिए।",
-        "hero-cta": "आज ही अपनी वेबसाइट प्राप्त करें",
-        "mission-title": "हमारा मिशन: सभी के लिए डिजिटल इंडिया",
-        "stat1": "शुरुआती मूल्य",
-        "stat2": "USD समकक्ष",
-        "stat3": "गुणवत्ता की गारंटी",
-        "stat4": "छिपे शुल्क",
-        "pricing-title": "ईमानदार, किफायती मूल्य",
-        "highlight-title": "से शुरू",
-        "highlight-desc": "हां, वास्तव में! सभी के लिए सुलभ पेशेवर वेबसाइटें",
-        "table-type": "वेबसाइट प्रकार",
-        "table-price": "मूल्य सीमा (INR / USD)",
-        "type1": "व्यक्तिगत पोर्टफोलियो वेबसाइट",
-        "type2": "लघु व्यवसाय वेबसाइट",
-        "type3": "उत्पाद प्रदर्शन वेबसाइट",
-        "type4": "रेस्तरां/कैफे मेनू साइट",
-        "type5": "रियल एस्टेट लिस्टिंग साइट",
-        "type6": "पेशेवर सेवा वेबसाइट",
-        "type7": "शैक्षिक संस्थान वेबसाइट",
-        "type8": "इवेंट/शादी वेबसाइट",
-        "type9": "यात्रा और पर्यटन वेबसाइट",
-        "type10": "ब्लॉग/सामग्री वेबसाइट",
-        "contact-title": "आइए अपनी वेबसाइट बनाएं",
-        "contact-email": "हमें ईमेल करें",
-        "contact-phone": "हमें कॉल करें",
-        "contact-location": "स्थान",
-        "location-text": "कोलकाता, पश्चिम बंगाल, भारत",
-        "footer-about-title": "कोडवर्स क्रिएटिव्स",
-        "footer-about-text": "हम हर भारतीय के लिए पेशेवर वेबसाइट सुलभ बनाने के मिशन पर हैं। ₹500 से, हम बाधाओं को तोड़ रहे हैं और पूरे भारत में डिजिटल सपनों का निर्माण कर रहे हैं।",
-        "footer-lang-title": "भाषा चुनें",
-        "lang-en": "English",
-        "lang-bn": "বাংলা (Bengali)",
-        "lang-hi": "हिंदी (Hindi)",
-        "footer-rights": "सर्वाधिकार सुरक्षित।",
-        "footer-made": "हर भारतीय के लिए ❤️ के साथ बनाया गया"
-      }
-    };
-
-    function switchLanguage(lang) {
-      document.querySelectorAll('[data-lang]').forEach(element => {
-        const key = element.getAttribute('data-lang');
-        if (translations[lang] && translations[lang][key]) {
-          element.textContent = translations[lang][key];
-        }
-      });
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      event.target.closest('.lang-btn').classList.add('active');
-      localStorage.setItem('preferredLanguage', lang);
-    }
-
-    window.addEventListener('DOMContentLoaded', function () {
-      const savedLang = localStorage.getItem('preferredLanguage');
-      if (savedLang && savedLang !== 'en') {
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-          if (btn.getAttribute('onclick').includes(savedLang)) {
-            btn.click();
-          }
-        });
-      }
-    });
-
-    // Smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-  </script>
+  <script src="js/content.js"></script>
+  <script src="js/modules/01-core-concepts.js"></script>
+  <script src="js/modules/02-data-binding.js"></script>
+  <script src="js/modules/03-directives.js"></script>
+  <script src="js/modules/04-services-di.js"></script>
+  <script src="js/modules/05-component-communication.js"></script>
+  <script src="js/modules/06-lifecycle-hooks.js"></script>
+  <script src="js/modules/07-routing.js"></script>
+  <script src="js/modules/08-forms.js"></script>
+  <script src="js/modules/09-pipes.js"></script>
+  <script src="js/modules/10-observables-rxjs.js"></script>
+  <script src="js/modules/11-http-api.js"></script>
+  <script src="js/modules/12-change-detection.js"></script>
+  <script src="js/modules/13-state-management.js"></script>
+  <script src="js/modules/14-performance-optimization.js"></script>
+  <script src="js/modules/15-testing.js"></script>
+  <script src="js/modules/16-advanced-concepts.js"></script>
+  <script src="js/modules/17-security.js"></script>
+  <script src="js/modules/18-build-deployment.js"></script>
+  <script src="js/modules/19-animations.js"></script>
+  <script src="js/modules/20-i18n.js"></script>
+  <script src="js/modules/21-accessibility.js"></script>
+  <script src="js/modules/22-pwa.js"></script>
+  <script src="js/modules/23-signals.js"></script>
+  <script src="js/modules/24-standalone-components.js"></script>
+  <script src="js/modules/25-template-syntax.js"></script>
+  <script src="js/modules/26-ngzone.js"></script>
+  <script src="js/modules/27-web-workers.js"></script>
+  <script src="js/modules/28-angular-material.js"></script>
+  <script src="js/modules/29-error-handling.js"></script>
+  <script src="js/modules/30-deployment-devops.js"></script>
+  <script src="js/modules/31-typescript-related.js"></script>
+  <script src="js/modules/32-micro-frontends.js"></script>
+  <script src="js/modules/33-memory-management.js"></script>
+  <script src="js/modules/34-workspace-projects.js"></script>
+  <script src="js/modules/35-custom-elements.js"></script>
+  <script src="js/modules/36-ssr-hydration.js"></script>
+  <script src="js/modules/37-version-specific-features.js"></script>
+  <script src="js/modules/38-real-world-scenarios.js"></script>
+  <script src="js/app.js"></script>
 </body>
-
 </html>
