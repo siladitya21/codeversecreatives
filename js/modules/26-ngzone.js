@@ -46,6 +46,24 @@ window.MODULES.push({
         `,
       "code": "// Common use cases:\n// - High-frequency canvas drawing\n// - WebGL rendering loops\n// - Drag-and-drop libraries\n// - Custom animations that don't use Angular's animation module\n// - Performance monitoring tools",
       "language": "typescript"
+    },
+    {
+      "id": "run-callback-inside-zone",
+      "title": "How to re-enter the Angular zone?",
+      "explanation": `
+          <p>After running code outside Angular's zone with <code>runOutsideAngular()</code>, you may need to <strong>re-enter the Angular zone</strong> to trigger change detection and update the UI.</p>\n\n          <p>Use <code>ngZone.run()</code> to execute code back inside the Angular zone. This is useful when you've completed a heavy operation outside the zone and now need to update the component state.</p>\n        `,
+      "code": "import { Component, NgZone } from '@angular/core';\n\n@Component({ /* ... */ })\nexport class MyComponent {\n  value = 0;\n\n  constructor(private ngZone: NgZone) {}\n\n  performHeavyTask() {\n    // Run expensive operation outside Angular's zone\n    this.ngZone.runOutsideAngular(() => {\n      for (let i = 0; i < 1000000; i++) {\n        this.expensiveCalculation();\n      }\n      \n      // Once done, re-enter the zone to update the view\n      this.ngZone.run(() => {\n        this.value = this.result; // This triggers change detection\n      });\n    });\n  }\n\n  private expensiveCalculation() {\n    // Heavy computation that doesn't need CD\n  }\n}",
+      "language": "typescript",
+      "diagram": `<div class="diagram-wrap"><p class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5">Zone Re-entry Flow</p><div class="flex items-center justify-between max-w-md mx-auto"><div class="bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center"><p class="text-xs font-bold text-indigo-700">Outside Angular</p></div><div class="text-slate-300">&rarr;</div><div class="bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center"><p class="text-xs font-bold text-amber-700">Heavy Task</p></div><div class="text-slate-300">&rarr;</div><div class="bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center"><p class="text-xs font-bold text-emerald-700">Back in Angular</p></div><div class="text-slate-300">&rarr;</div><div class="bg-rose-50 border-2 border-rose-200 rounded-xl p-3 text-center"><p class="text-xs font-bold text-rose-700">Change Detection</p></div></div></div>`
+    },
+    {
+      "id": "checking-zone-status",
+      "title": "Checking if code is running in Angular zone",
+      "explanation": `
+          <p>Sometimes you need to know whether code is currently running <strong>inside</strong> or <strong>outside</strong> Angular's zone. The <code>NgZone.isStable</code> property and event emitters help with this.</p>\n\n          <h3>Key Properties</h3>\n          <ul>\n            <li><code>ngZone.isStable</code>: An Observable that emits when Angular's zone becomes stable (no pending async tasks).</li>\n            <li><code>ngZone.onStable</code>: Observable that emits when the zone stabilizes.</li>\n            <li><code>ngZone.onUnstable</code>: Observable that emits when async tasks start.</li>\n          </ul>\n        `,
+      "code": "import { Component, NgZone } from '@angular/core';\n\n@Component({ /* ... */ })\nexport class MyComponent {\n  constructor(private ngZone: NgZone) {\n    // Wait for the zone to become stable before performing an action\n    this.ngZone.onStable.subscribe(() => {\n      console.log('All async operations completed. Safe to measure DOM.');\n      this.measureLayout();\n    });\n\n    this.ngZone.onUnstable.subscribe(() => {\n      console.log('Async operation started. Zone is now busy.');\n    });\n  }\n\n  measureLayout() {\n    // Safe to access DOM measurements here without triggering additional CD cycles\n    const height = document.body.offsetHeight;\n    console.log('Layout height:', height);\n  }\n}",
+      "language": "typescript",
+      "diagram": `<div class="diagram-wrap"><p class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5">Zone Stability States</p><div class="flex flex-col items-center gap-3 max-w-md mx-auto"><div class="w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center"><p class="text-xs font-bold text-indigo-700">Stable</p><p class="text-[10px] text-slate-500">No pending async tasks</p></div><div class="text-slate-400 text-sm">&darr; async task starts &uarr;</p><div class="w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center"><p class="text-xs font-bold text-amber-700">Unstable</p><p class="text-[10px] text-slate-500">Pending async tasks</p></div></div></div>`
     }
   ]
 });
