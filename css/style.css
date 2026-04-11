@@ -188,5 +188,26 @@ body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
 }
 .welcome-module-card:hover { border-color: #a5b4fc; background: #f5f3ff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99,102,241,0.08); }
 
+/* ─── Framework Tabs ─────────────────────────── */
+.framework-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: transparent;
+  border: 1px solid transparent;
+}
+.framework-tab:hover { background: #1e293b; color: #cbd5e1; }
+#tab-angular.active  { background: #3b1010; color: #fca5a5; border-color: #b91c1c; }
+#tab-react.active    { background: #082f3f; color: #67e8f9; border-color: #0e7490; }
+
 /* ─── Highlight.js override ──────────────────── */
 .hljs { background: #1a1d2e !important; }

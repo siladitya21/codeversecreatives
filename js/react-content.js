@@ -1,0 +1,1 @@
+window.REACT_MODULES = [];
