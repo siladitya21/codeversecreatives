@@ -1,88 +1,391 @@
 window.MODULES = window.MODULES || [];
 window.MODULES.push({
-  "id": "lifecycle-hooks",
-  "title": "Lifecycle Hooks",
-  "icon": "bi bi-hourglass-split",
-  "questions": [
+  id: "lifecycle-hooks",
+  title: "Lifecycle Hooks",
+  icon: "bi bi-hourglass-split",
+  questions: [
+
     {
-      "id": "what-are-lifecycle-hooks",
-      "title": "What are lifecycle hooks?",
-      "explanation": "\n          <p>In <strong>Angular</strong>, <strong>lifecycle hooks</strong> are special methods that Angular calls automatically at different stages of a component's or directive's life.</p>\n\n          <p>They let you run code when Angular creates a component, updates it, initializes its view/content, checks for changes, or destroys it.</p>\n\n          <h3>Why Lifecycle Hooks Are Useful</h3>\n          <ul>\n            <li>To initialize data at the right time</li>\n            <li>To react to input changes</li>\n            <li>To access template/view children safely</li>\n            <li>To run custom change detection logic</li>\n            <li>To clean up subscriptions, timers, or listeners</li>\n          </ul>\n        ",
-      "code": "@Component({\n  selector: 'app-demo',\n  template: '<p>Lifecycle Demo</p>'\n})\nexport class DemoComponent implements OnInit, OnDestroy {\n  ngOnInit(): void {\n    console.log('Component initialized');\n  }\n\n  ngOnDestroy(): void {\n    console.log('Component destroyed');\n  }\n}",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Angular Lifecycle</p>\n  <div class=\"flex flex-col items-center gap-3 max-w-md mx-auto\">\n    <div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-indigo-700\">Create</p></div>\n    <div class=\"text-slate-300\">&darr;</div>\n    <div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-emerald-700\">Initialize</p></div>\n    <div class=\"text-slate-300\">&darr;</div>\n    <div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-amber-700\">Check / Update</p></div>\n    <div class=\"text-slate-300\">&darr;</div>\n    <div class=\"w-full bg-rose-50 border-2 border-rose-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-rose-700\">Destroy</p></div>\n  </div>\n</div>"
+      id: "what-is-ngoninit",
+      title: "What is ngOnInit?",
+      explanation: `
+        <p><strong>ngOnInit()</strong> is a lifecycle hook that runs <em>once</em>, right after Angular finishes setting up the component and binding its <code>@Input()</code> properties for the first time.</p>
+
+        <h3>Why not use the constructor?</h3>
+        <p>When the constructor runs, Angular has not yet assigned any <code>@Input()</code> values. So if you try to read <code>this.userId</code> (received from a parent) inside the constructor, it will be <code>undefined</code>. By the time <code>ngOnInit()</code> is called, all inputs are ready.</p>
+
+        <h3>Typical uses</h3>
+        <ul>
+          <li>Fetch data from an API based on route parameters or inputs</li>
+          <li>Initialise reactive forms</li>
+          <li>Subscribe to state or route changes</li>
+          <li>Read <code>@Input()</code> values safely</li>
+        </ul>
+
+        <h3>Real-world example</h3>
+        <p>A <strong>DashboardComponent</strong> receives a <code>userId</code> from the router, then loads that user's data in <code>ngOnInit()</code>.</p>
+      `,
+      code: `import { Component, OnInit, Input } from '@angular/core';
+import { ApiService } from './api.service';
+
+@Component({ selector: 'app-dashboard', templateUrl: './dashboard.component.html' })
+export class DashboardComponent implements OnInit {
+  @Input() userId!: string;   // set by parent BEFORE ngOnInit runs
+  users: any[] = [];
+  loading = true;
+  error = false;
+
+  constructor(private api: ApiService) {
+    // DON'T call this.api here — userId is still undefined at this point
+  }
+
+  ngOnInit(): void {
+    // Safe to use this.userId now
+    this.api.getUserById(this.userId).subscribe({
+      next: (res) => {
+        this.users = res;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = true;
+        this.loading = false;
+      }
+    });
+  }
+}`,
+      language: "typescript"
     },
+
     {
-      "id": "what-is-ngoninit",
-      "title": "What is ngOnInit?",
-      "explanation": "\n          <p><strong><code>ngOnInit()</code></strong> is an Angular lifecycle hook that runs <strong>once</strong> after Angular has created the component and initialized its input properties.</p>\n\n          <p>It is commonly used for initialization work such as fetching data, setting default values, calling services, or preparing the component state.</p>\n\n          <h3>Important Point</h3>\n          <ul>\n            <li>It runs after the constructor.</li>\n            <li>It runs once for the component instance.</li>\n            <li>It is the preferred place for component initialization logic.</li>\n          </ul>\n        ",
-      "code": "@Component({\n  selector: 'app-profile',\n  template: '<p>{{ userName }}</p>'\n})\nexport class ProfileComponent implements OnInit {\n  userName = '';\n\n  constructor(private userService: UserService) {}\n\n  ngOnInit(): void {\n    this.userName = this.userService.getCurrentUser();\n  }\n}",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">ngOnInit</p>\n  <div class=\"max-w-lg mx-auto bg-white border border-slate-200 rounded-xl p-4 text-center\">\n    <p class=\"text-sm font-bold text-slate-700\">Constructor runs first</p>\n    <p class=\"text-xs text-slate-500 mt-2\">Angular sets inputs</p>\n    <p class=\"text-xs font-mono text-emerald-600 mt-2\">Then ngOnInit() runs once</p>\n  </div>\n</div>"
-    },
-    {
-      "id": "what-is-ngonchanges",
-      "title": "What is ngOnChanges?",
-      "explanation": "\n          <p><strong><code>ngOnChanges()</code></strong> is an Angular lifecycle hook that runs whenever the value of an <code>@Input()</code> property changes.</p>\n\n          <p>It receives a <code>SimpleChanges</code> object that gives details about the previous value, current value, and whether it is the first change.</p>\n\n          <h3>When It Runs</h3>\n          <ul>\n            <li>Before <code>ngOnInit()</code> for the first input change</li>\n            <li>Again whenever Angular detects a new input value from the parent</li>\n          </ul>\n        ",
-      "code": "@Component({\n  selector: 'app-child',\n  template: '<p>{{ title }}</p>'\n})\nexport class ChildComponent implements OnChanges {\n  @Input() title = '';\n\n  ngOnChanges(changes: SimpleChanges): void {\n    console.log(changes['title'].previousValue);\n    console.log(changes['title'].currentValue);\n    console.log(changes['title'].firstChange);\n  }\n}",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">ngOnChanges</p>\n  <div class=\"flex items-center justify-center gap-4\">\n    <div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 text-center\">\n      <p class=\"font-bold text-indigo-700\">Parent updates @Input</p>\n    </div>\n    <div class=\"text-slate-300\">&rarr;</div>\n    <div class=\"bg-amber-50 border-2 border-amber-200 rounded-xl p-4 text-center\">\n      <p class=\"font-bold text-amber-700\">ngOnChanges(changes)</p>\n    </div>\n  </div>\n</div>"
-    },
-    {
-      "id": "what-is-ngondestroy",
-      "title": "What is ngOnDestroy?",
-      "explanation": "\n          <p><strong><code>ngOnDestroy()</code></strong> is an Angular lifecycle hook that runs just before a component, directive, or service instance is destroyed.</p>\n\n          <p>It is mainly used for cleanup work.</p>\n\n          <h3>Common Cleanup Tasks</h3>\n          <ul>\n            <li>Unsubscribe from Observables</li>\n            <li>Clear intervals and timeouts</li>\n            <li>Remove event listeners</li>\n            <li>Release resources to avoid memory leaks</li>\n          </ul>\n        ",
-      "code": "@Component({\n  selector: 'app-timer',\n  template: '<p>Timer running</p>'\n})\nexport class TimerComponent implements OnInit, OnDestroy {\n  private intervalId: any;\n\n  ngOnInit(): void {\n    this.intervalId = setInterval(() => {\n      console.log('tick');\n    }, 1000);\n  }\n\n  ngOnDestroy(): void {\n    clearInterval(this.intervalId);\n    console.log('Cleanup complete');\n  }\n}",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">ngOnDestroy</p>\n  <div class=\"max-w-lg mx-auto bg-white border border-slate-200 rounded-xl p-4 text-center\">\n    <p class=\"text-sm font-bold text-slate-700\">Before Angular removes component</p>\n    <p class=\"text-xs font-mono text-rose-600 mt-2\">ngOnDestroy()</p>\n    <p class=\"text-xs text-slate-500 mt-2\">Cleanup subscriptions, timers, listeners</p>\n  </div>\n</div>"
-    },
-    {
-      "id": "what-is-ngafterviewinit",
-      "title": "What is ngAfterViewInit?",
-      "explanation": "\n          <p><strong><code>ngAfterViewInit()</code></strong> is an Angular lifecycle hook that runs once after Angular has fully initialized the component's <strong>view</strong> and its child views.</p>\n\n          <p>This is the correct place to work with <code>@ViewChild()</code> or <code>@ViewChildren()</code> references because the view is guaranteed to exist by then.</p>\n\n          <h3>Typical Uses</h3>\n          <ul>\n            <li>Access child component instances</li>\n            <li>Read template element references</li>\n            <li>Integrate with third-party DOM libraries carefully</li>\n          </ul>\n        ",
-      "code": "@Component({\n  selector: 'app-demo',\n  template: '<input #searchBox />'\n})\nexport class DemoComponent implements AfterViewInit {\n  @ViewChild('searchBox') searchBox!: ElementRef<HTMLInputElement>;\n\n  ngAfterViewInit(): void {\n    this.searchBox.nativeElement.focus();\n  }\n}",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">ngAfterViewInit</p>\n  <div class=\"flex flex-col items-center gap-3 max-w-md mx-auto\">\n    <div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-indigo-700\">Angular builds view</p></div>\n    <div class=\"text-slate-300\">&darr;</div>\n    <div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-emerald-700\">@ViewChild ready</p></div>\n    <div class=\"text-slate-300\">&darr;</div>\n    <div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-amber-700\">ngAfterViewInit()</p></div>\n  </div>\n</div>"
-    },
-    {
-      "id": "what-is-ngdocheck",
-      "title": "What is ngDoCheck?",
-      "explanation": "\n          <p><strong><code>ngDoCheck()</code></strong> is an Angular lifecycle hook that runs during every change detection cycle.</p>\n\n          <p>It lets you implement <strong>custom change detection logic</strong> when Angular's default checks are not enough.</p>\n\n          <h3>Important Note</h3>\n          <ul>\n            <li>It can run very frequently.</li>\n            <li>Heavy logic inside it can hurt performance.</li>\n            <li>Use it only when really necessary.</li>\n          </ul>\n        ",
-      "code": "@Component({\n  selector: 'app-checker',\n  template: '<p>{{ items.length }}</p>'\n})\nexport class CheckerComponent implements DoCheck {\n  items = ['Angular', 'React'];\n  private oldLength = this.items.length;\n\n  ngDoCheck(): void {\n    if (this.items.length !== this.oldLength) {\n      console.log('Items changed');\n      this.oldLength = this.items.length;\n    }\n  }\n}",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">ngDoCheck</p>\n  <div class=\"max-w-lg mx-auto bg-white border border-slate-200 rounded-xl p-4 text-center\">\n    <p class=\"text-sm font-bold text-slate-700\">Runs during every change detection cycle</p>\n    <p class=\"text-xs font-mono text-amber-600 mt-2\">ngDoCheck()</p>\n    <p class=\"text-xs text-slate-500 mt-2\">Use for custom checks, but keep it light</p>\n  </div>\n</div>"
-    },
-    {
-      "id": "constructor-vs-ngoninit",
-      "title": "Difference between constructor and ngOnInit",
-      "explanation": "\n          <p>In Angular, the <strong>constructor</strong> and <strong><code>ngOnInit()</code></strong> are not the same.</p>\n\n          <h3>Constructor</h3>\n          <ul>\n            <li>Runs when the class instance is created.</li>\n            <li>Mainly used for dependency injection.</li>\n            <li>Should not contain heavy initialization logic.</li>\n          </ul>\n\n          <h3>ngOnInit</h3>\n          <ul>\n            <li>Runs after Angular sets input properties.</li>\n            <li>Used for component initialization logic.</li>\n            <li>Better place for API calls and setup logic.</li>\n          </ul>\n\n          <h3>Interview Summary</h3>\n          <ul>\n            <li><strong>Constructor:</strong> create object and inject dependencies.</li>\n            <li><strong>ngOnInit:</strong> initialize component data and logic.</li>\n          </ul>\n        ",
-      "code": "@Component({\n  selector: 'app-example',\n  template: '<p>{{ title }}</p>'\n})\nexport class ExampleComponent implements OnInit {\n  @Input() title = '';\n\n  constructor(private api: ApiService) {\n    console.log('Constructor called');\n  }\n\n  ngOnInit(): void {\n    console.log('ngOnInit called');\n    this.api.loadData();\n  }\n}",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Constructor vs ngOnInit</p>\n  <div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\">\n    <div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4\">\n      <p class=\"text-sm font-bold text-indigo-700 text-center mb-3\">Constructor</p>\n      <ul class=\"text-xs text-slate-600 space-y-1\">\n        <li>Class creation</li>\n        <li>Dependency injection</li>\n        <li>Not ideal for full init logic</li>\n      </ul>\n    </div>\n    <div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4\">\n      <p class=\"text-sm font-bold text-emerald-700 text-center mb-3\">ngOnInit</p>\n      <ul class=\"text-xs text-slate-600 space-y-1\">\n        <li>Runs after inputs are set</li>\n        <li>Initialization logic</li>\n        <li>Good for API calls/setup</li>\n      </ul>\n    </div>\n  </div>\n</div>"
-    },
-    {
-      "id": "what-is-ngaftercontentinit",
-      "title": "What is ngAfterContentInit?",
-      "explanation": "\n          <p><strong><code>ngAfterContentInit()</code></strong> is called <strong>once</strong> after Angular projects external content into the component view via <code>&lt;ng-content&gt;</code>.</p>\n\n          <p>This is the first lifecycle moment where <code>@ContentChild</code> and <code>@ContentChildren</code> query results are populated and safe to use.</p>\n\n          <h3>When to Use It</h3>\n          <ul>\n            <li>Initialize logic that depends on projected child content</li>\n            <li>Read from <code>@ContentChild</code> references for the first time</li>\n            <li>Subscribe to projected child component outputs</li>\n          </ul>\n        ",
-      "code": "import { AfterContentInit, Component, ContentChild } from '@angular/core';\n\n@Component({\n  selector: 'app-card',\n  template: '<div class=\"card\"><ng-content></ng-content></div>'\n})\nexport class CardComponent implements AfterContentInit {\n  @ContentChild(HeaderComponent) header!: HeaderComponent;\n\n  ngAfterContentInit(): void {\n    // @ContentChild is populated here for the first time\n    if (this.header) {\n      this.header.setTheme('dark');\n    }\n  }\n}\n\n// Usage in parent:\n// <app-card>\n//   <app-header>My Title</app-header>  <-- projected via ng-content\n// </app-card>",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">ngAfterContentInit</p><div class=\"flex flex-col items-center gap-2 max-w-sm mx-auto\"><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-indigo-700\">Parent projects &lt;ng-content&gt;</p></div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-amber-700\">ngAfterContentInit() &mdash; runs once</p></div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-emerald-700\">@ContentChild references are now available</p></div></div></div>"
-    },
-    {
-      "id": "ngaftercontentchecked-and-ngafterviewchecked",
-      "title": "ngAfterContentChecked and ngAfterViewChecked",
-      "explanation": "\n          <p>These two hooks run after <strong>every change detection cycle</strong>, not just once. They are the repeating counterparts of <code>ngAfterContentInit</code> and <code>ngAfterViewInit</code>.</p>\n\n          <h3>ngAfterContentChecked</h3>\n          <ul>\n            <li>Runs after Angular checks the <strong>projected content</strong> for changes</li>\n            <li>First run is immediately after <code>ngAfterContentInit</code></li>\n            <li>Then runs after every <code>ngDoCheck</code></li>\n          </ul>\n\n          <h3>ngAfterViewChecked</h3>\n          <ul>\n            <li>Runs after Angular checks the component's <strong>own view and child views</strong></li>\n            <li>First run is immediately after <code>ngAfterViewInit</code></li>\n            <li>Then runs after every <code>ngDoCheck</code></li>\n          </ul>\n\n          <h3>Performance Warning</h3>\n          <ul>\n            <li>Both fire on <strong>every</strong> CD cycle &mdash; keep logic inside them minimal</li>\n            <li>Avoid modifying state here directly &mdash; it can cause <code>ExpressionChangedAfterItHasBeenCheckedError</code></li>\n          </ul>\n        ",
-      "code": "import {\n  AfterContentChecked, AfterViewChecked,\n  ChangeDetectorRef, Component\n} from '@angular/core';\n\n@Component({\n  selector: 'app-demo',\n  template: '<ng-content></ng-content>'\n})\nexport class DemoComponent implements AfterContentChecked, AfterViewChecked {\n\n  constructor(private cdr: ChangeDetectorRef) {}\n\n  ngAfterContentChecked(): void {\n    // Runs after every check of projected content\n    // If you must update state here, call cdr.detectChanges() afterwards\n    console.log('Content checked');\n  }\n\n  ngAfterViewChecked(): void {\n    // Runs after every check of this component's own view\n    console.log('View checked');\n  }\n}",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Checked Hooks &mdash; Run Every CD Cycle</p><div class=\"grid grid-cols-2 gap-4 max-w-md mx-auto\"><div class=\"bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-amber-700\">ngAfterContentChecked</p><p class=\"text-[10px] text-slate-500 mt-1\">After projected content is checked</p></div><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-indigo-700\">ngAfterViewChecked</p><p class=\"text-[10px] text-slate-500 mt-1\">After view &amp; child views are checked</p></div></div><p class=\"text-center text-xs text-rose-500 font-semibold mt-4\">Both run on every change detection cycle &mdash; keep them lightweight</p></div>"
-    },
-    {
-      "id": "complete-lifecycle-order",
-      "title": "Complete lifecycle order",
-      "explanation": "\n          <p>Angular calls lifecycle hooks in a fixed, predictable order. Knowing this order tells you exactly when inputs, projected content, and view children are safe to access.</p>\n\n          <ol>\n            <li><strong>constructor</strong> &mdash; class instantiated, dependencies injected. No Angular bindings yet.</li>\n            <li><strong>ngOnChanges</strong> &mdash; called before <code>ngOnInit</code> if the component has <code>@Input</code> properties; called again on every input change.</li>\n            <li><strong>ngOnInit</strong> &mdash; called once after the first <code>ngOnChanges</code>. Inputs available. Best place for initialization.</li>\n            <li><strong>ngDoCheck</strong> &mdash; custom change detection. Called every CD cycle.</li>\n            <li><strong>ngAfterContentInit</strong> &mdash; once, after projected <code>&lt;ng-content&gt;</code> is initialized.</li>\n            <li><strong>ngAfterContentChecked</strong> &mdash; after every check of projected content.</li>\n            <li><strong>ngAfterViewInit</strong> &mdash; once, after the component view and child views are initialized.</li>\n            <li><strong>ngAfterViewChecked</strong> &mdash; after every check of the component view.</li>\n            <li><strong>ngOnDestroy</strong> &mdash; just before Angular destroys the component. Unsubscribe and clean up here.</li>\n          </ol>\n        ",
-      "code": "import {\n  Component, Input, OnChanges, OnInit, DoCheck,\n  AfterContentInit, AfterContentChecked,\n  AfterViewInit, AfterViewChecked, OnDestroy,\n  SimpleChanges\n} from '@angular/core';\n\n@Component({ selector: 'app-all-hooks', template: '' })\nexport class AllHooksComponent implements\n    OnChanges, OnInit, DoCheck,\n    AfterContentInit, AfterContentChecked,\n    AfterViewInit, AfterViewChecked, OnDestroy {\n\n  @Input() value = '';\n\n  ngOnChanges(c: SimpleChanges) { console.log('1. ngOnChanges',         c); }\n  ngOnInit()                    { console.log('2. ngOnInit'); }\n  ngDoCheck()                   { console.log('3. ngDoCheck'); }\n  ngAfterContentInit()          { console.log('4. ngAfterContentInit'); }\n  ngAfterContentChecked()       { console.log('5. ngAfterContentChecked'); }\n  ngAfterViewInit()             { console.log('6. ngAfterViewInit'); }\n  ngAfterViewChecked()          { console.log('7. ngAfterViewChecked'); }\n  ngOnDestroy()                 { console.log('8. ngOnDestroy'); }\n}",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Full Lifecycle Order</p><div class=\"flex flex-col items-center gap-1 max-w-xs mx-auto\"><div class=\"w-full bg-slate-100 border border-slate-300 rounded-lg p-2 text-center\"><p class=\"text-xs font-bold text-slate-600\">constructor</p></div><div class=\"text-slate-400 text-xs\">&darr;</div><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-lg p-2 text-center\"><p class=\"text-xs font-bold text-indigo-700\">ngOnChanges (if @Input exists)</p></div><div class=\"text-slate-400 text-xs\">&darr;</div><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-lg p-2 text-center\"><p class=\"text-xs font-bold text-indigo-700\">ngOnInit</p></div><div class=\"text-slate-400 text-xs\">&darr;</div><div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-lg p-2 text-center\"><p class=\"text-xs font-bold text-amber-700\">ngDoCheck</p></div><div class=\"text-slate-400 text-xs\">&darr;</div><div class=\"w-full bg-purple-50 border-2 border-purple-200 rounded-lg p-2 text-center\"><p class=\"text-xs font-bold text-purple-700\">ngAfterContentInit &rarr; ngAfterContentChecked</p></div><div class=\"text-slate-400 text-xs\">&darr;</div><div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-lg p-2 text-center\"><p class=\"text-xs font-bold text-emerald-700\">ngAfterViewInit &rarr; ngAfterViewChecked</p></div><div class=\"text-slate-400 text-xs\">&darr;</div><div class=\"w-full bg-rose-50 border-2 border-rose-200 rounded-lg p-2 text-center\"><p class=\"text-xs font-bold text-rose-700\">ngOnDestroy</p></div></div></div>"
+      id: "what-is-ngonchanges",
+      title: "What is ngOnChanges?",
+      explanation: `
+        <p><strong>ngOnChanges()</strong> is called by Angular every time an <code>@Input()</code> property value changes — including the very first time (before <code>ngOnInit</code>).</p>
+
+        <h3>The SimpleChanges object</h3>
+        <p>Angular passes a <code>SimpleChanges</code> map as the argument. Each key is the name of the changed input, and the value is a <code>SimpleChange</code> object with three properties:</p>
+        <ul>
+          <li><code>previousValue</code> — what the value was before</li>
+          <li><code>currentValue</code> — the new value</li>
+          <li><code>firstChange</code> — <code>true</code> only on the very first assignment</li>
+        </ul>
+
+        <h3>Key gotcha</h3>
+        <p>ngOnChanges only fires when the <strong>reference</strong> of the input changes. Mutating an array or object inside the parent does <em>not</em> trigger it — you must replace the reference.</p>
+
+        <h3>Real-world example</h3>
+        <p>A <strong>ChartComponent</strong> receives filter settings from a parent. Every time the parent changes the filters, the chart should reload its data — but not on the very first load (handled by <code>ngOnInit</code>).</p>
+      `,
+      code: `import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+
+@Component({ selector: 'app-chart', templateUrl: './chart.component.html' })
+export class ChartComponent implements OnChanges {
+  @Input() filters!: { category: string; year: number };
+
+  chartData: any[] = [];
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['filters']) {
+      const prev = changes['filters'].previousValue;
+      const curr = changes['filters'].currentValue;
+
+      console.log('Filters changed from', prev, 'to', curr);
+
+      // Skip the initial assignment — ngOnInit already handles that
+      if (!changes['filters'].firstChange) {
+        this.loadChartData(curr);
+      }
     }
+  }
+
+  loadChartData(filters: any) {
+    console.log('Reloading chart with:', filters);
+    // call your API here
+  }
+}
+
+// Parent template usage:
+// <app-chart [filters]="selectedFilters"></app-chart>
+// Whenever selectedFilters is replaced with a new object, ngOnChanges fires.`,
+      language: "typescript"
+    },
+
+    {
+      id: "what-is-ngafterviewinit",
+      title: "What is ngAfterViewInit?",
+      explanation: `
+        <p><strong>ngAfterViewInit()</strong> is called once after Angular has fully created and rendered the component's template (its "view") including all child components.</p>
+
+        <h3>Why do we need this?</h3>
+        <p>Some things simply cannot be done until the DOM exists. For example:</p>
+        <ul>
+          <li>Reading the size or position of an element</li>
+          <li>Initialising a third-party chart, map, or editor library that needs a real DOM node</li>
+          <li>Setting focus on an input element</li>
+          <li>Using <code>@ViewChild</code> references (they are only available from this hook onwards)</li>
+        </ul>
+
+        <h3>Important rule</h3>
+        <p>Do <em>not</em> change component data in <code>ngAfterViewInit()</code> synchronously — doing so will trigger Angular's <em>ExpressionChangedAfterItHasBeenChecked</em> error. Use <code>setTimeout()</code> or <code>Promise.resolve()</code> if you must update state here.</p>
+
+        <h3>Real-world example</h3>
+        <p>Auto-scroll a message list to the bottom and set focus on an input field after the view loads.</p>
+      `,
+      code: `import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+
+@Component({
+  selector: 'app-chat',
+  template: \`
+    <div #messageList class="chat-messages">
+      <div *ngFor="let msg of messages">{{ msg.text }}</div>
+    </div>
+    <input #inputBox placeholder="Type a message..." />
+  \`
+})
+export class ChatComponent implements AfterViewInit {
+  @ViewChild('messageList') messageList!: ElementRef<HTMLDivElement>;
+  @ViewChild('inputBox')    inputBox!: ElementRef<HTMLInputElement>;
+
+  messages = [{ text: 'Hello!' }, { text: 'How are you?' }];
+
+  ngAfterViewInit(): void {
+    // DOM is ready — ViewChild references are now valid
+    const el = this.messageList.nativeElement;
+
+    // Scroll to the bottom of the chat
+    el.scrollTop = el.scrollHeight;
+
+    // Auto-focus the input field
+    this.inputBox.nativeElement.focus();
+
+    // If you need to update component data, use setTimeout to avoid
+    // "ExpressionChangedAfterItHasBeenChecked" error:
+    // setTimeout(() => this.title = 'Chat Ready');
+  }
+}`,
+      language: "typescript"
+    },
+
+    {
+      id: "what-is-ngondestroy",
+      title: "What is ngOnDestroy?",
+      explanation: `
+        <p><strong>ngOnDestroy()</strong> runs once just before Angular removes the component from the DOM. It is your last chance to release any resources the component was holding.</p>
+
+        <h3>Why is cleanup important?</h3>
+        <p>If you subscribe to an Observable and never unsubscribe, the subscription keeps running in the background even after the component is gone. This causes <strong>memory leaks</strong> and can produce bugs where callbacks fire on a destroyed component.</p>
+
+        <h3>What to clean up</h3>
+        <ul>
+          <li>RxJS subscriptions</li>
+          <li>WebSocket or Socket.IO connections</li>
+          <li>Timers created with <code>setInterval</code> / <code>setTimeout</code></li>
+          <li>Event listeners added to the window or document</li>
+          <li>Third-party library instances (maps, editors, charts)</li>
+        </ul>
+
+        <h3>Best pattern — takeUntil</h3>
+        <p>Create a <code>Subject</code> called <code>destroy$</code>. Pipe every subscription through <code>takeUntil(this.destroy$)</code>. In <code>ngOnDestroy</code>, emit one value from <code>destroy$</code> — this automatically completes all those subscriptions at once.</p>
+      `,
+      code: `import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { SocketService } from './socket.service';
+import { NotificationService } from './notification.service';
+
+@Component({ selector: 'app-live-feed', templateUrl: './live-feed.component.html' })
+export class LiveFeedComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();  // ← the "off switch"
+  messages: string[] = [];
+  private timer!: ReturnType<typeof setInterval>;
+
+  constructor(
+    private socket: SocketService,
+    private notifications: NotificationService
+  ) {}
+
+  ngOnInit(): void {
+    this.socket.connect();
+
+    // takeUntil automatically unsubscribes when destroy$ emits
+    this.socket.messages$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(msg => this.messages.push(msg));
+
+    this.notifications.alerts$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(alert => console.log('Alert:', alert));
+
+    // Keep a reference to any timer
+    this.timer = setInterval(() => this.socket.ping(), 30_000);
+  }
+
+  ngOnDestroy(): void {
+    // One emit completes ALL takeUntil subscriptions above
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    // Clean up other resources
+    clearInterval(this.timer);
+    this.socket.disconnect();
+  }
+}`,
+      language: "typescript"
+    },
+
+    {
+      id: "what-is-ngdocheck",
+      title: "What is ngDoCheck?",
+      explanation: `
+        <p><strong>ngDoCheck()</strong> is called on every single change detection run — it lets you implement your own change detection logic for cases Angular cannot handle automatically.</p>
+
+        <h3>When do you need it?</h3>
+        <p>Angular's default change detection compares object references. If you mutate an array (e.g., <code>this.cart.push(item)</code>) without replacing the reference, Angular will <em>not</em> detect the change through normal bindings. <code>ngDoCheck()</code> lets you catch such mutations manually.</p>
+
+        <h3>Performance warning</h3>
+        <p><code>ngDoCheck()</code> runs extremely frequently. Keep the logic inside it as cheap as possible — avoid API calls or heavy computation. Only use it when you truly cannot replace object references.</p>
+
+        <h3>Real-world example</h3>
+        <p>Tracking changes to a mutable shopping cart array and updating the total.</p>
+      `,
+      code: `import { Component, DoCheck, Input } from '@angular/core';
+
+interface CartItem { name: string; price: number; }
+
+@Component({ selector: 'app-cart-badge', template: '<span>{{ total | currency }}</span>' })
+export class CartBadgeComponent implements DoCheck {
+  @Input() cart: CartItem[] = [];
+
+  total = 0;
+  private previousLength = 0;
+
+  ngDoCheck(): void {
+    // Angular wouldn't notice cart.push() — we detect it manually
+    if (this.cart.length !== this.previousLength) {
+      console.log('Cart changed: was', this.previousLength, 'now', this.cart.length, 'items');
+      this.previousLength = this.cart.length;
+      this.total = this.cart.reduce((sum, item) => sum + item.price, 0);
+    }
+  }
+}
+
+// Better alternative: replace the array reference in the parent
+// this.cart = [...this.cart, newItem];
+// This lets ngOnChanges() handle it instead, which is cheaper.`,
+      language: "typescript"
+    },
+
+    {
+      id: "constructor-vs-ngoninit",
+      title: "Difference between constructor and ngOnInit",
+      explanation: `
+        <p>This is a very common interview question. The short answer is: <strong>constructor is for wiring up dependencies; ngOnInit is for logic</strong>.</p>
+
+        <h3>Constructor</h3>
+        <ul>
+          <li>Runs first, before any lifecycle hooks</li>
+          <li>Angular's DI system injects services here</li>
+          <li><code>@Input()</code> values are <strong>NOT yet available</strong></li>
+          <li>The template is <strong>NOT yet rendered</strong></li>
+          <li>Should only contain dependency injection — nothing else</li>
+        </ul>
+
+        <h3>ngOnInit</h3>
+        <ul>
+          <li>Runs after the constructor and after Angular sets all <code>@Input()</code> bindings</li>
+          <li>Safe to read <code>@Input()</code> properties</li>
+          <li>Ideal for API calls, form setup, and any initialisation logic</li>
+        </ul>
+
+        <h3>Why does this matter?</h3>
+        <p>If you call an API inside the constructor and the component has an <code>@Input()</code> like a user ID, that ID will still be <code>undefined</code> when the API call is made. Moving the call to <code>ngOnInit()</code> fixes this.</p>
+      `,
+      code: `import { Component, OnInit, Input } from '@angular/core';
+import { AuthService } from './auth.service';
+import { ProfileService } from './profile.service';
+
+@Component({ selector: 'app-profile', templateUrl: './profile.component.html' })
+export class ProfileComponent implements OnInit {
+  @Input() userId!: string;  // comes from parent — NOT ready in constructor
+  profile: any;
+
+  constructor(
+    private auth: AuthService,       // ✅ DI only in constructor
+    private profileService: ProfileService
+  ) {
+    // ❌ DON'T do this — userId is undefined here
+    // this.profileService.get(this.userId).subscribe(...);
+
+    // ✅ It's fine to call methods that don't depend on @Input()
+    console.log('Is logged in:', this.auth.isLoggedIn());
+  }
+
+  ngOnInit(): void {
+    // ✅ userId is ready now — safe to use
+    this.profileService.get(this.userId).subscribe(data => {
+      this.profile = data;
+    });
+  }
+}`,
+      language: "typescript"
+    },
+
+    {
+      id: "complete-lifecycle-order",
+      title: "Complete lifecycle order",
+      explanation: `
+        <p>Angular calls lifecycle hooks in a strict, predictable order. Understanding the order tells you exactly which hook to use for each task.</p>
+
+        <h3>The full order</h3>
+        <ol>
+          <li><strong>constructor</strong> — DI, no inputs yet</li>
+          <li><strong>ngOnChanges</strong> — first call happens here if there are inputs (before ngOnInit)</li>
+          <li><strong>ngOnInit</strong> — inputs are ready, run initialisation logic</li>
+          <li><strong>ngDoCheck</strong> — custom change detection (every CD cycle)</li>
+          <li><strong>ngAfterContentInit</strong> — projected content (<code>ng-content</code>) is ready</li>
+          <li><strong>ngAfterContentChecked</strong> — after every CD check of projected content</li>
+          <li><strong>ngAfterViewInit</strong> — component's own view and child views are ready</li>
+          <li><strong>ngAfterViewChecked</strong> — after every CD check of the view</li>
+          <li><strong>ngOnDestroy</strong> — cleanup before component is removed</li>
+        </ol>
+
+        <h3>Memory trick</h3>
+        <p>Think of it as three phases: <strong>Init phase</strong> (construct → changes → init) → <strong>Content phase</strong> (content init → content checked) → <strong>View phase</strong> (view init → view checked) → <strong>Destroy</strong>.</p>
+
+        <h3>Which hooks run once vs repeatedly?</h3>
+        <ul>
+          <li>Run <strong>once</strong>: ngOnInit, ngAfterContentInit, ngAfterViewInit, ngOnDestroy</li>
+          <li>Run <strong>repeatedly</strong> (every change detection): ngOnChanges (on input change), ngDoCheck, ngAfterContentChecked, ngAfterViewChecked</li>
+        </ul>
+      `,
+      code: `import { Component, OnInit, OnChanges, DoCheck, AfterContentInit,
+         AfterContentChecked, AfterViewInit, AfterViewChecked,
+         OnDestroy, Input, SimpleChanges } from '@angular/core';
+
+@Component({ selector: 'app-lifecycle-demo', template: '<p>{{ title }}</p>' })
+export class LifecycleDemoComponent implements
+  OnChanges, OnInit, DoCheck,
+  AfterContentInit, AfterContentChecked,
+  AfterViewInit, AfterViewChecked,
+  OnDestroy {
+
+  @Input() title = '';
+
+  constructor()                               { console.log('1. constructor'); }
+  ngOnChanges(c: SimpleChanges)              { console.log('2. ngOnChanges', c); }
+  ngOnInit()                                 { console.log('3. ngOnInit'); }
+  ngDoCheck()                                { console.log('4. ngDoCheck'); }
+  ngAfterContentInit()                       { console.log('5. ngAfterContentInit'); }
+  ngAfterContentChecked()                    { console.log('6. ngAfterContentChecked'); }
+  ngAfterViewInit()                          { console.log('7. ngAfterViewInit'); }
+  ngAfterViewChecked()                       { console.log('8. ngAfterViewChecked'); }
+  ngOnDestroy()                              { console.log('9. ngOnDestroy'); }
+}
+
+// Drop this component in a template and open the console.
+// You will see each hook fire in the exact order listed above.`,
+      language: "typescript"
+    }
+
   ]
 });

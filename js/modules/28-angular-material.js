@@ -6,74 +6,89 @@ window.MODULES.push({
   "questions": [
     {
       "id": "what-is-angular-material",
-      "title": "What is Angular Material?",
+      "title": "What is Angular Material and the CDK?",
       "explanation": `
-          <p><strong>Angular Material</strong> is a UI component library that implements Google's Material Design specification. It provides a set of high-quality, pre-built UI components (like buttons, cards, forms, navigation) that are ready to use in your Angular applications.</p>
-          <h3>Key Features</h3>
-          <ul>
-            <li><strong>Material Design:</strong> Adheres to Google's visual, motion, and interaction design guidelines.</li>
-            <li><strong>Accessible:</strong> Built with accessibility (a11y) in mind, including ARIA support.</li>
-            <li><strong>Theming:</strong> Easily customizable with a robust theming system.</li>
-            <li><strong>Cross-browser:</strong> Works consistently across all modern browsers.</li>
-            <li><strong>CDK (Component Dev Kit):</strong> Provides low-level primitives for building custom components.</li>
-          </ul>
+          <p><strong>Angular Material</strong> is Google's official UI component library for Angular. It implements the <a href="https://m3.material.io/">Material Design 3</a> specification — a comprehensive design system that defines visual language, motion principles, and interaction patterns used across Google products. Angular Material gives you production-quality, accessible, tested UI components (buttons, dialogs, tables, form controls, navigation) that are consistently styled and behave correctly across browsers.</p>
+
+          <p>Angular Material is installed with a single CLI command: <code>ng add @angular/material</code>. The schematic installs the package, prompts you to choose a prebuilt theme, configures animations, and adds the necessary global styles. From that point, every component is imported individually on a per-component basis — you import only what you use, so the bundle contains no dead code from the library.</p>
+
+          <h3>The Component Dev Kit (CDK)</h3>
+          <p>Underneath Angular Material is the <strong>Angular CDK</strong> (<code>@angular/cdk</code>). The CDK provides framework-level primitives — behaviors that require careful browser compatibility work — without imposing any visual styling. Angular Material's dialog, overlay, virtual scroll, drag-and-drop, and accessibility utilities are all built on CDK primitives. You can use the CDK directly if you want the behavior (focus trapping, overlay positioning, virtual scrolling) but want to supply your own design system's styles.</p>
+
+          <h3>Material 3 (M3) Theming</h3>
+          <p>Angular Material 17+ ships with full Material 3 support. M3 introduces a dramatically simplified token-based theming system using CSS custom properties, replacing the older SCSS palette approach. Themes are defined once and cascade automatically to all Material components through CSS variables.</p>
         `,
-      "code": "// To add Angular Material to your project:\n// ng add @angular/material",
-      "language": "bash",
-      "diagram": `<div class="diagram-wrap"><p class="text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5">Angular Material Stack</p><div class="flex flex-col items-center gap-2"><div class="bg-indigo-600 text-white p-3 rounded-lg text-xs font-bold shadow-lg">Angular Material Components</div><div class="text-slate-300">&darr;</div><div class="bg-emerald-50 border-2 border-emerald-200 p-3 rounded-lg text-xs">Angular CDK</div><div class="text-slate-300">&darr;</div><div class="bg-amber-50 border-2 border-amber-200 p-3 rounded-lg text-xs">Web Platform (HTML/CSS/JS)</div></div></div>`
+      "code": "# Install Angular Material (adds package, configures theme, animations, global styles)\nng add @angular/material\n# Prompts: choose theme (Indigo/Pink, Deep Purple/Amber, or custom),\n# enable animations, include typography styles\n\n# ---- app.component.ts — standalone import pattern ----\nimport { Component } from '@angular/core';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MatCardModule } from '@angular/material/card';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatIconModule } from '@angular/material/icon';\n\n@Component({\n  selector: 'app-root',\n  standalone: true,\n  // Import only the Material modules this component actually uses\n  imports: [MatButtonModule, MatCardModule, MatInputModule,\n            MatFormFieldModule, MatIconModule],\n  template: `\n    <mat-card>\n      <mat-card-header>\n        <mat-card-title>Sign In</mat-card-title>\n      </mat-card-header>\n      <mat-card-content>\n        <mat-form-field appearance=\"outline\" class=\"full-width\">\n          <mat-label>Email</mat-label>\n          <input matInput type=\"email\" placeholder=\"you@example.com\" />\n          <mat-icon matSuffix>email</mat-icon>\n        </mat-form-field>\n      </mat-card-content>\n      <mat-card-actions>\n        <button mat-raised-button color=\"primary\">Sign In</button>\n        <button mat-button>Cancel</button>\n      </mat-card-actions>\n    </mat-card>\n  `\n})\nexport class AppComponent {}",
+      "language": "bash"
     },
     {
       "id": "commonly-used-material-components",
-      "title": "Commonly used Material components",
+      "title": "Core Material components and their use cases",
       "explanation": `
-          <p>Angular Material offers a wide range of components for various UI needs. Here are some of the most frequently used:</p>
-          <ul>
-            <li><strong>Buttons:</strong> <code>&lt;button mat-button&gt;</code>, <code>&lt;button mat-raised-button&gt;</code></li>
-            <li><strong>Form Controls:</strong> <code>&lt;mat-form-field&gt;</code>, <code>&lt;input matInput&gt;</code>, <code>&lt;mat-select&gt;</code>, <code>&lt;mat-checkbox&gt;</code></li>
-            <li><strong>Navigation:</strong> <code>&lt;mat-toolbar&gt;</code>, <code>&lt;mat-sidenav&gt;</code>, <code>&lt;mat-tab-group&gt;</code></li>
-            <li><strong>Layout:</strong> <code>&lt;mat-card&gt;</code>, <code>&lt;mat-divider&gt;</code>, <code>&lt;mat-grid-list&gt;</code></li>
-            <li><strong>Popups & Modals:</strong> <code>&lt;mat-dialog&gt;</code>, <code>&lt;mat-menu&gt;</code>, <code>&lt;mat-tooltip&gt;</code></li>
-            <li><strong>Data Display:</strong> <code>&lt;mat-table&gt;</code>, <code>&lt;mat-list&gt;</code>, <code>&lt;mat-icon&gt;</code></li>
-          </ul>
+          <p>Angular Material's component catalog covers virtually every UI primitive needed in a business application. Rather than using them all, the best approach is to know which module to import for each need so you can compose your UI from focused, purpose-specific pieces.</p>
+
+          <h3>Form Controls</h3>
+          <p>The form control family centers on <code>MatFormField</code> — a wrapper that provides the floating label, prefix/suffix icon slots, hint text, and error message display. Inside it you place an <code>input</code> with <code>matInput</code>, a <code>mat-select</code>, a <code>mat-datepicker-input</code>, or a <code>mat-chip-grid</code>. Reactive forms integrate naturally: bind <code>[formControl]</code> to a Material input and the <code>MatFormField</code> automatically reflects validation state (showing errors when the control is invalid and touched).</p>
+
+          <h3>Navigation</h3>
+          <p><code>MatToolbar</code> provides the top application bar. <code>MatSidenav</code> and <code>MatDrawer</code> implement collapsible side panels with configurable open/close animations. <code>MatTabGroup</code> renders a tabbed interface. All navigation components are accessible by keyboard and expose ARIA attributes automatically.</p>
+
+          <h3>Data Display</h3>
+          <p><code>MatTable</code> is a flexible data table that works with any data source that implements the <code>DataSource</code> interface — including RxJS observables, HTTP responses, or static arrays. Pair it with <code>MatSort</code> for column sorting and <code>MatPaginator</code> for server or client-side pagination. <code>MatList</code> covers simpler item lists and navigation menus.</p>
+
+          <h3>Overlays and Feedback</h3>
+          <p><code>MatDialog</code> opens accessible modal dialogs with focus trapping. <code>MatSnackBar</code> shows brief informational toasts. <code>MatTooltip</code> adds accessible hover tooltips. <code>MatMenu</code> and <code>MatSelect</code> use the CDK overlay system for correct positioning relative to their trigger element.</p>
         `,
-      "code": "import { MatButtonModule } from '@angular/material/button';\nimport { MatInputModule } from '@angular/material/input';\n\n@NgModule({\n  imports: [MatButtonModule, MatInputModule],\n  // ...\n})\nexport class AppModule { }\n\n// Usage in template:\n// <button mat-raised-button color=\"primary\">Click Me</button>\n// <mat-form-field><input matInput placeholder=\"Name\"></mat-form-field>",
+      "code": "// ---- Reactive form with MatFormField error display ----\nimport { Component } from '@angular/core';\nimport { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatButtonModule } from '@angular/material/button';\nimport { MatSelectModule } from '@angular/material/select';\n\n@Component({\n  selector: 'app-registration',\n  standalone: true,\n  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule,\n            MatButtonModule, MatSelectModule],\n  template: `\n    <form [formGroup]=\"form\" (ngSubmit)=\"submit()\">\n      <mat-form-field appearance=\"outline\">\n        <mat-label>Full Name</mat-label>\n        <input matInput formControlName=\"name\" />\n        <!-- MatFormField reads the formControl's validity and shows this automatically -->\n        <mat-error *ngIf=\"form.get('name')?.hasError('required')\">\n          Name is required\n        </mat-error>\n        <mat-error *ngIf=\"form.get('name')?.hasError('minlength')\">\n          Name must be at least 2 characters\n        </mat-error>\n      </mat-form-field>\n\n      <mat-form-field appearance=\"outline\">\n        <mat-label>Role</mat-label>\n        <mat-select formControlName=\"role\">\n          <mat-option value=\"admin\">Administrator</mat-option>\n          <mat-option value=\"editor\">Editor</mat-option>\n          <mat-option value=\"viewer\">Viewer</mat-option>\n        </mat-select>\n      </mat-form-field>\n\n      <button mat-raised-button color=\"primary\"\n              type=\"submit\" [disabled]=\"form.invalid\">\n        Register\n      </button>\n    </form>\n  `\n})\nexport class RegistrationComponent {\n  form = inject(FormBuilder).group({\n    name: ['', [Validators.required, Validators.minLength(2)]],\n    role: ['viewer', Validators.required]\n  });\n\n  submit(): void {\n    if (this.form.valid) {\n      console.log(this.form.value);\n    }\n  }\n}",
       "language": "typescript"
     },
     {
       "id": "theming-in-angular-material",
-      "title": "Theming in Angular Material",
+      "title": "Theming Angular Material with Material 3",
       "explanation": `
-          <p>Angular Material provides a powerful theming system that allows you to customize the colors, typography, and density of your components to match your brand or application's aesthetic.</p>
-          <p>Themes are defined using Sass (SCSS) and consist of color palettes (primary, accent, warn), typography configurations, and density settings.</p>
-          <h3>Steps for Theming</h3>
-          <ol>
-            <li><strong>Define Palettes:</strong> Create primary, accent, and warn color palettes using <code>mat.define-palette()</code>.</li>
-            <li><strong>Create Theme:</strong> Combine palettes into a light or dark theme using <code>mat.define-light-theme()</code> or <code>mat.define-dark-theme()</code>.</li>
-            <li><strong>Include Theme:</strong> Include the theme in your global styles (e.g., <code>styles.scss</code>).</li>
-          </ol>
+          <p>Angular Material's theming system allows you to customize every component's colors, typography, and density from a single configuration. In Angular Material 17+, the recommended approach is <strong>Material 3 (M3)</strong> theming via SCSS, which generates a comprehensive set of CSS custom properties that all Material components read automatically.</p>
+
+          <h3>How M3 Theming Works</h3>
+          <p>You define a theme by specifying color palettes (primary, secondary, tertiary, error) using the provided SCSS functions. The <code>mat.theme()</code> mixin outputs hundreds of CSS custom properties (tokens like <code>--mat-filled-button-container-color</code>) that are consumed by the component styles. You never target component internals directly in your CSS — instead you override the published tokens.</p>
+
+          <h3>Light and Dark Mode</h3>
+          <p>Material 3 natively supports system-level dark mode. Define both a light and dark theme in your styles, scope the dark theme to <code>.dark-theme</code> (or a CSS media query), and all Material components switch colors automatically when the class is applied to the root element or when <code>prefers-color-scheme: dark</code> matches.</p>
+
+          <h3>Component-Level Density</h3>
+          <p>Material 3 supports density scale (-1, -2, -3) per component. Reducing density makes components more compact, which is useful for data-dense UIs like admin dashboards where you want smaller form fields and buttons.</p>
         `,
-      "code": "// styles.scss\n@use '@angular/material' as mat;\n\n@include mat.core();\n\n$my-primary: mat.define-palette(mat.$indigo-palette);\n$my-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);\n$my-warn: mat.define-palette(mat.$red-palette);\n\n$my-theme: mat.define-light-theme((\n  color: (\n    primary: $my-primary,\n    accent: $my-accent,\n    warn: $my-warn,\n  ),\n  typography: mat.define-typography-config(),\n  density: 0,\n));\n\n@include mat.all-component-themes($my-theme);",
-      "language": "scss",
-      "diagram": `<div class="diagram-wrap"><div class="max-w-md mx-auto bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-center"><p class="text-xs font-bold text-indigo-700 uppercase mb-2">Theming Hierarchy</p><div class="flex flex-col items-center gap-2"><div class="bg-white p-2 rounded text-[10px]">Palettes (Primary, Accent, Warn)</div><div class="text-slate-300">&darr;</div><div class="bg-white p-2 rounded text-[10px]">Theme (Light/Dark)</div><div class="text-slate-300">&darr;</div><div class="bg-white p-2 rounded text-[10px]">Component Styles</div></div></div>`
+      "code": "// styles.scss — Material 3 theming\n@use '@angular/material' as mat;\n\n// Include Material's base styles once\n@include mat.core();\n\n// Define your color scheme using M3 palettes\n// You can use any of Material's predefined palettes, or define custom tones\n$light-theme: mat.define-theme((\n  color: (\n    theme-type: light,\n    primary: mat.$violet-palette,      // primary color\n    tertiary: mat.$rose-palette,       // tertiary/accent color\n  ),\n  typography: (\n    brand-family: 'Inter, sans-serif',\n    bold-weight: 600,\n  ),\n  density: (\n    scale: 0,  // default density\n  ),\n));\n\n$dark-theme: mat.define-theme((\n  color: (\n    theme-type: dark,\n    primary: mat.$violet-palette,\n    tertiary: mat.$rose-palette,\n  ),\n));\n\n// Apply light theme to the whole app\n:root {\n  @include mat.all-component-themes($light-theme);\n}\n\n// Apply dark theme when .dark-theme class is set on body\n.dark-theme {\n  @include mat.all-component-color-themes($dark-theme);\n}\n\n// Respect system preference automatically\n@media (prefers-color-scheme: dark) {\n  :root:not(.light-theme) {\n    @include mat.all-component-color-themes($dark-theme);\n  }\n}\n\n// Override specific component density in a feature area\n.compact-form {\n  @include mat.form-field-density(-2);\n  @include mat.button-density(-1);\n}",
+      "language": "scss"
     },
     {
-      "id": "cdk-component-dev-kit",
-      "title": "What is CDK (Component Dev Kit)?",
+      "id": "mat-dialog",
+      "title": "MatDialog — opening and communicating with dialogs",
       "explanation": `
-          <p>The <strong>Angular CDK (Component Dev Kit)</strong> is a set of tools that provide high-quality, tested behaviors for building UI components without imposing any Material Design styles.</p>
-          <p>It's the foundation upon which Angular Material itself is built. If you need to create custom UI components with complex interactions (like drag-and-drop, overlays, virtual scrolling, or accessibility features) but don't want the Material Design look and feel, the CDK is your go-to.</p>
-          <h3>Common CDK Modules</h3>
-          <ul>
-            <li><code>@angular/cdk/a11y</code>: Accessibility utilities (FocusTrap, LiveAnnouncer).</li>
-            <li><code>@angular/cdk/overlay</code>: Tools for creating floating panels (dialogs, tooltips).</li>
-            <li><code>@angular/cdk/drag-drop</code>: Drag and drop functionality.</li>
-            <li><code>@angular/cdk/table</code>: Data table primitives without UI.</li>
-            <li><code>@angular/cdk/portal</code>: Renders dynamic content into an arbitrary DOM location.</li>
-          </ul>
+          <p><code>MatDialog</code> is Angular Material's modal dialog service. Unlike a simple overlay, <code>MatDialog</code> handles the full dialog lifecycle: rendering the component inside an overlay, trapping keyboard focus within the dialog, restoring focus to the trigger element when the dialog closes, and providing a clean API for passing data in and receiving results out.</p>
+
+          <h3>Dialog Data Flow</h3>
+          <p>You open a dialog by calling <code>this.dialog.open(MyDialogComponent, { data: { ... } })</code>. The dialog component accesses the passed data by injecting <code>MAT_DIALOG_DATA</code>. When the user confirms or cancels, the dialog component calls <code>this.dialogRef.close(result)</code>. Back in the caller, <code>dialogRef.afterClosed()</code> returns an observable that emits the result value once — including <code>undefined</code> if the dialog was dismissed by pressing Escape or clicking the backdrop.</p>
+
+          <h3>Accessibility</h3>
+          <p>MatDialog automatically sets <code>role="dialog"</code>, <code>aria-modal="true"</code>, and manages focus. The <code>cdkFocusInitial</code> directive (from the CDK) lets you designate which element should receive focus when the dialog opens — useful for pre-focusing the "Confirm" button or the first input field, depending on the interaction pattern.</p>
         `,
-      "code": "import { DragDropModule } from '@angular/cdk/drag-drop';\n\n@NgModule({\n  imports: [DragDropModule],\n  // ...\n})\nexport class AppModule { }\n\n// Usage in template:\n// <div cdkDrag>Drag me!</div>",
-      "language": "typescript",
-      "diagram": `<div class="diagram-wrap"><div class="max-w-md mx-auto bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center"><p class="text-xs font-bold text-emerald-700 uppercase mb-2">CDK: Building Blocks</p><p class="text-[10px] text-slate-500">Provides behaviors (e.g., drag-drop, overlay) without styling.</p><p class="text-[10px] text-slate-500 mt-2">Angular Material uses CDK. You can too!</p></div></div>`
+      "code": "import { Component, inject } from '@angular/core';\nimport { MatDialog, MatDialogModule, MatDialogRef,\n         MAT_DIALOG_DATA } from '@angular/material/dialog';\nimport { MatButtonModule } from '@angular/material/button';\n\n// ---- Delete confirmation dialog ----\nexport interface DeleteDialogData { itemName: string; }\nexport interface DeleteDialogResult { confirmed: boolean; }\n\n@Component({\n  selector: 'app-delete-dialog',\n  standalone: true,\n  imports: [MatDialogModule, MatButtonModule],\n  template: `\n    <h2 mat-dialog-title>Delete \"{{ data.itemName }}\"?</h2>\n    <mat-dialog-content>\n      <p>This action cannot be undone.</p>\n    </mat-dialog-content>\n    <mat-dialog-actions align=\"end\">\n      <button mat-button (click)=\"cancel()\">Cancel</button>\n      <!-- cdkFocusInitial puts initial focus on the destructive action -->\n      <button mat-raised-button color=\"warn\"\n              cdkFocusInitial (click)=\"confirm()\">Delete</button>\n    </mat-dialog-actions>\n  `\n})\nexport class DeleteDialogComponent {\n  data = inject<DeleteDialogData>(MAT_DIALOG_DATA);\n  private dialogRef = inject<MatDialogRef<DeleteDialogComponent, DeleteDialogResult>>(\n    MatDialogRef\n  );\n\n  confirm(): void { this.dialogRef.close({ confirmed: true }); }\n  cancel(): void  { this.dialogRef.close({ confirmed: false }); }\n}\n\n// ---- Component that opens the dialog ----\n@Component({\n  selector: 'app-product-list',\n  standalone: true,\n  imports: [MatButtonModule],\n  template: `\n    <button mat-icon-button (click)=\"deleteProduct('Laptop')\">\n      Delete\n    </button>\n  `\n})\nexport class ProductListComponent {\n  private dialog = inject(MatDialog);\n\n  deleteProduct(name: string): void {\n    const ref = this.dialog.open(DeleteDialogComponent, {\n      width: '400px',\n      data: { itemName: name } satisfies DeleteDialogData,\n      disableClose: true  // prevent accidental dismissal by clicking backdrop\n    });\n\n    ref.afterClosed().subscribe((result?: DeleteDialogResult) => {\n      if (result?.confirmed) {\n        console.log(`Deleting: ${name}`);\n        // call delete service\n      }\n    });\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "id": "mat-table",
+      "title": "MatTable with sorting and pagination",
+      "explanation": `
+          <p><code>MatTable</code> is a powerful, flexible data table built on the CDK table infrastructure. Unlike a simple <code>&lt;table&gt;</code> with <code>*ngFor</code>, MatTable uses a <strong>DataSource</strong> pattern that decouples data retrieval from rendering. The data source handles fetching, sorting, filtering, and pagination, while MatTable handles rendering the rows efficiently.</p>
+
+          <h3>Column Definition Pattern</h3>
+          <p>MatTable uses a declarative column definition system. For each column, you define a <code>matColumnDef</code> with a header cell (<code>*matHeaderCellDef</code>) and a data cell (<code>*matCellDef</code>). You then specify which columns to display and in what order via the <code>displayedColumns</code> array bound to the table. This makes it trivial to show/hide columns dynamically.</p>
+
+          <h3>MatTableDataSource</h3>
+          <p>For client-side tables, <code>MatTableDataSource</code> is a convenience class that wraps an array and automatically wires up <code>MatSort</code> and <code>MatPaginator</code>. Assigning to <code>dataSource.data</code> triggers a re-render. For server-side tables (where sorting and pagination make API calls), you implement a custom <code>DataSource</code> class that manages its own HTTP requests.</p>
+        `,
+      "code": "import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';\nimport { MatTableModule, MatTableDataSource } from '@angular/material/table';\nimport { MatSortModule, MatSort } from '@angular/material/sort';\nimport { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';\nimport { MatInputModule } from '@angular/material/input';\nimport { MatFormFieldModule } from '@angular/material/form-field';\n\ninterface Product {\n  id: number;\n  name: string;\n  category: string;\n  price: number;\n  stock: number;\n}\n\n@Component({\n  selector: 'app-product-table',\n  standalone: true,\n  imports: [MatTableModule, MatSortModule, MatPaginatorModule,\n            MatInputModule, MatFormFieldModule],\n  template: `\n    <mat-form-field appearance=\"outline\">\n      <mat-label>Filter</mat-label>\n      <input matInput (input)=\"applyFilter($event)\" placeholder=\"Search products...\" />\n    </mat-form-field>\n\n    <table mat-table [dataSource]=\"dataSource\" matSort>\n      <!-- Define each column -->\n      <ng-container matColumnDef=\"name\">\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>\n        <td mat-cell *matCellDef=\"let row\">{{ row.name }}</td>\n      </ng-container>\n\n      <ng-container matColumnDef=\"category\">\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>\n        <td mat-cell *matCellDef=\"let row\">{{ row.category }}</td>\n      </ng-container>\n\n      <ng-container matColumnDef=\"price\">\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>\n        <td mat-cell *matCellDef=\"let row\">{{ row.price | currency }}</td>\n      </ng-container>\n\n      <ng-container matColumnDef=\"stock\">\n        <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock</th>\n        <td mat-cell *matCellDef=\"let row\"\n            [class.low-stock]=\"row.stock < 10\">{{ row.stock }}</td>\n      </ng-container>\n\n      <!-- Render header and data rows -->\n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n\n      <!-- No data row -->\n      <tr class=\"mat-mdc-row\" *matNoDataRow>\n        <td [attr.colspan]=\"displayedColumns.length\" class=\"no-data\">\n          No products match \"{{ filterValue() }}\"\n        </td>\n      </tr>\n    </table>\n\n    <mat-paginator [pageSizeOptions]=\"[10, 25, 50]\"\n                   showFirstLastButtons>\n    </mat-paginator>\n  `\n})\nexport class ProductTableComponent implements OnInit {\n  @ViewChild(MatSort) sort!: MatSort;\n  @ViewChild(MatPaginator) paginator!: MatPaginator;\n\n  displayedColumns = ['name', 'category', 'price', 'stock'];\n  dataSource = new MatTableDataSource<Product>();\n  filterValue = signal('');\n\n  ngOnInit(): void {\n    this.dataSource.data = this.getProducts();\n  }\n\n  ngAfterViewInit(): void {\n    // Wire up sort and pagination after ViewChild refs are available\n    this.dataSource.sort = this.sort;\n    this.dataSource.paginator = this.paginator;\n  }\n\n  applyFilter(event: Event): void {\n    const value = (event.target as HTMLInputElement).value.trim().toLowerCase();\n    this.filterValue.set(value);\n    this.dataSource.filter = value;\n    // Reset to first page after filter changes\n    this.dataSource.paginator?.firstPage();\n  }\n\n  private getProducts(): Product[] {\n    return [\n      { id: 1, name: 'Laptop Pro', category: 'Electronics', price: 1299, stock: 5 },\n      { id: 2, name: 'Wireless Mouse', category: 'Accessories', price: 49, stock: 120 },\n      { id: 3, name: 'USB-C Hub', category: 'Accessories', price: 79, stock: 8 },\n    ];\n  }\n}",
+      "language": "typescript"
     }
   ]
 });

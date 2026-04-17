@@ -1,88 +1,517 @@
 window.MODULES = window.MODULES || [];
 window.MODULES.push({
-  "id": "routing",
-  "title": "Routing",
-  "icon": "bi bi-signpost-split",
-  "questions": [
+  id: "routing",
+  title: "Routing",
+  icon: "bi bi-signpost-split",
+  questions: [
+
     {
-      "id": "what-is-angular-router",
-      "title": "What is Angular Router?",
-      "explanation": "\n          <p><strong>Angular Router</strong> is the official Angular module used for navigation between views in a Single Page Application.</p>\n\n          <p>Instead of reloading the entire page, Angular Router updates the visible component based on the URL. This gives Angular applications fast client-side navigation.</p>\n\n          <h3>Why It Is Used</h3>\n          <ul>\n            <li>To move between pages/views without full page reload</li>\n            <li>To map URLs to components</li>\n            <li>To support route parameters, guards, lazy loading, and nested routes</li>\n          </ul>\n        ",
-      "code": "import { RouterModule, Routes } from '@angular/router';\n\nconst routes: Routes = [\n  { path: '', component: HomeComponent },\n  { path: 'about', component: AboutComponent }\n];\n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule]\n})\nexport class AppRoutingModule { }",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Angular Router</p>\n  <div class=\"flex items-center justify-center gap-4\">\n    <div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 text-center\">\n      <p class=\"font-bold text-indigo-700\">URL</p>\n      <p class=\"text-xs text-slate-500 mt-2\">/about</p>\n    </div>\n    <div class=\"text-slate-300\">&rarr;</div>\n    <div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 text-center\">\n      <p class=\"font-bold text-emerald-700\">Router</p>\n      <p class=\"text-xs text-slate-500 mt-2\">matches route</p>\n    </div>\n    <div class=\"text-slate-300\">&rarr;</div>\n    <div class=\"bg-amber-50 border-2 border-amber-200 rounded-xl p-4 text-center\">\n      <p class=\"font-bold text-amber-700\">Component</p>\n      <p class=\"text-xs text-slate-500 mt-2\">AboutComponent</p>\n    </div>\n  </div>\n</div>"
+      id: "what-is-angular-router",
+      title: "What is Angular Router?",
+      explanation: `
+        <p><strong>Angular Router</strong> is a built-in library that handles navigation inside a Single Page Application (SPA). It changes what is displayed on screen by mapping a URL to a component — without ever doing a full browser page reload.</p>
+
+        <h3>How it works</h3>
+        <p>You define a list of <strong>routes</strong>, each being a mapping: "when the URL is <code>/products</code>, render <code>ProductsComponent</code>". The router watches the browser URL and renders the matching component inside a <code>&lt;router-outlet&gt;</code> placeholder in your template.</p>
+
+        <h3>What it supports</h3>
+        <ul>
+          <li>Static and dynamic (parameterised) URLs</li>
+          <li>Nested / child routes for layout-based navigation</li>
+          <li>Lazy loading — only download a component's code when the user navigates to it</li>
+          <li>Route guards — block access, redirect, or preload data before rendering</li>
+          <li>Query parameters and fragments</li>
+        </ul>
+
+        <h3>Real-world example</h3>
+        <p>A typical app with a public landing page, a login page, and a protected dashboard.</p>
+      `,
+      code: `import { Routes } from '@angular/router';
+import { LandingComponent } from './landing/landing.component';
+import { LoginComponent }   from './login/login.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { authGuard } from './guards/auth.guard';
+
+export const routes: Routes = [
+  // Public pages
+  { path: '',      component: LandingComponent },
+  { path: 'login', component: LoginComponent },
+
+  // Protected page — authGuard redirects to /login if not authenticated
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard]
+  },
+
+  // Catch-all: show 404 for any unknown URL
+  { path: '**', redirectTo: '/not-found' }
+];
+
+// main.ts
+// bootstrapApplication(AppComponent, { providers: [provideRouter(routes)] });`,
+      language: "typescript"
     },
+
     {
-      "id": "how-to-configure-routes",
-      "title": "How to configure routes (Angular 21)?",
-      "explanation": "\n          <p>In Angular 21, routes are configured using a standalone functional approach with <code>provideRouter()</code> and <code>Routes</code> array.</p>\n\n          <p>Each route object contains a <code>path</code> and the <code>component</code> to load (or <code>loadComponent</code> for lazy loading).</p>\n\n          <h3>Basic Steps</h3>\n          <ul>\n            <li>Create standalone components for each route</li>\n            <li>Define route objects in a <code>Routes</code> array</li>\n            <li>Use <code>provideRouter(routes)</code> in <code>bootstrapApplication()</code></li>\n            <li>Place <code>&lt;router-outlet&gt;&lt;/router-outlet&gt;</code> in a template</li>\n          </ul>\n        ",
-      "code": "// app.routes.ts (Angular 21 - Standalone Routing)\nimport { Routes } from '@angular/router';\n\nexport const routes: Routes = [\n  { path: '', component: HomeComponent },\n  { path: 'products', component: ProductsComponent },\n  { path: 'contact', component: ContactComponent },\n  { path: '**', component: NotFoundComponent }\n];\n\n// main.ts\nimport { bootstrapApplication } from '@angular/platform-browser';\nimport { provideRouter } from '@angular/router';\nimport { AppComponent } from './app/app.component';\nimport { routes } from './app/app.routes';\n\nbootstrapApplication(AppComponent, {\n  providers: [provideRouter(routes)]\n}).catch(err => console.error(err));",
-      "language": "typescript",
-      "diagram": "\n<div class=\"diagram-wrap\">\n  <p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Route Configuration</p>\n  <div class=\"space-y-3 max-w-lg mx-auto\">\n    <div class=\"bg-white border border-slate-200 rounded-xl p-3 text-center\">1. Create routes array</div>\n    <div class=\"text-slate-300 text-center\">&darr;</div>\n    <div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\">2. forRoot(routes)</div>\n    <div class=\"text-slate-300 text-center\">&darr;</div>\n    <div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\">3. Render with router-outlet</div>\n  </div>\n</div>"
+      id: "how-to-configure-routes",
+      title: "How to configure routes (Angular 17+)?",
+      explanation: `
+        <p>Modern Angular uses <strong>standalone components</strong> and the <code>provideRouter()</code> function instead of <code>RouterModule.forRoot()</code>. This makes the setup lighter and more explicit.</p>
+
+        <h3>Two files to know</h3>
+        <ul>
+          <li><code>app.routes.ts</code> — where you define all routes</li>
+          <li><code>main.ts</code> — where you bootstrap the app and register the router</li>
+        </ul>
+
+        <h3>loadComponent vs component</h3>
+        <p>Using <code>loadComponent</code> (lazy) instead of <code>component</code> (eager) means the JavaScript for that component is only downloaded when the user actually navigates to it — making the initial bundle smaller and the app faster.</p>
+      `,
+      code: `// app.routes.ts
+import { Routes } from '@angular/router';
+
+export const routes: Routes = [
+  // Eagerly loaded — always in the initial bundle
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+  // Lazily loaded — JS downloaded only when user visits /home
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'products',
+    loadComponent: () =>
+      import('./products/products.component').then(m => m.ProductsComponent)
+  },
+  {
+    path: 'products/:id',
+    loadComponent: () =>
+      import('./product-detail/product-detail.component').then(m => m.ProductDetailComponent)
+  }
+];
+
+// main.ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { AppComponent } from './app/app.component';
+import { routes } from './app/app.routes';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes)
+    // Optional extras:
+    // withPreloading(PreloadAllModules),
+    // withDebugTracing()  ← logs every navigation event, useful in dev
+  ]
+});`,
+      language: "typescript"
     },
+
     {
-      "id": "what-are-route-parameters",
-      "title": "What are route parameters?",
-      "explanation": "\n          <p><strong>Route parameters</strong> are dynamic values included directly in the route path. They are used to identify a specific resource, such as a user ID or product ID.</p>\n\n          <p>In Angular, route parameters are defined using a colon syntax like <code>:id</code>.</p>\n        ",
-      "code": "const routes: Routes = [\n  { path: 'products/:id', component: ProductDetailsComponent }\n];\n\nexport class ProductDetailsComponent implements OnInit {\n  productId = '';\n  constructor(private route: ActivatedRoute) {}\n\n  ngOnInit(): void {\n    this.productId = this.route.snapshot.paramMap.get('id') || '';\n  }\n}",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Route Parameters</p><div class=\"grid grid-cols-1 md:grid-cols-3 gap-3\"><div class=\"bg-white border border-slate-200 rounded-xl p-4 text-center\"><p class=\"font-mono text-slate-700\">products/:id</p></div><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 text-center\"><p class=\"font-mono text-indigo-700\">/products/101</p></div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 text-center\"><p class=\"font-mono text-emerald-700\">id = 101</p></div></div></div>"
+      id: "what-are-route-parameters",
+      title: "What are route parameters?",
+      explanation: `
+        <p><strong>Route parameters</strong> are variable segments in a URL path, prefixed with <code>:</code>. They let you reuse one route definition for multiple items — for example, showing any product's detail page with a single route.</p>
+
+        <h3>How to read them</h3>
+        <p>Inject <code>ActivatedRoute</code> into your component. The <code>paramMap</code> is an Observable, so using <code>switchMap</code> to combine it with an API call means your component automatically reloads if the parameter changes (e.g., user navigates from product 1 to product 2) <em>without</em> the component being destroyed and recreated.</p>
+
+        <h3>snapshot vs observable</h3>
+        <ul>
+          <li><code>this.route.snapshot.paramMap.get('id')</code> — reads the parameter once at load time. Simple, but won't update if the route changes while the component is active.</li>
+          <li><code>this.route.paramMap.pipe(switchMap(...))</code> — reactive; updates automatically when the URL changes.</li>
+        </ul>
+      `,
+      code: `// 1. Define the route with a :orderId parameter
+// { path: 'orders/:orderId', component: OrderDetailComponent }
+
+// 2. Component — reads the parameter reactively
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { ApiService, Order } from './api.service';
+
+@Component({
+  selector: 'app-order-detail',
+  template: \`
+    <ng-container *ngIf="order$ | async as order">
+      <h2>Order #{{ order.id }}</h2>
+      <p>Status: {{ order.status }}</p>
+    </ng-container>
+  \`
+})
+export class OrderDetailComponent implements OnInit {
+  order$!: Observable<Order>;
+
+  constructor(private route: ActivatedRoute, private api: ApiService) {}
+
+  ngOnInit(): void {
+    this.order$ = this.route.paramMap.pipe(
+      // switchMap cancels the previous API call if the param changes fast
+      switchMap(params => this.api.getOrder(params.get('orderId')!))
+    );
+  }
+}
+
+// Navigate programmatically:
+// this.router.navigate(['/orders', order.id]);
+// Or in template:
+// <a [routerLink]="['/orders', order.id]">View Order</a>`,
+      language: "typescript"
     },
+
     {
-      "id": "what-are-query-parameters",
-      "title": "What are query parameters?",
-      "explanation": "\n          <p><strong>Query parameters</strong> are optional key-value pairs added after a question mark in the URL.</p>\n\n          <p>They are commonly used for filtering, sorting, pagination, or search values.</p>\n        ",
-      "code": "export class ProductsComponent implements OnInit {\n  category = '';\n  constructor(private route: ActivatedRoute) {}\n\n  ngOnInit(): void {\n    this.category = this.route.snapshot.queryParamMap.get('category') || '';\n  }\n}\n\n// this.router.navigate(['/products'], { queryParams: { category: 'mobile', page: 2 } });",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Query Parameters</p><div class=\"max-w-lg mx-auto bg-white border border-slate-200 rounded-xl p-4 text-center\"><p class=\"font-mono text-slate-700\">/products?category=mobile&page=2</p><p class=\"text-xs text-slate-500 mt-2\">Optional URL data for filters and search</p></div></div>"
+      id: "what-are-query-parameters",
+      title: "What are query parameters?",
+      explanation: `
+        <p><strong>Query parameters</strong> appear after the <code>?</code> in a URL, e.g. <code>/products?search=laptop&page=2&sort=price</code>. Unlike route parameters, they are optional and do not change the route — making them ideal for search filters, sorting, and pagination.</p>
+
+        <h3>queryParamsHandling</h3>
+        <p>When navigating, you often want to <em>add</em> one filter without losing the others already in the URL. That's what <code>queryParamsHandling: 'merge'</code> does — it merges the new params into the existing ones instead of replacing them all.</p>
+
+        <h3>Reading query params reactively</h3>
+        <p>Subscribe to <code>route.queryParamMap</code> so the component automatically reacts when the user changes a filter without navigating away from the page.</p>
+      `,
+      code: `import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-products',
+  templateUrl: './products.component.html'
+})
+export class ProductsComponent implements OnInit {
+  products: any[] = [];
+
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    // React to URL changes (back/forward button, links, etc.)
+    this.route.queryParamMap.subscribe(params => {
+      const search = params.get('search') ?? '';
+      const page   = Number(params.get('page') ?? 1);
+      const sort   = params.get('sort') ?? 'name';
+      this.loadProducts(search, page, sort);
+    });
+  }
+
+  // Called when user types in the search box
+  onSearchChange(term: string): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { search: term, page: 1 },  // reset to page 1 on new search
+      queryParamsHandling: 'merge'              // keep other params (sort, etc.)
+    });
+  }
+
+  onPageChange(page: number): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  loadProducts(search: string, page: number, sort: string) {
+    console.log('Loading:', { search, page, sort });
+    // call your API here
+  }
+}`,
+      language: "typescript"
     },
+
     {
-      "id": "what-is-child-routing",
-      "title": "What is child routing?",
-      "explanation": "\n          <p><strong>Child routing</strong> in Angular means defining nested routes inside a parent route.</p>\n\n          <p>This is useful when a parent page has multiple sub-pages, such as an admin panel with dashboard, users, and settings sections.</p>\n        ",
-      "code": "const routes: Routes = [\n  {\n    path: 'admin',\n    component: AdminComponent,\n    children: [\n      { path: 'users', component: AdminUsersComponent },\n      { path: 'settings', component: AdminSettingsComponent }\n    ]\n  }\n];\n\n// admin.component.html\n// <router-outlet></router-outlet>",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Child Routing</p><div class=\"flex flex-col items-center gap-3 max-w-md mx-auto\"><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-indigo-700\">/admin</p></div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-emerald-700\">AdminComponent</p></div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-amber-700\">Nested router-outlet</p></div></div></div>"
+      id: "what-is-child-routing",
+      title: "What is child routing?",
+      explanation: `
+        <p><strong>Child routes</strong> are routes nested inside another route. They are used to build layout-based navigation — for example a dashboard with a persistent sidebar and a changing main area, or an admin panel where all sub-pages share the same header and menu.</p>
+
+        <h3>How it works</h3>
+        <p>The parent route's component template has its own <code>&lt;router-outlet&gt;</code>. When a child route is activated, its component is rendered inside <em>that</em> outlet — not the root outlet. The parent layout stays on screen while only the inner area changes.</p>
+
+        <h3>Real-world example</h3>
+        <p>An admin panel where <code>/admin</code> shows the layout (sidebar + header), and <code>/admin/users</code>, <code>/admin/reports</code>, etc. render different content inside it.</p>
+      `,
+      code: `// app.routes.ts
+export const routes: Routes = [
+  {
+    path: 'admin',
+    component: AdminLayoutComponent,   // Persistent shell with sidebar & header
+    canActivate: [adminGuard],
+    children: [
+      { path: '',        redirectTo: 'overview', pathMatch: 'full' },
+      { path: 'overview', component: OverviewComponent },
+      { path: 'users',    component: UsersComponent },
+      { path: 'reports',  component: ReportsComponent },
+      { path: 'settings', component: SettingsComponent }
+    ]
+  }
+];
+
+// admin-layout.component.html — note the INNER <router-outlet>
+/*
+  <div class="admin-shell">
+    <app-sidebar></app-sidebar>
+
+    <main class="admin-content">
+      <app-admin-header></app-admin-header>
+
+      <!-- Child components render here, sidebar/header stay put -->
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+*/
+
+// Navigation example:
+// <a routerLink="overview" routerLinkActive="active">Overview</a>
+// <a routerLink="users"    routerLinkActive="active">Users</a>
+// These are relative links — they resolve to /admin/overview, /admin/users, etc.`,
+      language: "typescript"
     },
+
     {
-      "id": "what-is-lazy-loading",
-      "title": "What is lazy loading (Angular 21)?",
-      "explanation": "\n          <p><strong>Lazy loading</strong> in Angular 21 means loading standalone components only when the user navigates to their route, instead of loading everything at startup.</p>\n\n          <p>This significantly improves initial bundle size and Time to Interactive (TTI) by deferring non-critical component dependencies.</p>\n        ",
-      "code": "// app.routes.ts - Angular 21 Lazy Loading with Standalone Components\nexport const routes: Routes = [\n  { path: '', component: HomeComponent },\n  {\n    path: 'admin',\n    // Lazy load the admin component only when route is visited\n    loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),\n    children: [\n      { path: 'users', loadComponent: () => import('./admin/users/users.component').then(m => m.UsersComponent) },\n      { path: 'settings', loadComponent: () => import('./admin/settings/settings.component').then(m => m.SettingsComponent) }\n    ]\n  },\n  { path: '**', component: NotFoundComponent }\n];",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Lazy Loading</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4 text-center\"><p class=\"font-bold text-indigo-700\">App Start</p><p class=\"text-xs text-slate-500 mt-2\">Feature not loaded yet</p></div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 text-center\"><p class=\"font-bold text-emerald-700\">Visit route</p><p class=\"text-xs text-slate-500 mt-2\">Module loads on demand</p></div></div></div>"
+      id: "what-is-lazy-loading",
+      title: "What is lazy loading?",
+      explanation: `
+        <p><strong>Lazy loading</strong> means the JavaScript code for a component (or a group of related components) is <em>not included</em> in the initial bundle. Instead, it is downloaded on demand — only when the user first navigates to that route.</p>
+
+        <h3>Why does this matter?</h3>
+        <p>A large Angular app can have hundreds of components. If all of them were bundled together, the initial download would be huge and the app would feel slow to start. Lazy loading keeps the initial bundle small and fast, then loads the rest in the background or on demand.</p>
+
+        <h3>loadComponent vs loadChildren</h3>
+        <ul>
+          <li><code>loadComponent</code> — lazily loads a single standalone component</li>
+          <li><code>loadChildren</code> — lazily loads an entire routes file (a feature module's routes), allowing you to group many related routes together</li>
+        </ul>
+
+        <h3>canMatch guard</h3>
+        <p>Using <code>canMatch</code> prevents the lazy chunk from even being <em>downloaded</em> if the user doesn't have access — unlike <code>canActivate</code> which downloads the code first and then redirects.</p>
+      `,
+      code: `// app.routes.ts
+
+export const routes: Routes = [
+  // Lazy-load a single standalone component
+  {
+    path: 'admin',
+    loadComponent: () =>
+      import('./admin/admin.component').then(m => m.AdminComponent),
+    canMatch: [adminGuard]   // don't even download the chunk if not admin
+  },
+
+  // Lazy-load an entire feature's routes (many components together)
+  {
+    path: 'store',
+    loadChildren: () =>
+      import('./store/store.routes').then(m => m.storeRoutes)
+    // store.routes.ts can define /store/products, /store/cart, /store/checkout, etc.
+  }
+];
+
+// store/store.routes.ts  — a self-contained group of routes
+export const storeRoutes: Routes = [
+  { path: '',         loadComponent: () => import('./store-home.component').then(m => m.StoreHomeComponent) },
+  { path: 'products', loadComponent: () => import('./products.component').then(m => m.ProductsComponent) },
+  { path: 'cart',     loadComponent: () => import('./cart.component').then(m => m.CartComponent) }
+];`,
+      language: "typescript"
     },
+
     {
-      "id": "what-are-route-guards",
-      "title": "What are route guards (Angular 21)?",
-      "explanation": "\n          <p><strong>Route guards</strong> are Angular features used to control whether navigation to or from a route should be allowed.</p>\n\n          <p>In Angular 21, guards are written as simple functions rather than classes implementing specific interfaces, making them cleaner and more composable.</p>\n        ",
-      "code": "// auth.guard.ts - Angular 21 Functional Guard\nimport { inject } from '@angular/core';\nimport { CanMatchFn } from '@angular/router';\nimport { AuthService } from './auth.service';\n\nexport const authGuard: CanMatchFn = (route, segments) => {\n  const authService = inject(AuthService);\n  return authService.isLoggedIn();\n};\n\n// app.routes.ts\nexport const routes: Routes = [\n  {\n    path: 'dashboard',\n    component: DashboardComponent,\n    canActivate: [authGuard]\n  },\n  {\n    path: 'admin',\n    component: AdminComponent,\n    canMatch: [authGuard]  // Use canMatch for lazy-loaded routes\n  }\n];",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Route Guards</p><div class=\"flex items-center justify-center gap-4\"><div class=\"bg-white border border-slate-200 rounded-xl p-4 text-center\"><p class=\"font-bold text-slate-700\">User tries to navigate</p></div><div class=\"text-slate-300\">&rarr;</div><div class=\"bg-amber-50 border-2 border-amber-200 rounded-xl p-4 text-center\"><p class=\"font-bold text-amber-700\">Guard checks rules</p></div><div class=\"text-slate-300\">&rarr;</div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4 text-center\"><p class=\"font-bold text-emerald-700\">Allow or block</p></div></div></div>"
+      id: "what-are-route-guards",
+      title: "What are route guards?",
+      explanation: `
+        <p><strong>Route guards</strong> are functions that Angular runs before (or during) a navigation to decide whether to allow it, redirect the user, or cancel it. They are the standard way to protect routes.</p>
+
+        <h3>The most important guards</h3>
+        <ul>
+          <li><strong>canActivate</strong> — can the user enter this route? Used for authentication.</li>
+          <li><strong>canDeactivate</strong> — can the user leave this route? Used to warn about unsaved changes.</li>
+          <li><strong>resolve</strong> — fetch data before the route activates so the component starts with data ready.</li>
+          <li><strong>canMatch</strong> — like canActivate, but also prevents lazy-loading the code if access is denied.</li>
+        </ul>
+
+        <h3>Modern functional guards (Angular 15+)</h3>
+        <p>Guards are now plain functions using <code>inject()</code> instead of classes. This is shorter, easier to test, and the recommended style.</p>
+
+        <h3>Return values</h3>
+        <p>A guard can return <code>true</code> (allow), <code>false</code> (block), a <code>UrlTree</code> (redirect), or an Observable/Promise of any of those.</p>
+      `,
+      code: `import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
+import { AuthService } from './auth.service';
+
+// ✅ Functional guard — recommended modern style
+export const authGuard: CanActivateFn = (route, state) => {
+  const auth   = inject(AuthService);
+  const router = inject(Router);
+
+  if (auth.isLoggedIn()) {
+    return true;                          // Allow navigation
+  }
+
+  // Redirect to login, and pass the attempted URL so we can return after login
+  return router.createUrlTree(['/login'], {
+    queryParams: { returnUrl: state.url }
+  });
+};
+
+// Route configuration
+export const routes: Routes = [
+  { path: 'login', loadComponent: () => import('./login.component').then(m => m.LoginComponent) },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./dashboard.component').then(m => m.DashboardComponent),
+    canActivate: [authGuard]
+  }
+];`,
+      language: "typescript"
     },
+
     {
-      "id": "types-of-route-guards",
-      "title": "Types of route guards (Angular 21)",
-      "explanation": "\n          <p>Angular 21 uses functional guard patterns for cleaner, simpler code. Key guard types are:</p>\n\n          <ul>\n            <li><strong>CanActivateFn:</strong> decides whether a route can be entered.</li>\n            <li><strong>CanDeactivateFn:</strong> decides whether the user can leave a route.</li>\n            <li><strong>ResolveFn:</strong> fetches data before the route is activated.</li>\n            <li><strong>CanMatchFn:</strong> decides whether a lazy-loaded module can be loaded (replaces CanLoad).</li>\n          </ul>\n        ",
-      "code": "// Angular 21 - Functional Guard Approach\nimport { CanActivateFn, ResolveFn, CanMatchFn } from '@angular/router';\nimport { inject } from '@angular/core';\n\n// CanActivate Guard\nexport const authGuard: CanActivateFn = (route, state) => {\n  const authService = inject(AuthService);\n  return authService.isLoggedIn() || inject(Router).parseUrl('/login');\n};\n\n// Resolve Guard (preload data)\nexport const userResolver: ResolveFn<User> = () => {\n  return inject(UserService).getUser();\n};\n\n// CanMatch Guard (for lazy-loaded components)\nexport const adminGuard: CanMatchFn = () => {\n  return inject(AuthService).isAdmin();\n};\n\n// Usage in routes\nexport const routes: Routes = [\n  {\n    path: 'profile',\n    component: ProfileComponent,\n    canActivate: [authGuard],\n    resolve: { user: userResolver }\n  },\n  {\n    path: 'admin',\n    loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),\n    canMatch: [adminGuard]\n  }\n];",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Types Of Route Guards</p><div class=\"grid grid-cols-2 md:grid-cols-4 gap-3\"><div class=\"bg-indigo-50 border border-indigo-200 rounded-xl p-3 text-center text-xs font-mono text-indigo-700\">CanActivate</div><div class=\"bg-emerald-50 border border-emerald-200 rounded-xl p-3 text-center text-xs font-mono text-emerald-700\">CanDeactivate</div><div class=\"bg-amber-50 border border-amber-200 rounded-xl p-3 text-center text-xs font-mono text-amber-700\">Resolve</div><div class=\"bg-rose-50 border border-rose-200 rounded-xl p-3 text-center text-xs font-mono text-rose-700\">CanLoad</div></div></div>"
-    },
-    {
-      "id": "what-is-wildcard-route",
-      "title": "What is wildcard route?",
-      "explanation": "\n          <p>A <strong>wildcard route</strong> in Angular is used to catch all unmatched URLs. It is defined using <code>**</code>.</p>\n\n          <p>It is commonly used to show a 404 page or redirect unknown routes.</p>\n        ",
-      "code": "const routes: Routes = [\n  { path: '', component: HomeComponent },\n  { path: 'about', component: AboutComponent },\n  { path: '**', component: NotFoundComponent }\n];",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Wildcard Route</p><div class=\"max-w-lg mx-auto bg-white border border-slate-200 rounded-xl p-4 text-center\"><p class=\"font-mono text-rose-600\">path: '**'</p><p class=\"text-xs text-slate-500 mt-2\">Handles unmatched URLs / 404 pages</p></div></div>"
-    },
-    {
-      "id": "what-is-router-outlet",
-      "title": "What is router outlet?",
-      "explanation": "\n          <p><strong><code>router-outlet</code></strong> is an Angular directive that acts as a placeholder where the router loads the matched component.</p>\n\n          <p>Without <code>router-outlet</code>, Angular can match routes but has no place to render the routed component in the template.</p>\n        ",
-      "code": "@Component({\n  selector: 'app-root',\n  template:     <nav>\n      <a routerLink=\"/\">Home</a>\n      <a routerLink=\"/about\">About</a>\n    </nav>\n\n    <router-outlet></router-outlet>\n  })\nexport class AppComponent {}",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">router-outlet</p><div class=\"flex flex-col items-center gap-3 max-w-md mx-auto\"><div class=\"w-full bg-white border border-slate-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-slate-700\">Template</p></div><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"font-mono text-indigo-700\">&lt;router-outlet&gt;&lt;/router-outlet&gt;</p></div><div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-emerald-700\">Matched component renders here</p></div></div></div>"
+      id: "types-of-route-guards",
+      title: "Types of route guards",
+      explanation: `
+        <p>Angular provides several guard types, each covering a different point in the navigation lifecycle.</p>
+
+        <h3>canDeactivate — prevent leaving with unsaved changes</h3>
+        <p>This guard runs when the user tries to <em>leave</em> a route. Perfect for form pages where unsaved work could be lost.</p>
+
+        <h3>resolve — preload data before rendering</h3>
+        <p>A resolver runs before the component is created and fetches the data it needs. The component receives the data via <code>this.route.snapshot.data['product']</code>. This eliminates the loading spinner pattern for critical data.</p>
+
+        <h3>canMatch — prevent even loading the lazy chunk</h3>
+        <p>Runs before the lazy JavaScript is downloaded. Use it for role-based access to entire feature areas — if the user is not an admin, their browser never downloads the admin code at all.</p>
+      `,
+      code: `import { inject } from '@angular/core';
+import { CanDeactivateFn, ResolveFn, CanMatchFn, Router } from '@angular/router';
+import { ApiService } from './api.service';
+import { AuthService } from './auth.service';
+
+// --- canDeactivate: warn before leaving a dirty form ---
+export const unsavedChangesGuard: CanDeactivateFn<{ hasUnsavedChanges: () => boolean }> =
+  (component) => {
+    if (component.hasUnsavedChanges()) {
+      return window.confirm('You have unsaved changes. Leave anyway?');
     }
+    return true;
+  };
+
+// --- resolve: fetch product data before the component loads ---
+export const productResolver: ResolveFn<any> = (route) => {
+  return inject(ApiService).getProduct(route.paramMap.get('id')!);
+  // Component reads it: this.route.snapshot.data['product']
+};
+
+// --- canMatch: block access AND prevent downloading the lazy chunk ---
+export const adminOnlyGuard: CanMatchFn = () => {
+  const auth   = inject(AuthService);
+  const router = inject(Router);
+  return auth.hasRole('admin') || router.createUrlTree(['/forbidden']);
+};
+
+// Route configuration using all three
+export const routes: Routes = [
+  {
+    path: 'edit/:id',
+    loadComponent: () => import('./edit-product.component').then(m => m.EditProductComponent),
+    canDeactivate: [unsavedChangesGuard],
+    resolve: { product: productResolver }
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin/admin.routes').then(m => m.adminRoutes),
+    canMatch: [adminOnlyGuard]   // code never downloaded unless user is admin
+  }
+];`,
+      language: "typescript"
+    },
+
+    {
+      id: "what-is-wildcard-route",
+      title: "What is wildcard route?",
+      explanation: `
+        <p>The <strong>wildcard route</strong> (<code>path: '**'</code>) matches any URL that no other route in the list has matched. It is always placed <strong>last</strong> in the routes array — Angular tries routes in order, so putting wildcard first would match everything.</p>
+
+        <h3>Common uses</h3>
+        <ul>
+          <li>Show a custom 404 "Page Not Found" component</li>
+          <li>Redirect all unknown URLs to the home page or a safe default</li>
+        </ul>
+
+        <h3>pathMatch: 'full'</h3>
+        <p>The empty path <code>''</code> route uses <code>pathMatch: 'full'</code> to ensure it only matches exactly the empty string — otherwise it would match the beginning of every URL.</p>
+      `,
+      code: `import { Routes } from '@angular/router';
+
+export const routes: Routes = [
+  { path: '',        redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home',    loadComponent: () => import('./home.component').then(m => m.HomeComponent) },
+  { path: 'products', loadComponent: () => import('./products.component').then(m => m.ProductsComponent) },
+  { path: 'login',   loadComponent: () => import('./login.component').then(m => m.LoginComponent) },
+
+  // ← ALWAYS put wildcard LAST
+  {
+    path: '**',
+    loadComponent: () => import('./not-found/not-found.component').then(m => m.NotFoundComponent)
+    // Or simply: redirectTo: 'home'
+  }
+];
+
+// not-found.component.ts — a helpful 404 page
+@Component({
+  selector: 'app-not-found',
+  template: \`
+    <h1>404 — Page Not Found</h1>
+    <p>The page you're looking for doesn't exist.</p>
+    <a routerLink="/home">Go back home</a>
+  \`
+})
+export class NotFoundComponent {}`,
+      language: "typescript"
+    },
+
+    {
+      id: "what-is-router-outlet",
+      title: "What is router outlet?",
+      explanation: `
+        <p><code>&lt;router-outlet&gt;</code> is a placeholder directive in your template that tells Angular <em>where</em> to render the component that matches the current URL. When the user navigates to a route, Angular replaces the content of the nearest <code>&lt;router-outlet&gt;</code> with that route's component.</p>
+
+        <h3>Multiple outlets</h3>
+        <p>An app can have more than one router outlet. The primary outlet (unnamed) handles main navigation. Named outlets handle secondary areas like a sidebar or a modal — they can be activated independently by a route's <code>outlets</code> property.</p>
+
+        <h3>routerLinkActive</h3>
+        <p>Use the <code>routerLinkActive</code> directive on navigation links to automatically add a CSS class when that link's route is active.</p>
+      `,
+      code: `// app.component.ts
+@Component({
+  selector: 'app-root',
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, NavbarComponent],
+  template: \`
+    <app-navbar></app-navbar>
+
+    <nav>
+      <!-- routerLinkActive adds class "active" when route matches -->
+      <a routerLink="/home"     routerLinkActive="active">Home</a>
+      <a routerLink="/products" routerLinkActive="active">Products</a>
+    </nav>
+
+    <!-- Angular renders the matched component here -->
+    <router-outlet></router-outlet>
+
+    <!-- Named outlet for a chat panel — activated via:
+         router.navigate([{ outlets: { chat: ['support'] } }]) -->
+    <router-outlet name="chat"></router-outlet>
+  \`
+})
+export class AppComponent {}
+
+// The shell stays on screen — only the content inside <router-outlet> swaps.
+// This is what makes Angular a Single Page Application.`,
+      language: "typescript"
+    }
+
   ]
 });

@@ -1,104 +1,413 @@
 window.MODULES = window.MODULES || [];
 window.MODULES.push({
-  "id": "forms",
-  "title": "Forms",
-  "icon": "bi bi-ui-checks-grid",
-  "questions": [
+  id: "forms",
+  title: "Forms",
+  icon: "bi bi-ui-checks-grid",
+  questions: [
     {
-      "id": "types-of-forms",
-      "title": "Types of forms in Angular",
-      "explanation": "<p>Angular provides <strong>two approaches</strong> to handling user input through forms, each suited to different use cases:</p><ul><li><strong>Template-driven forms</strong> &mdash; form logic lives in the HTML template using directives like <code>ngModel</code>. Angular infers the form model from the template. Best for simple forms.</li><li><strong>Reactive forms</strong> &mdash; form model is explicitly created in the component class using <code>FormControl</code>, <code>FormGroup</code>, and <code>FormArray</code>. More predictable, testable, and scalable for complex forms.</li></ul><p>Both approaches share the same <code>AbstractControl</code> base class and support validation, status tracking, and value access.</p>",
-      "code": "// Template-driven: import FormsModule\nimport { FormsModule } from '@angular/forms';\n\n// Reactive: import ReactiveFormsModule\nimport { ReactiveFormsModule } from '@angular/forms';\n// or import specific classes\nimport { FormGroup, FormControl, Validators } from '@angular/forms';",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Angular Form Approaches</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4\"><p class=\"font-bold text-indigo-700 text-center mb-2\">Template-Driven</p><ul class=\"text-xs text-slate-600 space-y-1\"><li>Logic in HTML template</li><li>Uses ngModel directive</li><li>Less code, less control</li><li>Best for simple forms</li></ul></div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4\"><p class=\"font-bold text-emerald-700 text-center mb-2\">Reactive</p><ul class=\"text-xs text-slate-600 space-y-1\"><li>Logic in component class</li><li>Uses FormGroup / FormControl</li><li>More control, more testable</li><li>Best for complex forms</li></ul></div></div></div>"
+      id: "types-of-forms",
+      title: "Types of Forms in Angular",
+      explanation: `
+        <p>Angular gives you <strong>two strategies</strong> for building forms. Both use the same underlying Angular forms API, but they differ in <em>where</em> the logic lives.</p>
+
+        <h3>Template-Driven Forms</h3>
+        <p>You write most of the logic directly in the HTML template using directives like <code>ngModel</code>. Angular creates the form model behind the scenes.</p>
+        <ul>
+          <li>Quick to write, good for simple forms (e.g. a login form, a newsletter signup)</li>
+          <li>Logic scattered in the template — harder to unit test</li>
+          <li>Requires importing <code>FormsModule</code></li>
+        </ul>
+
+        <h3>Reactive Forms</h3>
+        <p>You build the form model explicitly in the <strong>component class</strong> using <code>FormGroup</code>, <code>FormControl</code>, and <code>FormArray</code>. The template then just binds to that model.</p>
+        <ul>
+          <li>Full control over validation and state</li>
+          <li>Easy to unit test — the model is plain TypeScript</li>
+          <li>Works naturally with RxJS (e.g. <code>valueChanges</code>)</li>
+          <li>The preferred approach for any non-trivial form</li>
+          <li>Requires importing <code>ReactiveFormsModule</code></li>
+        </ul>
+
+        <h3>Which to use?</h3>
+        <p>Use <strong>template-driven</strong> for quick, simple, 2–3 field forms. Use <strong>reactive</strong> for everything else — registration, checkout, multi-step wizards, dynamic field lists.</p>
+      `,
+      code: `// ─── Template-Driven ───────────────────────────────────────────
+// component.ts
+import { FormsModule } from '@angular/forms';
+
+@Component({
+  selector: 'app-login',
+  imports: [FormsModule],
+  template: \`
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+      <input name="email" ngModel required email />
+      <input name="password" ngModel required minlength="6" type="password" />
+      <button [disabled]="loginForm.invalid">Login</button>
+    </form>
+  \`
+})
+export class LoginComponent {
+  onSubmit(form: any) { console.log(form.value); }
+}
+
+// ─── Reactive ───────────────────────────────────────────────────
+// component.ts
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-register',
+  imports: [ReactiveFormsModule],
+  template: \`
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <input formControlName="email" />
+      <input formControlName="password" type="password" />
+      <button [disabled]="form.invalid">Register</button>
+    </form>
+  \`
+})
+export class RegisterComponent {
+  form = new FormGroup({
+    email:    new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)])
+  });
+
+  onSubmit() { console.log(this.form.value); }
+}`,
+      language: "typescript"
     },
+
     {
-      "id": "what-are-template-driven-forms",
-      "title": "What are template-driven forms?",
-      "explanation": "<p><strong>Template-driven forms</strong> are Angular forms where the form structure, binding, and validation are declared directly in the HTML template using Angular directives.</p><h3>Key Directives</h3><ul><li><code>FormsModule</code> &mdash; must be imported to enable template-driven forms</li><li><code>ngModel</code> &mdash; creates two-way data binding between the input and a component property</li><li><code>ngForm</code> &mdash; auto-applied to <code>&lt;form&gt;</code> elements; exposes form-level state and methods</li><li><code>#ref=\"ngModel\"</code> &mdash; template reference to access individual control state</li></ul><h3>Showing Errors</h3><p>Use template reference variables and built-in state flags like <code>touched</code> and <code>invalid</code> to control when errors appear.</p>",
-      "code": "<!-- login.component.html -->\n<form #loginForm=\"ngForm\" (ngSubmit)=\"onSubmit(loginForm)\">\n\n  <input\n    name=\"email\" type=\"email\"\n    [(ngModel)]=\"formData.email\"\n    required email\n    #emailField=\"ngModel\"\n  />\n  <div *ngIf=\"emailField.invalid && emailField.touched\">\n    <span *ngIf=\"emailField.errors?.['required']\">Email is required.</span>\n    <span *ngIf=\"emailField.errors?.['email']\">Must be a valid email.</span>\n  </div>\n\n  <input\n    name=\"password\" type=\"password\"\n    [(ngModel)]=\"formData.password\"\n    required minlength=\"6\"\n    #pwField=\"ngModel\"\n  />\n  <div *ngIf=\"pwField.invalid && pwField.touched\">\n    Password must be at least 6 characters.\n  </div>\n\n  <button type=\"submit\" [disabled]=\"loginForm.invalid\">Login</button>\n</form>",
-      "language": "html",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Template-Driven Form Flow</p><div class=\"flex flex-col items-center gap-2 max-w-sm mx-auto\"><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-indigo-700\">HTML Template (ngModel, ngForm)</p></div><div class=\"text-slate-300\">&darr; two-way binding &darr;</div><div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-emerald-700\">Component Class (data object)</p></div><div class=\"text-slate-300\">&darr; Angular infers &darr;</div><div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-amber-700\">FormGroup / FormControl (implicit)</p></div></div></div>"
+      id: "reactive-forms",
+      title: "Reactive Forms (Most Important)",
+      explanation: `
+        <p>In <strong>reactive forms</strong>, you define the entire form structure in the component class. The template is just a binding layer — it connects HTML inputs to the model using directives. This separation makes the form easy to read, test, and extend.</p>
+
+        <h3>Core building blocks</h3>
+        <ul>
+          <li><strong>FormControl</strong> — tracks the value and validation state of a single input</li>
+          <li><strong>FormGroup</strong> — groups multiple controls; the whole group becomes valid only when all controls inside are valid</li>
+          <li><strong>FormBuilder</strong> — a helper service with a shorter syntax for creating FormGroups and FormControls (no <code>new</code> keyword needed)</li>
+        </ul>
+
+        <h3>Template bindings</h3>
+        <ul>
+          <li><code>[formGroup]="form"</code> — connects the <code>&lt;form&gt;</code> element to the FormGroup</li>
+          <li><code>formControlName="email"</code> — connects an <code>&lt;input&gt;</code> to a specific FormControl by name</li>
+        </ul>
+
+        <h3>Reading state</h3>
+        <p>You can check any control's state at any time: <code>form.get('email')?.invalid</code>, <code>form.get('email')?.touched</code>, <code>form.value</code>, <code>form.valid</code>.</p>
+      `,
+      code: `import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-register',
+  imports: [ReactiveFormsModule, CommonModule],
+  template: \`
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <input formControlName="email" placeholder="Email" />
+      <span *ngIf="email.invalid && email.touched">
+        <span *ngIf="email.errors?.['required']">Email is required.</span>
+        <span *ngIf="email.errors?.['email']">Enter a valid email.</span>
+      </span>
+
+      <input formControlName="password" type="password" placeholder="Password" />
+      <span *ngIf="password.invalid && password.touched">
+        Password must be at least 8 characters.
+      </span>
+
+      <button type="submit" [disabled]="form.invalid">Create Account</button>
+
+    </form>
+  \`
+})
+export class RegisterComponent implements OnInit {
+  form!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      email:    ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
+    });
+  }
+
+  // Convenience getters — cleaner than form.get('email') everywhere in the template
+  get email()    { return this.form.get('email')!; }
+  get password() { return this.form.get('password')!; }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      console.log('Submitting:', this.form.value);
+      // call your API service here
+    }
+  }
+}`,
+      language: "typescript"
     },
+
     {
-      "id": "what-are-reactive-forms",
-      "title": "What are reactive forms?",
-      "explanation": "<p><strong>Reactive forms</strong> define the form model explicitly in the component class. The template simply binds to the existing model, giving you full programmatic control and making the form much easier to test.</p><h3>Key Classes</h3><ul><li><code>FormControl</code> &mdash; tracks value and validity of a single field</li><li><code>FormGroup</code> &mdash; a named group of controls treated as one unit</li><li><code>FormArray</code> &mdash; a variable-length array of controls (dynamic forms)</li><li><code>FormBuilder</code> &mdash; a service providing shorthand for building form models</li></ul><h3>Template Binding</h3><ul><li><code>[formGroup]=\"myForm\"</code> &mdash; binds the <code>&lt;form&gt;</code> element to a <code>FormGroup</code></li><li><code>formControlName=\"field\"</code> &mdash; binds an input to a named control inside the group</li></ul>",
-      "code": "// login.component.ts\nimport { Component, OnInit } from '@angular/core';\nimport { FormGroup, FormControl, Validators } from '@angular/forms';\n\n@Component({ selector: 'app-login', templateUrl: './login.component.html' })\nexport class LoginComponent implements OnInit {\n  loginForm!: FormGroup;\n\n  ngOnInit(): void {\n    this.loginForm = new FormGroup({\n      email:    new FormControl('', [Validators.required, Validators.email]),\n      password: new FormControl('', [Validators.required, Validators.minLength(6)])\n    });\n  }\n\n  onSubmit(): void {\n    if (this.loginForm.valid) {\n      console.log(this.loginForm.value); // { email: '...', password: '...' }\n    }\n  }\n}\n\n// login.component.html\n// <form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\n//   <input formControlName=\"email\" />\n//   <div *ngIf=\"loginForm.get('email')?.invalid && loginForm.get('email')?.touched\">\n//     <span *ngIf=\"loginForm.get('email')?.errors?.['required']\">Required.</span>\n//     <span *ngIf=\"loginForm.get('email')?.errors?.['email']\">Invalid email.</span>\n//   </div>\n//   <button type=\"submit\" [disabled]=\"loginForm.invalid\">Login</button>\n// </form>",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Reactive Form Flow</p><div class=\"flex flex-col items-center gap-2 max-w-sm mx-auto\"><div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-emerald-700\">Component Class (FormGroup defined here)</p></div><div class=\"text-slate-300\">&darr; bound via [formGroup] &darr;</div><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-indigo-700\">HTML Template (formControlName)</p></div><div class=\"text-slate-300\">&darr; status / value &darr;</div><div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-amber-700\">AbstractControl tree (FormControl, FormGroup)</p></div></div></div>"
+      id: "form-control-group-array",
+      title: "FormControl vs FormGroup vs FormArray",
+      explanation: `
+        <p>These three classes are the building blocks of every reactive form. Understanding what each one does is essential.</p>
+
+        <h3>FormControl — a single field</h3>
+        <p>Tracks the value, validity, and interaction state (touched, dirty) of one input. Think of it as a single cell in a spreadsheet.</p>
+
+        <h3>FormGroup — a named group of fields</h3>
+        <p>Holds a fixed set of FormControls under named keys. The group itself is valid only when every child control is valid. Used for the main form and for sub-sections of a form (e.g. an "address" group inside a checkout form).</p>
+
+        <h3>FormArray — a dynamic list of fields</h3>
+        <p>Holds a variable number of controls accessed by index (not by name). Perfect for "add another" patterns — e.g. multiple phone numbers, a list of work experiences on a CV, dynamic tags.</p>
+
+        <h3>They can be nested</h3>
+        <p>A FormGroup can contain other FormGroups and FormArrays, letting you model complex, deeply nested data structures.</p>
+      `,
+      code: `import { FormGroup, FormControl, FormArray, Validators, FormBuilder } from '@angular/forms';
+
+// ─── FormControl — single field ────────────────────────────────
+const emailControl = new FormControl('', [Validators.required, Validators.email]);
+console.log(emailControl.value);   // ''
+console.log(emailControl.valid);   // false (empty, required)
+
+// ─── FormGroup — fixed set of named fields ─────────────────────
+const addressGroup = new FormGroup({
+  street: new FormControl('', Validators.required),
+  city:   new FormControl('', Validators.required),
+  zip:    new FormControl('', [Validators.required, Validators.pattern(/^\\d{5}$/)])
+});
+console.log(addressGroup.value);   // { street: '', city: '', zip: '' }
+
+// ─── FormArray — dynamic list of fields ───────────────────────
+const fb = new FormBuilder();
+
+const resumeForm = fb.group({
+  name:        ['', Validators.required],
+  // FormArray starts with one entry; more can be added at runtime
+  experiences: fb.array([
+    fb.group({
+      company:  ['Google', Validators.required],
+      role:     ['Engineer', Validators.required],
+      years:    [2, [Validators.required, Validators.min(0)]]
+    })
+  ])
+});
+
+// Access the FormArray
+const experiences = resumeForm.get('experiences') as FormArray;
+
+// Add a new entry dynamically (e.g. user clicks "Add Experience")
+experiences.push(fb.group({
+  company: ['', Validators.required],
+  role:    ['', Validators.required],
+  years:   [0]
+}));
+
+// Remove an entry by index
+experiences.removeAt(1);
+
+console.log(experiences.length); // 1
+console.log(resumeForm.value);`,
+      language: "typescript"
     },
+
     {
-      "id": "template-vs-reactive-forms",
-      "title": "Difference between template-driven and reactive forms",
-      "explanation": "<p>Both approaches build on the same underlying <code>AbstractControl</code> API, but they differ in where the logic lives, how testable they are, and how well they scale.</p><table style=\"width:100%;font-size:0.75rem;border-collapse:collapse\"><thead><tr style=\"background:#f1f5f9\"><th style=\"padding:6px 8px;text-align:left;border:1px solid #e2e8f0\">Aspect</th><th style=\"padding:6px 8px;text-align:left;border:1px solid #e2e8f0\">Template-Driven</th><th style=\"padding:6px 8px;text-align:left;border:1px solid #e2e8f0\">Reactive</th></tr></thead><tbody><tr><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Form model location</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">HTML template</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Component class</td></tr><tr><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Data flow</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Two-way (ngModel)</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Explicit / reactive</td></tr><tr><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Testability</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Harder (needs DOM)</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Easier (pure TypeScript)</td></tr><tr><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Scalability</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Simple forms</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Complex / dynamic forms</td></tr><tr><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Module import</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">FormsModule</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">ReactiveFormsModule</td></tr><tr><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Async validators</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Limited</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">First-class support</td></tr><tr><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">valueChanges observable</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Not available</td><td style=\"padding:6px 8px;border:1px solid #e2e8f0\">Yes &mdash; on any control</td></tr></tbody></table>",
-      "code": "// Template-driven — logic in HTML\n// <input name=\"email\" [(ngModel)]=\"email\" required email />\n\n// Reactive — logic in class\nthis.form = new FormGroup({\n  email: new FormControl('', [Validators.required, Validators.email])\n});\n\n// Reactive forms are preferred for:\n// - Dynamic form fields (FormArray)\n// - Unit testing without a DOM\n// - Complex cross-field validation\n// - Reacting to input changes via valueChanges observable",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">When to Use Which?</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-4\"><p class=\"font-bold text-indigo-700 text-center mb-2\">Template-Driven</p><ul class=\"text-xs text-slate-600 space-y-1\"><li>Login / contact forms</li><li>Quick prototypes</li><li>Minimal validation needs</li></ul></div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-4\"><p class=\"font-bold text-emerald-700 text-center mb-2\">Reactive</p><ul class=\"text-xs text-slate-600 space-y-1\"><li>Dynamic / wizard forms</li><li>Complex / cross-field validation</li><li>When unit testing matters</li></ul></div></div></div>"
+      id: "form-validation",
+      title: "Form Validation (Real-World)",
+      explanation: `
+        <p>Angular's reactive forms provide granular access to a control's validity state. The key is showing errors <em>at the right time</em> so you don't annoy users with red error messages before they've had a chance to type anything.</p>
+
+        <h3>The golden rule</h3>
+        <p>Only show an error when the control is both <strong>invalid</strong> AND the user has <strong>touched</strong> it (clicked into and out of the field). This avoids showing errors on a fresh, empty form.</p>
+
+        <h3>Control state flags</h3>
+        <ul>
+          <li><code>pristine</code> / <code>dirty</code> — has the value been changed?</li>
+          <li><code>untouched</code> / <code>touched</code> — has the user focused and blurred the field?</li>
+          <li><code>valid</code> / <code>invalid</code> — do all validators pass?</li>
+          <li><code>pending</code> — an async validator is running</li>
+        </ul>
+
+        <h3>Custom validators</h3>
+        <p>A validator is just a function: it receives the control and returns <code>null</code> if valid, or an error object if invalid. Cross-field validators (e.g. "passwords must match") are placed on the FormGroup level.</p>
+      `,
+      code: `import { AbstractControl, ValidationErrors, ValidatorFn, FormGroup,
+         FormControl, Validators } from '@angular/forms';
+
+// ─── Custom validator: no whitespace allowed ───────────────────
+function noWhitespace(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const hasWhitespace = (control.value || '').trim().length === 0 && control.value.length > 0;
+    return hasWhitespace ? { whitespace: true } : null;
+  };
+}
+
+// ─── Cross-field validator: passwords must match ───────────────
+function passwordsMatch(group: AbstractControl): ValidationErrors | null {
+  const pw  = group.get('password')?.value;
+  const cpw = group.get('confirmPassword')?.value;
+  return pw === cpw ? null : { mismatch: true };
+}
+
+// ─── Form setup ────────────────────────────────────────────────
+const signupForm = new FormGroup({
+  username:        new FormControl('', [Validators.required, noWhitespace()]),
+  password:        new FormControl('', [Validators.required, Validators.minLength(8)]),
+  confirmPassword: new FormControl('', Validators.required)
+}, { validators: passwordsMatch });   // ← group-level validator
+
+// ─── Template error display ────────────────────────────────────
+/*
+  <input formControlName="username" />
+  <div *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched">
+    <span *ngIf="signupForm.get('username')?.errors?.['required']">Username is required.</span>
+    <span *ngIf="signupForm.get('username')?.errors?.['whitespace']">No whitespace allowed.</span>
+  </div>
+
+  <div *ngIf="signupForm.errors?.['mismatch'] && signupForm.get('confirmPassword')?.touched">
+    Passwords do not match.
+  </div>
+*/`,
+      language: "typescript"
     },
+
     {
-      "id": "what-is-formcontrol-formgroup-formarray",
-      "title": "FormControl, FormGroup and FormArray",
-      "explanation": "<p>These three classes are the building blocks of Angular reactive forms, all extending <code>AbstractControl</code>.</p><h3>FormControl</h3><p>Tracks the value and validation state of a <strong>single form field</strong>. The most granular unit.</p><h3>FormGroup</h3><p>Groups multiple controls together into a single object. The group is <code>valid</code> only when <strong>all</strong> its controls are valid. Access a child with <code>.get('fieldName')</code>.</p><h3>FormArray</h3><p>An ordered array of controls &mdash; useful for <strong>dynamic / repeatable</strong> fields (e.g., a list of phone numbers or addresses). Add with <code>.push()</code>, remove with <code>.removeAt(index)</code>.</p>",
-      "code": "import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';\n\n// FormControl — single field\nconst nameCtrl = new FormControl('', Validators.required);\nconsole.log(nameCtrl.value);   // ''\nconsole.log(nameCtrl.valid);   // false (required fails)\n\n// FormGroup — group of fields\nconst profileForm = new FormGroup({\n  name:  new FormControl('', Validators.required),\n  email: new FormControl('', [Validators.required, Validators.email]),\n});\nconsole.log(profileForm.value);         // { name: '', email: '' }\nconsole.log(profileForm.get('name'));   // FormControl reference\n\n// FormArray — dynamic list\nconst phonesArray = new FormArray([\n  new FormControl('555-1234'),\n  new FormControl('555-5678'),\n]);\nphoneArray.push(new FormControl('555-9999')); // add dynamically\nphoneArray.removeAt(0);                       // remove first\nconsole.log(phonesArray.length); // 2",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">AbstractControl Hierarchy</p><div class=\"flex flex-col items-center gap-2\"><div class=\"bg-slate-100 border border-slate-300 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-slate-700\">AbstractControl (base class)</p></div><div class=\"text-slate-300\">&darr;</div><div class=\"grid grid-cols-3 gap-3\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-indigo-700\">FormControl</p><p class=\"text-[10px] text-slate-500 mt-1\">single field</p></div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-emerald-700\">FormGroup</p><p class=\"text-[10px] text-slate-500 mt-1\">keyed group</p></div><div class=\"bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-amber-700\">FormArray</p><p class=\"text-[10px] text-slate-500 mt-1\">dynamic list</p></div></div></div></div>"
+      id: "validators",
+      title: "Built-in Validators",
+      explanation: `
+        <p>Angular's <code>Validators</code> class provides a set of ready-to-use validator functions. You pass them as an array to any <code>FormControl</code>.</p>
+
+        <h3>List of built-in validators</h3>
+        <ul>
+          <li><code>Validators.required</code> — value must not be empty</li>
+          <li><code>Validators.email</code> — value must be a valid email format</li>
+          <li><code>Validators.minLength(n)</code> — string must have at least n characters</li>
+          <li><code>Validators.maxLength(n)</code> — string must have at most n characters</li>
+          <li><code>Validators.min(n)</code> — number must be ≥ n</li>
+          <li><code>Validators.max(n)</code> — number must be ≤ n</li>
+          <li><code>Validators.pattern(regex)</code> — value must match the regex</li>
+          <li><code>Validators.nullValidator</code> — always valid (useful as a placeholder)</li>
+        </ul>
+
+        <h3>Combining validators</h3>
+        <p>Pass an array — all validators in the array must pass for the control to be valid. Angular also provides <code>Validators.compose()</code> if you need to combine them programmatically.</p>
+
+        <h3>Checking which error triggered</h3>
+        <p>Each validator adds a key to <code>control.errors</code> when it fails. Check <code>control.errors?.['required']</code>, <code>control.errors?.['email']</code>, etc. to show the right message.</p>
+      `,
+      code: `import { FormControl, Validators } from '@angular/forms';
+
+// Multiple validators on one control
+const phoneControl = new FormControl('', [
+  Validators.required,
+  Validators.pattern(/^\\+?[0-9]{10,15}$/)   // international phone format
+]);
+
+const ageControl = new FormControl(null, [
+  Validators.required,
+  Validators.min(18),    // must be at least 18
+  Validators.max(120)
+]);
+
+const usernameControl = new FormControl('', [
+  Validators.required,
+  Validators.minLength(3),
+  Validators.maxLength(20),
+  Validators.pattern(/^[a-z0-9_]+$/)   // lowercase, numbers, underscore only
+]);
+
+// Template: show different message for each error
+/*
+  <input formControlName="username" />
+  <div *ngIf="username.invalid && username.touched">
+    <p *ngIf="username.errors?.['required']">Username is required.</p>
+    <p *ngIf="username.errors?.['minlength']">
+      Minimum {{ username.errors?.['minlength'].requiredLength }} characters.
+    </p>
+    <p *ngIf="username.errors?.['maxlength']">
+      Maximum {{ username.errors?.['maxlength'].requiredLength }} characters.
+    </p>
+    <p *ngIf="username.errors?.['pattern']">
+      Only lowercase letters, numbers, and underscores.
+    </p>
+  </div>
+*/`,
+      language: "typescript"
     },
+
     {
-      "id": "form-status-properties",
-      "title": "Form status properties (pristine, dirty, touched, valid)",
-      "explanation": "<p>Every <code>AbstractControl</code> exposes status properties that Angular updates automatically as the user interacts with the form. These are essential for controlling when to show error messages.</p><h3>Value &amp; Validity</h3><ul><li><code>valid</code> &mdash; all validators pass</li><li><code>invalid</code> &mdash; at least one validator fails</li><li><code>errors</code> &mdash; object of current validation errors, or <code>null</code> when valid</li><li><code>status</code> &mdash; <code>'VALID'</code>, <code>'INVALID'</code>, <code>'PENDING'</code>, or <code>'DISABLED'</code></li></ul><h3>Interaction State</h3><ul><li><code>pristine</code> &mdash; value has <strong>not</strong> been changed by the user yet</li><li><code>dirty</code> &mdash; value <strong>has</strong> been changed</li><li><code>touched</code> &mdash; control has lost focus (blur) at least once</li><li><code>untouched</code> &mdash; control has never lost focus</li></ul><p><strong>Best practice:</strong> Show errors only when <code>invalid &amp;&amp; touched</code> to avoid showing errors before the user has interacted.</p>",
-      "code": "export class MyComponent {\n  emailCtrl = new FormControl('', [Validators.required, Validators.email]);\n\n  checkStatus(): void {\n    console.log(this.emailCtrl.value);    // ''\n    console.log(this.emailCtrl.valid);    // false\n    console.log(this.emailCtrl.invalid);  // true\n    console.log(this.emailCtrl.pristine); // true  (not changed yet)\n    console.log(this.emailCtrl.dirty);    // false\n    console.log(this.emailCtrl.touched);  // false (not blurred yet)\n    console.log(this.emailCtrl.errors);   // { required: true }\n    console.log(this.emailCtrl.status);   // 'INVALID'\n  }\n}\n\n// Template — show error only when the field has been interacted with:\n// <div *ngIf=\"emailCtrl.invalid && emailCtrl.touched\">\n//   <span *ngIf=\"emailCtrl.errors?.['required']\">Email is required.</span>\n//   <span *ngIf=\"emailCtrl.errors?.['email']\">Invalid email format.</span>\n// </div>",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Form Control States</p><div class=\"grid grid-cols-2 gap-3 max-w-md mx-auto\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3\"><p class=\"text-xs font-bold text-indigo-700\">pristine / dirty</p><p class=\"text-[10px] text-slate-500 mt-1\">Has the value been changed?</p></div><div class=\"bg-amber-50 border-2 border-amber-200 rounded-xl p-3\"><p class=\"text-xs font-bold text-amber-700\">touched / untouched</p><p class=\"text-[10px] text-slate-500 mt-1\">Has the field lost focus?</p></div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3\"><p class=\"text-xs font-bold text-emerald-700\">valid / invalid</p><p class=\"text-[10px] text-slate-500 mt-1\">Do all validators pass?</p></div><div class=\"bg-rose-50 border-2 border-rose-200 rounded-xl p-3\"><p class=\"text-xs font-bold text-rose-700\">status</p><p class=\"text-[10px] text-slate-500 mt-1\">VALID | INVALID | PENDING | DISABLED</p></div></div><p class=\"text-center text-xs text-slate-500 mt-4\">Show errors when: <code>invalid &amp;&amp; touched</code></p></div>"
-    },
-    {
-      "id": "what-is-form-validation",
-      "title": "Form validation and showing errors",
-      "explanation": "<p><strong>Form validation</strong> ensures user input meets the required rules before submitting. Angular applies validators synchronously after every value change and updates <code>control.errors</code> accordingly.</p><h3>Applying Validators</h3><ul><li>Pass validator functions as the <strong>second argument</strong> to <code>FormControl</code></li><li>Pass multiple validators as an array</li><li><code>control.errors</code> returns <code>null</code> when valid, or an object like <code>{ required: true }</code> when invalid</li></ul><h3>Reading Error Details</h3><p>Some validators return extra metadata in the error object. For example, <code>minlength</code> returns <code>{ requiredLength, actualLength }</code>, which you can display to the user.</p>",
-      "code": "this.form = new FormGroup({\n  username: new FormControl('', [\n    Validators.required,\n    Validators.minLength(3),\n    Validators.maxLength(20)\n  ]),\n  email: new FormControl('', [Validators.required, Validators.email])\n});\n\n// Template\n// <input formControlName=\"username\" />\n// <ng-container *ngIf=\"form.get('username') as ctrl\">\n//   <div *ngIf=\"ctrl.invalid && ctrl.touched\">\n//     <span *ngIf=\"ctrl.errors?.['required']\">Username is required.</span>\n//     <span *ngIf=\"ctrl.errors?.['minlength']\">\n//       Min {{ ctrl.errors?.['minlength'].requiredLength }} characters.\n//     </span>\n//     <span *ngIf=\"ctrl.errors?.['maxlength']\">\n//       Max {{ ctrl.errors?.['maxlength'].requiredLength }} characters.\n//     </span>\n//   </div>\n// </ng-container>",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Validation Flow</p><div class=\"flex flex-col items-center gap-2 max-w-sm mx-auto\"><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-indigo-700\">User types in field</p></div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-amber-700\">Validators run &rarr; control.errors updated</p></div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3 text-center\"><p class=\"text-xs font-bold text-emerald-700\">Template shows error if invalid &amp;&amp; touched</p></div></div></div>"
-    },
-    {
-      "id": "built-in-validators",
-      "title": "Built-in validators in Angular",
-      "explanation": "<p>Angular's <code>Validators</code> class provides synchronous validators covering the most common rules.</p><h3>Available Built-in Validators</h3><ul><li><code>Validators.required</code> &mdash; field must not be empty</li><li><code>Validators.requiredTrue</code> &mdash; field must be <code>true</code> (useful for checkboxes)</li><li><code>Validators.email</code> &mdash; must match email format</li><li><code>Validators.minLength(n)</code> &mdash; string must have at least <em>n</em> characters; error includes <code>requiredLength</code> and <code>actualLength</code></li><li><code>Validators.maxLength(n)</code> &mdash; string must have at most <em>n</em> characters</li><li><code>Validators.min(n)</code> &mdash; numeric value must be &ge; <em>n</em></li><li><code>Validators.max(n)</code> &mdash; numeric value must be &le; <em>n</em></li><li><code>Validators.pattern(regex)</code> &mdash; value must match the given regular expression</li><li><code>Validators.compose([...])</code> &mdash; combines multiple validators into one function</li></ul>",
-      "code": "import { FormControl, Validators } from '@angular/forms';\n\nconst ageCtrl = new FormControl(null, [\n  Validators.required,\n  Validators.min(18),\n  Validators.max(120)\n]);\n\nconst usernameCtrl = new FormControl('', [\n  Validators.required,\n  Validators.minLength(3),\n  Validators.maxLength(20),\n  Validators.pattern('^[a-zA-Z0-9_]+$')  // alphanumeric + underscore only\n]);\n\nconst emailCtrl  = new FormControl('', [Validators.required, Validators.email]);\nconst termsCtrl  = new FormControl(false, Validators.requiredTrue);\n\n// Accessing detailed error info:\n// usernameCtrl.errors?.['minlength']?.requiredLength  -> 3\n// usernameCtrl.errors?.['minlength']?.actualLength    -> 1",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Built-In Validators</p><div class=\"grid grid-cols-2 gap-2 max-w-md mx-auto text-xs\"><div class=\"bg-indigo-50 border border-indigo-200 rounded-lg p-2 text-center font-mono text-indigo-700\">required</div><div class=\"bg-indigo-50 border border-indigo-200 rounded-lg p-2 text-center font-mono text-indigo-700\">email</div><div class=\"bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-center font-mono text-emerald-700\">minLength(n)</div><div class=\"bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-center font-mono text-emerald-700\">maxLength(n)</div><div class=\"bg-amber-50 border border-amber-200 rounded-lg p-2 text-center font-mono text-amber-700\">min(n)</div><div class=\"bg-amber-50 border border-amber-200 rounded-lg p-2 text-center font-mono text-amber-700\">max(n)</div><div class=\"bg-purple-50 border border-purple-200 rounded-lg p-2 text-center font-mono text-purple-700\">pattern(regex)</div><div class=\"bg-purple-50 border border-purple-200 rounded-lg p-2 text-center font-mono text-purple-700\">requiredTrue</div></div></div>"
-    },
-    {
-      "id": "how-to-create-custom-validators",
-      "title": "Custom validators",
-      "explanation": "<p>A <strong>custom validator</strong> is a function that takes an <code>AbstractControl</code> and returns <code>null</code> (valid) or a <code>ValidationErrors</code> object (invalid). It can be applied to individual controls or to a whole <code>FormGroup</code> for cross-field validation.</p><h3>Field-level Validator</h3><p>Validates a single control's value — e.g., no spaces allowed in a username.</p><h3>Cross-field (Group-level) Validator</h3><p>Applied to the <code>FormGroup</code> itself to compare multiple fields — e.g., password must match confirm password.</p>",
-      "code": "import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';\n\n// --- Field-level validator ---\nexport function noSpaceValidator(): ValidatorFn {\n  return (control: AbstractControl): ValidationErrors | null => {\n    const hasSpace = (control.value || '').includes(' ');\n    return hasSpace ? { noSpace: true } : null;\n  };\n}\n\n// --- Cross-field (group-level) validator ---\nexport function passwordMatchValidator(): ValidatorFn {\n  return (group: AbstractControl): ValidationErrors | null => {\n    const pw  = group.get('password')?.value;\n    const cpw = group.get('confirmPassword')?.value;\n    return pw === cpw ? null : { passwordMismatch: true };\n  };\n}\n\n// Usage\nthis.form = new FormGroup({\n  username:        new FormControl('', [Validators.required, noSpaceValidator()]),\n  password:        new FormControl('', Validators.required),\n  confirmPassword: new FormControl('', Validators.required),\n}, { validators: passwordMatchValidator() });\n\n// Template: check group-level error\n// <div *ngIf=\"form.errors?.['passwordMismatch']\">Passwords do not match.</div>",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Custom Validator Structure</p><div class=\"max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-xs space-y-2\"><p class=\"text-slate-600\">(control: AbstractControl): ValidationErrors | null</p><div class=\"border-t border-slate-200 pt-2\"><p class=\"text-emerald-600\">return null &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // valid</p><p class=\"text-rose-600\">return &#123; myError: true &#125; &nbsp; // invalid</p></div></div></div>"
-    },
-    {
-      "id": "async-validators",
-      "title": "Async validators",
-      "explanation": "<p><strong>Async validators</strong> return an <code>Observable&lt;ValidationErrors | null&gt;</code> or <code>Promise</code>. They are used for checks that require a server call &mdash; such as verifying that a username is not already taken.</p><h3>Key Points</h3><ul><li>Pass async validators as the <strong>third argument</strong> to <code>FormControl</code> (after sync validators)</li><li>While an async validator is running, the control's status is <code>'PENDING'</code></li><li>Angular only runs async validators <strong>after all sync validators pass</strong>, saving unnecessary HTTP requests</li><li>The observable returned by the validator must <strong>complete</strong> &mdash; use <code>take(1)</code> or <code>first()</code> if needed</li></ul>",
-      "code": "import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';\nimport { Observable, of } from 'rxjs';\nimport { catchError, map, switchMap, timer } from 'rxjs';\n\n// Async validator factory\nexport function uniqueUsernameValidator(userService: UserService): AsyncValidatorFn {\n  return (control: AbstractControl): Observable<ValidationErrors | null> => {\n    // timer(400) adds a debounce before firing the HTTP call\n    return timer(400).pipe(\n      switchMap(() => userService.isUsernameTaken(control.value)),\n      map(isTaken => (isTaken ? { usernameTaken: true } : null)),\n      catchError(() => of(null)) // treat server errors as valid to not block the form\n    );\n  };\n}\n\n// Usage — third argument is the async validator(s)\nthis.form = new FormGroup({\n  username: new FormControl(\n    '',\n    [Validators.required, Validators.minLength(3)], // sync\n    [uniqueUsernameValidator(this.userService)]      // async\n  )\n});\n\n// Template\n// <span *ngIf=\"form.get('username')?.status === 'PENDING'\">Checking...</span>\n// <span *ngIf=\"form.get('username')?.errors?.['usernameTaken']\">Username taken.</span>",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Async Validator Flow</p><div class=\"flex flex-col items-center gap-2 max-w-sm mx-auto\"><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-2 text-center text-xs font-bold text-indigo-700\">User types value</div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-2 text-center text-xs font-bold text-amber-700\">Sync validators pass &rarr; status: PENDING</div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-purple-50 border-2 border-purple-200 rounded-xl p-2 text-center text-xs font-bold text-purple-700\">HTTP call fires (after debounce)</div><div class=\"text-slate-300\">&darr;</div><div class=\"grid grid-cols-2 gap-2 w-full\"><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-2 text-center text-xs font-bold text-emerald-700\">null &rarr; VALID</div><div class=\"bg-rose-50 border-2 border-rose-200 rounded-xl p-2 text-center text-xs font-bold text-rose-700\">error obj &rarr; INVALID</div></div></div></div>"
-    },
-    {
-      "id": "what-is-formbuilder",
-      "title": "What is FormBuilder?",
-      "explanation": "<p><code>FormBuilder</code> is an Angular injectable service that provides a shorter, more readable syntax for constructing reactive form models. It produces the same <code>FormControl</code>, <code>FormGroup</code>, and <code>FormArray</code> instances &mdash; just with less boilerplate.</p><h3>FormBuilder Methods</h3><ul><li><code>fb.group({...})</code> &mdash; creates a <code>FormGroup</code></li><li><code>fb.control(value, validators)</code> &mdash; creates a <code>FormControl</code></li><li><code>fb.array([...])</code> &mdash; creates a <code>FormArray</code></li></ul><p>Inside <code>fb.group()</code>, each field is a shorthand array: <code>[initialValue, syncValidators?, asyncValidators?]</code>.</p>",
-      "code": "import { Component, OnInit } from '@angular/core';\nimport { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';\n\n@Component({ selector: 'app-register', templateUrl: './register.component.html' })\nexport class RegisterComponent implements OnInit {\n  form!: FormGroup;\n\n  constructor(private fb: FormBuilder) {}\n\n  ngOnInit(): void {\n    this.form = this.fb.group({\n      name:  ['', [Validators.required, Validators.minLength(2)]],\n      email: ['', [Validators.required, Validators.email]],\n      address: this.fb.group({          // nested FormGroup\n        city: [''],\n        zip:  ['', Validators.pattern('^[0-9]{5}$')]\n      }),\n      phones: this.fb.array([           // dynamic FormArray\n        this.fb.control('', Validators.required)\n      ])\n    });\n  }\n\n  get phones(): FormArray { return this.form.get('phones') as FormArray; }\n\n  addPhone(): void { this.phones.push(this.fb.control('')); }\n\n  onSubmit(): void { console.log(this.form.value); }\n}",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">FormBuilder Shorthand</p><div class=\"max-w-md mx-auto bg-slate-50 border border-slate-200 rounded-xl p-4 text-xs space-y-3\"><div><p class=\"text-slate-500 mb-1\">Manual (verbose):</p><p class=\"font-mono text-slate-700\">new FormGroup(&#123; name: new FormControl('', Validators.required) &#125;)</p></div><div class=\"border-t border-slate-200 pt-3\"><p class=\"text-slate-500 mb-1\">FormBuilder (concise):</p><p class=\"font-mono text-emerald-700\">fb.group(&#123; name: ['', Validators.required] &#125;)</p></div></div></div>"
-    },
-    {
-      "id": "valuechanges-observable",
-      "title": "valueChanges observable",
-      "explanation": "<p>Every <code>AbstractControl</code> exposes a <code>valueChanges</code> observable that emits every time the control's value changes. This lets you react to user input declaratively using RxJS operators.</p><h3>Common Use Cases</h3><ul><li>Live search / autocomplete with <code>debounceTime</code></li><li>Enabling or disabling other fields based on a value</li><li>Cross-field dependent logic</li><li>Real-time form preview</li></ul><p><strong>Important:</strong> Always unsubscribe in <code>ngOnDestroy</code> (or use <code>takeUntilDestroyed()</code> in Angular 16+) to avoid memory leaks.</p>",
-      "code": "import { Component, OnInit, OnDestroy } from '@angular/core';\nimport { FormControl, FormGroup } from '@angular/forms';\nimport { Subject } from 'rxjs';\nimport { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';\n\n@Component({ selector: 'app-search', template: '' })\nexport class SearchComponent implements OnInit, OnDestroy {\n  private destroy$ = new Subject<void>();\n\n  searchCtrl  = new FormControl('');\n  countryCtrl = new FormControl('US');\n\n  ngOnInit(): void {\n    // Live search with debounce\n    this.searchCtrl.valueChanges.pipe(\n      debounceTime(300),\n      distinctUntilChanged(),\n      takeUntil(this.destroy$)\n    ).subscribe(query => this.search(query));\n\n    // React to a single field value change\n    this.countryCtrl.valueChanges\n      .pipe(takeUntil(this.destroy$))\n      .subscribe(country => this.loadRegions(country));\n  }\n\n  ngOnDestroy(): void {\n    this.destroy$.next();\n    this.destroy$.complete();\n  }\n\n  search(query: string | null) { /* call API */ }\n  loadRegions(country: string | null) { /* call API */ }\n}",
-      "language": "typescript",
-      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">valueChanges Flow</p><div class=\"flex flex-col items-center gap-2 max-w-sm mx-auto\"><div class=\"w-full bg-indigo-50 border-2 border-indigo-200 rounded-xl p-2 text-center text-xs font-bold text-indigo-700\">User types in field</div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-amber-50 border-2 border-amber-200 rounded-xl p-2 text-center text-xs font-bold text-amber-700\">control.valueChanges emits new value</div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-purple-50 border-2 border-purple-200 rounded-xl p-2 text-center text-xs font-bold text-purple-700\">RxJS pipe (debounceTime, distinctUntilChanged...)</div><div class=\"text-slate-300\">&darr;</div><div class=\"w-full bg-emerald-50 border-2 border-emerald-200 rounded-xl p-2 text-center text-xs font-bold text-emerald-700\">subscribe callback (API call, state update)</div></div></div>"
+      id: "valuechanges",
+      title: "valueChanges — reacting to form input in real time",
+      explanation: `
+        <p><code>valueChanges</code> is an Observable available on every <code>FormControl</code>, <code>FormGroup</code>, or <code>FormArray</code>. It emits a new value every time the user changes the input.</p>
+
+        <h3>Why is this powerful?</h3>
+        <p>Because it's a proper RxJS Observable, you can apply any RxJS operator to it — <code>debounceTime</code> to wait before reacting, <code>distinctUntilChanged</code> to skip duplicate values, <code>switchMap</code> to trigger an API call and automatically cancel the previous one.</p>
+
+        <h3>Common use cases</h3>
+        <ul>
+          <li><strong>Live search</strong> — search as the user types, debounced to avoid too many API calls</li>
+          <li><strong>Auto-save</strong> — save a draft every time the form changes</li>
+          <li><strong>Dynamic validation</strong> — enable or disable other fields based on a field's value</li>
+          <li><strong>Form state tracking</strong> — watch the whole form's value change at once</li>
+        </ul>
+
+        <h3>Always unsubscribe</h3>
+        <p>Like any subscription, clean up in <code>ngOnDestroy</code> or use <code>takeUntilDestroyed()</code> (Angular 16+).</p>
+      `,
+      code: `import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, takeUntil, filter } from 'rxjs/operators';
+import { SearchService } from './search.service';
+
+@Component({
+  selector: 'app-search',
+  imports: [ReactiveFormsModule],
+  template: \`
+    <input [formControl]="searchCtrl" placeholder="Search products..." />
+    <ul>
+      <li *ngFor="let result of results">{{ result.name }}</li>
+    </ul>
+  \`
+})
+export class SearchComponent implements OnInit, OnDestroy {
+  searchCtrl = new FormControl('');
+  results: any[] = [];
+  private destroy$ = new Subject<void>();
+
+  constructor(private searchService: SearchService) {}
+
+  ngOnInit(): void {
+    this.searchCtrl.valueChanges.pipe(
+      debounceTime(400),             // wait 400ms after the user stops typing
+      distinctUntilChanged(),        // skip if value is the same as before
+      filter(term => (term ?? '').length >= 2),  // only search for 2+ characters
+      switchMap(term =>
+        this.searchService.search(term ?? '')    // cancel previous call, start new one
+      ),
+      takeUntil(this.destroy$)       // auto-unsubscribe on destroy
+    ).subscribe(results => {
+      this.results = results;
+    });
+
+    // You can also watch an entire FormGroup at once
+    // this.form.valueChanges.subscribe(value => {
+    //   console.log('Whole form changed:', value);
+    // });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}`,
+      language: "typescript"
     }
   ]
 });
