@@ -12,6 +12,24 @@ window.MODULES.push({
       "language": "typescript"
     },
     {
+      "id": "shallow-copy-deep-copy-immutability",
+      "title": "Shallow copy vs deep copy - why immutability matters in Angular",
+      "explanation": `
+          <p>A lot of Angular bugs come from misunderstanding object references. Arrays and objects in JavaScript are reference values. If two variables point to the same nested object, changing one changes what the other sees. This matters in Angular because signals, NgRx selectors, <code>OnPush</code>, and zoneless change detection all work best when state updates create clear new references.</p>
+
+          <h3>Shallow copy</h3>
+          <p>A shallow copy creates a new outer object or array, but nested objects are still shared. Spread syntax (<code>{ ...obj }</code>, <code>[...arr]</code>), <code>Object.assign()</code>, <code>Array.slice()</code>, and <code>Array.from()</code> are shallow. This is perfect when you only change top-level fields, but it is not enough when you mutate nested fields.</p>
+
+          <h3>Deep copy</h3>
+          <p>A deep copy creates new copies of nested objects too. Use <code>structuredClone()</code> for plain serializable data like API DTOs, arrays, maps, sets, dates, and nested objects. Avoid <code>JSON.parse(JSON.stringify(value))</code> as a default because it loses dates, undefined values, functions, maps, sets, and many special types.</p>
+
+          <h3>Angular rule of thumb</h3>
+          <p>For state updates, do not deep-clone everything by habit. It is usually better to copy only the path you change. That keeps updates predictable and avoids unnecessary work. In signals, call <code>set()</code> or <code>update()</code> with a new reference. In NgRx reducers, return new state from pure functions and never mutate the existing state.</p>
+        `,
+      "code": "interface Address { city: string; pincode: string; }\ninterface User { id: number; name: string; address: Address; }\n\nconst user: User = {\n  id: 1,\n  name: 'Asha',\n  address: { city: 'Pune', pincode: '411001' }\n};\n\n// ---- Shallow copy: only the outer object is new ----\nconst shallow = { ...user };\nshallow.name = 'Asha Sharma';      // OK: top-level field is separate\nshallow.address.city = 'Mumbai';   // Problem: user.address is also changed\n\nconsole.log(user.address.city);    // 'Mumbai'\n\n// ---- Deep copy: nested objects are also copied ----\nconst deep = structuredClone(user);\ndeep.address.city = 'Bengaluru';\nconsole.log(user.address.city);    // still 'Mumbai'\n\n// ---- Best Angular pattern: copy only the changed path ----\nconst movedUser: User = {\n  ...user,\n  address: {\n    ...user.address,\n    city: 'Hyderabad'\n  }\n};\n\n// ---- Signals: update with a new reference ----\nimport { signal } from '@angular/core';\n\nconst users = signal<User[]>([user]);\n\nfunction renameUser(id: number, name: string): void {\n  users.update(current =>\n    current.map(u => u.id === id ? { ...u, name } : u)\n  );\n}\n\nfunction updateCity(id: number, city: string): void {\n  users.update(current =>\n    current.map(u =>\n      u.id === id\n        ? { ...u, address: { ...u.address, city } }\n        : u\n    )\n  );\n}\n\n// ---- NgRx reducer: same immutable update idea ----\non(updateUserCity, (state, { id, city }) => ({\n  ...state,\n  users: state.users.map(user =>\n    user.id === id\n      ? { ...user, address: { ...user.address, city } }\n      : user\n  )\n}));",
+      "language": "typescript"
+    },
+    {
       "id": "what-is-ngrx",
       "title": "What is NgRx?",
       "explanation": "<p><strong>NgRx</strong> is the most widely used state management library for Angular. It implements the <strong>Redux pattern</strong> using RxJS Observables.</p><h3>Core idea</h3><p>All application state lives in a single immutable object called the <strong>Store</strong>. State can only be changed by dispatching an <strong>Action</strong>. A <strong>Reducer</strong> is a pure function that receives the current state and an action, and returns a new state. This makes state changes predictable, traceable, and testable.</p><h3>The four building blocks</h3><ul><li><strong>Store</strong> — the single object holding all state; an Observable you can subscribe to</li><li><strong>Actions</strong> — plain objects describing what happened: <code>{ type: '[Cart] Add Item', item: {...} }</code></li><li><strong>Reducers</strong> — pure functions: <code>(currentState, action) => newState</code></li><li><strong>Effects</strong> — handle side effects (API calls, localStorage, routing) triggered by actions</li></ul><h3>When to use NgRx</h3><p>NgRx adds boilerplate. Use it when your app has complex shared state that is accessed by many unrelated components, has many async operations that interact with each other, or when your team needs strong debugging tools (time-travel with Redux DevTools). For simpler apps, a service with BehaviorSubject is often enough.</p>",

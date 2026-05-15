@@ -89,7 +89,7 @@ body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
 .module-btn.open .chevron { transform: rotate(90deg); }
 
 .question-list { overflow: hidden; max-height: 0; transition: max-height 0.3s ease; }
-.question-list.open { max-height: 1000px; }
+.question-list.open { max-height: none; overflow: visible; }
 
 .q-btn {
   width: 100%;

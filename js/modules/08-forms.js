@@ -408,6 +408,131 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 }`,
       language: "typescript"
+    },
+    {
+      id: "signal-forms-angular-21",
+      title: "Signal Forms (Angular 21 experimental)",
+      explanation: `
+        <p><strong>Signal Forms</strong> are Angular 21's experimental forms API. They use a writable signal as the source of truth and create a type-safe field tree with <code>form()</code>. This fits modern Angular's signals-first and zoneless direction better than Observable-heavy form flows.</p>
+
+        <h3>When to use it</h3>
+        <p>Use Signal Forms for learning, prototypes, and new code where you accept experimental API risk. For production-critical large forms, typed reactive forms are still the safest default until Signal Forms stabilize.</p>
+
+        <h3>Core pieces</h3>
+        <ul>
+          <li><code>signal()</code> holds the form data model</li>
+          <li><code>form(model)</code> creates fields that mirror the model shape</li>
+          <li><code>FormField</code> binds fields to native inputs</li>
+          <li>schema rules like <code>required()</code> and <code>email()</code> centralize validation</li>
+        </ul>
+      `,
+      code: `import { Component, signal } from '@angular/core';
+import { form, FormField, required, email, minLength } from '@angular/forms/signals';
+
+interface LoginForm {
+  email: string;
+  password: string;
+}
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [FormField],
+  template: \`
+    <form>
+      <label>
+        Email
+        <input type="email" [formField]="loginForm.email" />
+      </label>
+
+      <label>
+        Password
+        <input type="password" [formField]="loginForm.password" />
+      </label>
+
+      @if (loginForm.email().invalid()) {
+        <p>Email is required and must be valid.</p>
+      }
+    </form>
+  \`
+})
+export class LoginComponent {
+  loginModel = signal<LoginForm>({ email: '', password: '' });
+
+  loginForm = form(this.loginModel, path => {
+    required(path.email);
+    email(path.email);
+    required(path.password);
+    minLength(path.password, 8);
+  });
+}`,
+      language: "typescript"
+    },
+    {
+      id: "control-value-accessor",
+      title: "ControlValueAccessor - custom form controls",
+      explanation: `
+        <p><strong>ControlValueAccessor</strong> (CVA) is the bridge between Angular forms and a custom UI component. If you build a custom date picker, rating control, rich select, file picker, or design-system input, CVA lets it work with <code>formControlName</code>, validation, touched/dirty state, and disabled state.</p>
+
+        <h3>What a CVA must implement</h3>
+        <ul>
+          <li><code>writeValue(value)</code> - Angular writes a form value into your component</li>
+          <li><code>registerOnChange(fn)</code> - your component calls this when the user changes the value</li>
+          <li><code>registerOnTouched(fn)</code> - your component calls this on blur/touch</li>
+          <li><code>setDisabledState(disabled)</code> - Angular enables/disables your UI</li>
+        </ul>
+      `,
+      code: `import { Component, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+
+@Component({
+  selector: 'app-rating-input',
+  standalone: true,
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => RatingInputComponent),
+    multi: true
+  }],
+  template: \`
+    @for (star of [1, 2, 3, 4, 5]; track star) {
+      <button type="button" [disabled]="disabled" (click)="select(star)">
+        {{ star <= value ? '★' : '☆' }}
+      </button>
+    }
+  \`
+})
+export class RatingInputComponent implements ControlValueAccessor {
+  value = 0;
+  disabled = false;
+
+  private onChange = (value: number) => {};
+  private onTouched = () => {};
+
+  writeValue(value: number | null): void {
+    this.value = value ?? 0;
+  }
+
+  registerOnChange(fn: (value: number) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled: boolean): void {
+    this.disabled = disabled;
+  }
+
+  select(value: number): void {
+    this.value = value;
+    this.onChange(value);
+    this.onTouched();
+  }
+}
+
+// Usage: <app-rating-input formControlName="rating" />`,
+      language: "typescript"
     }
   ]
 });

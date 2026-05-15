@@ -511,6 +511,57 @@ export class AppComponent {}
 // The shell stays on screen — only the content inside <router-outlet> swaps.
 // This is what makes Angular a Single Page Application.`,
       language: "typescript"
+    },
+    {
+      id: "route-resolvers-and-data",
+      title: "Route resolvers and route data",
+      explanation: `
+        <p><strong>Route data</strong> is static metadata attached to a route, such as permissions, breadcrumbs, page titles, or layout settings. <strong>Resolvers</strong> load required data before a route activates, so the component can render with its required data already available.</p>
+
+        <h3>When to use resolvers</h3>
+        <p>Use a resolver when a route cannot meaningfully render without the data: product detail, edit user, invoice preview. For optional data or dashboard widgets, load inside the component so the page can render progressively.</p>
+
+        <h3>Modern Angular style</h3>
+        <p>Use functional resolvers with <code>ResolveFn</code> and <code>inject()</code>. This matches modern functional guards and keeps routing code concise.</p>
+      `,
+      code: `import { Routes, ResolveFn, ActivatedRoute } from '@angular/router';
+import { inject, Component } from '@angular/core';
+
+interface Product { id: string; name: string; price: number; }
+
+export const productResolver: ResolveFn<Product> = (route) => {
+  const productService = inject(ProductService);
+  return productService.getById(route.paramMap.get('id')!);
+};
+
+export const routes: Routes = [
+  {
+    path: 'products/:id',
+    title: 'Product Details',
+    resolve: { product: productResolver },
+    data: {
+      breadcrumb: 'Product',
+      requiredRole: 'customer'
+    },
+    loadComponent: () =>
+      import('./product-detail.component').then(m => m.ProductDetailComponent)
+  }
+];
+
+@Component({
+  standalone: true,
+  template: \`
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.price | currency }}</p>
+  \`
+})
+export class ProductDetailComponent {
+  private route = inject(ActivatedRoute);
+
+  // Resolver data is available when the component is created.
+  product = this.route.snapshot.data['product'] as Product;
+}`,
+      language: "typescript"
     }
 
   ]
