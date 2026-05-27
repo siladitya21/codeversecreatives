@@ -5,6 +5,48 @@ window.MODULES.push({
   "icon": "bi bi-diagram-3",
   "questions": [
     {
+      id: "angular-22-standard-state-upgrade",
+      title: "Angular 22 standard for state management",
+      explanation: `
+        <p>Angular 22-ready state management starts with the simplest correct store: signals in a service for local or feature state, RxJS for async stream orchestration, and NgRx or another store library when you need strict event history, entity management, devtools, effects, or large-team conventions.</p>
+
+        <h3>Modern state checklist</h3>
+        <ul>
+          <li>Use private writable signals and expose readonly signals or computed values.</li>
+          <li>Keep writes behind methods such as <code>addItem()</code> or <code>loadUser()</code>.</li>
+          <li>Use immutable updates so change detection and debugging stay predictable.</li>
+          <li>Scope feature state with route-level providers when it should reset per feature.</li>
+          <li>Use NgRx when state transitions, effects, and debugging need stronger structure.</li>
+        </ul>
+      `,
+      code: `import { Injectable, computed, signal } from '@angular/core';
+
+@Injectable()
+export class CartState {
+  private readonly itemsState = signal<CartItem[]>([]);
+
+  readonly items = this.itemsState.asReadonly();
+  readonly count = computed(() =>
+    this.items().reduce((sum, item) => sum + item.quantity, 0)
+  );
+  readonly total = computed(() =>
+    this.items().reduce((sum, item) => sum + item.price * item.quantity, 0)
+  );
+
+  add(item: CartItem): void {
+    this.itemsState.update(items => [...items, item]);
+  }
+
+  remove(id: number): void {
+    this.itemsState.update(items => items.filter(item => item.id !== id));
+  }
+}
+
+// Route-scoped state:
+// { path: 'checkout', providers: [CartState], loadComponent: ... }`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-state-management",
       "title": "What is state management?",
       "explanation": "<p><strong>State</strong> is any data your application needs to remember and display — the logged-in user, a shopping cart, a list of products, whether a sidebar is open. <strong>State management</strong> is how you store, update, and share that data across components.</p><h3>Why it becomes hard</h3><p>In a small app with 3–4 components, you can pass data around with <code>@Input()</code> and <code>@Output()</code>. But as an app grows to 50 components across many routes, this becomes unmanageable:</p><ul><li><strong>Prop drilling</strong> — passing data through 4–5 levels of components just to reach the one that needs it</li><li><strong>Out-of-sync views</strong> — two unrelated components both display the cart count, but they each maintain their own copy</li><li><strong>Unpredictable mutations</strong> — multiple components modify the same data in different ways, making bugs hard to trace</li></ul><h3>The solution: a single source of truth</h3><p>Store shared state in one central place (a service, a store library, or Signals). Components read from this central state and dispatch updates through it. Any component that subscribes to the state automatically re-renders when it changes.</p>",

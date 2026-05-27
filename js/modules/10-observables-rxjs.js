@@ -5,6 +5,49 @@ window.MODULES.push({
   "icon": "bi bi-broadcast",
   "questions": [
     {
+      id: "angular-22-standard-rxjs-upgrade",
+      title: "Angular 22 standard for Observables and RxJS",
+      explanation: `
+        <p>RxJS remains essential in Angular for HTTP, router events, forms, websockets, and cancellation-heavy async workflows. The Angular 22-ready standard is to use RxJS for asynchronous streams and use signals for synchronous UI state. Convert between the two at the edge with Angular interop helpers instead of forcing everything into one model.</p>
+
+        <h3>Modern RxJS checklist</h3>
+        <ul>
+          <li>Use <code>AsyncPipe</code> or <code>takeUntilDestroyed()</code> instead of unmanaged subscriptions.</li>
+          <li>Use <code>switchMap</code> for request cancellation, especially search and route-param flows.</li>
+          <li>Use <code>toSignal()</code> when a template reads Observable state as a signal.</li>
+          <li>Use <code>toObservable()</code> when signal state must enter an RxJS pipeline.</li>
+          <li>Keep services responsible for stream composition, not components.</li>
+        </ul>
+      `,
+      code: `import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs';
+
+@Component({
+  selector: 'app-user-page',
+  template: \`
+    @if (user(); as currentUser) {
+      <h2>{{ currentUser.name }}</h2>
+    } @else {
+      <p>Loading...</p>
+    }
+  \`
+})
+export class UserPageComponent {
+  private readonly route = inject(ActivatedRoute);
+  private readonly users = inject(UserService);
+
+  readonly user = toSignal(
+    this.route.paramMap.pipe(
+      switchMap(params => this.users.getById(params.get('id')!))
+    ),
+    { initialValue: null }
+  );
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-are-observables",
       "title": "What are observables?",
       "explanation": "<p>An <strong>Observable</strong> is a stream — a sequence of values delivered over time. Unlike a regular function call that returns one value immediately, an Observable can emit zero, one, or many values across any span of time, and then either complete normally or error out.</p><p>Angular uses Observables everywhere: HTTP responses, form <code>valueChanges</code>, router events, <code>@Output</code> EventEmitters, and more. The RxJS library provides the Observable implementation.</p><h3>Key concepts</h3><ul><li><strong>Producer</strong> — the Observable itself; defines what values to emit and when</li><li><strong>Consumer</strong> — the subscriber; reacts to each emitted value</li><li><strong>Lazy</strong> — nothing happens until something subscribes. Each <code>subscribe()</code> call starts a fresh execution of the Observable.</li><li><strong>Unicast by default</strong> — each subscriber gets its own independent execution (cold Observable)</li></ul><h3>The three notification types</h3><ul><li><code>next(value)</code> — emits a value to the subscriber</li><li><code>error(err)</code> — terminates the stream with an error</li><li><code>complete()</code> — terminates the stream successfully (no more values)</li></ul>",

@@ -5,6 +5,41 @@ window.MODULES.push({
   "icon": "bi bi-arrow-repeat",
   "questions": [
     {
+      id: "angular-22-standard-version-upgrade",
+      title: "Angular 22 standard version baseline",
+      explanation: `
+          <p>For Angular 22-ready interview prep, the baseline is no longer NgModule-first Angular. The modern baseline is standalone components, functional providers, signals, block template syntax, typed forms, functional router APIs, functional HTTP interceptors, SSR/hydration awareness, and modern testing.</p>
+
+          <h3>What to treat as current standard</h3>
+          <ul>
+            <li><code>bootstrapApplication()</code> instead of a root <code>AppModule</code> for new apps.</li>
+            <li>Standalone components, directives, and pipes.</li>
+            <li><code>signal()</code>, <code>computed()</code>, <code>effect()</code>, and signal component APIs.</li>
+            <li><code>@if</code>, <code>@for</code>, and <code>@switch</code> in new templates.</li>
+            <li><code>provideRouter()</code>, <code>provideHttpClient()</code>, and functional interceptors.</li>
+            <li>Typed reactive forms and strict template checking.</li>
+          </ul>
+        `,
+      code: `// Modern Angular baseline
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authInterceptor]))
+  ]
+});
+
+@Component({
+  selector: 'app-user-card',
+  imports: [CurrencyPipe],
+  template: '<h3>{{ user().name }}</h3>'
+})
+export class UserCardComponent {
+  readonly user = input.required<User>();
+  readonly selected = output<User>();
+}`,
+      language: "typescript"
+    },
+    {
       "id": "angular-14-15-features",
       "title": "Angular 14 & 15 — inject(), standalone components, typed forms",
       "explanation": `

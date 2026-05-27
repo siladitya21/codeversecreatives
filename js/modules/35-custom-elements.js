@@ -5,6 +5,40 @@ window.MODULES.push({
   "icon": "bi bi-puzzle-fill",
   "questions": [
     {
+      id: "angular-22-standard-custom-elements-upgrade",
+      title: "Angular 22 standard for custom elements",
+      explanation: `
+          <p>Angular 22-ready custom elements are best used for interoperability: embedding Angular-built widgets into non-Angular hosts or distributing a component suite across platforms. For normal Angular-to-Angular reuse, standalone components and libraries are lighter and simpler.</p>
+
+          <h3>Modern custom element checklist</h3>
+          <ul>
+            <li>Use Angular Elements only when the consumer is not an Angular app.</li>
+            <li>Keep the element API small: attributes/properties in, DOM events out.</li>
+            <li>Bundle shared runtime carefully if publishing many elements.</li>
+            <li>Document event names, attribute names, and supported browser targets.</li>
+            <li>Avoid relying on global app services unless the element bootstraps them.</li>
+          </ul>
+        `,
+      code: `@Component({
+  selector: 'app-rating-widget',
+  template: '<button (click)="rated.emit(5)">Rate 5</button>'
+})
+export class RatingWidgetComponent {
+  readonly productId = input.required<string>();
+  readonly rated = output<number>();
+}
+
+bootstrapApplication(EmptyHostComponent).then(appRef => {
+  const injector = appRef.injector;
+  const element = createCustomElement(RatingWidgetComponent, { injector });
+  customElements.define('rating-widget', element);
+});
+
+// Host page:
+// <rating-widget product-id="sku-1"></rating-widget>`,
+      language: "typescript"
+    },
+    {
       "id": "what-are-custom-elements",
       "title": "What are Custom Elements and why use Angular Elements?",
       "explanation": `

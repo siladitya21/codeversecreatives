@@ -5,6 +5,49 @@ window.MODULES.push({
   "icon": "bi bi-funnel",
   "questions": [
     {
+      id: "angular-22-standard-pipes-upgrade",
+      title: "Angular 22 standard for pipes",
+      explanation: `
+        <p>Angular 22-ready pipe usage is <strong>standalone, pure by default, and import-explicit</strong>. Pipes are still great for display formatting, but avoid using them as a state-management or filtering engine for large mutable lists. With signals and computed values available, expensive transformations often belong in <code>computed()</code> rather than in a pipe that runs from the template.</p>
+
+        <h3>Modern pipe checklist</h3>
+        <ul>
+          <li>Make custom pipes standalone and import them directly where used.</li>
+          <li>Keep pipes pure unless there is a very strong reason.</li>
+          <li>Use built-in pipes in standalone component <code>imports</code>, such as <code>DatePipe</code> or <code>CurrencyPipe</code>.</li>
+          <li>Use <code>computed()</code> for expensive app-specific derived state.</li>
+          <li>Use <code>AsyncPipe</code> for Observable display, but use signals when the state is already signal-based.</li>
+        </ul>
+      `,
+      code: `import { Component, Pipe, PipeTransform, computed, signal } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+
+@Pipe({
+  name: 'initials',
+  standalone: true
+})
+export class InitialsPipe implements PipeTransform {
+  transform(name: string): string {
+    return name.split(' ').map(part => part[0]).join('').toUpperCase();
+  }
+}
+
+@Component({
+  selector: 'app-user-card',
+  imports: [CurrencyPipe, InitialsPipe],
+  template: \`
+    <span>{{ user().name | initials }}</span>
+    <strong>{{ total() | currency }}</strong>
+  \`
+})
+export class UserCardComponent {
+  readonly user = signal({ name: 'Asha Sharma' });
+  readonly items = signal([{ price: 10 }, { price: 20 }]);
+  readonly total = computed(() => this.items().reduce((sum, item) => sum + item.price, 0));
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-are-pipes",
       "title": "What are pipes?",
       "explanation": "<p>In Angular, <strong>pipes</strong> are template functions that transform a value before displaying it. They keep transformation logic out of the component class and make templates more readable.</p><p>Think of a pipe like a filter in a kitchen — you pass raw data in, and get transformed, display-ready data out. Common uses: formatting dates, displaying currency, converting text case, trimming arrays.</p><h3>Syntax</h3><ul><li>Basic: <code>{{ value | pipeName }}</code></li><li>With parameters: <code>{{ value | pipeName:param1:param2 }}</code></li><li>Chained: <code>{{ value | pipe1 | pipe2 }}</code></li></ul><h3>Key Facts</h3><ul><li>Pipes are <strong>pure by default</strong> &mdash; Angular only re-runs them when the input reference changes (not on mutations)</li><li>Angular provides many built-in pipes; you can also write your own</li><li>Pipes can also be used inside component classes via <code>inject(DatePipe)</code> or constructor injection</li><li>They are standalone and can be imported directly into standalone components</li></ul>",

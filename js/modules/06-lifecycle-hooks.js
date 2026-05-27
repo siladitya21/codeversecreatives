@@ -4,6 +4,56 @@ window.MODULES.push({
   title: "Lifecycle Hooks",
   icon: "bi bi-hourglass-split",
   questions: [
+    {
+      id: "angular-22-standard-lifecycle-upgrade",
+      title: "Angular 22 standard for lifecycle hooks",
+      explanation: `
+        <p>Modern Angular still supports every lifecycle hook, but Angular 22-ready code should use hooks more selectively. Prefer <code>input()</code>, signals, <code>computed()</code>, <code>effect()</code>, and signal queries for reactive work, then use lifecycle hooks only when they match the component boundary: initialization, DOM access, projected content, view children, or cleanup.</p>
+
+        <h3>Modern rule of thumb</h3>
+        <ul>
+          <li>Use <code>constructor</code> or field initializers only for dependency setup.</li>
+          <li>Use <code>ngOnInit()</code> for one-time startup work that depends on injected services.</li>
+          <li>Use <code>input()</code> plus <code>effect()</code> instead of <code>ngOnChanges()</code> for many input-driven reactions.</li>
+          <li>Use <code>afterNextRender()</code> or view hooks for DOM-dependent work.</li>
+          <li>Use <code>DestroyRef</code> and <code>takeUntilDestroyed()</code> for cleanup instead of hand-written unsubscribe fields.</li>
+        </ul>
+      `,
+      code: `import { Component, DestroyRef, effect, inject, input } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+@Component({
+  selector: 'app-user-dashboard',
+  template: \`
+    @if (loading()) {
+      <p>Loading...</p>
+    } @else {
+      <h2>{{ userName() }}</h2>
+    }
+  \`
+})
+export class UserDashboardComponent {
+  readonly userId = input.required<string>();
+  readonly loading = signal(false);
+  readonly userName = signal('');
+
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly api = inject(ApiService);
+
+  constructor() {
+    effect(() => {
+      this.loading.set(true);
+      this.api.getUser(this.userId())
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(user => {
+          this.userName.set(user.name);
+          this.loading.set(false);
+        });
+    });
+  }
+}`,
+      language: "typescript"
+    },
 
     {
       id: "what-is-ngoninit",

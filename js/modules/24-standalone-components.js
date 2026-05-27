@@ -5,6 +5,45 @@ window.MODULES.push({
   "icon": "bi bi-box",
   "questions": [
     {
+      id: "angular-22-standard-standalone-upgrade",
+      title: "Angular 22 standard for standalone components",
+      explanation: `
+          <p>Angular 22-ready apps are standalone-first. Components, directives, and pipes import their own template dependencies directly, routes are provided with <code>provideRouter()</code>, HTTP with <code>provideHttpClient()</code>, and feature providers can live at route boundaries.</p>
+
+          <h3>Modern standalone checklist</h3>
+          <ul>
+            <li>Use standalone components as the default for new code.</li>
+            <li>Use component <code>imports</code> for dependencies instead of SharedModule-style buckets.</li>
+            <li>Use <code>bootstrapApplication()</code> instead of root <code>AppModule</code>.</li>
+            <li>Lazy load standalone components with <code>loadComponent()</code>.</li>
+            <li>Keep NgModules only for legacy compatibility or libraries that still require them.</li>
+          </ul>
+        `,
+      code: `bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient()
+  ]
+});
+
+@Component({
+  selector: 'app-product-card',
+  imports: [CurrencyPipe, RouterLink],
+  templateUrl: './product-card.component.html'
+})
+export class ProductCardComponent {
+  readonly product = input.required<Product>();
+}
+
+export const routes: Routes = [
+  {
+    path: 'products/:id',
+    loadComponent: () => import('./product-page.component').then(m => m.ProductPageComponent)
+  }
+];`,
+      language: "typescript"
+    },
+    {
       "id": "what-are-standalone-components",
       "title": "What are standalone components?",
       "explanation": "\n          <p>A <strong>standalone component</strong> is a component, directive, or pipe that does not need to be declared inside an <code>NgModule</code>. Instead, it manages its own dependencies directly in its <code>@Component</code> decorator's <code>imports</code> array. This was introduced in Angular 14 as an opt-in feature and became the recommended default approach in Angular 17.</p>\n\n          <p>Before standalone components, every Angular component had to be declared in an <code>NgModule</code>. If that component needed to use another component, a directive, or a pipe, those also had to be declared or imported in the same module. For large applications, this created large, hard-to-understand module files that became a maintenance burden — and a common source of confusing errors like \"Component 'X' is not declared in any module.\"</p>\n\n          <h3>The Key Difference</h3>\n          <p>In a standalone component, the <code>imports</code> array in <code>@Component</code> does exactly what the <code>imports</code> array in <code>@NgModule</code> used to do — it makes other components, directives, pipes, and modules available to the template. The difference is that these imports are scoped to <em>this component only</em>, not shared with every component in a module. This makes dependencies explicit and local, which is much easier to understand and tree-shake.</p>\n        ",

@@ -5,6 +5,43 @@ window.MODULES.push({
   "icon": "bi bi-server",
   "questions": [
     {
+      id: "angular-22-standard-ssr-upgrade",
+      title: "Angular 22 standard for SSR and hydration",
+      explanation: `
+          <p>Angular 22-ready SSR is about choosing the right rendering mode per route: client-side rendering for private app screens, prerendering for static public pages, and server-side rendering with hydration for dynamic public content. Hydration should preserve server-rendered DOM and make it interactive without flicker.</p>
+
+          <h3>Modern SSR checklist</h3>
+          <ul>
+            <li>Add SSR with <code>ng add @angular/ssr</code>.</li>
+            <li>Use hydration providers in the client app configuration.</li>
+            <li>Guard browser-only APIs like <code>window</code>, <code>document</code>, and <code>localStorage</code>.</li>
+            <li>Use TransferState or HTTP transfer cache to avoid duplicate data fetching.</li>
+            <li>Choose prerendering for static content and SSR for per-request content.</li>
+            <li>Test both first paint and post-hydration interactivity.</li>
+          </ul>
+        `,
+      code: `export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideClientHydration(),
+    provideHttpClient()
+  ]
+};
+
+@Injectable({ providedIn: 'root' })
+export class BrowserStorage {
+  private readonly platformId = inject(PLATFORM_ID);
+
+  getTheme(): string | null {
+    if (!isPlatformBrowser(this.platformId)) {
+      return null;
+    }
+    return localStorage.getItem('theme');
+  }
+}`,
+      language: "typescript"
+    },
+    {
       "id": "ssr-deep-dive",
       "title": "Server-Side Rendering — why it matters and how Angular does it",
       "explanation": `

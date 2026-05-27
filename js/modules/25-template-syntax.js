@@ -5,6 +5,44 @@ window.MODULES.push({
   "icon": "bi bi-code-slash",
   "questions": [
     {
+      id: "angular-22-standard-template-upgrade",
+      title: "Angular 22 standard for template syntax",
+      explanation: `
+          <p>Angular 22-ready templates should be readable, signal-aware, and block-syntax-first. Use <code>@if</code>, <code>@for</code>, and <code>@switch</code> for control flow, read signals with function calls, use stable tracking for lists, and keep expensive logic out of the template.</p>
+
+          <h3>Modern template checklist</h3>
+          <ul>
+            <li>Use <code>@if</code> and <code>@else</code> instead of new <code>*ngIf</code> examples.</li>
+            <li>Use <code>@for (...; track item.id)</code> for lists.</li>
+            <li>Read signal state as <code>state()</code>.</li>
+            <li>Use property, class, style, and event bindings explicitly.</li>
+            <li>Use <code>[attr.aria-*]</code> for ARIA attributes.</li>
+            <li>Move heavy expressions into <code>computed()</code> or pure pipes.</li>
+          </ul>
+        `,
+      code: `@Component({
+  selector: 'app-order-summary',
+  templateUrl: './order-summary.component.html'
+})
+export class OrderSummaryComponent {
+  readonly order = signal<Order | null>(null);
+  readonly total = computed(() =>
+    this.order()?.items.reduce((sum, item) => sum + item.price, 0) ?? 0
+  );
+}
+
+// order-summary.component.html
+// @if (order(); as currentOrder) {
+//   @for (item of currentOrder.items; track item.id) {
+//     <p [class.expensive]="item.price > 1000">{{ item.name }}</p>
+//   } @empty {
+//     <p>No items.</p>
+//   }
+//   <strong>{{ total() | currency }}</strong>
+// }`,
+      language: "typescript"
+    },
+    {
       "id": "template-expression-operators",
       "title": "Template expression operators",
       "explanation": "\n          <p><strong>Template expressions</strong> are TypeScript-like snippets evaluated by Angular inside interpolation (<code>{{ }}</code>) and binding attributes (<code>[property]=\"expression\"</code>). Angular evaluates them against the component instance, so any property or method of the component class is available directly by name.</p>\n\n          <h3>What You Can Use</h3>\n          <p>Standard TypeScript operators work: arithmetic (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>), comparison (<code>===</code>, <code>!==</code>, <code>&gt;</code>, <code>&lt;</code>), logical (<code>&&</code>, <code>||</code>, <code>!</code>), ternary (<code>condition ? a : b</code>), nullish coalescing (<code>??</code>), optional chaining (<code>?.</code>), property access, array indexing, and method calls. Angular also supports pipes in expressions via the <code>|</code> pipe operator.</p>\n\n          <h3>What You Cannot Use</h3>\n          <p>Template expressions are sandboxed for security and performance reasons. You cannot use assignment operators (<code>=</code>, <code>+=</code>), the <code>new</code> keyword, <code>typeof</code>, <code>instanceof</code>, increment/decrement (<code>++</code>, <code>--</code>), or bitwise operators. You also cannot directly reference global objects like <code>window</code>, <code>document</code>, <code>console</code>, or <code>Math</code>. If you need Math functions, expose them through the component: <code>protected Math = Math</code>.</p>\n\n          <h3>Keep Expressions Simple</h3>\n          <p>Angular runs template expressions on every change detection cycle. Heavy computations in expressions — sorting a large array, doing string transformations in loops — run repeatedly and hurt performance. Move complex logic into computed properties, getter methods, or Angular pipes (which can be memoized with <code>pure: true</code>).</p>\n        ",

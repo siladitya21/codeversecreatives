@@ -5,6 +5,44 @@ window.MODULES.push({
   "icon": "bi bi-rocket-takeoff",
   "questions": [
     {
+      id: "angular-22-standard-advanced-upgrade",
+      title: "Angular 22 standard for advanced concepts",
+      explanation: `
+          <p>Angular 22-ready advanced work is mostly about choosing the right platform feature at the right boundary: SSR and hydration for first paint and SEO, signals for fine-grained state, standalone APIs for composition, defer blocks for loading strategy, and functional providers for framework integration.</p>
+
+          <h3>Modern advanced checklist</h3>
+          <ul>
+            <li>Use Angular SSR with hydration for content-heavy or SEO-sensitive apps.</li>
+            <li>Guard browser-only APIs with platform checks during SSR.</li>
+            <li>Use deferrable views for expensive UI that does not need to load immediately.</li>
+            <li>Prefer functional guards, resolvers, interceptors, and providers.</li>
+            <li>Use signals and RxJS interop deliberately rather than mixing patterns randomly.</li>
+          </ul>
+        `,
+      code: `// Advanced Angular 22-ready app shape
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(withInterceptors([authInterceptor])),
+    provideClientHydration()
+  ]
+});
+
+// Browser-only work during SSR:
+const platformId = inject(PLATFORM_ID);
+if (isPlatformBrowser(platformId)) {
+  localStorage.setItem('theme', 'dark');
+}
+
+// Template idea:
+// @defer (on viewport) {
+//   <app-heavy-analytics-panel />
+// } @placeholder {
+//   <app-panel-skeleton />
+// }`,
+      language: "typescript"
+    },
+    {
       "id": "angular-universal-ssr",
       "title": "What is Angular Universal (SSR)?",
       "explanation": "\n          <p><strong>Angular Universal</strong> — now simply called <strong>Angular SSR</strong> — is the technology that renders your Angular application on the <strong>server</strong> and sends the finished HTML to the browser, instead of sending a blank page and making the browser do all the rendering work.</p>\n\n          <p>In a standard client-side Angular app, the server sends a nearly empty <code>index.html</code> with a bundle of JavaScript. The browser downloads the JS, boots Angular, and then renders the UI. This process takes time — during which the user stares at a blank screen. SSR eliminates that first paint delay by sending a fully populated HTML page immediately.</p>\n\n          <h3>Why Use SSR?</h3>\n          <p><strong>SEO</strong> is the most common reason. Search engine crawlers fetching your page get real HTML content right away, rather than an empty shell that requires JavaScript execution to populate. For content-driven sites this is critical. <strong>Social sharing</strong> benefits similarly — Facebook's and Twitter's link-preview crawlers read the raw HTML for title and OG image tags.</p>\n\n          <p><strong>Perceived performance</strong> is the second reason. First Contentful Paint (FCP) and Largest Contentful Paint (LCP) — the Core Web Vitals metrics Google uses in search ranking — both improve dramatically when the server sends pre-rendered HTML. The user sees real content within milliseconds, even before Angular's JavaScript bundle has finished loading.</p>\n\n          <h3>Hydration</h3>\n          <p>After the server-rendered HTML arrives, Angular still needs to download and boot its JavaScript to make the page interactive. This process — attaching event listeners and Angular's change detection to the already-visible DOM — is called <strong>hydration</strong>. Angular 16+ includes non-destructive hydration, meaning Angular reuses the server-rendered DOM instead of destroying and recreating it, which eliminates the flicker that older SSR implementations suffered.</p>\n\n          <h3>Platform-Specific Gotchas</h3>\n          <p>Server-side code runs in Node.js, not a browser. That means <code>window</code>, <code>document</code>, and <code>localStorage</code> do not exist. Any component or service that accesses these APIs will throw during SSR. Use Angular's <code>isPlatformBrowser()</code> guard or the <code>PLATFORM_ID</code> injection token to conditionally skip browser-only code on the server.</p>\n        ",

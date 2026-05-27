@@ -5,6 +5,40 @@ window.MODULES.push({
   "icon": "bi bi-layers",
   "questions": [
     {
+      id: "angular-22-standard-memory-upgrade",
+      title: "Angular 22 standard for memory management",
+      explanation: `
+          <p>Angular 22-ready memory management uses framework-owned cleanup wherever possible. Template bindings, <code>AsyncPipe</code>, signals, and <code>takeUntilDestroyed()</code> should replace manual subscription arrays and fragile <code>ngOnDestroy()</code> bookkeeping.</p>
+
+          <h3>Modern memory checklist</h3>
+          <ul>
+            <li>Prefer <code>AsyncPipe</code> or signals over manual subscriptions in components.</li>
+            <li>Use <code>takeUntilDestroyed()</code> for subscriptions you must start manually.</li>
+            <li>Use <code>DestroyRef.onDestroy()</code> to clean timers, workers, and event listeners.</li>
+            <li>Clear intervals and terminate workers.</li>
+            <li>Profile long-lived routes with browser memory tools after repeated navigation.</li>
+          </ul>
+        `,
+      code: `@Component({
+  selector: 'app-search-box',
+  template: '<input [formControl]="search" />'
+})
+export class SearchBoxComponent {
+  readonly search = new FormControl('');
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor() {
+    this.search.valueChanges
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(value => console.log(value));
+
+    const intervalId = setInterval(() => console.log('tick'), 1000);
+    this.destroyRef.onDestroy(() => clearInterval(intervalId));
+  }
+}`,
+      language: "typescript"
+    },
+    {
       "id": "memory-leaks-angular",
       "title": "Memory leaks in Angular — causes and consequences",
       "explanation": `

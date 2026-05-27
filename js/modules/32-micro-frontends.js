@@ -5,6 +5,38 @@ window.MODULES.push({
   "icon": "bi bi-puzzle",
   "questions": [
     {
+      id: "angular-22-standard-micro-frontends-upgrade",
+      title: "Angular 22 standard for micro frontends",
+      explanation: `
+          <p>Angular 22-ready micro frontends should solve an organizational scaling problem, not just a technical curiosity. Prefer a well-structured monorepo until independent team ownership and deployment are truly needed. When you do split, keep contracts explicit and dependencies aligned.</p>
+
+          <h3>Modern micro frontend checklist</h3>
+          <ul>
+            <li>Use micro frontends for independent ownership and release cadence.</li>
+            <li>Share Angular versions deliberately to avoid duplicate runtimes.</li>
+            <li>Define contracts through routes, custom events, APIs, or typed shared packages.</li>
+            <li>Keep authentication, design tokens, telemetry, and error handling consistent.</li>
+            <li>Test integration at the shell level, not only inside each remote.</li>
+          </ul>
+        `,
+      code: `// Shell route loading a remote feature:
+export const routes: Routes = [
+  {
+    path: 'billing',
+    loadChildren: () =>
+      loadRemoteModule({
+        type: 'module',
+        remoteEntry: 'https://cdn.example.com/billing/remoteEntry.js',
+        exposedModule: './routes'
+      }).then(m => m.billingRoutes)
+  }
+];
+
+// Keep shared contracts small:
+// @company/contracts -> UserSummary, AuthClaims, NavigationItem`,
+      language: "typescript"
+    },
+    {
       "id": "what-are-micro-frontends",
       "title": "What are micro frontends and when do you need them?",
       "explanation": `

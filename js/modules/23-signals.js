@@ -5,6 +5,43 @@ window.MODULES.push({
   "icon": "bi bi-reception-4",
   "questions": [
     {
+      id: "angular-22-standard-signals-upgrade",
+      title: "Angular 22 standard for signals",
+      explanation: `
+          <p>In Angular 22-ready code, signals are the default primitive for synchronous UI state. Use writable signals for local state, <code>computed()</code> for derived state, <code>effect()</code> only for side effects, and RxJS interop when state crosses into async streams like HTTP, router params, or form changes.</p>
+
+          <h3>Modern signals checklist</h3>
+          <ul>
+            <li>Read signals in templates by calling them: <code>count()</code>.</li>
+            <li>Update signals with <code>set()</code> and <code>update()</code>.</li>
+            <li>Keep derived state in <code>computed()</code>, not template methods.</li>
+            <li>Use <code>input()</code>, <code>output()</code>, and <code>model()</code> for modern component APIs.</li>
+            <li>Expose readonly signals from services.</li>
+            <li>Use <code>toSignal()</code> and <code>toObservable()</code> at RxJS boundaries.</li>
+          </ul>
+        `,
+      code: `@Injectable({ providedIn: 'root' })
+export class CounterStore {
+  private readonly countState = signal(0);
+
+  readonly count = this.countState.asReadonly();
+  readonly doubled = computed(() => this.count() * 2);
+
+  increment(): void {
+    this.countState.update(value => value + 1);
+  }
+}
+
+@Component({
+  selector: 'app-counter-button',
+  template: '<button (click)="store.increment()">{{ store.count() }}</button>'
+})
+export class CounterButtonComponent {
+  readonly store = inject(CounterStore);
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-are-signals",
       "title": "What are signals?",
       "explanation": "\n          <p><strong>Signals</strong> are Angular's reactive primitive for managing state. A signal is a wrapper around a value that automatically tracks who reads it and notifies those consumers when the value changes. Introduced in Angular 16 as developer preview and stabilized in Angular 17, signals represent a fundamentally different model of reactivity from the Zone.js + change detection approach Angular has used since Angular 2.</p>\n\n          <p>The core idea is simple: when you read a signal inside a template or a <code>computed()</code> call, Angular registers a dependency. When the signal's value changes, Angular knows exactly which templates and computed values need to be re-evaluated — and only those. No full component tree traversal, no Zone.js monkey-patching, no manual subscription management.</p>\n\n          <h3>Three Signal Primitives</h3>\n          <p><code>signal(initialValue)</code> creates a writable signal — a piece of state you control. You read it by calling it as a function: <code>count()</code>. You update it with <code>.set()</code> or <code>.update()</code>.</p>\n          <p><code>computed(() => expression)</code> creates a read-only derived signal whose value is automatically recalculated whenever any signal it reads changes. It is lazy (only calculates on first read) and memoized (returns the cached value if dependencies have not changed).</p>\n          <p><code>effect(() => sideEffect)</code> runs a function whenever any signal it reads changes. Use this for synchronizing to non-Angular systems — localStorage, analytics, third-party libraries — not for updating Angular state (that belongs in computed signals).</p>\n        ",

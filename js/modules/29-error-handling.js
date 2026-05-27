@@ -5,6 +5,42 @@ window.MODULES.push({
   "icon": "bi bi-bug",
   "questions": [
     {
+      id: "angular-22-standard-error-handling-upgrade",
+      title: "Angular 22 standard for error handling",
+      explanation: `
+          <p>Angular 22-ready error handling separates global crash reporting, HTTP recovery, route failures, and user-facing messages. A global <code>ErrorHandler</code> is the last line of defense, while predictable failures should be handled close to the operation that can recover from them.</p>
+
+          <h3>Modern error checklist</h3>
+          <ul>
+            <li>Use a custom <code>ErrorHandler</code> for uncaught errors and telemetry.</li>
+            <li>Use functional HTTP interceptors for auth failures and shared API errors.</li>
+            <li>Use <code>catchError()</code> inside services for request-specific fallbacks.</li>
+            <li>Represent loading, data, and error states explicitly in components.</li>
+            <li>Never show raw backend or stack-trace messages to users.</li>
+          </ul>
+        `,
+      code: `export const apiErrorInterceptor: HttpInterceptorFn = (req, next) => {
+  const toast = inject(ToastService);
+
+  return next(req).pipe(
+    catchError((error: HttpErrorResponse) => {
+      if (error.status >= 500) {
+        toast.show('Server error. Please try again later.');
+      }
+      return throwError(() => error);
+    })
+  );
+};
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    provideHttpClient(withInterceptors([apiErrorInterceptor]))
+  ]
+});`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-errorhandler",
       "title": "What is ErrorHandler and when does it fire?",
       "explanation": `

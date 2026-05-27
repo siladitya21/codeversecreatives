@@ -5,6 +5,47 @@ window.MODULES.push({
   "icon": "bi bi-phone-vibrate",
   "questions": [
     {
+      id: "angular-22-standard-pwa-upgrade",
+      title: "Angular 22 standard for PWAs",
+      explanation: `
+          <p>Angular 22-ready PWA work should be deliberate: not every Angular app needs offline mode. Use PWA features when installability, cached shell loading, offline reads, background updates, or push notifications clearly improve the product.</p>
+
+          <h3>Modern PWA checklist</h3>
+          <ul>
+            <li>Add PWA support with Angular's official schematic.</li>
+            <li>Register the service worker only for production builds.</li>
+            <li>Design cache strategies per asset group and data group.</li>
+            <li>Show update prompts when a new service worker version is ready.</li>
+            <li>Use HTTPS and valid maskable icons.</li>
+            <li>Test offline behavior in a production build, not <code>ng serve</code>.</li>
+          </ul>
+        `,
+      code: `bootstrapApplication(AppComponent, {
+  providers: [
+    provideServiceWorker('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    })
+  ]
+});
+
+@Injectable({ providedIn: 'root' })
+export class UpdateService {
+  private readonly updates = inject(SwUpdate);
+
+  constructor() {
+    if (this.updates.isEnabled) {
+      this.updates.versionUpdates.subscribe(event => {
+        if (event.type === 'VERSION_READY') {
+          document.location.reload();
+        }
+      });
+    }
+  }
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-pwa",
       "title": "What is a Progressive Web App (PWA)?",
       "explanation": "\n          <p>A <strong>Progressive Web App (PWA)</strong> is a web application that uses modern browser APIs to deliver an experience that feels like a native mobile or desktop app — installable on the home screen, capable of running offline, and able to receive push notifications. The word \"progressive\" means it enhances progressively: the base experience is still a normal website, and the app-like features layer on top for users whose browsers support them.</p>\n\n          <p>The value proposition is significant for the right applications. A traditional native app requires the user to visit an app store, download hundreds of megabytes, grant permissions, and wait for installation. A PWA is visited via a URL — the first visit loads in seconds, the app can be installed with a single tap, and subsequent visits work from cache even without a network connection.</p>\n\n          <h3>The Three Required Pillars</h3>\n          <p><strong>HTTPS</strong> — PWAs require a secure origin. Service workers (the technology behind offline capability) only register over HTTPS or localhost. This is a security requirement, not just a recommendation.</p>\n          <p><strong>Web App Manifest</strong> — A JSON file that describes the app: its name, icons, theme color, start URL, and display mode. The browser reads this to know how to install the app and what it should look like when launched from the home screen.</p>\n          <p><strong>Service Worker</strong> — A JavaScript file that runs in the background, separate from the main thread, intercepting network requests and serving cached responses. This is what makes offline mode and fast loads possible.</p>\n        ",

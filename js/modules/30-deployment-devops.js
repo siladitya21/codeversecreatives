@@ -5,6 +5,37 @@ window.MODULES.push({
   "icon": "bi bi-cloud-upload",
   "questions": [
     {
+      id: "angular-22-standard-devops-upgrade",
+      title: "Angular 22 standard for deployment and DevOps",
+      explanation: `
+          <p>Angular 22-ready DevOps focuses on repeatable builds, environment-safe configuration, CDN caching, route fallback, bundle budgets, automated tests, and observability. The deployment shape depends on whether the app is CSR, prerendered, SSR, or containerized.</p>
+
+          <h3>Modern DevOps checklist</h3>
+          <ul>
+            <li>Run lint, test, and production build in CI.</li>
+            <li>Fail CI on budget errors and critical test failures.</li>
+            <li>Cache hashed assets aggressively but never cache <code>index.html</code> forever.</li>
+            <li>Configure SPA fallback for client-side routes.</li>
+            <li>Inject environment config safely and avoid committing secrets.</li>
+            <li>Track runtime errors and Core Web Vitals after deployment.</li>
+          </ul>
+        `,
+      code: `# Typical CI flow
+npm ci
+npm run lint
+npm test -- --watch=false
+ng build --configuration production
+
+# Cache rule idea
+# index.html: no-cache
+# *.js, *.css with content hashes: max-age=31536000, immutable
+
+# SPA fallback idea
+# /dashboard/settings -> serve /index.html
+# Angular Router then renders the route.`,
+      language: "bash"
+    },
+    {
       "id": "deployment-strategies",
       "title": "Angular deployment strategies — choosing the right approach",
       "explanation": `

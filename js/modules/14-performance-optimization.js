@@ -5,6 +5,52 @@ window.MODULES.push({
   "icon": "bi bi-speedometer2",
   "questions": [
     {
+      id: "angular-22-standard-performance-upgrade",
+      title: "Angular 22 standard for performance",
+      explanation: `
+        <p>Angular 22-ready performance is not one trick. It combines lazy routes, standalone imports, signals, stable list tracking, SSR or prerendering where useful, image optimization, and strict bundle budgets. Optimize with measurements first, then choose the smallest change that removes the bottleneck.</p>
+
+        <h3>Modern performance checklist</h3>
+        <ul>
+          <li>Lazy load feature routes with <code>loadComponent()</code> or <code>loadChildren()</code>.</li>
+          <li>Use signals and <code>computed()</code> to avoid template recalculation.</li>
+          <li>Use <code>@for (...; track ...)</code> for lists.</li>
+          <li>Use deferrable views for heavy below-the-fold UI.</li>
+          <li>Keep dependencies tree-shakable and avoid large all-in-one imports.</li>
+          <li>Set bundle budgets and inspect production builds regularly.</li>
+        </ul>
+      `,
+      code: `@Component({
+  selector: 'app-dashboard',
+  template: \`
+    <app-summary />
+
+    @defer (on viewport) {
+      <app-heavy-chart [data]="chartData()" />
+    } @placeholder {
+      <p>Chart loading...</p>
+    }
+
+    @for (row of rows(); track row.id) {
+      <app-row [row]="row" />
+    }
+  \`
+})
+export class DashboardComponent {
+  readonly rows = signal<Row[]>([]);
+  readonly chartData = computed(() => buildChartData(this.rows()));
+}
+
+// app.routes.ts
+export const routes: Routes = [
+  {
+    path: 'reports',
+    loadComponent: () => import('./reports/reports.component').then(m => m.ReportsComponent)
+  }
+];`,
+      language: "typescript"
+    },
+    {
       "id": "how-to-optimize-angular",
       "title": "How to optimize Angular applications?",
       "explanation": "<p>Angular performance breaks into two distinct problems:</p><ul><li><strong>Load performance</strong> — how fast the app starts up (initial download, parse, render)</li><li><strong>Runtime performance</strong> — how smooth the app feels while running (how fast it reacts to user input)</li></ul><p>They require different solutions.</p><h3>Load performance strategies</h3><ul><li><strong>Lazy loading</strong> — only download code for the current route; other routes load on demand</li><li><strong>AOT compilation</strong> — compile templates at build time, not at runtime in the browser</li><li><strong>Tree shaking</strong> — the build process removes all unused code from the bundle</li><li><strong>Bundle analysis</strong> — find out what is actually in your bundle and cut unnecessary dependencies</li><li><strong>Preloading strategy</strong> — after the initial load, silently prefetch other routes in the background</li></ul><h3>Runtime performance strategies</h3><ul><li><strong>OnPush change detection</strong> — tell Angular to skip components whose inputs haven't changed</li><li><strong>trackBy in *ngFor</strong> — prevent DOM recreation for unchanged list items</li><li><strong>async pipe</strong> — let Angular manage subscriptions and only update the view when data actually changes</li><li><strong>runOutsideAngular</strong> — keep high-frequency operations (animations, scroll events) outside Angular's change detection zone</li></ul>",

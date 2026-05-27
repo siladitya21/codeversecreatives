@@ -5,6 +5,53 @@ window.MODULES.push({
   "icon": "bi bi-check2-circle",
   "questions": [
     {
+      id: "angular-22-standard-testing-upgrade",
+      title: "Angular 22 standard for testing",
+      explanation: `
+        <p>Angular 22-ready testing should focus on fast unit tests, standalone component tests, provider-based setup, and realistic integration tests around user-visible behavior. New Angular projects use Vitest-style testing in the modern path, while Jasmine and Karma remain important for older codebases.</p>
+
+        <h3>Modern testing checklist</h3>
+        <ul>
+          <li>Test pure functions, services, pipes, and signal stores without Angular setup when possible.</li>
+          <li>Use <code>TestBed</code> with standalone component <code>imports</code>.</li>
+          <li>Use provider-based router and HTTP testing utilities in new code.</li>
+          <li>Test outputs, inputs, signals, and rendered DOM behavior.</li>
+          <li>Keep E2E tests for critical journeys, not every edge case.</li>
+        </ul>
+      `,
+      code: `import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
+
+describe('UsersApi', () => {
+  let api: UsersApi;
+  let http: HttpTestingController;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        UsersApi,
+        provideHttpClient(),
+        provideHttpClientTesting()
+      ]
+    });
+
+    api = TestBed.inject(UsersApi);
+    http = TestBed.inject(HttpTestingController);
+  });
+
+  it('loads users', () => {
+    api.getAll().subscribe(users => {
+      expect(users.length).toBe(1);
+    });
+
+    const req = http.expectOne('/api/users');
+    req.flush([{ id: 1, name: 'Asha' }]);
+  });
+});`,
+      language: "typescript"
+    },
+    {
       "id": "types-of-testing",
       "title": "Types of testing in Angular",
       "explanation": "<p>Angular applications use three layers of testing, each serving a different purpose. They're often visualised as a pyramid — many small fast tests at the base, fewer slow end-to-end tests at the top.</p><h3>Unit tests — test one thing in isolation</h3><p>A unit test tests a single function, class, or component in complete isolation from its dependencies. Dependencies are replaced with mocks or spies. These tests run in milliseconds, you can have thousands of them, and they pinpoint exactly what broke.</p><h3>Integration tests — test how parts work together</h3><p>Integration tests check that multiple real units interact correctly — for example, a component and its template, or a component and a real service (backed by an HTTP mock). In Angular, component tests created with <code>TestBed</code> are typically integration tests.</p><h3>End-to-end (E2E) tests — test the whole app from the user's perspective</h3><p>E2E tests run a real browser, navigate the actual app, click buttons, fill forms, and assert what the user sees. They're the most realistic but also the slowest and most fragile. Use them to verify critical user journeys (login, checkout, registration).</p>",

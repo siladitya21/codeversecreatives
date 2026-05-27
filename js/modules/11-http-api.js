@@ -5,6 +5,49 @@ window.MODULES.push({
   "icon": "bi bi-cloud-arrow-down",
   "questions": [
     {
+      id: "angular-22-standard-http-upgrade",
+      title: "Angular 22 standard for HTTP and APIs",
+      explanation: `
+        <p>Modern Angular HTTP setup is <strong>functional and standalone</strong>. Register HTTP once with <code>provideHttpClient()</code>, use <code>inject(HttpClient)</code> in services, prefer functional interceptors, and keep API calls typed. Components should consume clean service APIs rather than building URLs and error handling inline.</p>
+
+        <h3>Modern HTTP checklist</h3>
+        <ul>
+          <li>Use <code>provideHttpClient()</code> at bootstrap.</li>
+          <li>Use <code>withInterceptors()</code> for functional interceptors.</li>
+          <li>Use typed DTOs and return typed Observables from services.</li>
+          <li>Use <code>httpResource</code> or resource APIs only when your project version marks them stable enough for your use case.</li>
+          <li>Test HTTP services with provider-based HTTP testing utilities rather than legacy module setup in new code.</li>
+        </ul>
+      `,
+      code: `import { HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { bootstrapApplication } from '@angular/platform-browser';
+
+export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const token = inject(AuthService).token();
+  return next(
+    token
+      ? req.clone({ setHeaders: { Authorization: ` + "`Bearer ${token}`" + ` } })
+      : req
+  );
+};
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(withInterceptors([authInterceptor]))
+  ]
+});
+
+@Injectable({ providedIn: 'root' })
+export class UsersApi {
+  private readonly http = inject(HttpClient);
+
+  getAll() {
+    return this.http.get<UserDto[]>('/api/users');
+  }
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-httpclient",
       "title": "What is HttpClient?",
       "explanation": "<p><strong>HttpClient</strong> is Angular's built-in service for making HTTP requests to backend APIs. It wraps the browser's <code>XMLHttpRequest</code> (or <code>fetch</code> in newer Angular versions) and gives you a clean, Observable-based API with TypeScript support.</p><h3>Why not use fetch() directly?</h3><p>You could, but HttpClient gives you several things for free:</p><ul><li><strong>Observable-based</strong> — every request returns an Observable, which integrates naturally with RxJS operators like <code>switchMap</code>, <code>catchError</code>, <code>retry</code></li><li><strong>Type safety</strong> — you can pass a generic type parameter and get a typed response</li><li><strong>Interceptors</strong> — middleware to add auth headers, log requests, handle errors globally</li><li><strong>Automatic JSON parsing</strong> — response bodies are parsed as JSON by default</li><li><strong>Cancellable</strong> — unsubscribing cancels the pending HTTP request</li><li><strong>Testable</strong> — Angular provides <code>HttpClientTestingModule</code> to mock requests</li></ul><h3>Setup</h3><p>In modern Angular (17+) with standalone components, register HttpClient globally by calling <code>provideHttpClient()</code> in <code>main.ts</code>. Then inject <code>HttpClient</code> into any service.</p>",

@@ -3,6 +3,13 @@ window.MODULES = window.MODULES || [];
 (function () {
   const scenarios = [
     {
+      id: "angular-22-standard-reasoning-upgrade",
+      title: "How should I reason about Angular 22 standard decisions?",
+      reasoning: "A modern Angular answer should not simply name the newest API. Good reasoning starts from the constraint: startup time, runtime performance, team ownership, testability, accessibility, SEO, offline support, or migration risk. Angular 22-ready thinking means choosing standalone APIs, signals, block syntax, typed forms, functional providers, and SSR only where they solve the actual problem.",
+      approach: "Start with the user-facing requirement, identify the bottleneck or risk, choose the smallest modern Angular pattern that addresses it, and explain the tradeoff. For local UI state, use signals. For async streams and cancellation, use RxJS. For new templates, use @if and @for with track. For route boundaries, use lazy standalone routes and providers. For public content, consider SSR or prerendering. For old apps, migrate gradually without rewriting working code for no reason.",
+      code: "function chooseAngularPattern(problem: Problem): Solution {\n  if (problem.kind === 'local-ui-state') return 'signals + computed';\n  if (problem.kind === 'async-cancellation') return 'RxJS switchMap';\n  if (problem.kind === 'large-list') return '@for track + pagination or virtual scroll';\n  if (problem.kind === 'public-seo-page') return 'SSR or prerender + hydration';\n  if (problem.kind === 'feature-boundary') return 'lazy standalone route + route providers';\n  return 'simple standalone component with typed inputs and outputs';\n}"
+    },
+    {
       id: "datatable-200-records",
       title: "If I have a data table with 200 records, how will I manage it?",
       reasoning: "Two hundred rows is usually not a big-data problem. The real question is row complexity, filtering needs, mobile behavior, and whether the dataset can grow later.",

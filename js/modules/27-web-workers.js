@@ -5,6 +5,40 @@ window.MODULES.push({
   "icon": "bi bi-cpu",
   "questions": [
     {
+      id: "angular-22-standard-web-workers-upgrade",
+      title: "Angular 22 standard for Web Workers",
+      explanation: `
+          <p>Angular 22-ready apps use Web Workers only for real main-thread pressure: CPU-heavy, DOM-independent work that blocks rendering. Keep Angular components on the main thread, send plain serializable messages to the worker, and return compact results.</p>
+
+          <h3>Modern worker checklist</h3>
+          <ul>
+            <li>Generate workers with the Angular CLI when working in a CLI app.</li>
+            <li>Move pure computation to workers, not DOM or Angular services.</li>
+            <li>Use transferable objects for large binary data where possible.</li>
+            <li>Wrap worker messages in a small typed service.</li>
+            <li>Terminate long-lived workers when the feature no longer needs them.</li>
+          </ul>
+        `,
+      code: `// CLI:
+// ng generate web-worker app/workers/report
+
+@Injectable({ providedIn: 'root' })
+export class ReportWorkerService {
+  run(input: ReportInput): Promise<ReportSummary> {
+    const worker = new Worker(new URL('./report.worker', import.meta.url));
+
+    return new Promise(resolve => {
+      worker.onmessage = ({ data }) => {
+        resolve(data as ReportSummary);
+        worker.terminate();
+      };
+      worker.postMessage(input);
+    });
+  }
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-are-web-workers",
       "title": "What are Web Workers and why do they matter in Angular?",
       "explanation": `

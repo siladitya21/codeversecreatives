@@ -5,6 +5,40 @@ window.MODULES.push({
   "icon": "bi bi-box-seam",
   "questions": [
     {
+      id: "angular-22-standard-build-upgrade",
+      title: "Angular 22 standard for build and deployment",
+      explanation: `
+          <p>Angular 22-ready deployment assumes the modern application builder, production optimization, bundle budgets, lazy chunks, environment-specific configuration, and a hosting setup that understands SPAs, SSR, or prerendered output depending on the app type.</p>
+
+          <h3>Modern build checklist</h3>
+          <ul>
+            <li>Use production builds for every deployment.</li>
+            <li>Keep bundle budgets active and fail builds when bundles grow too far.</li>
+            <li>Prefer ESM dependencies and avoid CommonJS warnings.</li>
+            <li>Use lazy routes to keep initial chunks small.</li>
+            <li>Choose CSR, prerender, or SSR intentionally per product need.</li>
+            <li>Configure server fallback to <code>index.html</code> for client-routed SPAs.</li>
+          </ul>
+        `,
+      code: `# Production build
+ng build --configuration production
+
+# Analyze output before shipping a large feature
+ng build --configuration production --stats-json
+
+# Keep framework and CLI aligned
+ng update @angular/core @angular/cli
+
+# SPA hosting rule
+# All unknown routes should serve /index.html:
+# /products/42 -> /index.html -> Angular Router renders ProductDetailComponent
+
+# SSR / prerender path
+# ng add @angular/ssr
+# ng build --configuration production`,
+      language: "bash"
+    },
+    {
       "id": "angular-cli-recap",
       "title": "What is Angular CLI and what does it do?",
       "explanation": "\n          <p>The <strong>Angular CLI</strong> is a command-line toolchain that manages the entire Angular development workflow. It abstracts away the complex configurations for Webpack (or esbuild), TypeScript, Karma/Jest, ESLint, and SCSS processing behind a set of simple commands, so you can focus on writing Angular code rather than configuring build tools.</p>\n\n          <p>The scope of what the CLI handles is significant. A bare Angular project without the CLI would require: a Webpack config with TypeScript, HTML template, SCSS, asset, and polyfill loaders; a <code>tsconfig.json</code> tuned for Angular's decorator metadata requirements; a Karma config with Jasmine; an ESLint config; and custom NPM scripts to wire them all together. <code>ng new</code> generates all of this in seconds, with best-practice defaults baked in.</p>\n\n          <h3>Builder System</h3>\n          <p>Behind every <code>ng</code> command is a <strong>builder</strong> — a function that takes options and runs a build task. The default builders are: <code>@angular-devkit/build-angular:application</code> (esbuild-based, default in Angular 17+) and <code>@angular-devkit/build-angular:browser</code> (Webpack-based, legacy). You can swap builders to use custom Webpack configs, Vite, or third-party setups by changing the <code>builder</code> field in <code>angular.json</code>.</p>\n\n          <h3>angular.json — The Project Configuration File</h3>\n          <p><code>angular.json</code> is the master configuration file for the CLI. It defines every project in the workspace, which builder to use, where source files live, what assets to copy, which environment file to swap for each configuration, and what optimizations to apply. Understanding <code>angular.json</code> is key to customizing the build beyond what the default flags offer.</p>\n        ",

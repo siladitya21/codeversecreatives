@@ -5,6 +5,38 @@ window.MODULES.push({
   "icon": "bi bi-palette",
   "questions": [
     {
+      id: "angular-22-standard-material-upgrade",
+      title: "Angular 22 standard for Angular Material",
+      explanation: `
+          <p>Angular 22-ready Material usage is standalone, tree-shakeable, accessible, and token-themed. Import only the Material components a standalone component needs, use CDK primitives when you need behavior without Material styling, and treat theming as design tokens rather than scattered overrides.</p>
+
+          <h3>Modern Material checklist</h3>
+          <ul>
+            <li>Install with <code>ng add @angular/material</code>.</li>
+            <li>Import Material modules directly in standalone components.</li>
+            <li>Use Material 3 theming and CSS custom properties where supported.</li>
+            <li>Use CDK overlay, a11y, drag-drop, and virtual scroll for custom design systems.</li>
+            <li>Use <code>provideNoopAnimations()</code> in tests.</li>
+          </ul>
+        `,
+      code: `@Component({
+  selector: 'app-user-editor',
+  imports: [MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule],
+  template: '<button mat-raised-button (click)="open()">Edit user</button>'
+})
+export class UserEditorComponent {
+  private readonly dialog = inject(MatDialog);
+
+  open(): void {
+    this.dialog.open(UserDialogComponent, {
+      width: '480px',
+      autoFocus: 'first-tabbable'
+    });
+  }
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-angular-material",
       "title": "What is Angular Material and the CDK?",
       "explanation": `

@@ -5,6 +5,39 @@ window.MODULES.push({
   "icon": "bi bi-folder2-open",
   "questions": [
     {
+      id: "angular-22-standard-workspace-upgrade",
+      title: "Angular 22 standard for workspaces and projects",
+      explanation: `
+          <p>Angular 22-ready workspaces should keep project boundaries clear, build targets predictable, and shared code intentional. Single-app workspaces should stay simple. Multi-project workspaces should use libraries for shared UI, data access, and contracts rather than cross-importing random app internals.</p>
+
+          <h3>Modern workspace checklist</h3>
+          <ul>
+            <li>Understand <code>angular.json</code> targets: build, serve, test, lint, and extract-i18n.</li>
+            <li>Use standalone app structure with <code>app.config.ts</code> and <code>app.routes.ts</code>.</li>
+            <li>Create libraries for reusable code with stable public APIs.</li>
+            <li>Use path aliases carefully and avoid circular dependencies.</li>
+            <li>Keep environment and deployment configuration separate from secrets.</li>
+          </ul>
+        `,
+      code: `// Modern app entry structure:
+// src/main.ts
+bootstrapApplication(AppComponent, appConfig);
+
+// src/app/app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient()
+  ]
+};
+
+// src/app/app.routes.ts
+export const routes: Routes = [
+  { path: '', loadComponent: () => import('./home/home.component').then(m => m.HomeComponent) }
+];`,
+      language: "typescript"
+    },
+    {
       "id": "angular-workspace-structure",
       "title": "Angular workspace structure and configuration files",
       "explanation": `

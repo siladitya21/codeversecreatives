@@ -5,6 +5,42 @@ window.MODULES.push({
   "icon": "bi bi-universal-access",
   "questions": [
     {
+      id: "angular-22-standard-accessibility-upgrade",
+      title: "Angular 22 standard for accessibility",
+      explanation: `
+          <p>Angular 22-ready accessibility is built into component design from the start. Prefer semantic HTML, bind ARIA attributes correctly, manage focus after route changes and dialogs, announce async state changes, and verify with keyboard and screen-reader testing rather than relying only on visual checks.</p>
+
+          <h3>Modern a11y checklist</h3>
+          <ul>
+            <li>Use native controls before ARIA-heavy custom controls.</li>
+            <li>Bind ARIA with <code>[attr.aria-*]</code>, not property binding.</li>
+            <li>Use <code>@angular/cdk/a11y</code> for focus traps, live announcements, and keyboard helpers.</li>
+            <li>Keep heading order and landmarks meaningful after router navigation.</li>
+            <li>Support keyboard interaction for every interactive workflow.</li>
+            <li>Respect reduced motion and visible focus states.</li>
+          </ul>
+        `,
+      code: `@Component({
+  selector: 'app-save-status',
+  template: '<button type="button" (click)="save()">Save</button>'
+})
+export class SaveStatusComponent {
+  private readonly live = inject(LiveAnnouncer);
+
+  save(): void {
+    this.live.announce('Saving changes');
+    // save work...
+    this.live.announce('Changes saved');
+  }
+}
+
+// Dynamic ARIA:
+// <button [attr.aria-expanded]="isOpen()" [attr.aria-controls]="panelId">
+//   Filters
+// </button>`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-accessibility",
       "title": "What is accessibility in Angular?",
       "explanation": "\n          <p><strong>Accessibility (a11y)</strong> is the practice of building web applications that work for every user, including people with visual, auditory, motor, or cognitive disabilities. The \"a11y\" abbreviation comes from there being 11 letters between the \"a\" and \"y\" in \"accessibility.\" Globally, about 15% of people live with some form of disability — ignoring accessibility excludes a significant portion of your users.</p>\n\n          <p>In Angular, accessibility is not one feature you add at the end — it is a set of ongoing decisions made throughout development. It involves choosing semantic HTML elements, managing keyboard focus correctly when the DOM changes, communicating dynamic updates to assistive technologies, and ensuring interactive controls are operable without a mouse.</p>\n\n          <h3>Why Browsers and Screen Readers Work Together</h3>\n          <p>The browser exposes the DOM to assistive technologies (like screen readers) through an <strong>Accessibility Tree</strong> — a parallel tree of accessibility objects derived from the DOM. Each element's tag, attributes, text content, and ARIA annotations determine what the screen reader announces. Angular's job is to keep this tree accurate as the app's state changes — adding ARIA attributes dynamically, managing focus after navigation, and announcing loading or error states that appear asynchronously.</p>\n\n          <h3>The Core Rule</h3>\n          <p>Use native HTML elements whenever possible. A <code>&lt;button&gt;</code> is keyboard-focusable, activatable with Enter and Space, announces its role as \"button\" to screen readers, and is disabled cleanly with the <code>disabled</code> attribute — all for free. A <code>&lt;div (click)=\"...\"&gt;</code> has none of these behaviors built in. You must add <code>tabindex</code>, <code>role=\"button\"</code>, a <code>keydown</code> handler for Enter/Space, and ARIA state management manually.</p>\n        ",

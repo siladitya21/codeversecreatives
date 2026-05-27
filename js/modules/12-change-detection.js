@@ -5,6 +5,47 @@ window.MODULES.push({
   "icon": "bi bi-lightning-charge",
   "questions": [
     {
+      id: "angular-22-standard-change-detection-upgrade",
+      title: "Angular 22 standard for change detection",
+      explanation: `
+        <p>Angular 22-ready change detection is centered on <strong>signals, immutable state, and smaller update scopes</strong>. <code>OnPush</code> remains important, but signals reduce the need to manually think in full-tree checks because Angular can track which template reads which reactive values.</p>
+
+        <h3>Modern change detection checklist</h3>
+        <ul>
+          <li>Use signals for local component state.</li>
+          <li>Use <code>computed()</code> for derived state instead of recalculating in template methods.</li>
+          <li>Use immutable updates for objects and arrays.</li>
+          <li>Use <code>@for (...; track ...)</code> for stable list rendering.</li>
+          <li>Use zoneless change detection only when the app and dependencies are ready for it.</li>
+          <li>Avoid template methods that do expensive work on every check.</li>
+        </ul>
+      `,
+      code: `import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-cart-summary',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: \`
+    @for (item of items(); track item.id) {
+      <p>{{ item.name }} x {{ item.quantity }}</p>
+    }
+
+    <strong>Total: {{ total() }}</strong>
+  \`
+})
+export class CartSummaryComponent {
+  readonly items = signal<CartItem[]>([]);
+  readonly total = computed(() =>
+    this.items().reduce((sum, item) => sum + item.price * item.quantity, 0)
+  );
+
+  add(item: CartItem): void {
+    this.items.update(items => [...items, item]);
+  }
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-change-detection",
       "title": "What is change detection?",
       "explanation": "<p><strong>Change detection</strong> is Angular's process of keeping the DOM in sync with your component's data. Whenever data in a component changes, Angular needs to find out what changed and update the relevant parts of the HTML.</p><h3>The problem it solves</h3><p>In plain JavaScript, if you do <code>this.userName = 'Alice'</code>, the browser has no idea you changed a variable — you'd have to manually find the DOM element and update it. Angular's change detection does this automatically: you change the data, Angular figures out what the DOM should now look like, and updates it.</p><h3>How Angular triggers it</h3><p>Angular doesn't continuously watch your data (that would be too slow). Instead, it runs change detection at specific moments — whenever something asynchronous happens that <em>might</em> have changed state:</p><ul><li>A browser event fires (click, input, scroll, keypress)</li><li>An HTTP response arrives</li><li>A timer (<code>setTimeout</code> / <code>setInterval</code>) fires</li><li>A Promise or Observable resolves</li></ul><p>Zone.js (covered next) is the mechanism that detects all of these and tells Angular to run a check.</p><h3>What Angular checks</h3><p>Angular walks the component tree from the root downward, checks each component's template bindings against current values, and updates any DOM nodes whose value has changed.</p>",

@@ -5,6 +5,37 @@ window.MODULES.push({
   "icon": "bi bi-filetype-tsx",
   "questions": [
     {
+      id: "angular-22-standard-typescript-upgrade",
+      title: "Angular 22 standard for TypeScript",
+      explanation: `
+          <p>Angular 22-ready TypeScript should be strict, explicit at public boundaries, and friendly to template type checking. Use the compiler to catch bugs early: nullable state, unsafe inputs, loosely typed forms, and accidental <code>any</code> values should not sneak into production code.</p>
+
+          <h3>Modern TypeScript checklist</h3>
+          <ul>
+            <li>Keep <code>strict</code> and <code>strictTemplates</code> enabled.</li>
+            <li>Use typed component inputs with <code>input.required&lt;T&gt;()</code>.</li>
+            <li>Use discriminated unions for UI states like loading, success, and error.</li>
+            <li>Use typed reactive forms and DTO interfaces for API responses.</li>
+            <li>Avoid <code>any</code>; use <code>unknown</code> and narrow it when needed.</li>
+          </ul>
+        `,
+      code: `type LoadState<T> =
+  | { status: 'loading' }
+  | { status: 'loaded'; data: T }
+  | { status: 'error'; message: string };
+
+@Component({
+  selector: 'app-user-card',
+  template: '<h3>{{ user().name }}</h3>'
+})
+export class UserCardComponent {
+  readonly user = input.required<UserDto>();
+}
+
+const state = signal<LoadState<UserDto[]>>({ status: 'loading' });`,
+      language: "typescript"
+    },
+    {
       "id": "typescript-features-in-angular",
       "title": "TypeScript features that power Angular",
       "explanation": `

@@ -5,6 +5,43 @@ window.MODULES.push({
   "icon": "bi bi-globe",
   "questions": [
     {
+      id: "angular-22-standard-real-world-upgrade",
+      title: "Angular 22 standard for real-world apps",
+      explanation: `
+          <p>Angular 22-ready real-world architecture is feature-first, standalone, lazy-loaded, typed, and measurable. The goal is not to use every new API everywhere; it is to make features easy to ship, easy to test, and hard to accidentally break.</p>
+
+          <h3>Modern real-world checklist</h3>
+          <ul>
+            <li>Organize by feature domain, not only by file type.</li>
+            <li>Lazy load feature routes and keep app startup small.</li>
+            <li>Use services or stores as state owners, exposing readonly signals or Observables.</li>
+            <li>Keep API DTOs, UI models, and form models typed.</li>
+            <li>Handle loading, empty, and error states explicitly.</li>
+            <li>Build accessibility, performance, and tests into the feature definition.</li>
+          </ul>
+        `,
+      code: `// Feature route owns feature-level providers
+export const productRoutes: Routes = [
+  {
+    path: '',
+    providers: [ProductStore],
+    loadComponent: () => import('./product-list.component').then(m => m.ProductListComponent)
+  },
+  {
+    path: ':id',
+    loadComponent: () => import('./product-detail.component').then(m => m.ProductDetailComponent)
+  }
+];
+
+@Injectable()
+export class ProductStore {
+  private readonly productsState = signal<Product[]>([]);
+  readonly products = this.productsState.asReadonly();
+  readonly count = computed(() => this.products().length);
+}`,
+      language: "typescript"
+    },
+    {
       "id": "how-to-structure-large-applications",
       "title": "Structuring large Angular applications — feature-based architecture",
       "explanation": `

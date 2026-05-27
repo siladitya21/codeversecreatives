@@ -5,6 +5,39 @@ window.MODULES.push({
   "icon": "bi bi-translate",
   "questions": [
     {
+      id: "angular-22-standard-i18n-upgrade",
+      title: "Angular 22 standard for i18n",
+      explanation: `
+          <p>Angular 22-ready internationalization means planning translations, locale-aware formatting, plural rules, URLs, SEO metadata, and deployment together. Angular's built-in i18n remains strongest for build-time translated apps, while runtime translation libraries fit products that need instant language switching.</p>
+
+          <h3>Modern i18n checklist</h3>
+          <ul>
+            <li>Use stable custom message IDs for important translated strings.</li>
+            <li>Use ICU messages for plural and select/gender cases.</li>
+            <li>Use Angular pipes with the correct <code>LOCALE_ID</code> for dates, numbers, and currencies.</li>
+            <li>Build and deploy locale-specific routes when using Angular built-in i18n.</li>
+            <li>Translate ARIA labels, page titles, meta descriptions, and validation errors too.</li>
+          </ul>
+        `,
+      code: `<!-- Stable custom ID for translators -->
+<h1 i18n="Homepage hero title@@homeHeroTitle">
+  Fast delivery for every order
+</h1>
+
+<!-- ICU plural message -->
+<p i18n="Cart item count@@cartItemCount">
+  {itemCount, plural,
+    =0 {No items}
+    =1 {One item}
+    other {{{ itemCount }} items}}
+</p>
+
+<!-- Locale-aware formatting -->
+<p>{{ total | currency:currencyCode }}</p>
+<p>{{ today | date:'fullDate' }}</p>`,
+      language: "html"
+    },
+    {
       "id": "what-is-i18n",
       "title": "What is i18n in Angular?",
       "explanation": "\n          <p><strong>Internationalization (i18n)</strong> is the process of designing your application so it can be adapted for different languages and regions without changing the source code. The name comes from the word \"internationalization\" — 18 letters between the i and the n. Localization (l10n) is the related process of actually providing the translated content for a specific region.</p>\n\n          <p>Angular provides a built-in i18n system that handles three distinct concerns. <strong>Text translation</strong> — replacing English strings with equivalent strings in other languages. <strong>Locale-aware formatting</strong> — dates, numbers, and currencies format differently per locale (the US writes <code>1,234.56</code> while Germany writes <code>1.234,56</code>; the EU writes dates as <code>DD/MM/YYYY</code> while the US uses <code>MM/DD/YYYY</code>). <strong>Grammar rules</strong> — pluralization and grammatical gender vary dramatically between languages (Russian has four plural forms; English has two).</p>\n\n          <h3>Build-Time vs Runtime Translation</h3>\n          <p>Angular's built-in i18n uses a <strong>build-time</strong> approach. You run one build per locale, and the CLI produces separate, fully compiled application bundles — one for English, one for French, one for German. Each bundle has translations already inlined; there is no runtime lookup overhead. The tradeoff is that you cannot switch languages without a page navigation to the locale-specific URL path.</p>\n\n          <p>The alternative is <strong>runtime</strong> translation via third-party libraries like <code>ngx-translate</code>, which loads translation JSON files on demand and lets users switch languages without a reload. This is covered in the last question in this module.</p>\n        ",

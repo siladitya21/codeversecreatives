@@ -5,6 +5,46 @@ window.MODULES.push({
   "icon": "bi bi-shield-lock",
   "questions": [
     {
+      id: "angular-22-standard-security-upgrade",
+      title: "Angular 22 standard for security",
+      explanation: `
+          <p>Angular 22-ready security starts with Angular's defaults: template sanitization, strict template checking, typed APIs, and HttpClient protections. The risky parts are usually where developers bypass the framework: direct DOM writes, unsafe HTML, token storage, permissive CSP, or custom authentication flows.</p>
+
+          <h3>Modern security checklist</h3>
+          <ul>
+            <li>Never put untrusted content into <code>ElementRef.nativeElement.innerHTML</code>.</li>
+            <li>Use <code>DomSanitizer</code> bypass APIs only for content you fully control.</li>
+            <li>Prefer HttpOnly secure cookies for sessions when the backend supports them.</li>
+            <li>Use functional HTTP interceptors for auth headers and global error handling.</li>
+            <li>Enable CSRF protection for cookie-based auth.</li>
+            <li>Use a Content Security Policy and avoid inline scripts.</li>
+          </ul>
+        `,
+      code: `export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const auth = inject(AuthService);
+  const token = auth.accessToken();
+
+  const secured = token
+    ? req.clone({ setHeaders: { Authorization: 'Bearer ' + token } })
+    : req;
+
+  return next(secured);
+};
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(
+      withInterceptors([authInterceptor]),
+      withXsrfConfiguration({
+        cookieName: 'XSRF-TOKEN',
+        headerName: 'X-XSRF-TOKEN'
+      })
+    )
+  ]
+});`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-xss",
       "title": "What is XSS and how does Angular prevent it?",
       "explanation": "\n          <p><strong>Cross-Site Scripting (XSS)</strong> is an attack where a malicious actor injects JavaScript into a page that then executes in the victim's browser under the page's trusted origin. The attacker can steal session cookies, hijack authentication tokens, redirect the user, or silently exfiltrate data. It is consistently one of the most exploited vulnerabilities on the web.</p>\n\n          <p>The attack works because browsers trust scripts that originate from the same domain as the page. If an attacker can get their code embedded in your HTML — through a comment field, a URL parameter, an API response — the browser runs it with full access to <code>document.cookie</code>, <code>localStorage</code>, and the DOM.</p>\n\n          <h3>How Angular Prevents XSS by Default</h3>\n          <p>Angular treats every value bound in a template as <strong>untrusted by default</strong>. When you use interpolation <code>{{ userInput }}</code> or property binding <code>[innerHTML]=\"content\"</code>, Angular's sanitizer inspects the value and strips or encodes anything that could execute as code. For interpolation, Angular HTML-encodes the value so <code>&lt;script&gt;</code> becomes the literal text <code>&lt;script&gt;</code>. For <code>[innerHTML]</code>, Angular strips script tags, event handlers, and JavaScript URLs before inserting the content.</p>\n\n          <h3>Context-Aware Sanitization</h3>\n          <p>Angular understands five security contexts: HTML (for <code>[innerHTML]</code>), Style (for <code>[style]</code>), URL (for <code>[href]</code>), Resource URL (for <code>[src]</code> of scripts/iframes), and Script. The sanitizer applies different rules per context. A <code>javascript:</code> URL is safe as a text string but dangerous in an <code>&lt;a href&gt;</code> — Angular sanitizes it differently in each context.</p>\n\n          <h3>The Danger Zone: Bypassing Sanitization</h3>\n          <p>The only way to introduce XSS in a modern Angular app is to deliberately bypass the sanitizer — using <code>DomSanitizer.bypassSecurityTrustHtml()</code> or directly setting <code>ElementRef.nativeElement.innerHTML</code>. Angular cannot protect you if you go around its APIs. Avoid both patterns unless you fully control and trust the content.</p>\n        ",

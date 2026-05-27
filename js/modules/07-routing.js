@@ -4,6 +4,49 @@ window.MODULES.push({
   title: "Routing",
   icon: "bi bi-signpost-split",
   questions: [
+    {
+      id: "angular-22-standard-routing-upgrade",
+      title: "Angular 22 standard for routing",
+      explanation: `
+        <p>Angular 22-ready routing is <strong>standalone, lazy, functional, and provider-driven</strong>. New apps should configure routing with <code>provideRouter(routes)</code>, use standalone route components, lazy load with <code>loadComponent</code> or route files, and write guards/resolvers as functions using <code>inject()</code>.</p>
+
+        <h3>Modern routing checklist</h3>
+        <ul>
+          <li>Register routes with <code>provideRouter(routes)</code> in <code>bootstrapApplication()</code>.</li>
+          <li>Use <code>loadComponent()</code> for single-screen lazy routes.</li>
+          <li>Use <code>loadChildren()</code> for feature route groups.</li>
+          <li>Use functional guards such as <code>CanMatchFn</code> and <code>CanActivateFn</code>.</li>
+          <li>Use route-level <code>providers</code> for feature-scoped services.</li>
+          <li>Prefer typed route data and clear fallback routes.</li>
+        </ul>
+      `,
+      code: `import { inject } from '@angular/core';
+import { CanMatchFn, Routes, Router } from '@angular/router';
+
+export const authGuard: CanMatchFn = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  return auth.isLoggedIn() || router.createUrlTree(['/login']);
+};
+
+export const routes: Routes = [
+  {
+    path: '',
+    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent)
+  },
+  {
+    path: 'admin',
+    canMatch: [authGuard],
+    providers: [AdminState],
+    loadChildren: () => import('./admin/admin.routes').then(m => m.adminRoutes)
+  },
+  {
+    path: '**',
+    loadComponent: () => import('./not-found.component').then(m => m.NotFoundComponent)
+  }
+];`,
+      language: "typescript"
+    },
 
     {
       id: "what-is-angular-router",

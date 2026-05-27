@@ -5,6 +5,59 @@ window.MODULES.push({
   icon: "bi bi-ui-checks-grid",
   questions: [
     {
+      id: "angular-22-standard-forms-upgrade",
+      title: "Angular 22 standard for forms",
+      explanation: `
+        <p>For Angular 22-ready applications, keep <strong>reactive forms</strong> as the default for serious form work because they are explicit, typed, testable, and easy to validate. Template-driven forms are still fine for small forms. Signal-friendly form APIs are evolving, so teach them as modern direction only when your Angular version marks them stable.</p>
+
+        <h3>Modern form checklist</h3>
+        <ul>
+          <li>Use typed <code>FormControl</code>, <code>FormGroup</code>, and <code>NonNullableFormBuilder</code>.</li>
+          <li>Import <code>ReactiveFormsModule</code> directly in standalone components.</li>
+          <li>Keep validation rules in TypeScript, not scattered across templates.</li>
+          <li>Use <code>@if</code> blocks for validation messages.</li>
+          <li>Use <code>takeUntilDestroyed()</code> for manual <code>valueChanges</code> subscriptions.</li>
+        </ul>
+      `,
+      code: `import { Component, inject } from '@angular/core';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-profile-form',
+  imports: [ReactiveFormsModule],
+  template: \`
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <input formControlName="name" />
+      @if (form.controls.name.invalid && form.controls.name.touched) {
+        <p>Name is required.</p>
+      }
+
+      <input formControlName="email" />
+      @if (form.controls.email.hasError('email')) {
+        <p>Enter a valid email.</p>
+      }
+
+      <button type="submit" [disabled]="form.invalid">Save</button>
+    </form>
+  \`
+})
+export class ProfileFormComponent {
+  private readonly fb = inject(NonNullableFormBuilder);
+
+  readonly form = this.fb.group({
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]]
+  });
+
+  save(): void {
+    if (this.form.valid) {
+      console.log(this.form.getRawValue());
+    }
+  }
+}`,
+      language: "typescript"
+    },
+    {
       id: "types-of-forms",
       title: "Types of Forms in Angular",
       explanation: `

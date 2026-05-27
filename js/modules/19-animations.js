@@ -5,6 +5,40 @@ window.MODULES.push({
   "icon": "bi bi-magic",
   "questions": [
     {
+      id: "angular-22-standard-animations-upgrade",
+      title: "Angular 22 standard for animations",
+      explanation: `
+          <p>Angular 22-ready animation work should balance Angular's animation APIs with native CSS and the Web Animations API. Use Angular animations when transitions depend on Angular state, route changes, or elements entering and leaving the DOM. Use CSS transitions for simple hover, focus, and one-off visual polish.</p>
+
+          <h3>Modern animation checklist</h3>
+          <ul>
+            <li>Provide animations at bootstrap with <code>provideAnimations()</code>.</li>
+            <li>Use <code>provideNoopAnimations()</code> in tests.</li>
+            <li>Respect reduced-motion user preferences.</li>
+            <li>Prefer transforms and opacity for smoother animations.</li>
+            <li>Use <code>@if</code> with enter/leave animations for conditional UI.</li>
+            <li>Avoid animating layout-heavy properties in large lists.</li>
+          </ul>
+        `,
+      code: `bootstrapApplication(AppComponent, {
+  providers: [provideAnimations()]
+});
+
+export const fadeInOut = trigger('fadeInOut', [
+  transition(':enter', [
+    style({ opacity: 0, transform: 'translateY(8px)' }),
+    animate('180ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+  ]),
+  transition(':leave', [
+    animate('120ms ease-in', style({ opacity: 0, transform: 'translateY(8px)' }))
+  ])
+]);
+
+// In tests:
+// providers: [provideNoopAnimations()]`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-animations-module",
       "title": "What is the Angular animations module?",
       "explanation": "\n          <p>Angular's animation system is a TypeScript DSL (Domain Specific Language) built on top of the <strong>Web Animations API</strong>. Rather than writing CSS keyframes or transitions in a stylesheet and hoping they coordinate with your component state, you define animations in TypeScript alongside the component — Angular automatically triggers them when the relevant state changes.</p>\n\n          <p>The key advantage over pure CSS transitions is that Angular animations are <strong>state-driven</strong>. You define named states (like <code>'open'</code> and <code>'closed'</code>) with their associated styles, and Angular figures out which transition to play whenever your component property changes from one state to another. The animation logic lives in the same component file as the state it animates, which makes the code coherent and testable.</p>\n\n          <h3>Setup: provideAnimations()</h3>\n          <p>To use Angular animations, you must provide the animations infrastructure at the application root. In modern standalone Angular you call <code>provideAnimations()</code> in the <code>bootstrapApplication</code> providers array. If you want to disable animations (useful in tests or for accessibility), use <code>provideNoopAnimations()</code> instead — it respects the same API but skips all timing.</p>\n\n          <h3>Core Building Blocks</h3>\n          <p>The animation DSL consists of a small set of functions imported from <code>@angular/animations</code>: <code>trigger()</code> names and groups an animation, <code>state()</code> defines styles for a named state, <code>transition()</code> defines the path between two states, <code>animate()</code> specifies duration and easing, <code>style()</code> defines a set of CSS styles at a moment in time, and <code>keyframes()</code> defines multiple style stops within a single animate call.</p>\n        ",

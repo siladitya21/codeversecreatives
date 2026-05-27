@@ -5,6 +5,43 @@ window.MODULES.push({
   "icon": "bi bi-speedometer",
   "questions": [
     {
+      id: "angular-22-standard-ngzone-upgrade",
+      title: "Angular 22 standard for NgZone",
+      explanation: `
+          <p>Angular 22-ready code treats <code>NgZone</code> as an integration tool, not everyday state management. Signals and explicit state updates should drive UI changes. Use <code>NgZone</code> when integrating high-frequency browser APIs or third-party libraries that run outside Angular's normal rendering flow.</p>
+
+          <h3>Modern NgZone checklist</h3>
+          <ul>
+            <li>Use signals for component state that templates read.</li>
+            <li>Run expensive non-UI work outside Angular with <code>runOutsideAngular()</code>.</li>
+            <li>Re-enter Angular only when UI state must change.</li>
+            <li>Consider zoneless change detection only after checking library compatibility.</li>
+            <li>Avoid using zone tricks to hide mutation-heavy state design.</li>
+          </ul>
+        `,
+      code: `@Component({
+  selector: 'app-pointer-tracker',
+  template: '<p>{{ position().x }}, {{ position().y }}</p>'
+})
+export class PointerTrackerComponent {
+  readonly position = signal({ x: 0, y: 0 });
+  private readonly zone = inject(NgZone);
+
+  ngOnInit(): void {
+    this.zone.runOutsideAngular(() => {
+      window.addEventListener('pointermove', event => {
+        if (event.buttons === 1) {
+          this.zone.run(() => {
+            this.position.set({ x: event.clientX, y: event.clientY });
+          });
+        }
+      });
+    });
+  }
+}`,
+      language: "typescript"
+    },
+    {
       "id": "what-is-ngzone",
       "title": "What is NgZone and why does Angular need it?",
       "explanation": `
