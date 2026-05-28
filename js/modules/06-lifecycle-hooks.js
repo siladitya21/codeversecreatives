@@ -435,6 +435,49 @@ export class LifecycleDemoComponent implements
 // Drop this component in a template and open the console.
 // You will see each hook fire in the exact order listed above.`,
       language: "typescript"
+    },
+    {
+      id: "after-next-render-and-after-every-render",
+      title: "afterNextRender and afterEveryRender",
+      explanation: `
+        <p>Modern Angular includes render callbacks for work that must happen <strong>after Angular has rendered the DOM</strong>. These are not class lifecycle interfaces like <code>ngAfterViewInit</code>; they are functions you call in an injection context, usually the constructor.</p>
+
+        <h3>afterNextRender</h3>
+        <p><code>afterNextRender()</code> runs once after the next full application render. Use it for one-time DOM work such as measuring an element, initializing a chart library, focusing an input, or reading layout.</p>
+
+        <h3>afterEveryRender</h3>
+        <p><code>afterEveryRender()</code> runs after every render. Use it rarely, because it can become expensive. It is useful for integrating with a non-Angular library that must be told whenever Angular has updated the DOM.</p>
+
+        <h3>Why Not Always ngAfterViewInit?</h3>
+        <p><code>ngAfterViewInit</code> tells you the component view was initialized. Render callbacks tell you Angular has completed rendering. They also avoid common SSR problems because render callbacks do not run during server-side rendering.</p>
+      `,
+      code: `import { Component, ElementRef, ViewChild, afterNextRender, afterEveryRender, inject } from '@angular/core';
+
+@Component({
+  selector: 'app-chart-panel',
+  standalone: true,
+  template: '<canvas #chartCanvas></canvas>'
+})
+export class ChartPanelComponent {
+  @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
+
+  constructor() {
+    afterNextRender(() => {
+      const canvas = this.chartCanvas.nativeElement;
+      const rect = canvas.getBoundingClientRect();
+      console.log('Canvas size after render:', rect.width, rect.height);
+
+      // Good place to initialize browser-only libraries:
+      // this.chart = new Chart(canvas, this.config);
+    });
+
+    afterEveryRender(() => {
+      // Keep this lightweight. It runs after every render.
+      // Useful for syncing with a third-party DOM library.
+    });
+  }
+}`,
+      language: "typescript"
     }
 
   ]

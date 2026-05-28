@@ -86,6 +86,24 @@ export const routes: Routes = [
       "language": "bash"
     },
     {
+      "id": "relative-vs-non-relative-imports",
+      "title": "Relative and non-relative imports",
+      "explanation": `
+          <p>Angular projects use two broad import styles. A <strong>relative import</strong> starts with <code>./</code> or <code>../</code> and points to a file based on the current file location. A <strong>non-relative import</strong> does not start with dots. It points to an npm package, an Angular package, a workspace library, or a TypeScript path alias.</p>
+
+          <h3>Relative Imports</h3>
+          <p>Use relative imports for files that are close together and belong to the same feature. For example, a component importing its own service from the same folder should use <code>./user.service</code>. Relative imports make local ownership obvious.</p>
+
+          <h3>Non-Relative Imports</h3>
+          <p>Use non-relative imports for framework packages (<code>@angular/core</code>), third-party packages (<code>rxjs</code>), workspace libraries (<code>shared-ui</code>), and configured aliases such as <code>@core/*</code> or <code>@shared/*</code>. They keep deeply nested files readable and reduce fragile paths like <code>../../../../core/auth.service</code>.</p>
+
+          <h3>Practical Rule</h3>
+          <p>Inside a feature folder, relative imports are fine. Across major boundaries like <code>core</code>, <code>shared</code>, <code>features</code>, or libraries, prefer aliases or library imports. Avoid importing another feature's private files directly because it creates hidden coupling.</p>
+        `,
+      "code": "// ---- Relative imports: start with ./ or ../ ----\n// product-card.component.ts and product-card.types.ts are neighbors.\nimport { ProductCardViewModel } from './product-card.types';\n\n// Move up one folder, then into another local folder.\nimport { ProductService } from '../data-access/product.service';\n\n// Lazy route relative to the current routes file.\nexport const routes = [\n  {\n    path: 'details/:id',\n    loadComponent: () =>\n      import('./product-details/product-details.component')\n        .then(m => m.ProductDetailsComponent)\n  }\n];\n\n// ---- Non-relative imports: packages, libraries, aliases ----\nimport { Component, inject } from '@angular/core';       // Angular package\nimport { Observable, map } from 'rxjs';                  // npm package\nimport { ButtonComponent } from 'shared-ui';             // workspace library\nimport { AuthService } from '@core/auth/auth.service';   // path alias\nimport { PricePipe } from '@shared/pipes/price.pipe';    // path alias\n\n// ---- Import hygiene ----\n// Good: feature owns its local implementation.\nimport { ProductApi } from './data-access/product-api.service';\n\n// Risky: one feature reaches into another feature's private files.\n// import { AdminUserService } from '../../admin/internal/admin-user.service';\n\n// Better: expose shared contracts through a library or public barrel.\nimport { UserSummary } from '@shared/models/user-summary.model';",
+      "language": "typescript"
+    },
+    {
       "id": "path-mapping-tsconfig",
       "title": "TypeScript path aliases — clean imports with @core, @shared",
       "explanation": `

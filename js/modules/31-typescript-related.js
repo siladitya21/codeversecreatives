@@ -120,6 +120,58 @@ const state = signal<LoadState<UserDto[]>>({ status: 'loading' });`,
         `,
       "code": "// ---- Template literal types for event names ----\ntype EventName<T extends string> = `${Lowercase<T>}Changed`;\ntype ProductEvent = EventName<'Price' | 'Stock' | 'Name'>;\n// = 'priceChanged' | 'stockChanged' | 'nameChanged'\n\n// ---- satisfies: type-check without widening ----\nimport { InjectionToken } from '@angular/core';\n\ninterface AppConfig { apiUrl: string; maxRetries: number; debug: boolean; }\nexport const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG');\n\n// satisfies: AppConfig is checked, but literals are preserved\nconst defaultConfig = {\n  apiUrl: 'https://api.example.com',  // type: string (not widened to unknown)\n  maxRetries: 3,                       // type: number\n  debug: false                         // type: boolean\n} satisfies AppConfig;\n\n// ---- infer: extract observable emission type ----\ntype Unwrap<T> = T extends Observable<infer U> ? U\n               : T extends Promise<infer U>    ? U\n               : T;\n\ntype UserListType = Unwrap<ReturnType<UserService['getAll']>>;\n// If getAll() returns Observable<User[]>, UserListType = User[]\n\n// ---- Mapped type for form state ----\ntype FormState<T> = {\n  [K in keyof T]: {\n    value: T[K];\n    dirty: boolean;\n    errors: string[];\n  };\n};\n\ninterface LoginForm { email: string; password: string; }\ntype LoginFormState = FormState<LoginForm>;\n// = { email: { value: string; dirty: boolean; errors: string[] };\n//     password: { value: string; dirty: boolean; errors: string[] } }\n\n// ---- Using ReturnType + Parameters for service testing ----\ntype ProductServiceMethods = keyof ProductService;\ntype GetProductsReturnType = ReturnType<ProductService['getAll']>;\n// Use in test: jest.spyOn returns correctly typed mock",
       "language": "typescript"
+    },
+    {
+      "id": "shallow-copy-vs-deep-copy",
+      "title": "Shallow copy vs deep copy in Angular state",
+      "explanation": `
+          <p>A <strong>shallow copy</strong> creates a new outer object or array, but nested objects inside it still point to the same references. A <strong>deep copy</strong> creates new copies all the way down the object graph. This matters in Angular because signals, OnPush components, reducers, and RxJS state streams all depend on predictable reference changes.</p>
+
+          <h3>Shallow Copy</h3>
+          <p>Use shallow copies when only the top-level value changes, or when you are replacing a nested item with a new object. Common tools are the spread operator (<code>{ ...obj }</code>, <code>[...arr]</code>), <code>Array.map()</code>, <code>Array.filter()</code>, and <code>Object.assign()</code>. This is the normal Angular pattern for updating UI state.</p>
+
+          <h3>Deep Copy</h3>
+          <p>Use deep copy when you truly need an independent clone of nested data, such as editing a draft form object without touching the original. Modern browsers and Node support <code>structuredClone()</code>, which handles many built-in types better than <code>JSON.parse(JSON.stringify(...))</code>. Avoid deep copying large state on every UI update because it is expensive and can hide poor state design.</p>
+
+          <h3>Angular Rule of Thumb</h3>
+          <p>Prefer immutable updates that copy only the path you change. For a product inside a cart array, create a new array and a new product object for that one item, while reusing the unchanged objects. That gives Angular a clean reference change without wasting work.</p>
+        `,
+      "code": "import { Component, signal } from '@angular/core';\n\ninterface Product {\n  id: number;\n  name: string;\n  price: number;\n  meta: { featured: boolean; tags: string[] };\n}\n\n@Component({\n  selector: 'app-products',\n  standalone: true,\n  template: `\n    @for (product of products(); track product.id) {\n      <button (click)=\"toggleFeatured(product.id)\">\n        {{ product.name }} - {{ product.meta.featured ? 'Featured' : 'Normal' }}\n      </button>\n    }\n  `\n})\nexport class ProductsComponent {\n  readonly products = signal<Product[]>([\n    { id: 1, name: 'Laptop', price: 999, meta: { featured: false, tags: ['tech'] } }\n  ]);\n\n  // BAD: mutates nested object. The array reference does not change.\n  mutateDirectly(id: number): void {\n    const product = this.products().find(p => p.id === id);\n    if (product) product.meta.featured = !product.meta.featured;\n  }\n\n  // GOOD: copy only the changed path: array -> product -> meta.\n  toggleFeatured(id: number): void {\n    this.products.update(items =>\n      items.map(product =>\n        product.id === id\n          ? {\n              ...product,\n              meta: {\n                ...product.meta,\n                featured: !product.meta.featured\n              }\n            }\n          : product\n      )\n    );\n  }\n\n  // Deep copy for independent draft editing.\n  createEditableDraft(product: Product): Product {\n    return structuredClone(product);\n  }\n}",
+      "language": "typescript"
+    },
+    {
+      "id": "reference-vs-value-types",
+      "title": "Primitive values vs reference values",
+      "explanation": `
+          <p>JavaScript values fall into two practical groups. <strong>Primitive values</strong> such as <code>string</code>, <code>number</code>, <code>boolean</code>, <code>null</code>, <code>undefined</code>, <code>bigint</code>, and <code>symbol</code> are copied by value. <strong>Objects</strong>, arrays, functions, maps, sets, dates, and class instances are copied by reference.</p>
+
+          <p>In Angular this explains many confusing bugs. If a child component receives an object input and mutates it, the parent object changes too because both components point to the same object. If an OnPush child receives the same object reference after mutation, Angular may not know anything meaningful changed.</p>
+
+          <h3>Best Practice</h3>
+          <p>Treat component inputs, signal values, and store state as read-only. When something changes, create a new object or array. This keeps parent-child data flow clean and makes change detection easier to reason about.</p>
+        `,
+      "code": "interface User {\n  id: number;\n  name: string;\n  address: { city: string };\n}\n\n// Primitive copy: independent value.\nlet a = 10;\nlet b = a;\nb = 20;\nconsole.log(a); // 10\n\n// Reference copy: both variables point to the same object.\nconst user: User = { id: 1, name: 'Asha', address: { city: 'Pune' } };\nconst sameUser = user;\nsameUser.name = 'Neha';\nconsole.log(user.name); // 'Neha'\n\n// Shallow copy: outer object is new, nested address is still shared.\nconst shallowUser = { ...user };\nshallowUser.address.city = 'Mumbai';\nconsole.log(user.address.city); // 'Mumbai'\n\n// Copy the nested path to avoid leaking changes.\nconst updatedUser: User = {\n  ...user,\n  address: {\n    ...user.address,\n    city: 'Bengaluru'\n  }\n};\n\n// Angular input pattern: do not mutate @Input/input() objects directly.\n// Emit an event or call a service that creates the next immutable state.",
+      "language": "typescript"
+    },
+    {
+      "id": "copying-arrays-and-objects",
+      "title": "Copying arrays and objects without mutation",
+      "explanation": `
+          <p>Most Angular UI updates are array or object transformations: add a row, update one item, remove an item, sort a list, or patch a form model. The safest approach is to return a new value instead of mutating the existing one. This is especially important with signals, NgRx reducers, component inputs, and OnPush components.</p>
+
+          <h3>Common Immutable Operations</h3>
+          <ul>
+            <li>Add: <code>[...items, newItem]</code></li>
+            <li>Remove: <code>items.filter(item =&gt; item.id !== id)</code></li>
+            <li>Update one: <code>items.map(item =&gt; item.id === id ? { ...item, name } : item)</code></li>
+            <li>Sort without mutation: <code>[...items].sort(...)</code></li>
+            <li>Patch object: <code>{ ...user, email: nextEmail }</code></li>
+          </ul>
+
+          <p>Avoid mutating methods like <code>push</code>, <code>splice</code>, <code>sort</code>, and direct property assignment on state objects unless the value is purely local and never used for change detection.</p>
+        `,
+      "code": "import { Component, computed, signal } from '@angular/core';\n\ninterface Todo {\n  id: number;\n  title: string;\n  done: boolean;\n}\n\n@Component({\n  selector: 'app-todos',\n  standalone: true,\n  template: `\n    <p>Open: {{ openCount() }}</p>\n    @for (todo of todos(); track todo.id) {\n      <label>\n        <input type=\"checkbox\" [checked]=\"todo.done\" (change)=\"toggle(todo.id)\" />\n        {{ todo.title }}\n      </label>\n    }\n  `\n})\nexport class TodosComponent {\n  readonly todos = signal<Todo[]>([]);\n  readonly openCount = computed(() => this.todos().filter(t => !t.done).length);\n\n  add(title: string): void {\n    const next: Todo = { id: Date.now(), title, done: false };\n    this.todos.update(items => [...items, next]);\n  }\n\n  toggle(id: number): void {\n    this.todos.update(items =>\n      items.map(todo =>\n        todo.id === id ? { ...todo, done: !todo.done } : todo\n      )\n    );\n  }\n\n  remove(id: number): void {\n    this.todos.update(items => items.filter(todo => todo.id !== id));\n  }\n\n  sortedByTitle(): Todo[] {\n    return [...this.todos()].sort((a, b) => a.title.localeCompare(b.title));\n  }\n}",
+      "language": "typescript"
     }
   ]
 });
