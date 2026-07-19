@@ -8,8 +8,14 @@ window.MODULES.push({
       id: "angular-22-standard-lifecycle-upgrade",
       title: "Angular 22 standard for lifecycle hooks",
       explanation: `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>security guard doing scheduled rounds</strong> versus a <strong>motion-sensor alarm system</strong>. The old model checked in on a fixed patrol schedule (lifecycle hooks firing on every change-detection pass, whether anything actually changed or not). Signals and <code>effect()</code> are the motion sensor: they only trigger when something they actually depend on moves. You still keep a guard on duty for the moments that genuinely need scheduled rounds &mdash; init, DOM-ready, cleanup &mdash; but you stop making them patrol constantly out of habit.</p>
+          </div>
+        </div>
         <p>Modern Angular still supports every lifecycle hook, but Angular 22-ready code should use hooks more selectively. Prefer <code>input()</code>, signals, <code>computed()</code>, <code>effect()</code>, and signal queries for reactive work, then use lifecycle hooks only when they match the component boundary: initialization, DOM access, projected content, view children, or cleanup.</p>
-
         <h3>Modern rule of thumb</h3>
         <ul>
           <li>Use <code>constructor</code> or field initializers only for dependency setup.</li>
@@ -17,9 +23,10 @@ window.MODULES.push({
           <li>Use <code>input()</code> plus <code>effect()</code> instead of <code>ngOnChanges()</code> for many input-driven reactions.</li>
           <li>Use <code>afterNextRender()</code> or view hooks for DOM-dependent work.</li>
           <li>Use <code>DestroyRef</code> and <code>takeUntilDestroyed()</code> for cleanup instead of hand-written unsubscribe fields.</li>
+          <li>Remember OnPush is the default change detection strategy in Angular 22 &mdash; a component with no <code>changeDetection</code> set only re-renders on signal changes, input changes, events, or explicit triggers, which makes disciplined hook usage even more important.</li>
         </ul>
       `,
-      code: `import { Component, DestroyRef, effect, inject, input } from '@angular/core';
+      code: `import { Component, DestroyRef, effect, inject, input, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -52,26 +59,31 @@ export class UserDashboardComponent {
     });
   }
 }`,
-      language: "typescript"
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Old Patrol vs New Motion Sensor</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 text-xs\"><div class=\"bg-slate-50 border-2 border-slate-300 rounded-xl p-3\"><p class=\"font-bold text-slate-700 text-center mb-2\">ngOnChanges / ngDoCheck</p><p class=\"text-slate-500 text-center\">runs on every CD cycle, whether or not the relevant value actually changed</p></div><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3\"><p class=\"font-bold text-indigo-700 text-center mb-2\">input() + effect()</p><p class=\"text-slate-600 text-center\">runs only when the specific signal it reads actually changes</p></div></div></div>"
     },
 
     {
       id: "what-is-ngoninit",
       title: "What is ngOnInit?",
       explanation: `
-        <p><strong>ngOnInit()</strong> is a lifecycle hook that runs <em>once</em>, right after Angular finishes setting up the component and binding its <code>@Input()</code> properties for the first time.</p>
-
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A new employee's <strong>first day at the office</strong>. The constructor is the moment they walk through the front door &mdash; they exist, but nobody has handed them their badge, desk assignment, or project brief yet (inputs aren't set). <code>ngOnInit()</code> is once they're sitting at their desk with everything handed over &mdash; that's when it's actually safe to start doing real work.</p>
+          </div>
+        </div>
+        <p><strong>ngOnInit()</strong> is a lifecycle hook that runs <em>once</em>, right after Angular finishes setting up the component and binding its input properties for the first time.</p>
         <h3>Why not use the constructor?</h3>
-        <p>When the constructor runs, Angular has not yet assigned any <code>@Input()</code> values. So if you try to read <code>this.userId</code> (received from a parent) inside the constructor, it will be <code>undefined</code>. By the time <code>ngOnInit()</code> is called, all inputs are ready.</p>
-
+        <p>When the constructor runs, Angular has not yet assigned any input values. So if you try to read <code>this.userId</code> (received from a parent) inside the constructor, it will be <code>undefined</code>. By the time <code>ngOnInit()</code> is called, all inputs are ready.</p>
         <h3>Typical uses</h3>
         <ul>
           <li>Fetch data from an API based on route parameters or inputs</li>
           <li>Initialise reactive forms</li>
           <li>Subscribe to state or route changes</li>
-          <li>Read <code>@Input()</code> values safely</li>
+          <li>Read input values safely</li>
         </ul>
-
         <h3>Real-world example</h3>
         <p>A <strong>DashboardComponent</strong> receives a <code>userId</code> from the router, then loads that user's data in <code>ngOnInit()</code>.</p>
       `,
@@ -103,15 +115,22 @@ export class DashboardComponent implements OnInit {
     });
   }
 }`,
-      language: "typescript"
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Constructor vs ngOnInit</p><div class=\"flex items-center justify-center gap-3 text-xs\"><div class=\"bg-rose-50 border-2 border-rose-200 rounded-lg px-4 py-3 text-center\"><p class=\"font-bold text-rose-700\">constructor</p><p class=\"text-slate-500 mt-1\">userId is undefined</p></div><span class=\"text-slate-300 text-lg\">&rarr;</span><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-lg px-4 py-3 text-center\"><p class=\"font-bold text-emerald-700\">ngOnInit</p><p class=\"text-slate-500 mt-1\">userId is ready — safe to use</p></div></div></div>"
     },
 
     {
       id: "what-is-ngonchanges",
       title: "What is ngOnChanges?",
       explanation: `
-        <p><strong>ngOnChanges()</strong> is called by Angular every time an <code>@Input()</code> property value changes — including the very first time (before <code>ngOnInit</code>).</p>
-
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>customs officer stamping a passport</strong> every time it crosses the border. <code>ngOnChanges</code> only stamps when the passport itself (the input reference) is swapped for a different one. If you scribble a note inside the same passport without handing over a new one, the officer never notices &mdash; the object was mutated, not replaced, so no stamp, no ngOnChanges call.</p>
+          </div>
+        </div>
+        <p><strong>ngOnChanges()</strong> is called by Angular every time an input property value changes &mdash; including the very first time (before <code>ngOnInit</code>).</p>
         <h3>The SimpleChanges object</h3>
         <p>Angular passes a <code>SimpleChanges</code> map as the argument. Each key is the name of the changed input, and the value is a <code>SimpleChange</code> object with three properties:</p>
         <ul>
@@ -119,10 +138,13 @@ export class DashboardComponent implements OnInit {
           <li><code>currentValue</code> — the new value</li>
           <li><code>firstChange</code> — <code>true</code> only on the very first assignment</li>
         </ul>
-
-        <h3>Key gotcha</h3>
-        <p>ngOnChanges only fires when the <strong>reference</strong> of the input changes. Mutating an array or object inside the parent does <em>not</em> trigger it — you must replace the reference.</p>
-
+        <div class="gotcha-box">
+          <svg class="gotcha-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div class="gotcha-body">
+            <p class="gotcha-label">Common trap</p>
+            <p class="gotcha-text">ngOnChanges only fires when the <strong>reference</strong> of the input changes. Mutating an array or object inside the parent (<code>this.filters.year = 2026</code>) does <em>not</em> trigger it — you must replace the reference (<code>this.filters = { ...this.filters, year: 2026 }</code>). This is the single most common reason "my child component isn't updating" bugs happen.</p>
+          </div>
+        </div>
         <h3>Real-world example</h3>
         <p>A <strong>ChartComponent</strong> receives filter settings from a parent. Every time the parent changes the filters, the chart should reload its data — but not on the very first load (handled by <code>ngOnInit</code>).</p>
       `,
@@ -157,15 +179,22 @@ export class ChartComponent implements OnChanges {
 // Parent template usage:
 // <app-chart [filters]="selectedFilters"></app-chart>
 // Whenever selectedFilters is replaced with a new object, ngOnChanges fires.`,
-      language: "typescript"
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Reference Swap vs Mutation</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 text-xs\"><div class=\"bg-rose-50 border-2 border-rose-200 rounded-xl p-3\"><p class=\"font-bold text-rose-700 text-center mb-2\">this.filters.year = 2026</p><p class=\"text-slate-500 text-center\">same object reference &rarr; ngOnChanges never fires</p></div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3\"><p class=\"font-bold text-emerald-700 text-center mb-2\">this.filters = { ...filters, year: 2026 }</p><p class=\"text-slate-500 text-center\">new reference &rarr; ngOnChanges fires correctly</p></div></div></div>"
     },
 
     {
       id: "what-is-ngafterviewinit",
       title: "What is ngAfterViewInit?",
       explanation: `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">The moment a <strong>house is fully built and handed over the keys</strong>, not just when the blueprint was approved. You can't hang a picture on a wall that's still a blueprint sketch &mdash; you need the actual physical wall to exist. <code>ngAfterViewInit()</code> is the "keys handed over" moment: the real DOM exists, and now you can measure it, decorate it, or move furniture into it.</p>
+          </div>
+        </div>
         <p><strong>ngAfterViewInit()</strong> is called once after Angular has fully created and rendered the component's template (its "view") including all child components.</p>
-
         <h3>Why do we need this?</h3>
         <p>Some things simply cannot be done until the DOM exists. For example:</p>
         <ul>
@@ -174,10 +203,13 @@ export class ChartComponent implements OnChanges {
           <li>Setting focus on an input element</li>
           <li>Using <code>@ViewChild</code> references (they are only available from this hook onwards)</li>
         </ul>
-
-        <h3>Important rule</h3>
-        <p>Do <em>not</em> change component data in <code>ngAfterViewInit()</code> synchronously — doing so will trigger Angular's <em>ExpressionChangedAfterItHasBeenChecked</em> error. Use <code>setTimeout()</code> or <code>Promise.resolve()</code> if you must update state here.</p>
-
+        <div class="gotcha-box">
+          <svg class="gotcha-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div class="gotcha-body">
+            <p class="gotcha-label">Common trap</p>
+            <p class="gotcha-text">Do not change component data in <code>ngAfterViewInit()</code> synchronously — doing so triggers Angular's <em>ExpressionChangedAfterItHasBeenChecked</em> error, because the view was already checked this cycle before your change. Use <code>setTimeout()</code>, <code>Promise.resolve()</code>, or better, <code>afterNextRender()</code> if you must update state here.</p>
+          </div>
+        </div>
         <h3>Real-world example</h3>
         <p>Auto-scroll a message list to the bottom and set focus on an input field after the view loads.</p>
       `,
@@ -213,18 +245,24 @@ export class ChatComponent implements AfterViewInit {
     // setTimeout(() => this.title = 'Chat Ready');
   }
 }`,
-      language: "typescript"
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Only Safe After the View Exists</p><div class=\"flex flex-wrap items-center justify-center gap-2 text-xs\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-lg px-3 py-2 text-center font-semibold text-indigo-700\">measure element size</div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-lg px-3 py-2 text-center font-semibold text-emerald-700\">init 3rd-party chart/map</div><div class=\"bg-amber-50 border-2 border-amber-200 rounded-lg px-3 py-2 text-center font-semibold text-amber-700\">focus an input</div><div class=\"bg-rose-50 border-2 border-rose-200 rounded-lg px-3 py-2 text-center font-semibold text-rose-700\">read @ViewChild</div></div><p class=\"text-center text-slate-400 text-xs mt-3\">all require ngAfterViewInit — the real DOM must exist first</p></div>"
     },
 
     {
       id: "what-is-ngondestroy",
       title: "What is ngOnDestroy?",
       explanation: `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">Checking out of a <strong>hotel room</strong>. Before you leave you're supposed to turn off the lights, return the key card, and close the minibar tab. Skip that, and the hotel keeps billing you and running the AC in an empty room forever &mdash; that's a memory leak. <code>ngOnDestroy()</code> is checkout: your last guaranteed chance to settle every open tab (subscriptions, timers, sockets) before the room (component) is gone for good.</p>
+          </div>
+        </div>
         <p><strong>ngOnDestroy()</strong> runs once just before Angular removes the component from the DOM. It is your last chance to release any resources the component was holding.</p>
-
         <h3>Why is cleanup important?</h3>
         <p>If you subscribe to an Observable and never unsubscribe, the subscription keeps running in the background even after the component is gone. This causes <strong>memory leaks</strong> and can produce bugs where callbacks fire on a destroyed component.</p>
-
         <h3>What to clean up</h3>
         <ul>
           <li>RxJS subscriptions</li>
@@ -233,68 +271,74 @@ export class ChatComponent implements AfterViewInit {
           <li>Event listeners added to the window or document</li>
           <li>Third-party library instances (maps, editors, charts)</li>
         </ul>
-
-        <h3>Best pattern — takeUntil</h3>
-        <p>Create a <code>Subject</code> called <code>destroy$</code>. Pipe every subscription through <code>takeUntil(this.destroy$)</code>. In <code>ngOnDestroy</code>, emit one value from <code>destroy$</code> — this automatically completes all those subscriptions at once.</p>
+        <h3>Best pattern — DestroyRef and takeUntilDestroyed</h3>
+        <p>Modern Angular provides <code>DestroyRef</code> and the <code>takeUntilDestroyed()</code> RxJS operator, which automatically unsubscribes when the component (or directive, or service) is destroyed — no manual <code>Subject</code> bookkeeping required. The older <code>Subject</code>-based <code>takeUntil(destroy$)</code> pattern still works and you'll see it constantly in existing codebases.</p>
       `,
-      code: `import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+      code: `import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SocketService } from './socket.service';
 import { NotificationService } from './notification.service';
 
 @Component({ selector: 'app-live-feed', templateUrl: './live-feed.component.html' })
-export class LiveFeedComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();  // ← the "off switch"
+export class LiveFeedComponent {
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly socket = inject(SocketService);
+  private readonly notifications = inject(NotificationService);
+
   messages: string[] = [];
   private timer!: ReturnType<typeof setInterval>;
 
-  constructor(
-    private socket: SocketService,
-    private notifications: NotificationService
-  ) {}
-
-  ngOnInit(): void {
+  constructor() {
     this.socket.connect();
 
-    // takeUntil automatically unsubscribes when destroy$ emits
+    // takeUntilDestroyed automatically unsubscribes when the component is destroyed
     this.socket.messages$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(msg => this.messages.push(msg));
 
     this.notifications.alerts$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(alert => console.log('Alert:', alert));
 
-    // Keep a reference to any timer
     this.timer = setInterval(() => this.socket.ping(), 30_000);
-  }
 
-  ngOnDestroy(): void {
-    // One emit completes ALL takeUntil subscriptions above
-    this.destroy$.next();
-    this.destroy$.complete();
-
-    // Clean up other resources
-    clearInterval(this.timer);
-    this.socket.disconnect();
+    // Anything that isn't an Observable still needs manual cleanup:
+    this.destroyRef.onDestroy(() => {
+      clearInterval(this.timer);
+      this.socket.disconnect();
+    });
   }
-}`,
-      language: "typescript"
+}
+
+// ---- Legacy Subject-based pattern (still common in existing code) ----
+// private destroy$ = new Subject<void>();
+// this.socket.messages$.pipe(takeUntil(this.destroy$)).subscribe(...);
+// ngOnDestroy() { this.destroy$.next(); this.destroy$.complete(); }`,
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Hotel Checkout Checklist</p><div class=\"grid grid-cols-2 md:grid-cols-4 gap-2 text-xs\"><div class=\"bg-indigo-50 border border-indigo-200 rounded-lg p-2 text-center\">RxJS subscriptions</div><div class=\"bg-emerald-50 border border-emerald-200 rounded-lg p-2 text-center\">WebSocket connections</div><div class=\"bg-amber-50 border border-amber-200 rounded-lg p-2 text-center\">setInterval / setTimeout</div><div class=\"bg-rose-50 border border-rose-200 rounded-lg p-2 text-center\">window/document listeners</div></div><p class=\"text-center text-slate-400 text-xs mt-3\">takeUntilDestroyed(destroyRef) handles the observable cases automatically</p></div>"
     },
 
     {
       id: "what-is-ngdocheck",
       title: "What is ngDoCheck?",
       explanation: `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">Manually recounting inventory on a shelf because the automated barcode scanner (Angular's default change detection) can only see items that were swapped for a completely different box &mdash; it can't tell if someone quietly added a can to a box that's already on the shelf. <code>ngDoCheck()</code> is you personally walking the aisle and counting cans by hand, every single time the store does a walkthrough. It works, but it's exhausting if the aisle is large.</p>
+          </div>
+        </div>
         <p><strong>ngDoCheck()</strong> is called on every single change detection run — it lets you implement your own change detection logic for cases Angular cannot handle automatically.</p>
-
         <h3>When do you need it?</h3>
         <p>Angular's default change detection compares object references. If you mutate an array (e.g., <code>this.cart.push(item)</code>) without replacing the reference, Angular will <em>not</em> detect the change through normal bindings. <code>ngDoCheck()</code> lets you catch such mutations manually.</p>
-
-        <h3>Performance warning</h3>
-        <p><code>ngDoCheck()</code> runs extremely frequently. Keep the logic inside it as cheap as possible — avoid API calls or heavy computation. Only use it when you truly cannot replace object references.</p>
-
+        <div class="gotcha-box">
+          <svg class="gotcha-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div class="gotcha-body">
+            <p class="gotcha-label">Common trap</p>
+            <p class="gotcha-text"><code>ngDoCheck()</code> runs on every change detection pass across the whole app, which can be extremely frequent — especially with Zone.js still in play. Putting API calls or heavy computation inside it is a reliable way to tank performance. In Angular 22, prefer replacing references and using signals over reaching for <code>ngDoCheck</code> at all; it should be a last resort, not a habit.</p>
+          </div>
+        </div>
         <h3>Real-world example</h3>
         <p>Tracking changes to a mutable shopping cart array and updating the total.</p>
       `,
@@ -321,34 +365,40 @@ export class CartBadgeComponent implements DoCheck {
 
 // Better alternative: replace the array reference in the parent
 // this.cart = [...this.cart, newItem];
-// This lets ngOnChanges() handle it instead, which is cheaper.`,
-      language: "typescript"
+// This lets ngOnChanges() handle it instead, which is cheaper.
+// Better still: hold the cart as a signal and use computed() for the total.`,
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Why ngDoCheck Is a Last Resort</p><div class=\"flex flex-col items-center gap-2 text-xs\"><div class=\"bg-rose-50 border-2 border-rose-200 rounded-lg px-4 py-2 text-center font-semibold text-rose-700\">ngDoCheck — runs every CD cycle, everywhere</div><span class=\"text-slate-300\">preferred over by</span><div class=\"bg-amber-50 border-2 border-amber-200 rounded-lg px-4 py-2 text-center font-semibold text-amber-700\">ngOnChanges — runs only on reference swap</div><span class=\"text-slate-300\">preferred over by</span><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-lg px-4 py-2 text-center font-semibold text-emerald-700\">signal + computed() — runs only when the signal changes</div></div></div>"
     },
 
     {
       id: "constructor-vs-ngoninit",
       title: "Difference between constructor and ngOnInit",
       explanation: `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A surgeon <strong>scrubbing in</strong> versus actually <strong>starting the operation</strong>. Scrubbing in (the constructor) is about gathering your instruments and making sure everything is present and correctly handed to you — it is not the moment to start cutting. The operation itself (<code>ngOnInit</code>) only begins once the patient (the component's inputs) is actually on the table and ready.</p>
+          </div>
+        </div>
         <p>This is a very common interview question. The short answer is: <strong>constructor is for wiring up dependencies; ngOnInit is for logic</strong>.</p>
-
         <h3>Constructor</h3>
         <ul>
           <li>Runs first, before any lifecycle hooks</li>
-          <li>Angular's DI system injects services here</li>
-          <li><code>@Input()</code> values are <strong>NOT yet available</strong></li>
+          <li>Angular's DI system injects services here (or via <code>inject()</code> in field initializers, which run at the same point)</li>
+          <li>Input values are <strong>NOT yet available</strong></li>
           <li>The template is <strong>NOT yet rendered</strong></li>
           <li>Should only contain dependency injection — nothing else</li>
         </ul>
-
         <h3>ngOnInit</h3>
         <ul>
-          <li>Runs after the constructor and after Angular sets all <code>@Input()</code> bindings</li>
-          <li>Safe to read <code>@Input()</code> properties</li>
+          <li>Runs after the constructor and after Angular sets all input bindings</li>
+          <li>Safe to read input properties</li>
           <li>Ideal for API calls, form setup, and any initialisation logic</li>
         </ul>
-
         <h3>Why does this matter?</h3>
-        <p>If you call an API inside the constructor and the component has an <code>@Input()</code> like a user ID, that ID will still be <code>undefined</code> when the API call is made. Moving the call to <code>ngOnInit()</code> fixes this.</p>
+        <p>If you call an API inside the constructor and the component has an input like a user ID, that ID will still be <code>undefined</code> when the API call is made. Moving the call to <code>ngOnInit()</code> fixes this.</p>
       `,
       code: `import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from './auth.service';
@@ -360,34 +410,41 @@ export class ProfileComponent implements OnInit {
   profile: any;
 
   constructor(
-    private auth: AuthService,       // ✅ DI only in constructor
+    private auth: AuthService,       // DI only in constructor
     private profileService: ProfileService
   ) {
-    // ❌ DON'T do this — userId is undefined here
+    // DON'T do this — userId is undefined here
     // this.profileService.get(this.userId).subscribe(...);
 
-    // ✅ It's fine to call methods that don't depend on @Input()
+    // It's fine to call methods that don't depend on inputs
     console.log('Is logged in:', this.auth.isLoggedIn());
   }
 
   ngOnInit(): void {
-    // ✅ userId is ready now — safe to use
+    // userId is ready now — safe to use
     this.profileService.get(this.userId).subscribe(data => {
       this.profile = data;
     });
   }
 }`,
-      language: "typescript"
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Scrubbing In vs Operating</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 text-xs\"><div class=\"bg-slate-50 border-2 border-slate-300 rounded-xl p-3\"><p class=\"font-bold text-slate-700 text-center mb-2\">constructor</p><ul class=\"space-y-1 text-slate-600\"><li>&bull; DI only</li><li>&bull; no inputs yet</li><li>&bull; no template yet</li></ul></div><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3\"><p class=\"font-bold text-indigo-700 text-center mb-2\">ngOnInit</p><ul class=\"space-y-1 text-slate-600\"><li>&bull; inputs ready</li><li>&bull; safe for API calls</li><li>&bull; safe for form setup</li></ul></div></div></div>"
     },
 
     {
       id: "complete-lifecycle-order",
       title: "Complete lifecycle order",
       explanation: `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>film production schedule</strong>: pre-production (constructor, inputs arrive), then the shoot itself starts (<code>ngOnInit</code>), the crew keeps re-checking continuity all day (<code>ngDoCheck</code>), then props and extras that were placed by other departments get inspected (content hooks), then the actual set the camera sees gets finalized (view hooks), and finally the wrap party where everything gets packed away (<code>ngOnDestroy</code>). Each phase has a strict order because later phases depend on earlier ones being finished.</p>
+          </div>
+        </div>
         <p>Angular calls lifecycle hooks in a strict, predictable order. Understanding the order tells you exactly which hook to use for each task.</p>
-
         <h3>The full order</h3>
-        <ol>
+        <ol style="list-style:decimal;padding-left:1.25rem;color:#475569;line-height:1.8;">
           <li><strong>constructor</strong> — DI, no inputs yet</li>
           <li><strong>ngOnChanges</strong> — first call happens here if there are inputs (before ngOnInit)</li>
           <li><strong>ngOnInit</strong> — inputs are ready, run initialisation logic</li>
@@ -398,10 +455,8 @@ export class ProfileComponent implements OnInit {
           <li><strong>ngAfterViewChecked</strong> — after every CD check of the view</li>
           <li><strong>ngOnDestroy</strong> — cleanup before component is removed</li>
         </ol>
-
         <h3>Memory trick</h3>
-        <p>Think of it as three phases: <strong>Init phase</strong> (construct → changes → init) → <strong>Content phase</strong> (content init → content checked) → <strong>View phase</strong> (view init → view checked) → <strong>Destroy</strong>.</p>
-
+        <p>Think of it as three phases: <strong>Init phase</strong> (construct &rarr; changes &rarr; init) &rarr; <strong>Content phase</strong> (content init &rarr; content checked) &rarr; <strong>View phase</strong> (view init &rarr; view checked) &rarr; <strong>Destroy</strong>.</p>
         <h3>Which hooks run once vs repeatedly?</h3>
         <ul>
           <li>Run <strong>once</strong>: ngOnInit, ngAfterContentInit, ngAfterViewInit, ngOnDestroy</li>
@@ -434,28 +489,32 @@ export class LifecycleDemoComponent implements
 
 // Drop this component in a template and open the console.
 // You will see each hook fire in the exact order listed above.`,
-      language: "typescript"
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">The Four Phases</p><div class=\"flex flex-wrap items-center justify-center gap-2 text-xs\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-lg px-3 py-2 text-center font-semibold text-indigo-700\">Init<br><span class=\"font-normal text-slate-500\">ctor &rarr; changes &rarr; init</span></div><span class=\"text-slate-300\">&rarr;</span><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-lg px-3 py-2 text-center font-semibold text-emerald-700\">Content<br><span class=\"font-normal text-slate-500\">content init &rarr; checked</span></div><span class=\"text-slate-300\">&rarr;</span><div class=\"bg-amber-50 border-2 border-amber-200 rounded-lg px-3 py-2 text-center font-semibold text-amber-700\">View<br><span class=\"font-normal text-slate-500\">view init &rarr; checked</span></div><span class=\"text-slate-300\">&rarr;</span><div class=\"bg-rose-50 border-2 border-rose-200 rounded-lg px-3 py-2 text-center font-semibold text-rose-700\">Destroy</div></div></div>"
     },
     {
       id: "after-next-render-and-after-every-render",
       title: "afterNextRender and afterEveryRender",
       explanation: `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">The <strong>photographer at a wedding</strong> who only shows up once the guests are actually seated and the room is arranged — not during the setup chaos. <code>afterNextRender()</code> is that photographer snapping one shot right after the room is finally arranged. <code>afterEveryRender()</code> is a photographer who insists on a new shot after every single chair gets nudged — useful occasionally, exhausting if overused. Neither one shows up at all during a dress rehearsal held in an empty hall (server-side rendering), because there's no real room to photograph yet.</p>
+          </div>
+        </div>
         <p>Modern Angular includes render callbacks for work that must happen <strong>after Angular has rendered the DOM</strong>. These are not class lifecycle interfaces like <code>ngAfterViewInit</code>; they are functions you call in an injection context, usually the constructor.</p>
-
         <h3>afterNextRender</h3>
         <p><code>afterNextRender()</code> runs once after the next full application render. Use it for one-time DOM work such as measuring an element, initializing a chart library, focusing an input, or reading layout.</p>
-
         <h3>afterEveryRender</h3>
         <p><code>afterEveryRender()</code> runs after every render. Use it rarely, because it can become expensive. It is useful for integrating with a non-Angular library that must be told whenever Angular has updated the DOM.</p>
-
-        <h3>Why Not Always ngAfterViewInit?</h3>
+        <h3>Why not always ngAfterViewInit?</h3>
         <p><code>ngAfterViewInit</code> tells you the component view was initialized. Render callbacks tell you Angular has completed rendering. They also avoid common SSR problems because render callbacks do not run during server-side rendering.</p>
       `,
       code: `import { Component, ElementRef, ViewChild, afterNextRender, afterEveryRender, inject } from '@angular/core';
 
 @Component({
   selector: 'app-chart-panel',
-  standalone: true,
   template: '<canvas #chartCanvas></canvas>'
 })
 export class ChartPanelComponent {
@@ -477,7 +536,8 @@ export class ChartPanelComponent {
     });
   }
 }`,
-      language: "typescript"
+      language: "typescript",
+      diagram: "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">afterNextRender vs afterEveryRender</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 text-xs\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3\"><p class=\"font-bold text-indigo-700 text-center mb-2\">afterNextRender()</p><p class=\"text-slate-600 text-center\">runs once, after the next render only — for one-time DOM setup</p></div><div class=\"bg-amber-50 border-2 border-amber-200 rounded-xl p-3\"><p class=\"font-bold text-amber-700 text-center mb-2\">afterEveryRender()</p><p class=\"text-slate-600 text-center\">runs after every render — use sparingly, keep it cheap</p></div></div><p class=\"text-center text-slate-400 text-xs mt-3\">both are skipped entirely during server-side rendering</p></div>"
     }
 
   ]

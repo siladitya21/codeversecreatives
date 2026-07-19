@@ -158,6 +158,76 @@ body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
   padding: 1.5rem;
 }
 
+/* ─── Analogy Callout ────────────────────────── */
+.analogy-box {
+  display: flex;
+  gap: 12px;
+  background: linear-gradient(135deg, #fefce8, #fef3c7);
+  border: 1px solid #fde68a;
+  border-left: 3px solid #d97706;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 0 0 1.25rem;
+}
+.analogy-box .analogy-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: #b45309;
+  margin-top: 1px;
+}
+.analogy-box .analogy-body { min-width: 0; }
+.analogy-box .analogy-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b45309;
+  margin: 0 0 0.25rem;
+}
+.analogy-box .analogy-text {
+  font-size: 0.85rem;
+  color: #78350f;
+  line-height: 1.65;
+  margin: 0;
+}
+.analogy-box .analogy-text strong { color: #92400e; }
+
+/* ─── Gotcha / Warning Callout ───────────────── */
+.gotcha-box {
+  display: flex;
+  gap: 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-left: 3px solid #dc2626;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 1.25rem 0;
+}
+.gotcha-box .gotcha-icon {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: #b91c1c;
+  margin-top: 1px;
+}
+.gotcha-box .gotcha-body { min-width: 0; }
+.gotcha-box .gotcha-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b91c1c;
+  margin: 0 0 0.25rem;
+}
+.gotcha-box .gotcha-text {
+  font-size: 0.85rem;
+  color: #7f1d1d;
+  line-height: 1.65;
+  margin: 0;
+}
+.gotcha-box .gotcha-text strong { color: #991b1b; }
+
 /* ─── Nav Buttons ────────────────────────────── */
 .nav-btn {
   display: flex;

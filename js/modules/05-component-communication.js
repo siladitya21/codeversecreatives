@@ -7,65 +7,641 @@ window.MODULES.push({
     {
       "id": "angular-22-standard-communication-upgrade",
       "title": "Angular 22 standard for component communication",
-      "explanation": "<p>For new Angular code, prefer the function-based component API: <code>input()</code> for parent-to-child data, <code>output()</code> for child-to-parent events, <code>model()</code> for deliberate two-way component bindings, and signal queries for child references. Decorator APIs such as <code>@Input()</code>, <code>@Output()</code>, <code>@ViewChild()</code>, and <code>@ContentChild()</code> still matter for existing projects, but the modern standard is signal-friendly.</p><h3>Upgrade map</h3><ul><li><code>@Input({ required: true }) item!: Item</code> -> <code>item = input.required&lt;Item&gt;()</code>.</li><li><code>@Output() saved = new EventEmitter&lt;Item&gt;()</code> -> <code>saved = output&lt;Item&gt;()</code>.</li><li>Manual two-way input/output pairs -> <code>model()</code> when the child owns an editable value.</li><li><code>@ViewChild()</code> -> <code>viewChild()</code> where signal queries fit.</li><li>Shared service streams can be RxJS for async workflows or signals for synchronous UI state.</li></ul>",
-      "code": "import { Component, input, output } from '@angular/core';\n\nexport interface Product {\n  id: number;\n  name: string;\n  price: number;\n}\n\n@Component({\n  selector: 'app-product-card',\n  template: `\n    <article>\n      <h3>{{ product().name }}</h3>\n      <p>{{ product().price | currency }}</p>\n      <button type=\"button\" (click)=\"cartAdd.emit(product())\">Add</button>\n      <button type=\"button\" (click)=\"removed.emit(product().id)\">Remove</button>\n    </article>\n  `\n})\nexport class ProductCardComponent {\n  readonly product = input.required<Product>();\n  readonly cartAdd = output<Product>();\n  readonly removed = output<number>();\n}",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">Swapping a <strong>paper inbox tray</strong> for a live shared spreadsheet. Decorator-based <code>@Input()</code>/<code>@Output()</code> work fine but sit slightly outside the reactive flow &mdash; you often need <code>ngOnChanges</code> to notice a change. Function-based <code>input()</code>/<code>output()</code>/<code>model()</code> are cells in a live spreadsheet: read one, and anything downstream that reads it (a <code>computed()</code>, an <code>effect()</code>) reacts automatically, no polling or extra lifecycle hook required.</p>
+          </div>
+        </div>
+        <p>For new Angular code, prefer the function-based component API: <code>input()</code> for parent-to-child data, <code>output()</code> for child-to-parent events, <code>model()</code> for deliberate two-way component bindings, and signal queries for child references. Decorator APIs such as <code>@Input()</code>, <code>@Output()</code>, <code>@ViewChild()</code>, and <code>@ContentChild()</code> still matter for existing projects, but the modern standard is signal-friendly end to end.</p>
+        <h3>Upgrade map</h3>
+        <ul>
+          <li><code>@Input({ required: true }) item!: Item</code> &rarr; <code>item = input.required&lt;Item&gt;()</code>.</li>
+          <li><code>@Output() saved = new EventEmitter&lt;Item&gt;()</code> &rarr; <code>saved = output&lt;Item&gt;()</code>.</li>
+          <li>Manual two-way input/output pairs &rarr; <code>model()</code> when the child owns an editable value.</li>
+          <li><code>@ViewChild()</code> &rarr; <code>viewChild()</code> where signal queries fit.</li>
+          <li>Shared service streams can be RxJS for async workflows or signals for synchronous UI state.</li>
+        </ul>
+      `,
+      "code": `import { Component, input, output } from '@angular/core';
+
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+
+@Component({
+  selector: 'app-product-card',
+  template: \`
+    <article>
+      <h3>{{ product().name }}</h3>
+      <p>{{ product().price | currency }}</p>
+      <button type="button" (click)="cartAdd.emit(product())">Add</button>
+      <button type="button" (click)="removed.emit(product().id)">Remove</button>
+    </article>
+  \`
+})
+export class ProductCardComponent {
+  readonly product = input.required<Product>();
+  readonly cartAdd = output<Product>();
+  readonly removed = output<number>();
+}`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Decorator API &rarr; Function API</p><div class=\"grid grid-cols-1 md:grid-cols-3 gap-3 max-w-2xl mx-auto text-xs\"><div class=\"bg-slate-50 border border-slate-200 rounded-lg p-3 text-center\"><p class=\"font-mono font-bold text-slate-600\">@Input()</p><p class=\"text-slate-300 my-1\">&darr;</p><p class=\"font-mono font-bold text-indigo-700\">input()</p></div><div class=\"bg-slate-50 border border-slate-200 rounded-lg p-3 text-center\"><p class=\"font-mono font-bold text-slate-600\">@Output()</p><p class=\"text-slate-300 my-1\">&darr;</p><p class=\"font-mono font-bold text-emerald-700\">output()</p></div><div class=\"bg-slate-50 border border-slate-200 rounded-lg p-3 text-center\"><p class=\"font-mono font-bold text-slate-600\">@ViewChild()</p><p class=\"text-slate-300 my-1\">&darr;</p><p class=\"font-mono font-bold text-amber-700\">viewChild()</p></div></div></div>"
     },
     {
       "id": "parent-to-child-data",
       "title": "How to pass data from parent to child component?",
-      "explanation": "\n          <p>The standard Angular mechanism for passing data from a <strong>parent to a child</strong> is <strong>property binding</strong> on the parent's template combined with an input declared by the child. In modern Angular, prefer <code>input()</code> and <code>input.required()</code>; <code>@Input()</code> remains valid for legacy and decorator-style code. The parent owns the data; the child declares which properties it accepts; Angular keeps those properties in sync whenever the parent's value changes.</p>\n\n          <h3>How It Works</h3>\n          <p>The child component decorates a property with <code>@Input()</code>. This registers it as an input binding — Angular knows the property is intended to receive data from outside. The parent then binds to that property using square-bracket syntax: <code>[propertyName]=\"expression\"</code>. Every time Angular runs change detection and finds that the expression's value has changed, it sets the child's input property to the new value before running the child's <code>ngOnChanges</code> lifecycle hook.</p>\n\n          <h3>Input Aliasing</h3>\n          <p>You can alias an input to give it a different public name than its internal property name: <code>@Input('label') buttonLabel = ''</code>. The template uses <code>[label]=\"text\"</code> while the class uses <code>this.buttonLabel</code> internally. This is useful when the public API name conflicts with a TypeScript keyword or needs to follow a naming convention different from the class internals.</p>\n\n          <h3>Required Inputs (Angular 16+)</h3>\n          <p>Angular 16 introduced <code>@Input({ required: true })</code>. If a parent uses the child without providing a required input, Angular throws a compile-time error. This is far better than discovering a missing input at runtime with an undefined value.</p>\n        ",
-      "code": "// ---- child: product-card.component.ts ----\nexport interface Product {\n  id: number;\n  name: string;\n  price: number;\n  inStock: boolean;\n}\n\n@Component({\n  selector: 'app-product-card',\n  standalone: true,\n  imports: [NgClass, CurrencyPipe],\n  template: `\n    <div class=\"card\" [ngClass]=\"{ 'card-dimmed': !product.inStock }\">\n      <h3>{{ product.name }}</h3>\n      <p>{{ product.price | currency }}</p>\n      <span *ngIf=\"!product.inStock\" class=\"badge-red\">Out of Stock</span>\n    </div>\n  `\n})\nexport class ProductCardComponent {\n  // required: true — compile error if parent forgets to bind this\n  @Input({ required: true }) product!: Product;\n}\n\n// ---- parent: product-list.component.ts ----\n@Component({\n  selector: 'app-product-list',\n  standalone: true,\n  imports: [ProductCardComponent, NgFor],\n  template: `\n    <app-product-card\n      *ngFor=\"let p of products\"\n      [product]=\"p\"\n    ></app-product-card>\n  `\n})\nexport class ProductListComponent {\n  products: Product[] = [\n    { id: 1, name: 'Laptop', price: 999, inStock: true },\n    { id: 2, name: 'Webcam', price: 89, inStock: false },\n    { id: 3, name: 'Mouse', price: 29, inStock: true }\n  ];\n}",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>parent packing a school lunchbox</strong> for their kid every morning. The parent decides what goes in (the data), the kid (child component) just receives whatever is packed and displays it. If the parent swaps yesterday's sandwich for today's, the lunchbox automatically reflects the new contents &mdash; the kid never reaches back into the kitchen to grab their own food.</p>
+          </div>
+        </div>
+        <p>The standard Angular mechanism for passing data from a <strong>parent to a child</strong> is <strong>property binding</strong> on the parent's template combined with an input declared by the child. In modern Angular, prefer <code>input()</code> and <code>input.required()</code>; <code>@Input()</code> remains valid for legacy and decorator-style code. The parent owns the data; the child declares which properties it accepts; Angular keeps those properties in sync whenever the parent's value changes.</p>
+        <h3>How it works</h3>
+        <p>The child declares an input &mdash; either the modern <code>input()</code> function or the legacy <code>@Input()</code> decorator. This registers the property as something the parent is allowed to bind to. The parent then binds using square-bracket syntax: <code>[propertyName]="expression"</code>. Every time Angular re-evaluates that expression and finds a new value, it updates the child's input, and (for decorator-based inputs) fires <code>ngOnChanges</code> before the next render.</p>
+        <h3>Input aliasing</h3>
+        <p>You can alias an input to give it a different public name than its internal property name: <code>@Input('label') buttonLabel = ''</code> or <code>buttonLabel = input('', { alias: 'label' })</code>. The template uses <code>[label]="text"</code> while the class uses <code>this.buttonLabel</code> internally. This is useful when the public API name conflicts with a TypeScript keyword or needs to follow a naming convention different from the class internals.</p>
+        <h3>Required inputs</h3>
+        <p><code>input.required&lt;T&gt;()</code> (or the older <code>@Input({ required: true })</code>) makes the compiler enforce that every usage of the component supplies the input. If a parent uses the child without providing a required input, Angular throws a compile-time error &mdash; far better than discovering a missing input at runtime with an undefined value.</p>
+      `,
+      "code": `// ---- child: product-card.component.ts ----
+import { Component, input } from '@angular/core';
+
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  inStock: boolean;
+}
+
+@Component({
+  selector: 'app-product-card',
+  imports: [NgClass, CurrencyPipe],
+  template: \`
+    <div class="card" [ngClass]="{ 'card-dimmed': !product().inStock }">
+      <h3>{{ product().name }}</h3>
+      <p>{{ product().price | currency }}</p>
+      @if (!product().inStock) {
+        <span class="badge-red">Out of Stock</span>
+      }
+    </div>
+  \`
+})
+export class ProductCardComponent {
+  // required — compile error if parent forgets to bind this
+  readonly product = input.required<Product>();
+}
+
+// ---- parent: product-list.component.ts ----
+@Component({
+  selector: 'app-product-list',
+  imports: [ProductCardComponent],
+  template: \`
+    @for (p of products; track p.id) {
+      <app-product-card [product]="p" />
+    }
+  \`
+})
+export class ProductListComponent {
+  products: Product[] = [
+    { id: 1, name: 'Laptop', price: 999, inStock: true },
+    { id: 2, name: 'Webcam', price: 89, inStock: false },
+    { id: 3, name: 'Mouse', price: 29, inStock: true }
+  ];
+}`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Parent &rarr; Child, One Direction</p><div class=\"flex items-center justify-center gap-3 text-xs\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-lg px-4 py-2 text-center font-semibold text-indigo-700\">ProductListComponent<br><span class=\"font-normal text-slate-500\">owns products[]</span></div><span class=\"text-slate-300 text-lg\">&rarr;</span><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-lg px-4 py-2 font-mono text-emerald-700\">[product]=\"p\"</div><span class=\"text-slate-300 text-lg\">&rarr;</span><div class=\"bg-amber-50 border-2 border-amber-200 rounded-lg px-4 py-2 text-center font-semibold text-amber-700\">ProductCardComponent<br><span class=\"font-normal text-slate-500\">input.required()</span></div></div></div>"
     },
     {
       "id": "child-to-parent-data",
       "title": "How to pass data from child to parent component?",
-      "explanation": "\n          <p>Data flows <strong>up</strong> from child to parent through <strong>custom events</strong>. In modern Angular, the child declares an <code>output()</code> emitter; older code commonly uses an <code>@Output()</code> property typed as <code>EventEmitter</code>, emits a value when something interesting happens, and the parent listens to that event in its template using event binding syntax.</p>\n\n          <h3>Why Events Instead of Direct Access?</h3>\n          <p>Angular's component model is deliberately one-directional for data flow. The child does not hold a reference to the parent and should not modify the parent's state directly — that would create hidden dependencies and make the child impossible to reuse in other contexts. Instead, the child announces that something happened (a button was clicked, a form was submitted, an item was selected) and lets the parent decide what to do with that information. This keeps the child a dumb, reusable piece of UI.</p>\n\n          <h3>The $event Variable</h3>\n          <p>In the parent's template, <code>$event</code> is a special Angular template variable that holds the value passed to <code>emit()</code>. If the child calls <code>this.itemSelected.emit(product)</code>, then in the parent's handler binding <code>(itemSelected)=\"onSelect($event)\"</code>, <code>$event</code> is the <code>product</code> object. The type of <code>$event</code> matches the generic type parameter of <code>EventEmitter&lt;T&gt;</code>.</p>\n        ",
-      "code": "// ---- child: product-card.component.ts ----\n@Component({\n  selector: 'app-product-card',\n  standalone: true,\n  template: `\n    <div class=\"card\">\n      <h3>{{ product.name }}</h3>\n      <button (click)=\"addToCart()\">Add to Cart</button>\n      <button (click)=\"remove()\">Remove</button>\n    </div>\n  `\n})\nexport class ProductCardComponent {\n  @Input({ required: true }) product!: Product;\n\n  // Emits the full product when user adds to cart\n  @Output() cartAdd = new EventEmitter<Product>();\n\n  // Emits only the ID when user removes an item\n  @Output() productRemove = new EventEmitter<number>();\n\n  addToCart(): void {\n    this.cartAdd.emit(this.product);\n  }\n\n  remove(): void {\n    this.productRemove.emit(this.product.id);\n  }\n}\n\n// ---- parent: product-list.component.ts ----\n@Component({\n  selector: 'app-product-list',\n  standalone: true,\n  imports: [ProductCardComponent, NgFor],\n  template: `\n    <app-product-card\n      *ngFor=\"let p of products\"\n      [product]=\"p\"\n      (cartAdd)=\"handleCartAdd($event)\"\n      (productRemove)=\"handleRemove($event)\"\n    ></app-product-card>\n    <p>Cart has {{ cartCount }} item(s).</p>\n  `\n})\nexport class ProductListComponent {\n  products: Product[] = [ /* ... */ ];\n  cartCount = 0;\n\n  handleCartAdd(product: Product): void {\n    this.cartCount++;\n    console.log('Added to cart:', product.name);\n  }\n\n  handleRemove(id: number): void {\n    this.products = this.products.filter(p => p.id !== id);\n  }\n}",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>waiter taking an order</strong> back to the kitchen. The waiter (child component) doesn't cook the food themselves or barge into the kitchen &mdash; they just announce "table 5 wants the salmon" (<code>emit()</code>) and let the kitchen (parent) decide what to actually do with that information. The child stays a reusable, dumb messenger; all real decisions live with the parent.</p>
+          </div>
+        </div>
+        <p>Data flows <strong>up</strong> from child to parent through <strong>custom events</strong>. In modern Angular, the child declares an <code>output()</code> emitter; older code commonly uses an <code>@Output()</code> property typed as <code>EventEmitter</code>. Either way, the child emits a value when something interesting happens, and the parent listens to that event in its template using event binding syntax.</p>
+        <h3>Why events instead of direct access?</h3>
+        <p>Angular's component model is deliberately one-directional for data flow. The child does not hold a reference to the parent and should not modify the parent's state directly &mdash; that would create hidden dependencies and make the child impossible to reuse in other contexts. Instead, the child announces that something happened (a button was clicked, a form was submitted, an item was selected) and lets the parent decide what to do with that information. This keeps the child a dumb, reusable piece of UI.</p>
+        <h3>The $event variable</h3>
+        <p>In the parent's template, <code>$event</code> is a special Angular template variable that holds the value passed to <code>emit()</code>. If the child calls <code>this.itemSelected.emit(product)</code>, then in the parent's handler binding <code>(itemSelected)="onSelect($event)"</code>, <code>$event</code> is the <code>product</code> object. The type of <code>$event</code> matches the generic type parameter of the output.</p>
+      `,
+      "code": `// ---- child: product-card.component.ts ----
+import { Component, input, output } from '@angular/core';
+
+@Component({
+  selector: 'app-product-card',
+  template: \`
+    <div class="card">
+      <h3>{{ product().name }}</h3>
+      <button type="button" (click)="addToCart()">Add to Cart</button>
+      <button type="button" (click)="remove()">Remove</button>
+    </div>
+  \`
+})
+export class ProductCardComponent {
+  readonly product = input.required<Product>();
+
+  // Emits the full product when user adds to cart
+  readonly cartAdd = output<Product>();
+
+  // Emits only the ID when user removes an item
+  readonly productRemove = output<number>();
+
+  addToCart(): void {
+    this.cartAdd.emit(this.product());
+  }
+
+  remove(): void {
+    this.productRemove.emit(this.product().id);
+  }
+}
+
+// ---- parent: product-list.component.ts ----
+@Component({
+  selector: 'app-product-list',
+  imports: [ProductCardComponent],
+  template: \`
+    @for (p of products; track p.id) {
+      <app-product-card
+        [product]="p"
+        (cartAdd)="handleCartAdd($event)"
+        (productRemove)="handleRemove($event)"
+      />
+    }
+    <p>Cart has {{ cartCount }} item(s).</p>
+  \`
+})
+export class ProductListComponent {
+  products: Product[] = [ /* ... */ ];
+  cartCount = 0;
+
+  handleCartAdd(product: Product): void {
+    this.cartCount++;
+    console.log('Added to cart:', product.name);
+  }
+
+  handleRemove(id: number): void {
+    this.products = this.products.filter(p => p.id !== id);
+  }
+}`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Child &rarr; Parent via emit()</p><div class=\"flex items-center justify-center gap-3 text-xs\"><div class=\"bg-amber-50 border-2 border-amber-200 rounded-lg px-4 py-2 text-center font-semibold text-amber-700\">ProductCardComponent<br><span class=\"font-normal text-slate-500\">cartAdd.emit(product)</span></div><span class=\"text-slate-300 text-lg\">&rarr;</span><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-lg px-4 py-2 font-mono text-emerald-700\">(cartAdd)=\"handle($event)\"</div><span class=\"text-slate-300 text-lg\">&rarr;</span><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-lg px-4 py-2 text-center font-semibold text-indigo-700\">ProductListComponent<br><span class=\"font-normal text-slate-500\">decides what happens next</span></div></div></div>"
     },
     {
       "id": "what-is-input-decorator",
       "title": "What is @Input decorator?",
-      "explanation": "\n          <p><code>input()</code> is the modern signal-based way to declare a <strong>public input binding</strong>. <code>@Input()</code> marks a decorator-based input and is still fully valid in existing code — it tells Angular that the parent is allowed to set this property from the template using property binding syntax. Without <code>@Input()</code>, a property is private to the component class; Angular will not allow the parent to bind to it, and the template compiler will report an error.</p>\n\n          <h3>ngOnChanges Integration</h3>\n          <p>Every time an <code>@Input()</code> value changes, Angular calls the component's <code>ngOnChanges</code> lifecycle hook (if implemented) and passes a <code>SimpleChanges</code> object. This gives you a place to react to input changes — for example, to refetch data when an ID input changes, or to transform an incoming value before using it in the template. This is cleaner than setting up manual subscriptions for parent-driven changes.</p>\n\n          <h3>Input Transform (Angular 16+)</h3>\n          <p>Angular 16 added the ability to define a transform function on an input: <code>@Input({ transform: numberAttribute }) id = 0</code>. The transform runs automatically whenever Angular sets the input, converting the raw bound value (often a string from a static attribute in tests or SSR) into the target type. Angular ships helper transforms like <code>numberAttribute</code> and <code>booleanAttribute</code> for the common cases.</p>\n        ",
-      "code": "import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';\nimport { numberAttribute } from '@angular/core';\nimport { UserService } from './user.service';\n\ninterface UserProfile {\n  name: string;\n  avatar: string;\n  bio: string;\n}\n\n@Component({\n  selector: 'app-user-profile',\n  standalone: true,\n  imports: [AsyncPipe],\n  template: `\n    <div *ngIf=\"profile\">\n      <img [src]=\"profile.avatar\" />\n      <h2>{{ profile.name }}</h2>\n      <p>{{ profile.bio }}</p>\n    </div>\n  `\n})\nexport class UserProfileComponent implements OnChanges {\n  // Required input — missing it causes a compile-time error\n  @Input({ required: true }) userId!: number;\n\n  // Optional input with a default\n  @Input() showBio = true;\n\n  // transform: coerces '42' (string from HTML attribute) to 42 (number)\n  @Input({ transform: numberAttribute }) maxBioLength = 200;\n\n  private userService = inject(UserService);\n  profile: UserProfile | null = null;\n\n  ngOnChanges(changes: SimpleChanges): void {\n    if (changes['userId']) {\n      // Re-fetch user whenever the ID changes\n      this.userService.getUser(this.userId).subscribe(u => (this.profile = u));\n    }\n  }\n}\n\n// Parent usage:\n// <app-user-profile [userId]=\"selectedUserId\" [showBio]=\"true\"></app-user-profile>",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>mail slot cut into a front door</strong>. Without the slot, mail piled outside just sits there &mdash; nobody inside knows it exists. Cutting the slot (declaring <code>input()</code> / <code>@Input()</code>) is what lets outside mail (the parent's data) actually reach the inside of the house (the component's private state) in a controlled way.</p>
+          </div>
+        </div>
+        <p><code>input()</code> is the modern signal-based way to declare a <strong>public input binding</strong>. <code>@Input()</code> marks a decorator-based input and is still fully valid in existing code &mdash; it tells Angular that the parent is allowed to set this property from the template using property binding syntax. Without it, a property is private to the component class; Angular will not allow the parent to bind to it, and the template compiler will report an error.</p>
+        <h3>Reacting to changes</h3>
+        <p>With <code>input()</code>, the value is a signal &mdash; read it inside a <code>computed()</code> or <code>effect()</code> and your logic re-runs automatically whenever the input changes, no separate lifecycle hook required. With decorator-based <code>@Input()</code>, Angular calls <code>ngOnChanges</code> (if implemented) and passes a <code>SimpleChanges</code> object every time the value changes, giving you a place to react &mdash; for example, to refetch data when an ID input changes.</p>
+        <h3>Input transform</h3>
+        <p>You can define a transform function on an input to coerce incoming values: <code>id = input(0, { transform: numberAttribute })</code> (or the decorator equivalent <code>@Input({ transform: numberAttribute })</code>). The transform runs automatically whenever Angular sets the input, converting the raw bound value (often a string from a static attribute in tests or SSR) into the target type. Angular ships helper transforms like <code>numberAttribute</code> and <code>booleanAttribute</code> for the common cases.</p>
+      `,
+      "code": `import { Component, input, computed, effect, inject } from '@angular/core';
+import { numberAttribute } from '@angular/core';
+import { UserService } from './user.service';
+
+interface UserProfile {
+  name: string;
+  avatar: string;
+  bio: string;
+}
+
+@Component({
+  selector: 'app-user-profile',
+  template: \`
+    @if (profile()) {
+      <img [src]="profile()!.avatar" />
+      <h2>{{ profile()!.name }}</h2>
+      @if (showBio()) { <p>{{ profile()!.bio }}</p> }
+    }
+  \`
+})
+export class UserProfileComponent {
+  // Required input — missing it causes a compile-time error
+  readonly userId = input.required<number>();
+
+  // Optional input with a default
+  readonly showBio = input(true);
+
+  // transform: coerces '42' (string from HTML attribute) to 42 (number)
+  readonly maxBioLength = input(200, { transform: numberAttribute });
+
+  private userService = inject(UserService);
+  readonly profile = signal<UserProfile | null>(null);
+
+  constructor() {
+    effect(() => {
+      // Re-fetch automatically whenever userId() changes — no ngOnChanges needed
+      this.userService.getUser(this.userId()).subscribe(u => this.profile.set(u));
+    });
+  }
+}
+
+// Parent usage:
+// <app-user-profile [userId]="selectedUserId" [showBio]="true"></app-user-profile>`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">input() Is a Signal</p><div class=\"flex flex-wrap items-center justify-center gap-2 text-xs\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-lg px-3 py-2 text-center font-semibold text-indigo-700\">parent sets [userId]</div><span class=\"text-slate-300\">&rarr;</span><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-lg px-3 py-2 text-center font-semibold text-emerald-700\">userId() signal updates</div><span class=\"text-slate-300\">&rarr;</span><div class=\"bg-amber-50 border-2 border-amber-200 rounded-lg px-3 py-2 text-center font-semibold text-amber-700\">effect() re-runs automatically</div></div></div>"
     },
     {
       "id": "what-is-output-decorator",
       "title": "What is @Output decorator?",
-      "explanation": "\n          <p><code>output()</code> is the modern function-based way to declare a <strong>custom event</strong>. <code>@Output()</code> marks a decorator-based output and remains common in existing code that the component can emit. From the parent's perspective it looks exactly like a native DOM event — the parent uses the same <code>(eventName)=\"handler\"</code> syntax that it uses for <code>(click)</code> or <code>(keydown)</code>. From inside the child, the event is fired by calling <code>.emit()</code> on the associated <code>EventEmitter</code>.</p>\n\n          <h3>Naming Convention</h3>\n          <p>Angular style guide recommends naming output events as verb phrases — <code>itemSelected</code>, <code>formSubmitted</code>, <code>pageChanged</code> — because they describe actions that have just happened. Avoid the <code>on</code> prefix on the output itself (save that for the handler method in the parent: <code>onItemSelected</code>).</p>\n\n          <h3>Output Aliasing</h3>\n          <p>Like <code>@Input()</code>, you can alias an output: <code>@Output('select') itemSelect = new EventEmitter()</code>. The parent template uses <code>(select)=\"...\"</code> while the class uses <code>this.itemSelect.emit()</code>. This is useful when the internal name differs from the desired public API name.</p>\n\n          <h3>Avoid Emitting Too Often</h3>\n          <p>A common performance mistake is emitting on every keystroke in an input handler without debouncing. The parent then re-runs its handler on each keystroke, potentially triggering expensive operations. Pair <code>@Output()</code> with <code>debounceTime</code> in <code>valueChanges</code> for text inputs, or throttle the emit calls for scroll/resize events.</p>\n        ",
-      "code": "import { Component, Output, EventEmitter } from '@angular/core';\n\nexport interface SearchEvent {\n  query: string;\n  category: string;\n}\n\n@Component({\n  selector: 'app-search-bar',\n  standalone: true,\n  imports: [FormsModule],\n  template: `\n    <div class=\"search-bar\">\n      <input [(ngModel)]=\"query\" placeholder=\"Search...\" />\n      <select [(ngModel)]=\"category\">\n        <option value=\"all\">All</option>\n        <option value=\"books\">Books</option>\n        <option value=\"electronics\">Electronics</option>\n      </select>\n      <button (click)=\"emitSearch()\">Search</button>\n      <button (click)=\"emitClear()\">Clear</button>\n    </div>\n  `\n})\nexport class SearchBarComponent {\n  query = '';\n  category = 'all';\n\n  // Emits a structured search event\n  @Output() searched = new EventEmitter<SearchEvent>();\n\n  // Emits void — just signals that clear was clicked\n  @Output() cleared = new EventEmitter<void>();\n\n  emitSearch(): void {\n    if (this.query.trim()) {\n      this.searched.emit({ query: this.query, category: this.category });\n    }\n  }\n\n  emitClear(): void {\n    this.query = '';\n    this.category = 'all';\n    this.cleared.emit();\n  }\n}\n\n// Parent usage:\n// <app-search-bar\n//   (searched)=\"loadResults($event)\"\n//   (cleared)=\"resetResults()\"\n// ></app-search-bar>",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>car horn</strong>. The driver (child component) presses it to announce something to the outside world &mdash; they don't know or care who's listening, or what those people will do about it. From outside, hearing a horn (<code>(searched)="..."</code>) is exactly like hearing any other alert; you don't need to know it came from this particular car versus a native <code>(click)</code> event.</p>
+          </div>
+        </div>
+        <p><code>output()</code> is the modern function-based way to declare a <strong>custom event</strong> the component can emit. <code>@Output()</code> marks a decorator-based output and remains common in existing code. From the parent's perspective it looks exactly like a native DOM event &mdash; the parent uses the same <code>(eventName)="handler"</code> syntax that it uses for <code>(click)</code> or <code>(keydown)</code>. From inside the child, the event is fired by calling <code>.emit()</code>.</p>
+        <h3>Naming convention</h3>
+        <p>Angular style guide recommends naming output events as verb phrases &mdash; <code>itemSelected</code>, <code>formSubmitted</code>, <code>pageChanged</code> &mdash; because they describe actions that have just happened. Avoid the <code>on</code> prefix on the output itself (save that for the handler method in the parent: <code>onItemSelected</code>).</p>
+        <h3>Output aliasing</h3>
+        <p>Like inputs, you can alias an output: <code>@Output('select') itemSelect = new EventEmitter()</code> or <code>itemSelect = output({ alias: 'select' })</code>. The parent template uses <code>(select)="..."</code> while the class uses <code>this.itemSelect.emit()</code>. This is useful when the internal name differs from the desired public API name.</p>
+        <div class="gotcha-box">
+          <svg class="gotcha-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div class="gotcha-body">
+            <p class="gotcha-label">Common trap</p>
+            <p class="gotcha-text">Emitting on every keystroke without debouncing is a classic performance mistake. The parent re-runs its handler on every single character typed, potentially triggering expensive operations like an API call per keystroke. Pair frequent outputs with <code>debounceTime</code> on the underlying stream, or throttle the emit calls for scroll/resize-driven events.</p>
+          </div>
+        </div>
+      `,
+      "code": `import { Component, output } from '@angular/core';
+
+export interface SearchEvent {
+  query: string;
+  category: string;
+}
+
+@Component({
+  selector: 'app-search-bar',
+  imports: [FormsModule],
+  template: \`
+    <div class="search-bar">
+      <input [(ngModel)]="query" placeholder="Search..." />
+      <select [(ngModel)]="category">
+        <option value="all">All</option>
+        <option value="books">Books</option>
+        <option value="electronics">Electronics</option>
+      </select>
+      <button type="button" (click)="emitSearch()">Search</button>
+      <button type="button" (click)="emitClear()">Clear</button>
+    </div>
+  \`
+})
+export class SearchBarComponent {
+  query = '';
+  category = 'all';
+
+  // Emits a structured search event
+  readonly searched = output<SearchEvent>();
+
+  // Emits void — just signals that clear was clicked
+  readonly cleared = output<void>();
+
+  emitSearch(): void {
+    if (this.query.trim()) {
+      this.searched.emit({ query: this.query, category: this.category });
+    }
+  }
+
+  emitClear(): void {
+    this.query = '';
+    this.category = 'all';
+    this.cleared.emit();
+  }
+}
+
+// Parent usage:
+// <app-search-bar
+//   (searched)="loadResults($event)"
+//   (cleared)="resetResults()"
+// ></app-search-bar>`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Output Naming: Verb, Past Tense</p><div class=\"grid grid-cols-2 gap-3 max-w-md mx-auto text-xs\"><div class=\"bg-emerald-50 border border-emerald-200 rounded-lg p-3 text-center\"><p class=\"font-mono font-bold text-emerald-700\">itemSelected</p><p class=\"text-slate-500 mt-1\">good</p></div><div class=\"bg-rose-50 border border-rose-200 rounded-lg p-3 text-center\"><p class=\"font-mono font-bold text-rose-700\">onItemSelect</p><p class=\"text-slate-500 mt-1\">avoid the on- prefix here</p></div></div></div>"
     },
     {
       "id": "what-is-event-emitter",
       "title": "What is EventEmitter?",
-      "explanation": "\n          <p><code>EventEmitter</code> is an Angular class that enables a component to broadcast a custom event. It lives in <code>@angular/core</code> and is always used together with <code>@Output()</code>. When you call <code>.emit(value)</code>, Angular propagates the event up to the parent template and invokes the bound handler, passing the emitted value as <code>$event</code>.</p>\n\n          <h3>EventEmitter Extends Subject</h3>\n          <p>Internally, <code>EventEmitter</code> extends RxJS <code>Subject</code>, which means it is also an Observable. You can call <code>.subscribe()</code> on it programmatically, though this is rarely the right approach for template event bindings — it is mainly useful in tests. For regular component output, always use the <code>(eventName)=\"handler\"</code> template binding rather than subscribing to the EventEmitter directly in component code.</p>\n\n          <h3>Typed EventEmitter</h3>\n          <p>Always provide the generic type parameter: <code>new EventEmitter&lt;Product&gt;()</code>. This gives the parent template type-safe access to <code>$event</code> — the template compiler knows <code>$event</code> is a <code>Product</code> and can catch type errors. An untyped <code>new EventEmitter()</code> makes <code>$event</code> implicitly <code>any</code>.</p>\n\n          <h3>The async Parameter</h3>\n          <p><code>new EventEmitter(true)</code> makes the emitter asynchronous — emitted values are dispatched in a microtask rather than synchronously. This is rarely needed but can prevent <code>ExpressionChangedAfterItHasBeenCheckedError</code> when an emission would otherwise cause a change during the same change detection run that triggered the event.</p>\n        ",
-      "code": "import { Component, Output, EventEmitter } from '@angular/core';\n\nexport interface QuantityChange {\n  productId: number;\n  newQuantity: number;\n}\n\n@Component({\n  selector: 'app-quantity-picker',\n  standalone: true,\n  template: `\n    <div class=\"qty-picker\">\n      <button (click)=\"decrement()\" [disabled]=\"quantity <= 1\">−</button>\n      <span>{{ quantity }}</span>\n      <button (click)=\"increment()\" [disabled]=\"quantity >= maxQty\">+</button>\n    </div>\n  `\n})\nexport class QuantityPickerComponent {\n  @Input({ required: true }) productId!: number;\n  @Input() maxQty = 99;\n\n  // Strongly typed — $event in the parent template is QuantityChange\n  @Output() quantityChanged = new EventEmitter<QuantityChange>();\n\n  quantity = 1;\n\n  increment(): void {\n    this.quantity++;\n    this.quantityChanged.emit({ productId: this.productId, newQuantity: this.quantity });\n  }\n\n  decrement(): void {\n    if (this.quantity > 1) {\n      this.quantity--;\n      this.quantityChanged.emit({ productId: this.productId, newQuantity: this.quantity });\n    }\n  }\n}\n\n// Parent:\n// <app-quantity-picker\n//   [productId]=\"item.id\"\n//   [maxQty]=\"item.stock\"\n//   (quantityChanged)=\"updateCart($event)\"\n// ></app-quantity-picker>",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>radio broadcast tower</strong> built on top of a general-purpose transmitter (RxJS's <code>Subject</code>). <code>EventEmitter</code> is that tower configured specifically for one-way announcements to whoever's tuned in via <code>(eventName)</code>. You technically could plug a receiver straight into the transmitter and <code>.subscribe()</code> to it manually &mdash; and Angular does exactly that under the hood &mdash; but the tower's whole purpose is the template binding, not manual subscription.</p>
+          </div>
+        </div>
+        <p><code>EventEmitter</code> is an Angular class that enables a component to broadcast a custom event. It lives in <code>@angular/core</code> and is used together with <code>@Output()</code> (the modern <code>output()</code> function returns a similar emitter object under the hood). When you call <code>.emit(value)</code>, Angular propagates the event up to the parent template and invokes the bound handler, passing the emitted value as <code>$event</code>.</p>
+        <h3>EventEmitter extends Subject</h3>
+        <p>Internally, <code>EventEmitter</code> extends RxJS <code>Subject</code>, which means it is also an Observable. You can call <code>.subscribe()</code> on it programmatically, though this is rarely the right approach for template event bindings &mdash; it is mainly useful in tests. For regular component output, always use the <code>(eventName)="handler"</code> template binding rather than subscribing to the EventEmitter directly in component code.</p>
+        <h3>Typed EventEmitter</h3>
+        <p>Always provide the generic type parameter: <code>new EventEmitter&lt;Product&gt;()</code>. This gives the parent template type-safe access to <code>$event</code> &mdash; the template compiler knows <code>$event</code> is a <code>Product</code> and can catch type errors. An untyped <code>new EventEmitter()</code> makes <code>$event</code> implicitly <code>any</code>.</p>
+        <h3>The async parameter</h3>
+        <p><code>new EventEmitter(true)</code> makes the emitter asynchronous &mdash; emitted values are dispatched in a microtask rather than synchronously. This is rarely needed but can prevent <code>ExpressionChangedAfterItHasBeenCheckedError</code> when an emission would otherwise cause a change during the same change detection run that triggered the event.</p>
+      `,
+      "code": `import { Component, Output, EventEmitter, Input } from '@angular/core';
+
+export interface QuantityChange {
+  productId: number;
+  newQuantity: number;
+}
+
+@Component({
+  selector: 'app-quantity-picker',
+  template: \`
+    <div class="qty-picker">
+      <button type="button" (click)="decrement()" [disabled]="quantity <= 1">−</button>
+      <span>{{ quantity }}</span>
+      <button type="button" (click)="increment()" [disabled]="quantity >= maxQty">+</button>
+    </div>
+  \`
+})
+export class QuantityPickerComponent {
+  @Input({ required: true }) productId!: number;
+  @Input() maxQty = 99;
+
+  // Strongly typed — $event in the parent template is QuantityChange
+  @Output() quantityChanged = new EventEmitter<QuantityChange>();
+
+  quantity = 1;
+
+  increment(): void {
+    this.quantity++;
+    this.quantityChanged.emit({ productId: this.productId, newQuantity: this.quantity });
+  }
+
+  decrement(): void {
+    if (this.quantity > 1) {
+      this.quantity--;
+      this.quantityChanged.emit({ productId: this.productId, newQuantity: this.quantity });
+    }
+  }
+}
+
+// Parent:
+// <app-quantity-picker
+//   [productId]="item.id"
+//   [maxQty]="item.stock"
+//   (quantityChanged)="updateCart($event)"
+// ></app-quantity-picker>`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">EventEmitter Extends Subject</p><div class=\"flex flex-col items-center gap-2 text-xs font-mono\"><div class=\"bg-slate-800 text-white rounded-lg px-3 py-1.5\">RxJS Subject</div><div class=\"w-px h-3 bg-slate-300\"></div><div class=\"bg-indigo-50 border-2 border-indigo-300 rounded-lg px-3 py-1.5 text-indigo-700\">EventEmitter&lt;T&gt;</div><div class=\"w-px h-3 bg-slate-300\"></div><div class=\"bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-1.5 text-emerald-700\">(eventName)=\"handler($event)\"</div></div></div>"
     },
     {
       "id": "what-is-viewchild-viewchildren",
       "title": "What is ViewChild and ViewChildren?",
-      "explanation": "\n          <p><code>@ViewChild()</code> and <code>@ViewChildren()</code> give a component direct access to child components, directives, or template reference variables that are declared inside its own template. This is for the component's <strong>own view</strong> — the HTML in its <code>template</code> field.</p>\n\n          <h3>When Are They Available?</h3>\n          <p>ViewChild and ViewChildren are only populated after Angular completes the component's view — that is, after <code>ngAfterViewInit()</code> runs. Trying to use them in <code>ngOnInit</code> will give you <code>undefined</code>. This is a common source of bugs. If you have a <code>static: true</code> option set (<code>@ViewChild(MyComponent, { static: true })</code>), Angular populates the reference during the initial change detection pass, making it available in <code>ngOnInit</code> — but only when the element is not inside a structural directive like <code>*ngIf</code>.</p>\n\n          <h3>Practical Use: Calling a Child's Method</h3>\n          <p>A common real-world use case is calling a method on a child component — for example, resetting a form, focusing an input, or scrolling a list. The parent holds a reference via <code>@ViewChild</code> and calls the method directly. This is appropriate when the interaction is driven by the parent's logic (e.g., an \"open modal\" button in the parent calls <code>this.modal.open()</code>).</p>\n\n          <h3>QueryList</h3>\n          <p><code>@ViewChildren()</code> returns a <code>QueryList&lt;T&gt;</code>, which is a live collection. When child components are added or removed (e.g., via <code>*ngFor</code>), the QueryList updates and fires its <code>changes</code> observable. You can subscribe to <code>this.items.changes</code> to react whenever the set of children changes.</p>\n        ",
-      "code": "import { Component, ViewChild, ViewChildren, QueryList, AfterViewInit } from '@angular/core';\n\n@Component({\n  selector: 'app-slide',\n  standalone: true,\n  template: '<div class=\"slide\"><ng-content></ng-content></div>'\n})\nexport class SlideComponent {\n  activate() { /* add active class */ }\n  deactivate() { /* remove active class */ }\n}\n\n@Component({\n  selector: 'app-slideshow',\n  standalone: true,\n  imports: [SlideComponent, NgFor],\n  template: `\n    <app-slide *ngFor=\"let s of slides\">{{ s }}</app-slide>\n    <button (click)=\"prev()\">Prev</button>\n    <button (click)=\"next()\">Next</button>\n  `\n})\nexport class SlideshowComponent implements AfterViewInit {\n  slides = ['Slide 1', 'Slide 2', 'Slide 3'];\n  currentIndex = 0;\n\n  // All app-slide instances as a live QueryList\n  @ViewChildren(SlideComponent) slideRefs!: QueryList<SlideComponent>;\n\n  ngAfterViewInit(): void {\n    // Safe to access ViewChildren only after this hook\n    this.activateCurrent();\n\n    // React whenever slides are added/removed dynamically\n    this.slideRefs.changes.subscribe(() => this.activateCurrent());\n  }\n\n  next(): void {\n    if (this.currentIndex < this.slides.length - 1) {\n      this.currentIndex++;\n      this.activateCurrent();\n    }\n  }\n\n  prev(): void {\n    if (this.currentIndex > 0) {\n      this.currentIndex--;\n      this.activateCurrent();\n    }\n  }\n\n  private activateCurrent(): void {\n    this.slideRefs.forEach((s, i) =>\n      i === this.currentIndex ? s.activate() : s.deactivate()\n    );\n  }\n}",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>stage director with a direct earpiece to each actor</strong> in their own show. The director (parent component) doesn't need to shout instructions across the theatre &mdash; they can speak directly to a specific actor's earpiece (call a method on the child directly) whenever they choose. But the earpiece only connects once the actor is actually on stage and ready &mdash; not before the curtain rises.</p>
+          </div>
+        </div>
+        <p><code>@ViewChild()</code> / <code>@ViewChildren()</code> (or the modern <code>viewChild()</code> / <code>viewChildren()</code> signal queries) give a component direct access to child components, directives, or template reference variables that are declared inside its own template. This is for the component's <strong>own view</strong> &mdash; the HTML in its <code>template</code> field.</p>
+        <div class="gotcha-box">
+          <svg class="gotcha-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <div class="gotcha-body">
+            <p class="gotcha-label">Common trap</p>
+            <p class="gotcha-text">Decorator-based <code>@ViewChild</code> references are only populated after Angular completes the component's view &mdash; that is, after <code>ngAfterViewInit()</code> runs. Trying to read them in <code>ngOnInit</code> gives you <code>undefined</code>, a very common source of confusing bugs. The modern <code>viewChild()</code> signal query sidesteps this entirely: it returns a signal you can safely read anywhere, and it simply reports <code>undefined</code> until the view exists &mdash; no crash, no timing puzzle.</p>
+          </div>
+        </div>
+        <h3>Practical use: calling a child's method</h3>
+        <p>A common real-world use case is calling a method on a child component &mdash; for example, resetting a form, focusing an input, or scrolling a list. The parent holds a reference and calls the method directly. This is appropriate when the interaction is driven by the parent's logic (e.g., an "open modal" button in the parent calls <code>this.modal().open()</code>).</p>
+        <h3>QueryList</h3>
+        <p><code>@ViewChildren()</code> returns a <code>QueryList&lt;T&gt;</code>, which is a live collection. When child components are added or removed (e.g., via <code>@for</code>), the QueryList updates and fires its <code>changes</code> observable. You can subscribe to <code>this.items.changes</code> to react whenever the set of children changes. The signal-based <code>viewChildren()</code> gives you a plain readonly signal of an array instead, which composes more naturally with <code>computed()</code>.</p>
+      `,
+      "code": `import { Component, viewChildren, afterRenderEffect } from '@angular/core';
+
+@Component({
+  selector: 'app-slide',
+  template: '<div class="slide"><ng-content></ng-content></div>'
+})
+export class SlideComponent {
+  activate() { /* add active class */ }
+  deactivate() { /* remove active class */ }
+}
+
+@Component({
+  selector: 'app-slideshow',
+  imports: [SlideComponent],
+  template: \`
+    @for (s of slides; track s) { <app-slide>{{ s }}</app-slide> }
+    <button type="button" (click)="prev()">Prev</button>
+    <button type="button" (click)="next()">Next</button>
+  \`
+})
+export class SlideshowComponent {
+  slides = ['Slide 1', 'Slide 2', 'Slide 3'];
+  currentIndex = 0;
+
+  // A live, readonly signal of all app-slide instances in this view
+  readonly slideRefs = viewChildren(SlideComponent);
+
+  constructor() {
+    // Re-run whenever the set of slides changes after a render
+    afterRenderEffect(() => this.activateCurrent());
+  }
+
+  next(): void {
+    if (this.currentIndex < this.slides.length - 1) {
+      this.currentIndex++;
+      this.activateCurrent();
+    }
+  }
+
+  prev(): void {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      this.activateCurrent();
+    }
+  }
+
+  private activateCurrent(): void {
+    this.slideRefs().forEach((s, i) =>
+      i === this.currentIndex ? s.activate() : s.deactivate()
+    );
+  }
+}`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">ViewChild Timing</p><div class=\"flex flex-wrap items-center justify-center gap-2 text-xs\"><div class=\"bg-rose-50 border-2 border-rose-200 rounded-lg px-3 py-2 text-center font-semibold text-rose-700\">ngOnInit<br><span class=\"font-normal text-slate-500\">@ViewChild is undefined</span></div><span class=\"text-slate-300\">&rarr;</span><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-lg px-3 py-2 text-center font-semibold text-emerald-700\">ngAfterViewInit<br><span class=\"font-normal text-slate-500\">@ViewChild is ready</span></div></div><p class=\"text-center text-slate-400 text-xs mt-3\">viewChild() signal avoids this trap — it's just undefined-safe to read anywhere</p></div>"
     },
     {
       "id": "what-is-contentchild-contentchildren",
       "title": "What is ContentChild and ContentChildren?",
-      "explanation": "\n          <p><code>@ContentChild()</code> and <code>@ContentChildren()</code> access elements that are <strong>projected into the component</strong> via <code>&lt;ng-content&gt;</code>, rather than elements defined in the component's own template. This is the distinction: <code>@ViewChild</code> queries the component's own template; <code>@ContentChild</code> queries content that comes from the outside world.</p>\n\n          <h3>ng-content and Content Projection</h3>\n          <p>Content projection is Angular's equivalent of the web component slot mechanism. When you write <code>&lt;app-card&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/app-card&gt;</code>, the <code>&lt;p&gt;</code> is the projected content. Inside <code>CardComponent</code>, <code>&lt;ng-content&gt;</code> marks where the projected content is rendered. The component does not know what content will be projected — it just provides a slot. <code>@ContentChild</code> lets the host component inspect or interact with what was projected into that slot.</p>\n\n          <h3>Lifecycle: ngAfterContentInit</h3>\n          <p>Projected content is available after <code>ngAfterContentInit()</code> runs — one hook earlier than <code>ngAfterViewInit</code>. The ordering is: constructor → ngOnChanges → ngOnInit → ngDoCheck → ngAfterContentInit → ngAfterContentChecked → ngAfterViewInit. Access <code>@ContentChild</code> references in <code>ngAfterContentInit</code> or later.</p>\n\n          <h3>Real-World Example: Tab Component</h3>\n          <p>A classic use case is a tab container that expects <code>&lt;app-tab&gt;</code> children to be projected into it. The container uses <code>@ContentChildren(TabComponent)</code> to get the list of all tabs, reads their labels to render the tab bar, and activates the correct one. The tabs are defined by the consumer; the container just manages them.</p>\n        ",
-      "code": "import { Component, ContentChildren, QueryList, AfterContentInit, Input } from '@angular/core';\n\n// ---- Tab component: a projected child ----\n@Component({\n  selector: 'app-tab',\n  standalone: true,\n  template: `<div *ngIf=\"active\"><ng-content></ng-content></div>`\n})\nexport class TabComponent {\n  @Input({ required: true }) label!: string;\n  active = false;\n}\n\n// ---- Tabs container: queries its projected content ----\n@Component({\n  selector: 'app-tabs',\n  standalone: true,\n  imports: [NgFor, NgClass],\n  template: `\n    <!-- Tab bar built from projected TabComponents -->\n    <div class=\"tab-bar\">\n      <button\n        *ngFor=\"let tab of tabs\"\n        [ngClass]=\"{ active: tab.active }\"\n        (click)=\"selectTab(tab)\"\n      >\n        {{ tab.label }}\n      </button>\n    </div>\n    <!-- Projected tabs render here -->\n    <ng-content></ng-content>\n  `\n})\nexport class TabsComponent implements AfterContentInit {\n  @ContentChildren(TabComponent) tabs!: QueryList<TabComponent>;\n\n  ngAfterContentInit(): void {\n    // Activate the first tab by default\n    const allTabs = this.tabs.toArray();\n    if (allTabs.length) {\n      allTabs[0].active = true;\n    }\n  }\n\n  selectTab(selected: TabComponent): void {\n    this.tabs.forEach(t => (t.active = t === selected));\n  }\n}\n\n// ---- Consumer: projects TabComponents into the container ----\n// <app-tabs>\n//   <app-tab label=\"Overview\">Overview content here</app-tab>\n//   <app-tab label=\"Details\">Detailed info here</app-tab>\n//   <app-tab label=\"Reviews\">Customer reviews here</app-tab>\n// </app-tabs>",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>picture frame you sell empty</strong>. You don't know or control what photo the customer will put inside &mdash; that's <code>&lt;ng-content&gt;</code>, the empty slot. But you might still want to peek at the photo they inserted (to auto-crop it, say). <code>@ContentChild</code> is that peek: it lets the frame (the host component) inspect whatever the customer (the consumer) chose to project into it.</p>
+          </div>
+        </div>
+        <p><code>@ContentChild()</code> and <code>@ContentChildren()</code> (or their signal equivalents <code>contentChild()</code> / <code>contentChildren()</code>) access elements that are <strong>projected into the component</strong> via <code>&lt;ng-content&gt;</code>, rather than elements defined in the component's own template. This is the distinction: <code>@ViewChild</code> queries the component's own template; <code>@ContentChild</code> queries content that comes from the outside world.</p>
+        <h3>ng-content and content projection</h3>
+        <p>Content projection is Angular's equivalent of the web component slot mechanism. When you write <code>&lt;app-card&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/app-card&gt;</code>, the <code>&lt;p&gt;</code> is the projected content. Inside <code>CardComponent</code>, <code>&lt;ng-content&gt;</code> marks where the projected content is rendered. The component does not know what content will be projected &mdash; it just provides a slot. <code>@ContentChild</code> lets the host component inspect or interact with what was projected into that slot.</p>
+        <h3>Lifecycle: ngAfterContentInit</h3>
+        <p>Projected content is available after <code>ngAfterContentInit()</code> runs &mdash; one hook earlier than <code>ngAfterViewInit</code>. The ordering is: constructor &rarr; ngOnChanges &rarr; ngOnInit &rarr; ngDoCheck &rarr; ngAfterContentInit &rarr; ngAfterContentChecked &rarr; ngAfterViewInit. Access <code>@ContentChild</code> references in <code>ngAfterContentInit</code> or later &mdash; the signal-based <code>contentChild()</code> avoids the timing puzzle the same way <code>viewChild()</code> does.</p>
+        <h3>Real-world example: tab component</h3>
+        <p>A classic use case is a tab container that expects <code>&lt;app-tab&gt;</code> children to be projected into it. The container uses <code>@ContentChildren(TabComponent)</code> to get the list of all tabs, reads their labels to render the tab bar, and activates the correct one. The tabs are defined by the consumer; the container just manages them.</p>
+      `,
+      "code": `import { Component, contentChildren, input, afterRenderEffect } from '@angular/core';
+
+// ---- Tab component: a projected child ----
+@Component({
+  selector: 'app-tab',
+  template: \`@if (active) { <div><ng-content></ng-content></div> }\`
+})
+export class TabComponent {
+  readonly label = input.required<string>();
+  active = false;
+}
+
+// ---- Tabs container: queries its projected content ----
+@Component({
+  selector: 'app-tabs',
+  imports: [NgClass],
+  template: \`
+    <!-- Tab bar built from projected TabComponents -->
+    <div class="tab-bar">
+      @for (tab of tabs(); track tab) {
+        <button type="button" [ngClass]="{ active: tab.active }" (click)="selectTab(tab)">
+          {{ tab.label() }}
+        </button>
+      }
+    </div>
+    <!-- Projected tabs render here -->
+    <ng-content></ng-content>
+  \`
+})
+export class TabsComponent {
+  readonly tabs = contentChildren(TabComponent);
+
+  constructor() {
+    afterRenderEffect(() => {
+      // Activate the first tab by default, once tabs exist
+      const all = this.tabs();
+      if (all.length && !all.some(t => t.active)) {
+        all[0].active = true;
+      }
+    });
+  }
+
+  selectTab(selected: TabComponent): void {
+    this.tabs().forEach(t => (t.active = t === selected));
+  }
+}
+
+// ---- Consumer: projects TabComponents into the container ----
+// <app-tabs>
+//   <app-tab label="Overview">Overview content here</app-tab>
+//   <app-tab label="Details">Detailed info here</app-tab>
+//   <app-tab label="Reviews">Customer reviews here</app-tab>
+// </app-tabs>`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">ViewChild vs ContentChild</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 text-xs\"><div class=\"bg-indigo-50 border-2 border-indigo-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-indigo-700 mb-1\">@ViewChild</p><p class=\"text-slate-600\">queries the component's<br><strong>own template</strong> HTML</p></div><div class=\"bg-purple-50 border-2 border-purple-200 rounded-xl p-3 text-center\"><p class=\"font-bold text-purple-700 mb-1\">@ContentChild</p><p class=\"text-slate-600\">queries content <strong>projected in</strong><br>via &lt;ng-content&gt;</p></div></div></div>"
     },
     {
       "id": "service-based-communication",
       "title": "How to communicate between unrelated components using a service?",
-      "explanation": "\n          <p><code>@Input()</code>/<code>@Output()</code> only work between direct parent-child pairs. When two components have no parent-child relationship — for example, a sidebar and a main content panel, or a header and a nested route component — passing data through the component tree via input/output chains becomes unmanageable. This is called <strong>prop drilling</strong>, and the solution is a shared service with a reactive state stream.</p>\n\n          <h3>BehaviorSubject as Shared State</h3>\n          <p>The standard pattern is to hold state in a <code>BehaviorSubject</code> inside a service. A <code>BehaviorSubject</code> is an RxJS subject that remembers the last value it emitted. Any component that subscribes immediately receives the current value — it does not have to wait for the next emission. This makes it ideal for state that multiple components need to read when they first initialize.</p>\n\n          <p>The service exposes the subject's data as a public read-only <code>Observable</code> (via <code>.asObservable()</code>) so components can subscribe to changes, but only the service can push new values. This one-way write access enforces a clear data-ownership boundary.</p>\n\n          <h3>The Pattern</h3>\n          <p>The service holds a private <code>BehaviorSubject</code> for each piece of shared state, and exposes two things: a public observable for reading (<code>value$</code>) and a method for writing (<code>setValue()</code>). Components subscribe to the observable using the <code>async</code> pipe, which handles subscription and cleanup automatically. When any component calls the write method, all other components subscribed to the observable see the update on the next change detection cycle.</p>\n        ",
-      "code": "import { Injectable, inject } from '@angular/core';\nimport { BehaviorSubject, Observable } from 'rxjs';\n\nexport interface CartItem {\n  id: number;\n  name: string;\n  quantity: number;\n  price: number;\n}\n\n// ---- CartService: single source of truth for cart state ----\n@Injectable({ providedIn: 'root' })\nexport class CartService {\n  private readonly _items = new BehaviorSubject<CartItem[]>([]);\n\n  // Public read-only stream — components subscribe to this\n  readonly items$: Observable<CartItem[]> = this._items.asObservable();\n\n  get itemCount(): number {\n    return this._items.value.reduce((sum, item) => sum + item.quantity, 0);\n  }\n\n  addItem(newItem: CartItem): void {\n    const current = this._items.value;\n    const existing = current.find(i => i.id === newItem.id);\n    if (existing) {\n      this._items.next(\n        current.map(i => i.id === newItem.id ? { ...i, quantity: i.quantity + 1 } : i)\n      );\n    } else {\n      this._items.next([...current, { ...newItem, quantity: 1 }]);\n    }\n  }\n\n  removeItem(id: number): void {\n    this._items.next(this._items.value.filter(i => i.id !== id));\n  }\n\n  clear(): void {\n    this._items.next([]);\n  }\n}\n\n// ---- HeaderComponent: shows cart count — no parent/child relationship with ProductPage ----\n@Component({\n  selector: 'app-header',\n  standalone: true,\n  imports: [AsyncPipe, NgFor],\n  template: `\n    <nav>\n      <span>Cart ({{ (cart.items$ | async)?.length ?? 0 }} items)</span>\n    </nav>\n  `\n})\nexport class HeaderComponent {\n  cart = inject(CartService);\n}\n\n// ---- ProductPageComponent: adds items — completely unrelated to HeaderComponent ----\n@Component({\n  selector: 'app-product-page',\n  standalone: true,\n  template: `\n    <button (click)=\"addLaptop()\">Add Laptop to Cart</button>\n  `\n})\nexport class ProductPageComponent {\n  private cart = inject(CartService);\n\n  addLaptop(): void {\n    this.cart.addItem({ id: 1, name: 'Laptop', quantity: 1, price: 999 });\n    // HeaderComponent's count updates automatically — no @Output needed\n  }\n}",
-      "language": "typescript"
+      "explanation": `
+        <div class="analogy-box">
+          <svg class="analogy-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+          <div class="analogy-body">
+            <p class="analogy-label">Think of it like</p>
+            <p class="analogy-text">A <strong>shared office bulletin board</strong> instead of passing notes hand-to-hand through every desk in between. Two colleagues on opposite sides of the building (unrelated components) don't need to relay a message through everyone sitting in the rows between them (prop drilling). They both just walk up to the same board (an injected service), read the current pin, or post a new one &mdash; everyone watching the board sees the update instantly.</p>
+          </div>
+        </div>
+        <p><code>@Input()</code>/<code>@Output()</code> (and their function-based equivalents) only work between direct parent-child pairs. When two components have no parent-child relationship &mdash; for example, a sidebar and a main content panel, or a header and a nested route component &mdash; passing data through the component tree via input/output chains becomes unmanageable. This is called <strong>prop drilling</strong>, and the solution is a shared service holding reactive state.</p>
+        <h3>Signal-based shared state</h3>
+        <p>The simplest modern pattern is a private writable signal in a root-provided service, exposed as a read-only signal (<code>.asReadonly()</code>) plus methods to mutate it. Any component that injects the service and reads the signal automatically re-renders when it changes &mdash; no subscription management needed.</p>
+        <h3>BehaviorSubject as shared state</h3>
+        <p>For state that's driven by async streams (WebSocket messages, polling, combined HTTP calls), RxJS's <code>BehaviorSubject</code> is still the right tool. A <code>BehaviorSubject</code> remembers the last value it emitted, so any component that subscribes immediately receives the current value &mdash; it does not have to wait for the next emission. The service exposes the subject's data as a public read-only <code>Observable</code> (via <code>.asObservable()</code>) so components can subscribe to changes, but only the service can push new values.</p>
+        <h3>The pattern</h3>
+        <p>Whichever primitive you choose, the shape is the same: the service holds private mutable state and exposes two things &mdash; a public read channel and a method for writing. Components read using the <code>async</code> pipe (for observables) or by calling the signal (for signals). When any component calls the write method, all other components watching the read channel see the update on the next render.</p>
+      `,
+      "code": `import { Injectable, computed, signal } from '@angular/core';
+
+export interface CartItem {
+  id: number;
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+// ---- CartService: single source of truth for cart state ----
+@Injectable({ providedIn: 'root' })
+export class CartService {
+  private readonly itemsState = signal<CartItem[]>([]);
+
+  // Public read-only signal — components read this directly
+  readonly items = this.itemsState.asReadonly();
+  readonly itemCount = computed(() =>
+    this.items().reduce((sum, item) => sum + item.quantity, 0)
+  );
+
+  addItem(newItem: CartItem): void {
+    this.itemsState.update(current => {
+      const existing = current.find(i => i.id === newItem.id);
+      if (existing) {
+        return current.map(i => i.id === newItem.id ? { ...i, quantity: i.quantity + 1 } : i);
+      }
+      return [...current, { ...newItem, quantity: 1 }];
+    });
+  }
+
+  removeItem(id: number): void {
+    this.itemsState.update(current => current.filter(i => i.id !== id));
+  }
+
+  clear(): void {
+    this.itemsState.set([]);
+  }
+}
+
+// ---- HeaderComponent: shows cart count — no parent/child relationship with ProductPage ----
+@Component({
+  selector: 'app-header',
+  template: \`<nav><span>Cart ({{ cart.itemCount() }} items)</span></nav>\`
+})
+export class HeaderComponent {
+  cart = inject(CartService);
+}
+
+// ---- ProductPageComponent: adds items — completely unrelated to HeaderComponent ----
+@Component({
+  selector: 'app-product-page',
+  template: \`<button type="button" (click)="addLaptop()">Add Laptop to Cart</button>\`
+})
+export class ProductPageComponent {
+  private cart = inject(CartService);
+
+  addLaptop(): void {
+    this.cart.addItem({ id: 1, name: 'Laptop', quantity: 1, price: 999 });
+    // HeaderComponent's count updates automatically — no @Output needed
+  }
+}`,
+      "language": "typescript",
+      "diagram": "<div class=\"diagram-wrap\"><p class=\"text-center text-xs font-bold text-slate-400 uppercase tracking-widest mb-5\">Prop Drilling vs Shared Service</p><div class=\"grid grid-cols-1 md:grid-cols-2 gap-4 text-xs\"><div class=\"bg-rose-50 border-2 border-rose-200 rounded-xl p-3\"><p class=\"font-bold text-rose-700 text-center mb-2\">Prop drilling</p><div class=\"flex flex-col items-center gap-1 font-mono text-slate-600\"><div>Header</div><div class=\"text-slate-300\">&darr; input/output chain</div><div>Layout</div><div class=\"text-slate-300\">&darr;</div><div>ProductPage</div></div></div><div class=\"bg-emerald-50 border-2 border-emerald-200 rounded-xl p-3\"><p class=\"font-bold text-emerald-700 text-center mb-2\">Shared service</p><div class=\"flex flex-col items-center gap-2\"><div class=\"bg-white border border-emerald-200 rounded px-3 py-1\">CartService (root)</div><div class=\"flex gap-4 text-slate-500\"><span>&uarr; Header reads</span><span>&uarr; ProductPage writes</span></div></div></div></div></div>"
     }
   ]
 });
