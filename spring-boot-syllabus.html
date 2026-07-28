@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Java &amp; Spring Boot Syllabus — CodeVerse Creatives</title>
+<meta name="description" content="A 15-week Java and Spring Boot syllabus covering core Spring, REST APIs, JPA, security, testing, microservices, caching, observability and a deployed capstone." />
+<link rel="icon" href="favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-course="spring-boot">
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="angular-syllabus.html">Angular</a>
+      <a href="llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="spring-boot-syllabus.html" aria-current="page">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero__eyebrow">Java &amp; Spring Boot Course</span>
+      <h1>Build production <span>Spring Boot</span> APIs on modern Java</h1>
+      <p class="hero__lede">
+        A hands-on backend path — core Spring &amp; dependency injection, REST APIs, Spring Data JPA,
+        security, testing, microservices and observability — ending with a capstone service you
+        containerize and deploy yourself.
+      </p>
+
+      <div class="hero__meta">
+        <span class="chip chip--accent">15 Weeks</span>
+        <span class="chip">Beginner → Job-Ready</span>
+        <span class="chip">Self-Paced</span>
+        <span class="chip">Java 21 LTS &amp; Spring Boot 3</span>
+      </div>
+
+      <div class="hero__actions">
+        <a href="#timeline" class="btn btn--primary">View Full Timeline</a>
+        <a href="index.html" class="btn btn--ghost">See All Courses</a>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat-card">
+          <div class="stat-card__value">15</div>
+          <div class="stat-card__label">Weeks of study</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">12</div>
+          <div class="stat-card__label">Core modules</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">1</div>
+          <div class="stat-card__label">Capstone project</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">0→1</div>
+          <div class="stat-card__label">No prior Spring needed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prerequisites & stack -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-head__eyebrow">Before You Start</span>
+        <h2>Prerequisites &amp; tooling</h2>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card reveal">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 21V9"/></svg>
+          </div>
+          <h3>What you should already know</h3>
+          <ul>
+            <li>Core Java — classes, interfaces, collections, OOP basics</li>
+            <li>Comfortable with the command line and Git</li>
+            <li>No prior Spring experience required</li>
+            <li>JDK 21 (LTS) and an IDE like IntelliJ installed</li>
+          </ul>
+        </div>
+
+        <div class="info-card reveal">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Stack you'll work with</h3>
+          <p style="margin-bottom:0;">The same tools teams use to ship real Spring Boot services in production.</p>
+          <div class="stack-row">
+            <span class="chip">Java 21 LTS</span>
+            <span class="chip">Spring Boot 3</span>
+            <span class="chip">Spring Data JPA</span>
+            <span class="chip">Spring Security</span>
+            <span class="chip">Maven / Gradle</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">Docker</span>
+            <span class="chip">JUnit 5 &amp; Testcontainers</span>
+            <span class="chip">Redis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section" id="timeline">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-head__eyebrow">Syllabus</span>
+        <h2>Your 15-week learning path</h2>
+        <p>Twelve modules, from your first <code>@RestController</code> to a tested, secured, observable service you deploy in a container.</p>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-marker">01</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 1</span>
+            <h3>Java Foundations &amp; Environment Setup</h3>
+            <p>Refresh modern Java and get your backend toolchain running.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Records, sealed classes &amp; pattern matching</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>JDK 21, Maven/Gradle &amp; project structure</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>IDE setup &amp; running your first Spring Boot app</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">02</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 2</span>
+            <h3>Spring Core &amp; Dependency Injection</h3>
+            <p>Understand the container that powers every Spring application.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>IoC container, beans &amp; the bean lifecycle</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Constructor injection &amp; component scanning</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Auto-configuration &amp; starters explained</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">03</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 3</span>
+            <h3>Building REST APIs</h3>
+            <p>Design and build clean, well-validated HTTP APIs.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Spring MVC, <code>@RestController</code> &amp; DTOs</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Bean Validation &amp; request/response mapping</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Centralized error handling with <code>@ControllerAdvice</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">04</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 4–5</span>
+            <h3>Data Persistence with Spring Data JPA</h3>
+            <p>Model your domain and talk to a real relational database.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Entities, repositories &amp; JPQL queries</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Relationships, lazy loading &amp; transactions</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Schema migrations with Flyway</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">05</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 6–7</span>
+            <h3>Spring Security &amp; Authentication</h3>
+            <p>Lock down your API with modern, stateless authentication.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>The security filter chain &amp; password encoding</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>JWT-based authentication &amp; OAuth2/OIDC login</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Method-level authorization</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">06</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 8</span>
+            <h3>Testing Spring Boot Applications</h3>
+            <p>Build a layered test suite you can trust before every deploy.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unit testing with JUnit 5 &amp; Mockito</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>@SpringBootTest</code> &amp; <code>MockMvc</code> slice tests</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Real-database integration tests with Testcontainers</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">07</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 9–10</span>
+            <h3>Microservices &amp; Messaging</h3>
+            <p>Move from a single service to a small distributed system.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Service-to-service calls with <code>RestClient</code> / <code>WebClient</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Event-driven messaging with Kafka/RabbitMQ</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Resilience patterns with Resilience4j</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">08</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 11</span>
+            <h3>Caching &amp; Performance</h3>
+            <p>Keep a growing service fast under real load.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>The Spring Cache abstraction &amp; Redis</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Connection pooling &amp; query performance</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Async processing with <code>@Async</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">09</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 12</span>
+            <h3>Observability &amp; Production Readiness</h3>
+            <p>Understand what your service is doing once it's live.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Spring Boot Actuator &amp; health checks</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Metrics with Micrometer &amp; structured logging</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Distributed tracing basics</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">10</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 13</span>
+            <h3>Containerization &amp; Deployment</h3>
+            <p>Package and ship your service the way production teams do.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Docker images with Cloud Native Buildpacks</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CI/CD pipelines for a Spring Boot service</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deploying to Kubernetes — the basics</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">11</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 14</span>
+            <h3>Reactive Programming with WebFlux</h3>
+            <p>An introduction to Spring's non-blocking, reactive stack.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Project Reactor: <code>Mono</code> &amp; <code>Flux</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reactive data access &amp; backpressure</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>When to reach for WebFlux vs. Spring MVC</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item is-capstone">
+          <div class="timeline-marker">12</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 15 · CAPSTONE</span>
+            <h3>Capstone: Ship a Production Spring Boot Service</h3>
+            <p>Apply every module in one project — built, tested, secured and deployed by you.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Fully tested, secured, containerized service</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Code review &amp; deployment walkthrough</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Portfolio-ready project you can show employers</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <h2>Ready to build with Spring Boot?</h2>
+        <p>Start with Week 1 and work through a real backend engineering path — or browse the Angular and LLM &amp; ML courses if you're building out a full-stack or AI skill set.</p>
+        <div class="cta-banner__actions">
+          <a href="#timeline" class="btn btn--primary">Start Week 1</a>
+          <a href="index.html" class="btn btn--ghost">See All Courses</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="index.html">Home</a>
+      <a href="angular-syllabus.html">Angular</a>
+      <a href="llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

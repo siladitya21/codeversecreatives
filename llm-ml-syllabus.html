@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LLM &amp; Machine Learning Syllabus — CodeVerse Creatives</title>
+<meta name="description" content="A 16-week syllabus from Python and math foundations through classical ML, deep learning, transformers, fine-tuning, RAG, agents and a deployed capstone LLM application." />
+<link rel="icon" href="favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-course="llm-ml">
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="angular-syllabus.html">Angular</a>
+      <a href="llm-ml-syllabus.html" aria-current="page">LLM &amp; ML</a>
+      <a href="spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero__eyebrow">LLM &amp; Machine Learning Course</span>
+      <h1>Go from <span>Python to production LLMs</span> in one guided path</h1>
+      <p class="hero__lede">
+        Start with math and classical machine learning, build up through neural networks and
+        transformers, then fine-tune, prompt, retrieve and orchestrate real large language models —
+        finishing with a deployed AI application.
+      </p>
+
+      <div class="hero__meta">
+        <span class="chip chip--accent">16 Weeks</span>
+        <span class="chip">Beginner → Job-Ready</span>
+        <span class="chip">Self-Paced</span>
+        <span class="chip">Math to Production</span>
+      </div>
+
+      <div class="hero__actions">
+        <a href="#timeline" class="btn btn--primary">View Full Timeline</a>
+        <a href="angular-syllabus.html" class="btn btn--ghost">Explore Angular Course</a>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat-card">
+          <div class="stat-card__value">16</div>
+          <div class="stat-card__label">Weeks of study</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">13</div>
+          <div class="stat-card__label">Core modules</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">1</div>
+          <div class="stat-card__label">Capstone project</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">0→1</div>
+          <div class="stat-card__label">No prior ML needed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prerequisites & stack -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-head__eyebrow">Before You Start</span>
+        <h2>Prerequisites &amp; tooling</h2>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card reveal">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 21V9"/></svg>
+          </div>
+          <h3>What you should already know</h3>
+          <ul>
+            <li>Basic Python — variables, functions, loops, lists/dicts</li>
+            <li>Comfort with high-school-level math (we refresh what's needed)</li>
+            <li>No prior machine learning or deep learning experience required</li>
+            <li>Python 3.10+ and a code editor installed</li>
+          </ul>
+        </div>
+
+        <div class="info-card reveal">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Stack you'll work with</h3>
+          <p style="margin-bottom:0;">From notebooks to a shipped app — the same tools used in industry today.</p>
+          <div class="stack-row">
+            <span class="chip">Python 3.11</span>
+            <span class="chip">NumPy &amp; Pandas</span>
+            <span class="chip">scikit-learn</span>
+            <span class="chip">PyTorch</span>
+            <span class="chip">Hugging Face</span>
+            <span class="chip">LangChain</span>
+            <span class="chip">Vector Databases</span>
+            <span class="chip">Claude &amp; OpenAI APIs</span>
+            <span class="chip">Jupyter</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section" id="timeline">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-head__eyebrow">Syllabus</span>
+        <h2>Your 16-week learning path</h2>
+        <p>Thirteen modules that build from math and classical ML to transformers, fine-tuning, RAG, agents and a deployed capstone.</p>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-marker">01</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 1–2</span>
+            <h3>Math &amp; Python Foundations</h3>
+            <p>Build the toolkit every later module depends on.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Linear algebra &amp; probability essentials for ML</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>NumPy &amp; Pandas for data manipulation</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Environment setup: venv/conda &amp; Jupyter</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">02</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 3–4</span>
+            <h3>Core Machine Learning Concepts</h3>
+            <p>Learn the vocabulary and workflow behind every ML model you'll ever train.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Supervised vs. unsupervised learning</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Train/validation/test splits, bias–variance tradeoff</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Your first models with scikit-learn</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">03</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 5</span>
+            <h3>Classical ML Algorithms</h3>
+            <p>The workhorse algorithms behind most tabular-data systems.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Decision trees, random forests &amp; gradient boosting</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Support vector machines</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Clustering (k-means) &amp; dimensionality reduction (PCA)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">04</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 6</span>
+            <h3>Neural Network Foundations</h3>
+            <p>Understand what's really happening inside a neural net.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Perceptrons, activation functions &amp; backpropagation</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Loss functions &amp; optimizers (SGD, Adam)</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Building your first network in PyTorch</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">05</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 7–8</span>
+            <h3>Deep Learning Architectures</h3>
+            <p>Move from single networks to the architectures behind vision and sequence models.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CNNs for image data</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>RNNs, LSTMs &amp; an intro to attention</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Regularization &amp; normalization techniques</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">06</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 9</span>
+            <h3>Transformer Architecture Deep Dive</h3>
+            <p>The architecture behind every modern LLM, built from first principles.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Self-attention &amp; multi-head attention</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Positional encoding, encoder/decoder stacks</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a mini transformer from scratch</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">07</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 10</span>
+            <h3>Large Language Model Fundamentals</h3>
+            <p>How raw text becomes a model that can converse and reason.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Pretraining objectives &amp; tokenization (BPE)</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Scaling laws &amp; model families</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reading a model card critically</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">08</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 11</span>
+            <h3>Fine-Tuning &amp; Adaptation</h3>
+            <p>Adapt a pretrained model to your own task and data.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Transfer learning &amp; full fine-tuning</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Parameter-efficient tuning: LoRA &amp; QLoRA</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Instruction tuning &amp; an overview of RLHF/DPO</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">09</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 12</span>
+            <h3>Prompt Engineering &amp; Reasoning</h3>
+            <p>Get reliable, structured behavior out of a model without touching its weights.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Prompt patterns, few-shot &amp; chain-of-thought</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Structured outputs &amp; tool schemas</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Systematically evaluating prompts</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">10</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 13</span>
+            <h3>Retrieval-Augmented Generation &amp; Embeddings</h3>
+            <p>Ground model answers in your own data.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Embeddings &amp; vector similarity</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Chunking strategies &amp; vector databases</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a working RAG pipeline end-to-end</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">11</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 14</span>
+            <h3>Agents, Tool Use &amp; Orchestration</h3>
+            <p>Let a model take actions, not just generate text.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Function calling &amp; tool-use loops</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Multi-agent systems &amp; the Model Context Protocol</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Agent memory &amp; state management</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">12</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 15</span>
+            <h3>Evaluation, Safety &amp; Deployment</h3>
+            <p>Take a model from a notebook to something you can trust in production.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Evals, benchmarks &amp; hallucination mitigation</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Guardrails &amp; responsible-AI basics</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cost, latency &amp; serving considerations</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item is-capstone">
+          <div class="timeline-marker">13</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 16 · CAPSTONE</span>
+            <h3>Capstone: Ship an LLM-Powered Application</h3>
+            <p>Combine fine-tuning, RAG, agents and evaluation into one deployed product.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>End-to-end AI application, from data to deployment</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Code review &amp; deployment walkthrough</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Portfolio-ready project you can show employers</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <h2>Ready to build with LLMs?</h2>
+        <p>Start with Week 1 and work through math, classical ML, deep learning and modern LLM engineering — or check out the Angular course if you're focused on frontend engineering.</p>
+        <div class="cta-banner__actions">
+          <a href="#timeline" class="btn btn--primary">Start Week 1</a>
+          <a href="angular-syllabus.html" class="btn btn--ghost">View Angular Syllabus</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="index.html">Home</a>
+      <a href="angular-syllabus.html">Angular</a>
+      <a href="llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

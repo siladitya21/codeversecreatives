@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Angular Syllabus — CodeVerse Creatives</title>
+<meta name="description" content="A 14-week, project-driven Angular syllabus covering signals, standalone components, routing, forms, RxJS, testing, SSR and a capstone build — updated for the latest Angular." />
+<link rel="icon" href="favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-course="angular">
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="angular-syllabus.html" aria-current="page">Angular</a>
+      <a href="llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero__eyebrow">Angular Course · Updated for Angular 22</span>
+      <h1>Master <span>Angular</span> in real depth — from fundamentals to production</h1>
+      <p class="hero__lede">
+        A genuinely detailed, project-driven curriculum — 26 weeks across 7 phases, each week with
+        its own learning objectives, topic breakdown and hands-on exercise. Signals, standalone
+        components, routing, forms, RxJS, testing, performance, security and SSR — ending with a
+        capstone app you ship yourself.
+      </p>
+
+      <div class="hero__meta">
+        <span class="chip chip--accent">26 Weeks · ~6 Months</span>
+        <span class="chip">Beginner → Job-Ready</span>
+        <span class="chip">Self-Paced</span>
+        <span class="chip">Signals &amp; Standalone APIs</span>
+      </div>
+
+      <div class="hero__actions">
+        <a href="#timeline" class="btn btn--primary">View Full Curriculum</a>
+        <a href="llm-ml-syllabus.html" class="btn btn--ghost">Explore LLM &amp; ML Course</a>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat-card">
+          <div class="stat-card__value">26</div>
+          <div class="stat-card__label">Weeks of study</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">7</div>
+          <div class="stat-card__label">Phases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">25</div>
+          <div class="stat-card__label">Weekly modules</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">1</div>
+          <div class="stat-card__label">Capstone project</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prerequisites & stack -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-head__eyebrow">Before You Start</span>
+        <h2>Prerequisites &amp; tooling</h2>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card reveal">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 21V9"/></svg>
+          </div>
+          <h3>What you should already know</h3>
+          <ul>
+            <li>Comfortable writing HTML, CSS and everyday JavaScript</li>
+            <li>Basic TypeScript is helpful, but we cover it in Week 1</li>
+            <li>Familiarity with the command line and Git</li>
+            <li>Node.js (LTS) installed on your machine</li>
+          </ul>
+        </div>
+
+        <div class="info-card reveal">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Stack you'll work with</h3>
+          <p style="margin-bottom:0;">Everything is taught on the current Angular toolchain — no legacy NgModules required.</p>
+          <div class="stack-row">
+            <span class="chip">Angular 22</span>
+            <span class="chip">TypeScript 5</span>
+            <span class="chip">Signals</span>
+            <span class="chip">RxJS</span>
+            <span class="chip">Standalone Components</span>
+            <span class="chip">Vite / esbuild CLI</span>
+            <span class="chip">Angular CDK</span>
+            <span class="chip">Vitest</span>
+            <span class="chip">Playwright</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curriculum -->
+  <section class="section" id="timeline">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-head__eyebrow">Syllabus</span>
+        <h2>Your 26-week curriculum</h2>
+        <p>7 phases, 25 weekly modules — each with its own objectives, detailed topics and a hands-on exercise. Click a week to expand it.</p>
+      </div>
+
+      <div class="phase-nav reveal">
+        <a href="#phase-1"><span>1</span> Foundations</a>
+        <a href="#phase-2"><span>2</span> Core Reactivity &amp; UI</a>
+        <a href="#phase-3"><span>3</span> Application Architecture</a>
+        <a href="#phase-4"><span>4</span> Data &amp; State</a>
+        <a href="#phase-5"><span>5</span> Quality &amp; Performance</a>
+        <a href="#phase-6"><span>6</span> Advanced &amp; Specialization</a>
+        <a href="#phase-7"><span>7</span> Capstone</a>
+        <button type="button" class="btn btn--ghost" data-expand-all>Expand all weeks</button>
+      </div>
+
+      <!-- Phase 1 -->
+      <div class="curriculum-phase reveal" id="phase-1">
+        <div class="phase-head">
+          <div class="phase-head__num">1</div>
+          <div>
+            <h3>Foundations</h3>
+            <p>Build the language, tooling and mental model every later phase depends on.</p>
+            <span class="chip chip--accent">Weeks 1–4</span>
+          </div>
+        </div>
+
+        <div class="week-list">
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 1</span>
+              <div class="week-item__heading">
+                <h4>Modern JavaScript &amp; TypeScript for Angular</h4>
+                <p>Build the language foundation every Angular concept sits on top of.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <a href="angular/week-01.html" class="course-card__cta" style="grid-column:1 / -1;">
+                Start this lesson
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </a>
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Read and write idiomatic modern JS/TS without hesitation</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Follow Angular's own source using its type system</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Configure a TypeScript project confidently</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>ES2022+: destructuring, spread/rest, optional chaining, nullish coalescing</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Modules, Promises &amp; async/await</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Types, interfaces &amp; generics</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Union types, narrowing &amp; discriminated unions</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Classes &amp; decorators — the mechanism Angular is built on</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>tsconfig.json</code> deep dive &amp; strict mode</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Convert a small vanilla-JS utility library to strict TypeScript, adding proper types and generics throughout.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 2</span>
+              <div class="week-item__heading">
+                <h4>Angular CLI, Tooling &amp; Project Anatomy</h4>
+                <p>Get comfortable with the tools you'll use every day for the rest of the course.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Scaffold, run, build and analyze an Angular project from the CLI</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain what every generated file is for</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Installing the Angular CLI &amp; creating a new application</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>The Vite/esbuild-based application builder</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Project structure: <code>angular.json</code>, <code>main.ts</code>, app config</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Workspaces, multi-app &amp; shared-library setups</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Environment configuration &amp; build targets</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Editor setup, Angular Language Service &amp; DevTools</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Scaffold a workspace with two applications and one shared library, and wire up a build script for both.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 3</span>
+              <div class="week-item__heading">
+                <h4>Standalone Components &amp; the Angular Mental Model</h4>
+                <p>Learn how Angular assembles an application without NgModules.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain how a standalone Angular app bootstraps end to end</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reason about the component tree as the UI's source of truth</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Bootstrapping with <code>bootstrapApplication</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Standalone components, directives &amp; pipes</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Providers &amp; <code>ApplicationConfig</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Change detection &amp; the render cycle (conceptual overview)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Component tree &amp; parent/child relationships</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Migrating a legacy NgModule app (conceptual walkthrough)</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Bootstrap a standalone app from scratch (no CLI schematic) and render a three-level component tree.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 4</span>
+              <div class="week-item__heading">
+                <h4>Component Fundamentals &amp; Templates</h4>
+                <p>Build your first real components and internalize Angular's template syntax.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build components with typed inputs/outputs</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Read and write Angular templates fluently</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Component decorator options (selector, template, styles)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Interpolation, property &amp; event binding</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>input()</code>, <code>output()</code> &amp; <code>model()</code> signal-based APIs</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Template reference variables</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>ng-template</code> &amp; <code>ng-container</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Lifecycle hooks &amp; signal-based alternatives</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a reusable rating-stars component with a two-way bound value via <code>model()</code>.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="curriculum-phase reveal" id="phase-2">
+        <div class="phase-head">
+          <div class="phase-head__num">2</div>
+          <div>
+            <h3>Core Reactivity &amp; UI</h3>
+            <p>Master signals, the new control flow, and building composable, styled UI.</p>
+            <span class="chip chip--accent">Weeks 5–8</span>
+          </div>
+        </div>
+
+        <div class="week-list">
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 5</span>
+              <div class="week-item__heading">
+                <h4>Signals Deep Dive</h4>
+                <p>Master Angular's fine-grained reactivity primitive.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Model derived and effectful state with signals confidently</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Avoid common signal pitfalls (over-computing, effect loops)</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>signal()</code>, <code>computed()</code> &amp; <code>effect()</code> in depth</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>linkedSignal()</code> for dependent, resettable state</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Signal equality functions &amp; custom comparators</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>untracked()</code> and when to use it</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Debugging signals with Angular DevTools</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Signals vs. RxJS — when to reach for each</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a shopping-cart state model entirely with signals — totals, discounts and item count all as computed signals.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 6</span>
+              <div class="week-item__heading">
+                <h4>New Control Flow &amp; Template Syntax</h4>
+                <p>Replace structural directives with Angular's built-in control flow.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Write templates using <code>@if</code>/<code>@for</code>/<code>@switch</code> fluently</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Understand <code>@for</code>'s tracking behavior and why it matters</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>@if</code> / <code>@else if</code> / <code>@else</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>@for</code>, track expressions &amp; performance implications</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>@switch</code> / <code>@case</code> / <code>@default</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>@let</code> for local template variables</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Conditional rendering patterns &amp; empty states</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Migrating <code>*ngIf</code>/<code>*ngFor</code> templates to the new syntax</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Rebuild a data table (sorting, filtering, empty state) using only the new control-flow syntax.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 7</span>
+              <div class="week-item__heading">
+                <h4>Styling, View Encapsulation &amp; Content Projection</h4>
+                <p>Compose flexible, reusable UI components.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Choose the right encapsulation strategy for a component</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build components that accept projected content and slots</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Component styles &amp; <code>:host</code> / <code>:host-context</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>View encapsulation modes (Emulated, ShadowDom, None)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Host bindings &amp; host listeners</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>ng-content</code>, multi-slot projection &amp; fallback content</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Responsive layout with the Angular CDK Layout module</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Building a small design-system component (button, card, modal)</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a modal component with a named header/body/footer projection API and CDK-based focus trapping.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 8</span>
+              <div class="week-item__heading">
+                <h4>Directives, Pipes &amp; the Angular CDK</h4>
+                <p>Extend Angular's template language with your own reusable behavior.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Write custom attribute and structural directives</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Use the CDK for common UI behaviors instead of reinventing them</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom attribute directives &amp; host bindings</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom structural directives — how <code>*ngIf</code>-style directives work</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Pure vs. impure pipes, and building your own</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CDK Overlay, Portal &amp; DragDrop basics</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CDK a11y utilities (FocusTrap, LiveAnnouncer)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>When to build vs. reach for a library</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a custom "clickOutside" directive and a reusable pipe library (currency, relative-time, truncate).</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="curriculum-phase reveal" id="phase-3">
+        <div class="phase-head">
+          <div class="phase-head__num">3</div>
+          <div>
+            <h3>Application Architecture</h3>
+            <p>Turn a single component tree into a routed, form-driven, multi-view application.</p>
+            <span class="chip chip--accent">Weeks 9–13</span>
+          </div>
+        </div>
+
+        <div class="week-list">
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 9</span>
+              <div class="week-item__heading">
+                <h4>Dependency Injection &amp; Services Deep Dive</h4>
+                <p>Structure application logic so it's testable and swappable.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Design a service layer with clear responsibilities</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Use Angular's DI system beyond the basics</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Providers, <code>providedIn</code> strategies &amp; tree-shakable services</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>The <code>inject()</code> function vs. constructor injection</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Injection tokens &amp; multi-providers</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hierarchical injectors &amp; component-level providers</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Environment-based configuration &amp; feature flags</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Testing services in isolation</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a notification service with a swappable "transport" (toast vs. console) injected via a token.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 10</span>
+              <div class="week-item__heading">
+                <h4>Routing Fundamentals</h4>
+                <p>Turn a single component tree into a real multi-view application.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Configure routes, parameters and nested views confidently</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Route configuration &amp; the Router service</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Route parameters, query parameters &amp; fragments</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Router outlets &amp; nested/child routes</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Programmatic navigation &amp; <code>routerLink</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Route data &amp; title strategies</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Handling 404s and wildcard routes</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a three-level nested routing structure for a dashboard (overview → project → task detail).</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 11</span>
+              <div class="week-item__heading">
+                <h4>Advanced Routing</h4>
+                <p>Control access, loading and performance at the routing layer.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Protect and optimize routes for a production application</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Functional guards (<code>CanActivate</code>, <code>CanDeactivate</code>, <code>CanMatch</code>)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Resolvers for pre-fetching route data</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Lazy loading with <code>loadComponent</code> &amp; <code>loadChildren</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Preloading strategies</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deferrable views with <code>@defer</code> (triggers, placeholders, errors)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Route-level code-splitting strategy</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Add auth guards and a resolver to the Week 10 dashboard, and lazy-load each top-level section.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 12</span>
+              <div class="week-item__heading">
+                <h4>Reactive Forms</h4>
+                <p>Handle complex, validated user input the Angular way.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build and validate non-trivial forms with full type safety</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>FormControl</code>, <code>FormGroup</code> &amp; <code>FormArray</code> (typed forms)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Built-in &amp; custom synchronous validators</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Async validators &amp; debounced validation</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Cross-field validation patterns</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dynamically adding/removing form controls</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Form state (dirty, touched, pending) &amp; UX patterns</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a multi-step signup form with cross-field validation and a dynamically-sized "add another" section.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 13</span>
+              <div class="week-item__heading">
+                <h4>Template-Driven &amp; Dynamic Forms</h4>
+                <p>Know when template-driven forms fit better, and how to generate forms from data.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Choose the right form strategy for a given feature</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Template-driven forms &amp; <code>ngModel</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>When template-driven beats reactive (and vice versa)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Building a schema-driven dynamic form renderer</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom form control components (<code>ControlValueAccessor</code>)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Form accessibility (labels, error announcements)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Testing forms</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a <code>ControlValueAccessor</code>-based custom input (e.g. a tag/chip input) that works inside a reactive form.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="curriculum-phase reveal" id="phase-4">
+        <div class="phase-head">
+          <div class="phase-head__num">4</div>
+          <div>
+            <h3>Data &amp; State</h3>
+            <p>Talk to real APIs, master RxJS, and manage shared state as an app grows.</p>
+            <span class="chip chip--accent">Weeks 14–17</span>
+          </div>
+        </div>
+
+        <div class="week-list">
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 14</span>
+              <div class="week-item__heading">
+                <h4>HttpClient, Interceptors &amp; API Integration</h4>
+                <p>Talk to real backends reliably.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a robust HTTP data-access layer</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>HttpClient</code> basics: GET/POST/PUT/DELETE, typed responses</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Functional interceptors (auth headers, error handling, logging)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Retry, timeout &amp; error-recovery strategies</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>File uploads &amp; progress events</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Mocking HTTP in development</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>API versioning &amp; environment-based base URLs</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a typed API client layer for a REST API with a shared error-handling interceptor and retry policy.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 15</span>
+              <div class="week-item__heading">
+                <h4>RxJS Deep Dive</h4>
+                <p>Get fluent in the reactive-stream operators Angular is built on.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Compose non-trivial async flows with RxJS confidently</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Subjects, <code>BehaviorSubject</code> &amp; <code>ReplaySubject</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Core operators: <code>map</code>, <code>switchMap</code>, <code>mergeMap</code>, <code>concatMap</code>, <code>exhaustMap</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>combineLatest</code>, <code>forkJoin</code>, <code>withLatestFrom</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Error handling operators (<code>catchError</code>, <code>retry</code>)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Subscription management &amp; memory leaks</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Building a typeahead search with debounce + <code>switchMap</code></li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Build a live search feature combining <code>debounceTime</code>, <code>distinctUntilChanged</code> and <code>switchMap</code> with proper cancellation.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 16</span>
+              <div class="week-item__heading">
+                <h4>Bridging Signals &amp; Observables</h4>
+                <p>Use both reactivity models together without fighting them.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Move data between the signal and observable worlds cleanly</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>toSignal()</code> &amp; <code>toObservable()</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>resource()</code> and <code>rxResource()</code> for async data loading</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Patterns for "signal-first" component design</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Handling loading/error/success states with <code>resource()</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Avoiding common interop bugs (stale closures, double-subscribing)</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Rebuild the Week 15 typeahead using <code>resource()</code>/<code>rxResource()</code> and compare the two approaches.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 17</span>
+              <div class="week-item__heading">
+                <h4>State Management at Scale</h4>
+                <p>Choose and implement a state strategy that scales past a single component.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Design shared state that stays predictable as an app grows</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Signal-based state services (the "poor man's store")</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>NgRx Signal Store fundamentals</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>When (and when not) to reach for NgRx/Redux-style state</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Entity state patterns</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>DevTools &amp; time-travel debugging</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Testing stateful services</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Refactor the dashboard app's cross-cutting state (auth, notifications, filters) into a Signal Store.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="curriculum-phase reveal" id="phase-5">
+        <div class="phase-head">
+          <div class="phase-head__num">5</div>
+          <div>
+            <h3>Quality &amp; Performance</h3>
+            <p>Test what you've built, then make it fast and production-ready.</p>
+            <span class="chip chip--accent">Weeks 18–21</span>
+          </div>
+        </div>
+
+        <div class="week-list">
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 18</span>
+              <div class="week-item__heading">
+                <h4>Unit Testing</h4>
+                <p>Build confidence in your components and services with fast, isolated tests.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Write meaningful unit tests, not just coverage-padding ones</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Testing philosophy: what to test, what not to</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vitest/Jasmine fundamentals &amp; <code>TestBed</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Testing components with signal inputs/outputs</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Mocking services &amp; HTTP</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Testing RxJS streams (marble testing basics)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Snapshot vs. behavioral assertions</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Write a full unit-test suite for the Week 17 Signal Store, including edge cases.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 19</span>
+              <div class="week-item__heading">
+                <h4>Component, Integration &amp; E2E Testing</h4>
+                <p>Test the seams — how components and pages actually behave together.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Write tests that catch real regressions across component boundaries</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Component harnesses &amp; the CDK Testing Harness API</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Integration testing patterns (shallow vs. deep rendering)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>End-to-end testing with Playwright</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Page object patterns for E2E suites</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Visual regression testing (overview)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CI test strategy &amp; flaky-test triage</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Write an E2E Playwright suite covering the Week 12 signup flow end to end, including validation errors.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 20</span>
+              <div class="week-item__heading">
+                <h4>Performance Optimization &amp; Zoneless Change Detection</h4>
+                <p>Make an app that stays fast as it grows.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Diagnose and fix real performance problems in an Angular app</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Zoneless change detection &amp; OnPush strategy</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Profiling with Angular DevTools &amp; the Chrome Performance panel</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Bundle analysis &amp; lazy-loading strategy review</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Image optimization with <code>NgOptimizedImage</code></li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Virtual scrolling with the CDK</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Memory leak detection &amp; fixes</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Profile the dashboard app, identify three real bottlenecks, and fix them with before/after measurements.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 21</span>
+              <div class="week-item__heading">
+                <h4>SSR, Hydration &amp; Deployment</h4>
+                <p>Ship an app that starts fast for real users.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Take an app from local dev to a deployed, server-rendered build</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Server-side rendering with Angular</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hydration &amp; avoiding hydration mismatches</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Incremental hydration &amp; <code>@defer</code> on the server</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build budgets &amp; production configuration</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deploying to a hosting provider (static + SSR)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Monitoring a live app (error tracking, web vitals)</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Add SSR to the dashboard app, fix any hydration warnings, and deploy it to a live URL.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Phase 6 -->
+      <div class="curriculum-phase reveal" id="phase-6">
+        <div class="phase-head">
+          <div class="phase-head__num">6</div>
+          <div>
+            <h3>Advanced &amp; Specialization</h3>
+            <p>Polish, secure and scale an application the way larger teams do.</p>
+            <span class="chip chip--accent">Weeks 22–24</span>
+          </div>
+        </div>
+
+        <div class="week-list">
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 22</span>
+              <div class="week-item__heading">
+                <h4>Animations, Accessibility &amp; Internationalization</h4>
+                <p>Polish the app for real, diverse users.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Ship an app that's usable, accessible and translatable</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Angular animations API &amp; CSS-driven alternatives</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reduced-motion support</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>WCAG basics &amp; accessible component patterns</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Keyboard navigation &amp; focus management</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Angular i18n &amp; runtime translation strategies</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Auditing an app with Lighthouse/axe</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Run an accessibility audit on the dashboard app, fix every issue found, and add a second language.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 23</span>
+              <div class="week-item__heading">
+                <h4>Security, Authentication &amp; Authorization</h4>
+                <p>Protect an application and its users.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Implement authentication/authorization patterns safely</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>XSS, CSRF &amp; Angular's built-in sanitization</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Token-based auth (JWT) &amp; refresh-token flows</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>OAuth2/OIDC login flows in an SPA</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Role- and permission-based UI (structural guards &amp; directives)</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Secure storage of tokens</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Content Security Policy basics for an Angular app</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Add a full login flow with refresh tokens and role-based route/UI guards to the dashboard app.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="week-item">
+            <summary>
+              <span class="week-item__badge">WEEK 24</span>
+              <div class="week-item__heading">
+                <h4>Micro-Frontends &amp; Advanced Architecture</h4>
+                <p>See how large orgs split Angular apps apart.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Understand the tradeoffs of splitting a monolith frontend</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Monorepo strategies (Nx) for multi-app Angular workspaces</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Module federation &amp; micro-frontend patterns</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Shared design-system libraries across apps</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Versioning &amp; publishing internal libraries</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Choosing monolith vs. micro-frontend for a given team size</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Split the dashboard app into two independently-deployable micro-frontends sharing a common UI library.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+      <!-- Phase 7 -->
+      <div class="curriculum-phase reveal" id="phase-7">
+        <div class="phase-head">
+          <div class="phase-head__num">7</div>
+          <div>
+            <h3>Capstone</h3>
+            <p>Apply everything in one project, planned and built by you.</p>
+            <span class="chip chip--accent">Weeks 25–26</span>
+          </div>
+        </div>
+
+        <div class="week-list">
+          <details class="week-item is-capstone">
+            <summary>
+              <span class="week-item__badge">WEEKS 25–26 · CAPSTONE</span>
+              <div class="week-item__heading">
+                <h4>Capstone: Ship a Full Application</h4>
+                <p>Plan, build, test and ship a complete Angular application solo.</p>
+              </div>
+              <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+            </summary>
+            <div class="week-item__body">
+              <div class="week-item__col">
+                <h5>You'll Be Able To</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Plan, build, test and ship a complete Angular application solo</li>
+                </ul>
+              </div>
+              <div class="week-item__col">
+                <h5>Topics Covered</h5>
+                <ul>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Project planning &amp; scoping</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Architecture decisions &amp; tradeoffs</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Full implementation using signals, routing, forms &amp; state</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Performance pass &amp; accessibility pass</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>SSR + deployment</li>
+                  <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Portfolio write-up &amp; demo</li>
+                </ul>
+              </div>
+              <div class="week-item__exercise">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                <p><strong>Hands-on: </strong>Ship a complete, deployed, tested Angular application of your own design — portfolio-ready, start to finish.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <h2>Ready to build with Angular?</h2>
+        <p>Start with Week 1 and work through a real learning path — or check out the LLM &amp; Machine Learning course if you're aiming at AI engineering instead.</p>
+        <div class="cta-banner__actions">
+          <a href="#timeline" class="btn btn--primary">Start Week 1</a>
+          <a href="llm-ml-syllabus.html" class="btn btn--ghost">View LLM &amp; ML Syllabus</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="index.html">Home</a>
+      <a href="angular-syllabus.html">Angular</a>
+      <a href="llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
