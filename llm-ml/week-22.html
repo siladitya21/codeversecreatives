@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 22: Retrieval-Augmented Generation &amp; Embeddings — CodeVerse Creatives</title>
+<meta name="description" content="Week 22 of the LLM &amp; Machine Learning curriculum: embeddings and vector similarity, chunking strategies, vector databases and approximate nearest-neighbor search, retrieval quality tradeoffs, and evaluating RAG groundedness." />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="llm-ml">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../llm-ml-syllabus.html" aria-current="page">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../llm-ml-syllabus.html">LLM &amp; ML Syllabus</a>
+        <span>/</span>
+        <a href="../llm-ml-syllabus.html#phase-6">Phase 6 · Adapting &amp; Directing LLMs</a>
+        <span>/</span>
+        <span aria-current="page">Week 22</span>
+      </div>
+
+      <h1>Week 22: Retrieval-Augmented Generation &amp; Embeddings</h1>
+      <p class="lesson-header__lede">
+        Fine-tuning (Week 19-20) bakes knowledge into weights; prompting (Week 21) works with whatever
+        fits in the context window. Neither lets a model reliably answer from your private, changing
+        documents. RAG solves that: retrieve the relevant pieces of your own data at query time, and
+        hand them to the model as context — grounding its answer in something real instead of its
+        pretrained memory alone.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Phase 6 of 8</span>
+        <span class="chip">Week 22 of 26</span>
+        <span class="chip">~4–5 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain how embeddings and cosine similarity power semantic search</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Chunk documents and store them in a vector database for retrieval</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a full RAG pipeline and check whether its answers are actually grounded</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#embeddings"><span>1</span> Embeddings &amp; Vector Similarity</a>
+        <a href="#chunking"><span>2</span> Chunking Strategies</a>
+        <a href="#vector-db"><span>3</span> Vector Databases &amp; ANN Search</a>
+        <a href="#retrieval-quality"><span>4</span> Retrieval Quality Tradeoffs</a>
+        <a href="#groundedness"><span>5</span> Evaluating Groundedness</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="embeddings">
+            <h2>1. Embeddings &amp; Vector Similarity</h2>
+            <p>
+              An <strong>embedding model</strong> converts a piece of text into a fixed-length vector
+              such that semantically similar text ends up nearby in that vector space — a sentence
+              about "returning a damaged product" lands close to "refund for a broken item," even
+              though they share almost no exact words.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">embeddings.py</div>
+              <pre><code>from sentence_transformers import SentenceTransformer
+import numpy as np
+
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
+query = "How do I get a refund for a broken item?"
+doc = "To return a damaged product for a refund, visit the returns portal within 30 days."
+
+query_vec = model.encode(query)
+doc_vec = model.encode(doc)
+
+def cosine_similarity(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))   # exactly Week 2's formula
+
+similarity = cosine_similarity(query_vec, doc_vec)
+</code></pre>
+            </div>
+
+            <p>
+              This is precisely Week 2's cosine similarity, applied to embeddings instead of the small
+              hand-built word-count vectors from that lesson's exercise. RAG's entire retrieval step is
+              built on this one idea: embed a query, embed a collection of documents, and rank
+              documents by how close their vectors are to the query's — a real-world direct
+              application of Week 2's dot-product-and-norm formula.
+            </p>
+          </section>
+
+          <section id="chunking">
+            <h2>2. Chunking Strategies</h2>
+            <p>
+              A whole document is usually too long to embed as one meaningful vector (its meaning gets
+              diluted across many topics), and too long to fit in a context window (Week 17) alongside
+              a question and an answer. <strong>Chunking</strong> splits documents into smaller pieces
+              before embedding and storing them.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">chunking.py</div>
+              <pre><code>def chunk_text(text, chunk_size=500, overlap=50):
+    chunks = []
+    start = 0
+    while start < len(text):
+        end = start + chunk_size
+        chunks.append(text[start:end])
+        start += chunk_size - overlap   # overlap keeps context from being cut mid-thought
+    return chunks
+</code></pre>
+            </div>
+
+            <p>
+              Chunk size is a real tradeoff: too small, and a chunk loses surrounding context needed to
+              make sense of it in isolation; too large, and its embedding blurs together multiple
+              distinct ideas, hurting retrieval precision (Section 4). <strong>Overlap</strong> between
+              consecutive chunks helps avoid awkwardly severing a sentence or idea exactly at a chunk
+              boundary. More sophisticated approaches chunk along natural document structure
+              (paragraphs, sections, headers) rather than a fixed character count — generally
+              preferable when the document's own structure is meaningful, at the cost of more complex
+              preprocessing.
+            </p>
+          </section>
+
+          <section id="vector-db">
+            <h2>3. Vector Databases &amp; Approximate Nearest-Neighbor Search</h2>
+            <p>
+              Computing cosine similarity between a query and every single chunk works fine for a
+              thousand chunks, but doesn't scale to millions — exactly the same kind of computational
+              wall Week 15 hit with attention's quadratic cost. A <strong>vector database</strong>
+              stores embeddings alongside an index structure built for fast <strong>approximate
+              nearest-neighbor (ANN)</strong> search, trading a small amount of retrieval accuracy for
+              dramatically faster lookups at scale.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">vector_db_sketch.py</div>
+              <pre><code>import chromadb
+
+client = chromadb.Client()
+collection = client.create_collection("support_docs")
+
+collection.add(
+    embeddings=[doc_vec_1, doc_vec_2, doc_vec_3],
+    documents=[chunk_1, chunk_2, chunk_3],
+    ids=["doc1", "doc2", "doc3"],
+)
+
+results = collection.query(query_embeddings=[query_vec], n_results=3)   # top-3 nearest chunks
+</code></pre>
+            </div>
+
+            <p>
+              "Approximate" is the key word: rather than guaranteeing the mathematically exact nearest
+              neighbors, ANN indexes (like HNSW, a common one under the hood) find <em>very likely</em>
+              nearest neighbors far faster than an exhaustive search — a deliberate, usually
+              worthwhile accuracy/speed tradeoff, directly reminiscent of Week 9's tradeoff between a
+              simpler and a more accurate model when speed matters.
+            </p>
+          </section>
+
+          <section id="retrieval-quality">
+            <h2>4. Retrieval Quality: Recall vs. Precision Tradeoffs</h2>
+            <p>
+              Retrieval has its own version of Week 6's precision/recall tension: retrieving more
+              chunks (a higher <code>n_results</code>) increases the chance the truly relevant
+              information is somewhere in there (<strong>recall</strong>), but also increases the
+              chance of including irrelevant or distracting chunks that push up the token count (Week
+              17's context budget) and can confuse the model's final answer
+              (<strong>precision</strong>).
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">the RAG generation step</div>
+              <pre><code>retrieved_chunks = collection.query(query_embeddings=[query_vec], n_results=5)["documents"][0]
+
+context = "\n\n".join(retrieved_chunks)
+prompt = f"""
+Answer the question using ONLY the context below. If the answer isn't in the context, say so.
+
+Context:
+{context}
+
+Question: {query}
+"""
+</code></pre>
+            </div>
+
+            <p>
+              "Answer using ONLY the context" is doing real work in that prompt — without it, the
+              model may fall back on its pretrained knowledge (Week 17) even when the retrieved context
+              doesn't actually contain the answer, defeating the entire purpose of grounding the
+              response in your own data. Tuning <code>n_results</code>, chunk size, and this instruction
+              together is the practical work of building a good RAG system.
+            </p>
+          </section>
+
+          <section id="groundedness">
+            <h2>5. Evaluating a RAG System's Answers for Groundedness</h2>
+            <p>
+              A RAG answer can fail in two distinct ways, and telling them apart matters: the retrieval
+              step might fail to find the relevant chunk at all, or retrieval might succeed while the
+              model still <strong>hallucinates</strong> — generating an answer not actually supported
+              by the retrieved context, despite the instruction from Section 4.
+            </p>
+            <div class="code-block">
+              <div class="code-block__label">a simple groundedness check</div>
+              <pre><code># Ask a second LLM call to verify: is the answer actually supported by the retrieved context?
+verification_prompt = f"""
+Context: {context}
+Answer: {generated_answer}
+
+Does the answer above rely ONLY on information present in the context? Reply YES or NO, with a brief reason.
+"""
+</code></pre>
+            </div>
+            <p>
+              This kind of check — separately verifying retrieval quality ("was the right chunk
+              found?") and generation groundedness ("did the model actually use it correctly?") — is
+              the foundation Week 24 builds into a proper evaluation suite, including hallucination
+              detection as a first-class metric rather than an afterthought.
+            </p>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build an end-to-end RAG pipeline over a small document set</h3>
+              <p>Assemble a small knowledge base (5–10 short documents on a topic of your choice — product docs, a FAQ, or article excerpts all work).</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Chunk your documents (Section 2), embed each chunk (Section 1), and store them in a vector database (Section 3).</li>
+                <li>Write a retrieval function that embeds a query and returns the top-<code>k</code> most similar chunks.</li>
+                <li>Write a generation step that answers a question using only the retrieved context, explicitly instructing the model not to use outside knowledge (Section 4).</li>
+                <li>Ask 5 questions clearly answerable from your documents, and 2 questions clearly <em>not</em> covered by them — confirm the model correctly says it doesn't know for the latter.</li>
+                <li>Implement Section 5's groundedness check as a second LLM call, and run it against all 7 answers — does it catch any answer that wasn't actually well-supported by the retrieved context?</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If the model answers an "unanswerable" question anyway, check your retrieved chunks first — a weak query embedding can retrieve <em>something</em> even when nothing relevant exists, and the model may then (incorrectly) try to answer from that irrelevant context rather than declining.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why can two pieces of text with almost no words in common still have highly similar embeddings?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Embedding models are trained to place text with similar <em>meaning</em> close together in vector space, not similar surface wording — a well-trained embedding model captures semantic similarity (synonyms, paraphrases, related concepts) rather than relying on exact word overlap the way a simple keyword search would.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>What's the tradeoff involved in choosing a smaller vs. larger chunk size?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Smaller chunks risk losing surrounding context needed to interpret them correctly in isolation. Larger chunks blur multiple distinct ideas into one embedding, which can hurt how precisely retrieval can pinpoint the specific relevant piece of information — there's no universally correct size, only a tradeoff to tune for a given document type.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What does "approximate" mean in approximate nearest-neighbor search, and why accept it?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>ANN search finds very likely nearest neighbors rather than guaranteeing the mathematically exact closest vectors, in exchange for dramatically faster search over large collections. It's an accuracy/speed tradeoff accepted because an exhaustive exact search becomes computationally infeasible once the number of stored vectors grows into the millions.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>A RAG system gives a wrong answer. How would you determine whether the problem was retrieval or generation?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Inspect the retrieved chunks: if the actually-relevant information wasn't retrieved at all, it's a retrieval failure (chunking, embedding, or query-matching issue). If the relevant information was retrieved but the generated answer doesn't match or use it correctly, it's a generation/groundedness failure — a hallucination despite having the right context available, which a groundedness check like Section 5's is specifically designed to catch.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-21.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 21: Prompt Engineering &amp; Reasoning</span>
+          </a>
+          <a href="week-23.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 23: Agents, Tool Use &amp; Orchestration →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
