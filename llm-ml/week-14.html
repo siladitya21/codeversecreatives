@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 14: Sequence Models — RNNs, LSTMs &amp; an Intro to Attention — CodeVerse Creatives</title>
+<meta name="description" content="Week 14 of the LLM &amp; Machine Learning curriculum: RNNs and the vanishing gradient problem, LSTMs and GRUs, sequence-to-sequence modeling, the bottleneck problem, and attention as the fix that led to transformers." />
+<link rel="icon" href="../favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="llm-ml">
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../llm-ml-syllabus.html" aria-current="page">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../llm-ml-syllabus.html">LLM &amp; ML Syllabus</a>
+        <span>/</span>
+        <a href="../llm-ml-syllabus.html#phase-4">Phase 4 · Neural Networks &amp; Deep Learning</a>
+        <span>/</span>
+        <span aria-current="page">Week 14</span>
+      </div>
+
+      <h1>Week 14: Sequence Models — RNNs, LSTMs &amp; an Intro to Attention</h1>
+      <p class="lesson-header__lede">
+        CNNs assume nearby pixels are related; sequence models assume nearby <em>tokens</em> are
+        related — and that order itself carries meaning. This week traces the path that led directly
+        to the transformer: recurrent networks, their well-known limitations, and the specific
+        bottleneck problem that attention — the subject of Week 15 — was invented to solve.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Phase 4 of 8</span>
+        <span class="chip">Week 14 of 26</span>
+        <span class="chip">~4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain why plain RNNs struggle with long sequences</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Train an LSTM on a sequence task and explain what its gates do</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain the seq2seq bottleneck problem and how attention fixes it</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#rnns"><span>1</span> RNNs &amp; Vanishing Gradients</a>
+        <a href="#lstm"><span>2</span> LSTMs &amp; GRUs</a>
+        <a href="#seq2seq"><span>3</span> Seq2Seq &amp; the Bottleneck</a>
+        <a href="#attention-intro"><span>4</span> Attention: a First Look</a>
+        <a href="#when-rnn"><span>5</span> Where RNNs Still Make Sense</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="rnns">
+            <h2>1. RNNs &amp; the Vanishing Gradient Problem</h2>
+            <p>
+              A <strong>recurrent neural network (RNN)</strong> processes a sequence one element at a
+              time, maintaining a <strong>hidden state</strong> that's updated at every step and
+              carries information forward from everything seen so far.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">rnn_cell.py</div>
+              <pre><code>import torch.nn as nn
+
+rnn = nn.RNN(input_size=50, hidden_size=64, batch_first=True)
+
+# x: (batch, sequence_length, input_size)
+output, hidden = rnn(x)
+# output: hidden state at every time step
+# hidden: the FINAL hidden state -- a summary of the entire sequence
+</code></pre>
+            </div>
+
+            <p>
+              The same weights are reused at every time step (a form of weight sharing across time,
+              conceptually similar to Week 13's weight sharing across space), which lets an RNN handle
+              sequences of any length. The problem: computing gradients backward <em>through time</em>
+              (backpropagation through many time steps) means repeatedly multiplying by the same
+              weight matrix — and just like Week 11's discussion of unstable training, repeated
+              multiplication can make gradients shrink toward zero (vanish) or grow uncontrollably
+              (explode) over long sequences. A vanishing gradient means the network effectively can't
+              learn dependencies between tokens that are far apart.
+            </p>
+          </section>
+
+          <section id="lstm">
+            <h2>2. LSTMs &amp; GRUs: Gates and Why They Help</h2>
+            <p>
+              <strong>LSTMs</strong> (Long Short-Term Memory networks) fix this by adding a separate
+              <strong>cell state</strong> — a kind of conveyor belt that information can travel along
+              largely unchanged — controlled by learned <strong>gates</strong> that decide what to
+              keep, what to forget, and what to output at each step.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">lstm.py</div>
+              <pre><code>import torch.nn as nn
+
+lstm = nn.LSTM(input_size=50, hidden_size=64, batch_first=True)
+
+output, (hidden, cell) = lstm(x)
+# forget gate:  decides what to discard from the cell state
+# input gate:   decides what new information to add
+# output gate:  decides what part of the cell state becomes the visible hidden state
+</code></pre>
+            </div>
+
+            <p>
+              Because the cell state's updates are mostly additive (rather than the repeated matrix
+              multiplication of a plain RNN), gradients have a much more direct path backward through
+              time, largely sidestepping the vanishing gradient problem for moderately long sequences.
+              <strong>GRUs</strong> (Gated Recurrent Units) simplify this design into fewer gates,
+              training faster with often comparable performance — a common practical alternative when
+              LSTM's full complexity isn't needed.
+            </p>
+          </section>
+
+          <section id="seq2seq">
+            <h2>3. Sequence-to-Sequence Modeling &amp; the Bottleneck Problem</h2>
+            <p>
+              <strong>Sequence-to-sequence (seq2seq)</strong> models — used for tasks like translation,
+              where an input sequence maps to an output sequence of a different length — use an
+              <strong>encoder</strong> RNN to read the entire input and compress it into a single final
+              hidden state, then a <strong>decoder</strong> RNN that generates the output sequence
+              starting from that one hidden state.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">seq2seq_sketch.py</div>
+              <pre><code># Encoder: reads the whole input sentence
+_, (encoder_hidden, encoder_cell) = encoder_lstm(input_sequence)
+
+# Decoder: must generate the ENTIRE output sequence
+# starting from just this one fixed-size hidden state
+decoder_output, _ = decoder_lstm(decoder_input, (encoder_hidden, encoder_cell))
+</code></pre>
+            </div>
+
+            <p>
+              Here's the problem this creates: no matter how long the input sentence is — five words
+              or five hundred — the encoder has to squeeze everything into one fixed-size hidden
+              vector. For long sequences, this is an information <strong>bottleneck</strong>: details
+              from early in the input are increasingly likely to get lost by the time the encoder
+              finishes reading a long sequence, well before the decoder ever gets a chance to use them.
+            </p>
+          </section>
+
+          <section id="attention-intro">
+            <h2>4. Attention as a Fix: a First, Intuitive Look</h2>
+            <p>
+              The fix, introduced originally for exactly this seq2seq bottleneck, is <strong>attention</strong>:
+              instead of forcing the decoder to work from one fixed summary vector, let it look back at
+              <em>every</em> encoder hidden state at every decoding step, and learn to weight them by
+              relevance for whatever it's currently generating.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">attention_sketch.py</div>
+              <pre><code># All encoder hidden states are kept, not just the final one
+encoder_outputs, _ = encoder_lstm(input_sequence)   # one hidden state PER input token
+
+# At each decoding step, compute a relevance score between the
+# decoder's current state and every encoder hidden state
+scores = decoder_hidden @ encoder_outputs.transpose(1, 2)   # a dot product, per Week 2
+
+weights = softmax(scores)              # Week 2's softmax, turning scores into a distribution
+context = weights @ encoder_outputs     # a weighted average -- attend more to relevant tokens
+</code></pre>
+            </div>
+
+            <p>
+              This should look familiar: a dot product to compute relevance, softmax to turn scores
+              into weights, and a weighted sum — exactly the vectors and softmax you built in Week 2,
+              now solving a real architectural problem. This mechanism eliminates the bottleneck
+              entirely, since the decoder can pull directly from any part of the input, regardless of
+              sequence length. Week 15 formalizes this exact idea — with the same query/key/value
+              framing — into the self-attention mechanism that powers every modern transformer.
+            </p>
+          </section>
+
+          <section id="when-rnn">
+            <h2>5. Where RNNs Still Make Sense vs. Where Transformers Took Over</h2>
+            <p>
+              Once attention alone (without any recurrence at all) proved sufficient — the subject of
+              Weeks 15–16 — transformers largely replaced RNNs for language tasks, because
+              transformers process an entire sequence in parallel (no step-by-step recurrence) and
+              handle long-range dependencies far more directly than an RNN's sequential hidden state
+              ever could. RNNs and LSTMs still show up in a few practical niches:
+            </p>
+            <ul>
+              <li><strong>Streaming/online settings</strong> — where you genuinely process one new token at a time as it arrives, without access to the full sequence up front</li>
+              <li><strong>Very resource-constrained deployments</strong> — an RNN's per-step computation can be cheaper than the attention mechanism's cost, which scales with sequence length squared (a cost you'll examine directly in Week 15)</li>
+              <li><strong>Some time-series forecasting tasks</strong> — where sequences are moderate-length and the inductive bias of strict left-to-right recurrence fits naturally</li>
+            </ul>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Train an LSTM for next-character prediction, then add simple attention</h3>
+              <p>You're given a small text corpus (a few paragraphs of any public-domain text works fine).</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Build a character-level dataset: for each position, the input is a window of preceding characters, the target is the next character.</li>
+                <li>Train a small LSTM to predict the next character, tracking training loss per epoch (Week 12's diagnostic curves).</li>
+                <li>Generate text by sampling from the trained model one character at a time, feeding each prediction back in as the next input.</li>
+                <li>Add a simple attention layer (Section 4's sketch) over the LSTM's per-step hidden states before the final prediction layer, and retrain.</li>
+                <li>Compare generated samples and training loss between the plain LSTM and the attention-augmented version, and describe any difference you observe.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>On a small corpus and short training run, the difference between the plain and attention-augmented LSTM may be subtle — the point of this exercise is seeing attention work mechanically end to end, not necessarily beating the LSTM by a wide margin.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why do plain RNNs struggle to learn dependencies between tokens that are far apart in a sequence?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Backpropagating gradients through many time steps repeatedly multiplies by the same weight matrix, which can cause the gradient to shrink toward zero (vanish) over long sequences. A vanishing gradient means the connection between a distant early token and the current prediction becomes too weak to actually update during training.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>What does an LSTM's cell state provide that a plain RNN's hidden state doesn't?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A more direct, largely additive path for information (and gradients) to flow across many time steps, controlled by learned gates that decide what to keep or discard. This mostly avoids the repeated-multiplication problem that causes vanishing gradients in plain RNNs, letting LSTMs learn longer-range dependencies.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What exactly is the "bottleneck problem" in a plain seq2seq encoder-decoder model?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>The encoder must compress the entire input sequence — regardless of its length — into a single fixed-size hidden state, which the decoder then has to work from entirely. For long inputs, this forces a lot of information to be lost, since a fixed-size vector simply can't hold arbitrarily much detail.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>How does attention solve the bottleneck problem?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Instead of relying on one fixed-size summary vector, attention lets the decoder look back at every encoder hidden state directly at each decoding step, computing a relevance-weighted combination of them. This gives the decoder direct access to any part of the input, regardless of sequence length, eliminating the fixed-size compression bottleneck entirely.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-13.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 13: Convolutional Neural Networks</span>
+          </a>
+          <a href="week-15.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 15: The Attention Mechanism →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

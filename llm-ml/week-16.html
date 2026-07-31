@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 16: The Full Transformer Architecture — CodeVerse Creatives</title>
+<meta name="description" content="Week 16 of the LLM &amp; Machine Learning curriculum: positional encoding, encoder/decoder stacks, residual connections and layer normalization, encoder-only vs. decoder-only vs. encoder-decoder architectures, and building a mini transformer from scratch." />
+<link rel="icon" href="../favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="llm-ml">
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../llm-ml-syllabus.html" aria-current="page">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../llm-ml-syllabus.html">LLM &amp; ML Syllabus</a>
+        <span>/</span>
+        <a href="../llm-ml-syllabus.html#phase-5">Phase 5 · Transformers &amp; LLM Foundations</a>
+        <span>/</span>
+        <span aria-current="page">Week 16</span>
+      </div>
+
+      <h1>Week 16: The Full Transformer Architecture</h1>
+      <p class="lesson-header__lede">
+        Week 15 gave you attention in isolation. This week assembles it into the complete
+        architecture — positional encoding, residual connections, layer normalization, and a full
+        encoder/decoder stack — and ends with you building and training a small decoder-only
+        transformer from scratch. This is the architecture every model in Weeks 17 onward is built on.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Phase 5 of 8</span>
+        <span class="chip">Week 16 of 26</span>
+        <span class="chip">~4–5 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain why a transformer needs positional encoding at all</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Assemble a full transformer block: attention, residuals, layer norm and a feed-forward sublayer</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain the difference between encoder-only, decoder-only and encoder-decoder models</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#positional"><span>1</span> Positional Encoding</a>
+        <a href="#residuals"><span>2</span> Residuals &amp; Layer Norm</a>
+        <a href="#feedforward"><span>3</span> The Feed-Forward Sublayer</a>
+        <a href="#stacks"><span>4</span> Encoder/Decoder Stacks</a>
+        <a href="#architectures"><span>5</span> Three Architecture Families</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="positional">
+            <h2>1. Positional Encoding</h2>
+            <p>
+              Attention, as built in Week 15, is fundamentally order-blind — <code>Q @ K.T</code>
+              produces the same relevance scores no matter what order the tokens are fed in, unlike an
+              RNN, which processes tokens strictly in sequence. Since word order clearly carries
+              meaning ("dog bites man" vs. "man bites dog"), the model needs order injected explicitly.
+              <strong>Positional encoding</strong> adds a vector — a function of position — directly to
+              each token's embedding before attention ever runs.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">positional_encoding.py</div>
+              <pre><code>import numpy as np
+
+def sinusoidal_positional_encoding(seq_len, d_model):
+    position = np.arange(seq_len)[:, np.newaxis]
+    dim = np.arange(d_model)[np.newaxis, :]
+    angle_rates = 1 / np.power(10000, (2 * (dim // 2)) / d_model)
+    angles = position * angle_rates
+
+    pe = np.zeros((seq_len, d_model))
+    pe[:, 0::2] = np.sin(angles[:, 0::2])   # even dimensions: sine
+    pe[:, 1::2] = np.cos(angles[:, 1::2])   # odd dimensions: cosine
+
+    return pe
+
+token_embeddings = X + sinusoidal_positional_encoding(seq_len, d_model)
+</code></pre>
+            </div>
+
+            <p>
+              The original transformer used this fixed sinusoidal pattern, chosen because its
+              particular mathematical structure lets the model infer relative positions (the encoding
+              for position 5 relative to position 3 has a consistent relationship regardless of where
+              in the sequence those positions fall) purely through linear combinations. Many modern
+              models instead use <strong>learned positional embeddings</strong> — a plain trainable
+              lookup table indexed by position — letting the model discover whatever positional pattern
+              works best for its data, at the cost of not extrapolating well beyond the lengths seen
+              during training (directly relevant to the "context window" limits you'll examine in
+              Week 17).
+            </p>
+          </section>
+
+          <section id="residuals">
+            <h2>2. Residual Connections &amp; Layer Normalization</h2>
+            <p>
+              A transformer stacks many attention and feed-forward sublayers — and just like the very
+              deep CNNs from Week 13, training would be unstable without help. The transformer borrows
+              exactly the same fix: a <strong>residual connection</strong> around every sublayer, adding
+              the sublayer's input back to its output.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">residual_and_norm.py</div>
+              <pre><code>def layer_norm(x, eps=1e-5):
+    mean = x.mean(axis=-1, keepdims=True)
+    var = x.var(axis=-1, keepdims=True)
+    return (x - mean) / np.sqrt(var + eps)
+
+# The transformer block's actual pattern, per sublayer:
+attn_out = multi_head_attention(X, num_heads=4, d_model=d_model)
+X = layer_norm(X + attn_out)          # residual, THEN normalize
+</code></pre>
+            </div>
+
+            <p>
+              <strong>Layer normalization</strong> is Week 4 and Week 12's normalization idea applied
+              across a single token's features (rather than across a batch, the way batch
+              normalization does), which makes it work cleanly regardless of sequence length or batch
+              size — an important practical difference from Week 12's batch norm, which depends on
+              batch statistics. Together, residuals give gradients a direct path through dozens of
+              stacked transformer blocks (exactly ResNet's argument from Week 13), while layer norm
+              keeps activations in a stable range at every step.
+            </p>
+          </section>
+
+          <section id="feedforward">
+            <h2>3. The Feed-Forward Sublayer</h2>
+            <p>
+              Every transformer block pairs its attention sublayer with a second, simpler sublayer: a
+              small, ordinary fully-connected network (Week 11's territory) applied independently to
+              each token's representation.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">feed_forward.py</div>
+              <pre><code>def feed_forward(x, W1, b1, W2, b2):
+    hidden = np.maximum(0, x @ W1 + b1)   # expand, typically to 4x d_model, then ReLU
+    return hidden @ W2 + b2                # project back down to d_model
+
+ff_out = feed_forward(X, W1, b1, W2, b2)
+X = layer_norm(X + ff_out)                 # another residual + norm, same pattern as Section 2
+</code></pre>
+            </div>
+
+            <p>
+              Where attention lets tokens exchange information <em>with each other</em>, the
+              feed-forward sublayer processes each token's representation independently, adding
+              additional non-linear transformation capacity. A full transformer block, in order, is:
+              attention → residual + norm → feed-forward → residual + norm — and this exact block is
+              simply stacked <code>N</code> times to build the full model.
+            </p>
+          </section>
+
+          <section id="stacks">
+            <h2>4. Encoder &amp; Decoder Stacks</h2>
+            <p>
+              An <strong>encoder</strong> stack is a sequence of transformer blocks using plain
+              (unmasked) self-attention — every token can attend to every other token, in both
+              directions, which suits tasks that need to understand a complete input. A
+              <strong>decoder</strong> stack is nearly identical, but uses the causal mask from Week 15
+              in its self-attention (so it can't look ahead), and — in the original encoder-decoder
+              design — adds a cross-attention sublayer where its queries come from the decoder while
+              keys and values come from the encoder's output.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">decoder_block_sketch.py</div>
+              <pre><code># A decoder block, in order:
+X = layer_norm(X + masked_self_attention(X))          # 1. causal self-attention
+X = layer_norm(X + cross_attention(X, encoder_output))  # 2. cross-attention (encoder-decoder only)
+X = layer_norm(X + feed_forward(X))                     # 3. feed-forward
+</code></pre>
+            </div>
+          </section>
+
+          <section id="architectures">
+            <h2>5. Encoder-Only vs. Decoder-Only vs. Encoder-Decoder</h2>
+            <p>
+              These building blocks combine into three architecture families, each suited to a
+              different kind of task:
+            </p>
+            <ul>
+              <li><strong>Encoder-only</strong> (e.g. BERT-style models) — bidirectional self-attention, good at understanding/classifying complete input text (sentiment, embeddings for search). Not naturally suited to generating new text.</li>
+              <li><strong>Decoder-only</strong> (e.g. GPT-style models) — causal self-attention only, generates text one token at a time, each new token attending only to what came before. This is the dominant architecture for modern LLMs, and the one you'll build in this week's exercise.</li>
+              <li><strong>Encoder-decoder</strong> (e.g. the original translation transformer, T5-style models) — a full encoder processes the input, a decoder generates the output while cross-attending back to it. Well-suited to tasks with a clear input→output transformation, like translation or summarization.</li>
+            </ul>
+            <p>
+              Decoder-only models won out as the dominant architecture for general-purpose LLMs largely
+              because a single next-token-prediction objective (Week 17) can be applied uniformly to
+              almost any text, and the same architecture that generates text can also be prompted to
+              "understand" it — one architecture serving both jobs, rather than needing separate
+              encoder and decoder specializations.
+            </p>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build a small decoder-only transformer from scratch and generate text</h3>
+              <p>Combine everything from Weeks 15–16 into one working, trainable model.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Using a small text corpus (character-level, as in Week 14, keeps this manageable), build a token embedding layer plus sinusoidal or learned positional encoding.</li>
+                <li>Implement one full decoder block: causal multi-head self-attention, residual + layer norm, feed-forward, residual + layer norm (Sections 2–4), reusing your Week 15 attention code.</li>
+                <li>Stack 2–4 decoder blocks, followed by a final linear layer projecting to vocabulary size and a softmax, to predict the next token.</li>
+                <li>Train with cross-entropy loss (Week 11) on next-token prediction, tracking the loss curve (Week 12's diagnostics).</li>
+                <li>Generate new text by sampling one token at a time from the trained model, feeding each generated token back in as input — and compare the output's coherence to Week 14's LSTM-generated text.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Implementing this in PyTorch (rather than pure NumPy) will let autograd handle the backward pass through every block automatically — a good moment to lean on Week 12's framework skills now that the architecture itself is the point, not re-deriving backpropagation by hand again.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why does a transformer need positional encoding, when an RNN doesn't need anything equivalent?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>An RNN processes tokens strictly in sequence, so order is built into how it computes. Attention computes relevance scores between all token pairs simultaneously and would produce identical results regardless of token order — positional encoding is what explicitly reintroduces order information into the token representations before attention runs.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>What problem do residual connections solve in a deep transformer, and where else have you seen this same idea?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>They give gradients a direct path backward through many stacked sublayers, avoiding the vanishing-gradient-style training instability that very deep networks suffer without them. This is the exact same idea as ResNet's skip connections from Week 13 — a general fix for training deep networks, not specific to transformers or CNNs.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What's the key architectural difference between a decoder-only model and an encoder-decoder model?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A decoder-only model uses only causal self-attention and generates text purely from what came before it in the same sequence. An encoder-decoder model has a separate encoder (bidirectional self-attention over the full input) and a decoder that additionally cross-attends back to the encoder's output — useful when there's a distinct input sequence to condition generation on, like a source sentence in translation.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Why is layer normalization used instead of batch normalization inside a transformer block?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Layer normalization normalizes across a single token's own features, independent of batch size or sequence length, whereas batch normalization depends on statistics computed across a batch. Since sequences in NLP vary in length and batch composition can vary at inference time, layer norm's per-token normalization is far more consistent and practical for transformer architectures.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-15.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 15: The Attention Mechanism</span>
+          </a>
+          <span class="lesson-pager__link lesson-pager__link--next is-disabled">
+            <span class="lesson-pager__label">Coming soon</span>
+            <span class="lesson-pager__title">Week 17: LLM Pretraining &amp; Tokenization →</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
