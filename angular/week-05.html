@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 5: Signals Deep Dive — CodeVerse Creatives</title>
+<meta name="description" content="Week 5 of the Angular curriculum: signal(), computed() and effect() in depth, linkedSignal(), custom equality functions, untracked(), and when to reach for signals vs. RxJS." />
+<link rel="icon" href="../favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="angular">
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html" aria-current="page">Angular</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../angular-syllabus.html">Angular Syllabus</a>
+        <span>/</span>
+        <a href="../angular-syllabus.html#phase-2">Phase 2 · Core Reactivity &amp; UI</a>
+        <span>/</span>
+        <span aria-current="page">Week 5</span>
+      </div>
+
+      <h1>Week 5: Signals Deep Dive</h1>
+      <p class="lesson-header__lede">
+        Signals are Angular's fine-grained reactivity primitive — the thing that decides exactly
+        which piece of the DOM needs to update when a value changes, without re-checking everything
+        else. You've used <code>model()</code> already; this week you learn the full signal toolkit
+        properly.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Phase 2 of 7</span>
+        <span class="chip">Week 5 of 26</span>
+        <span class="chip">~4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Model derived and effectful state with signals confidently</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Avoid the common signal pitfalls — over-computing and effect loops</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Decide, with reasons, when to reach for a signal vs. an RxJS stream</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#signal-basics"><span>1</span> signal() Basics</a>
+        <a href="#computed"><span>2</span> computed()</a>
+        <a href="#effect"><span>3</span> effect()</a>
+        <a href="#linked-signal"><span>4</span> linkedSignal()</a>
+        <a href="#equality-untracked"><span>5</span> Equality &amp; untracked()</a>
+        <a href="#vs-rxjs"><span>6</span> Signals vs. RxJS</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="signal-basics">
+            <h2>1. <code>signal()</code> Basics</h2>
+            <p>
+              A signal is a wrapper around a value that knows who's reading it. Call it like a
+              function to read the current value; call <code>.set()</code> or <code>.update()</code>
+              to change it.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">signal-basics.ts</div>
+              <pre><code>import { signal } from '@angular/core';
+
+const count = signal(0);
+
+console.log(count());     // 0 -- read by calling it
+
+count.set(5);              // replace the value directly
+count.update((n) =&gt; n + 1); // derive the new value from the old one
+
+console.log(count());     // 6
+</code></pre>
+            </div>
+
+            <p>
+              That's the entire mental model: a signal is a box you read by calling, and write with
+              <code>set</code>/<code>update</code>. What makes signals powerful is what happens next —
+              anything that <em>reads</em> a signal inside a template, <code>computed()</code>, or
+              <code>effect()</code> is automatically tracked as a dependent.
+            </p>
+          </section>
+
+          <section id="computed">
+            <h2>2. <code>computed()</code> — Derived State</h2>
+            <p>
+              <code>computed()</code> creates a read-only signal whose value is derived from others.
+              It's <strong>lazy</strong> (only recalculates when actually read after a dependency
+              changes) and <strong>memoized</strong> (reading it twice without a dependency changing
+              doesn't re-run the calculation).
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">cart-totals.ts</div>
+              <pre><code>import { signal, computed } from '@angular/core';
+
+interface CartItem { price: number; quantity: number; }
+
+const items = signal&lt;CartItem[]&gt;([
+  { price: 12.5, quantity: 2 },
+  { price: 8, quantity: 1 },
+]);
+
+const subtotal = computed(() =&gt;
+  items().reduce((sum, item) =&gt; sum + item.price * item.quantity, 0)
+);
+
+const tax = computed(() =&gt; subtotal() * 0.08);
+const total = computed(() =&gt; subtotal() + tax());
+
+console.log(total()); // 34.83
+
+items.update((list) =&gt; [...list, { price: 5, quantity: 3 }]);
+console.log(total()); // recalculated automatically -- 50.83
+</code></pre>
+            </div>
+
+            <p>
+              Notice <code>tax</code> and <code>total</code> read other computed signals, not just raw
+              ones — dependency tracking chains through as many layers as you need, and Angular only
+              recomputes the ones actually affected by a given change.
+            </p>
+          </section>
+
+          <section id="effect">
+            <h2>3. <code>effect()</code> — Reacting to Changes</h2>
+            <p>
+              An effect runs a function once immediately, then re-runs it automatically whenever any
+              signal it read changes. It's for <strong>side effects</strong> — logging, syncing to
+              <code>localStorage</code>, imperative DOM work — not for deriving values (that's what
+              <code>computed()</code> is for).
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">persist-cart.ts</div>
+              <pre><code>import { signal, effect } from '@angular/core';
+
+const cartItems = signal&lt;CartItem[]&gt;([]);
+
+// Inside a component's constructor (effects need an injection context):
+effect(() =&gt; {
+  const items = cartItems(); // tracked -- effect re-runs when this changes
+  localStorage.setItem('cart', JSON.stringify(items));
+});
+
+effect((onCleanup) =&gt; {
+  const timer = setTimeout(() =&gt; console.log('idle'), 5000);
+  onCleanup(() =&gt; clearTimeout(timer)); // runs before the next execution, and on destroy
+});
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>The most common signals mistake</strong>
+                <p>Reaching for <code>effect()</code> to keep one signal in sync with another. If you ever write <code>effect(() =&gt; otherSignal.set(thisSignal()))</code>, stop — that's exactly what <code>computed()</code> is for. Effects are for leaving Angular's world (the DOM, storage, logging); computed is for staying inside it.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="linked-signal">
+            <h2>4. <code>linkedSignal()</code> for Dependent, Resettable State</h2>
+            <p>
+              Sometimes you need state that's writable — the user can change it directly — but should
+              automatically reset when some other signal changes. <code>computed()</code> can't do
+              this (it's read-only); a plain <code>signal()</code> plus a manual <code>effect()</code>
+              to reset it works but is easy to get wrong. <code>linkedSignal()</code> is built exactly
+              for this.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">selected-tab.ts</div>
+              <pre><code>import { signal, linkedSignal } from '@angular/core';
+
+const availableTabs = signal(['overview', 'details', 'reviews']);
+
+// Defaults to the first tab -- but resets to the first tab again
+// whenever `availableTabs` changes, even after the user picked a different one
+const selectedTab = linkedSignal(() =&gt; availableTabs()[0]);
+
+selectedTab.set('reviews'); // user clicked a tab -- writable, like a signal
+
+availableTabs.set(['summary', 'pricing']);
+console.log(selectedTab()); // 'summary' -- automatically reset, 'reviews' no longer valid
+</code></pre>
+            </div>
+
+            <p>
+              Without <code>linkedSignal()</code>, changing <code>availableTabs</code> here would leave
+              <code>selectedTab</code> pointing at a tab that no longer exists — a real bug you'd
+              otherwise have to guard against by hand in an effect.
+            </p>
+          </section>
+
+          <section id="equality-untracked">
+            <h2>5. Equality Functions &amp; <code>untracked()</code></h2>
+            <p>
+              By default, signals compare new and old values with <code>===</code> — setting an object
+              to a different-but-equal-looking object still counts as a change. A custom equality
+              function lets you change that:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">custom-equality.ts</div>
+              <pre><code>import { signal } from '@angular/core';
+
+interface Point { x: number; y: number; }
+
+const position = signal&lt;Point&gt;(
+  { x: 0, y: 0 },
+  { equal: (a, b) =&gt; a.x === b.x &amp;&amp; a.y === b.y }
+);
+
+position.set({ x: 0, y: 0 }); // new object, but "equal" by our function --
+                                // dependents are NOT notified
+</code></pre>
+            </div>
+
+            <p>
+              <code>untracked()</code> lets you read a signal <em>without</em> registering it as a
+              dependency — useful inside an effect when you need a value but shouldn't re-run just
+              because that particular value changed:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">untracked.ts</div>
+              <pre><code>import { signal, effect, untracked } from '@angular/core';
+
+const query = signal('');
+const analyticsEnabled = signal(true);
+
+effect(() =&gt; {
+  const q = query(); // tracked -- effect reruns when the search query changes
+  if (untracked(() =&gt; analyticsEnabled())) { // read, but not tracked
+    console.log('search:', q);
+  }
+});
+</code></pre>
+            </div>
+
+            <p>
+              Without <code>untracked()</code> there, toggling <code>analyticsEnabled</code> alone
+              would also re-run the effect — usually not what you want.
+            </p>
+          </section>
+
+          <section id="vs-rxjs">
+            <h2>6. Signals vs. RxJS — When to Reach for Each</h2>
+            <p>
+              Both model changing values over time, but they answer different questions. Signals
+              answer <strong>"what is the current value?"</strong> — synchronous, always has a value,
+              read by calling. RxJS Observables answer <strong>"what's the sequence of events over
+              time?"</strong> — asynchronous by nature, can represent things that aren't really a
+              "current value" at all (a stream of button clicks, WebSocket messages).
+            </p>
+            <ul>
+              <li>Component state, derived UI values, form field values → <strong>signals</strong></li>
+              <li>HTTP requests, debounced search input, WebSocket streams, complex async pipelines → <strong>RxJS</strong></li>
+            </ul>
+            <p>
+              You won't have to choose blind for long — Week 16 covers <code>toSignal()</code> and
+              <code>toObservable()</code>, the two functions that convert between them, so you can use
+              RxJS for the async plumbing and hand a plain signal to your template at the boundary.
+            </p>
+          </section>
+
+          <section id="exercise">
+            <h2>7. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build a shopping-cart state model entirely with signals</h3>
+              <p>Extend Section 2's cart example into a small, complete state model.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>A <code>items</code> signal holding an array of <code>{ id, name, price, quantity }</code>.</li>
+                <li>Computed signals for <code>subtotal</code>, a 10% <code>discount</code> that only applies when <code>subtotal</code> exceeds $50, and <code>total</code> (subtotal minus discount, plus 8% tax on the discounted amount).</li>
+                <li>Methods on a small cart service class — <code>addItem</code>, <code>removeItem</code>, <code>setQuantity</code> — that mutate the <code>items</code> signal via <code>.update()</code>, never <code>.set()</code> with a hand-built array copy-paste.</li>
+                <li>An <code>effect()</code> that persists <code>items</code> to <code>localStorage</code> on every change, and reads it back to initialize the signal on startup.</li>
+                <li>A <code>itemCount</code> computed signal used in a small badge component, proving derived signals compose across component boundaries when passed as inputs.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If the persistence effect fires immediately on load and overwrites the <code>localStorage</code> value you just read, you've got the read/write order backwards — initialize the signal <em>from</em> storage first, then set up the effect that writes back to it.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>8. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why is <code>computed()</code> described as "lazy" and "memoized" — what would break without those properties?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Lazy means it doesn't recalculate the instant a dependency changes — only when something actually reads it next. Memoized means reading it repeatedly without a dependency change returns the cached value instead of recomputing. Without both, an app with several chained computed signals would recalculate the same derived values repeatedly on every read, even when nothing relevant changed — wasted work that gets expensive fast in a large component tree.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>Why is <code>effect(() =&gt; otherSignal.set(thisSignal()))</code> considered an anti-pattern?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It's using a side-effect tool to do pure derivation, which <code>computed()</code> already does — more efficiently, and without risking effect ordering issues or accidental update loops. If <code>otherSignal</code> is ever read somewhere that also feeds back into <code>thisSignal</code>, this pattern can cause infinite update cycles that a computed signal structurally can't.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What problem does <code>linkedSignal()</code> solve that a plain <code>signal()</code> can't?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>State that needs to be both independently writable (the user can change it) <em>and</em> automatically reset to a derived default when some other signal changes. A plain signal has no built-in way to react to another signal; you'd need a manual effect to reset it, which is easy to get wrong (ordering, missed cases). <code>linkedSignal()</code> bakes that reset logic in directly.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>You need a debounced, cancellable search-as-you-type request. Signal, or Observable — and why?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Observable. Debouncing and cancellation are exactly what RxJS operators (<code>debounceTime</code>, <code>switchMap</code>) are built for — modeling a sequence of events over time, where earlier in-flight work needs to be discarded. Signals model "the current value," not a stream of async events, so they're the wrong tool for the async orchestration itself (though you'd likely convert the final result to a signal with <code>toSignal()</code> for the template).</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-04.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 4: Component Fundamentals &amp; Templates</span>
+          </a>
+          <a href="week-06.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 6: New Control Flow &amp; Template Syntax →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

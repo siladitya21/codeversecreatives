@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 4: Component Fundamentals &amp; Templates — CodeVerse Creatives</title>
+<meta name="description" content="Week 4 of the Angular curriculum: component decorator options, interpolation and binding, input()/output()/model(), template reference variables, ng-template/ng-container, and lifecycle hooks." />
+<link rel="icon" href="../favicon.ico" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="angular">
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html" aria-current="page">Angular</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../angular-syllabus.html">Angular Syllabus</a>
+        <span>/</span>
+        <a href="../angular-syllabus.html#phase-1">Phase 1 · Foundations</a>
+        <span>/</span>
+        <span aria-current="page">Week 4</span>
+      </div>
+
+      <h1>Week 4: Component Fundamentals &amp; Templates</h1>
+      <p class="lesson-header__lede">
+        This is the week it stops being abstract. You've bootstrapped an app and understand the
+        mental model — now you'll build real components with real inputs, outputs, and templates,
+        using the exact APIs you'll reach for in every component for the rest of the course.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Phase 1 of 7</span>
+        <span class="chip">Week 4 of 26</span>
+        <span class="chip">~4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build components with typed, signal-based inputs and outputs</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Read and write Angular templates fluently</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hook into a component's lifecycle the modern, signal-first way</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#decorator"><span>1</span> Component Decorator</a>
+        <a href="#binding"><span>2</span> Interpolation &amp; Binding</a>
+        <a href="#io"><span>3</span> input() / output() / model()</a>
+        <a href="#template-refs"><span>4</span> Template Reference Variables</a>
+        <a href="#containers"><span>5</span> ng-template &amp; ng-container</a>
+        <a href="#lifecycle"><span>6</span> Lifecycle Hooks</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="decorator">
+            <h2>1. Component Decorator Options</h2>
+            <p>
+              You've seen <code>@Component</code> a few times already; this week you learn it
+              properly. Three options account for almost everything you'll configure day to day:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">rating-stars.ts</div>
+              <pre><code>import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-rating-stars',
+  templateUrl: './rating-stars.html',
+  styleUrl: './rating-stars.css',
+})
+export class RatingStars {}
+</code></pre>
+            </div>
+
+            <ul>
+              <li><code>selector</code> — the HTML tag this component is used as, e.g. <code>&lt;app-rating-stars&gt;</code></li>
+              <li><code>templateUrl</code> / <code>template</code> — an external file, or an inline string for very small components</li>
+              <li><code>styleUrl</code> / <code>styleUrls</code> — one or more stylesheets scoped to just this component (more on that scoping in Week 7)</li>
+            </ul>
+            <p>
+              Small, purely presentational components are often written with an inline template
+              instead of a separate file — a judgment call you'll get a feel for as you write more of
+              them.
+            </p>
+          </section>
+
+          <section id="binding">
+            <h2>2. Interpolation, Property &amp; Event Binding</h2>
+            <p>Three binding syntaxes cover almost every template you'll write:</p>
+
+            <div class="code-block">
+              <div class="code-block__label">example.html</div>
+              <pre><code>&lt;!-- Interpolation: render a value as text --&gt;
+&lt;h2&gt;{{ product.name }}&lt;/h2&gt;
+
+&lt;!-- Property binding: set a DOM/component property --&gt;
+&lt;img [src]="product.imageUrl" [alt]="product.name" /&gt;
+&lt;app-badge [count]="cartItemCount" /&gt;
+
+&lt;!-- Event binding: call a method when something happens --&gt;
+&lt;button (click)="addToCart(product)"&gt;Add to cart&lt;/button&gt;
+
+&lt;!-- Class and style bindings --&gt;
+&lt;div [class.out-of-stock]="product.stock === 0"
+     [style.opacity]="product.stock === 0 ? 0.5 : 1"&gt;
+  {{ product.name }}
+&lt;/div&gt;
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Attribute vs. property</strong>
+                <p><code>[src]="..."</code> sets the DOM <em>property</em>, not the HTML attribute — that distinction rarely matters, except for a handful of attributes (like custom <code>data-*</code> ones) where you need <code>[attr.data-id]="..."</code> instead. Angular defaults to property binding because it's faster and type-checked.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="io">
+            <h2>3. <code>input()</code>, <code>output()</code> &amp; <code>model()</code></h2>
+            <p>
+              These three functions are how a component receives data, emits events, and supports
+              two-way binding — the signal-based replacement for the older
+              <code>@Input()</code>/<code>@Output()</code> decorators.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">rating-stars.ts</div>
+              <pre><code>import { Component, input, output, model } from '@angular/core';
+
+@Component({
+  selector: 'app-rating-stars',
+  templateUrl: './rating-stars.html',
+})
+export class RatingStars {
+  // Required input -- consumer MUST provide a value
+  max = input.required&lt;number&gt;();
+
+  // Optional input with a default
+  readOnly = input(false);
+
+  // Output: an event this component emits
+  rated = output&lt;number&gt;();
+
+  // model(): two-way bindable signal -- both an input and an output, paired
+  value = model(0);
+
+  select(stars: number) {
+    if (this.readOnly()) return;
+    this.value.set(stars);
+    this.rated.emit(stars);
+  }
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">using it — parent.html</div>
+              <pre><code>&lt;app-rating-stars
+  [max]="5"
+  [(value)]="productRating"
+  (rated)="onRated($event)"
+/&gt;
+</code></pre>
+            </div>
+
+            <p>
+              <code>[(value)]</code> is Angular's "banana in a box" syntax — shorthand for binding
+              <code>[value]</code> and listening to <code>(valueChange)</code> at once.
+              <code>model()</code> generates that <code>valueChange</code> output for you
+              automatically; you never write it by hand.
+            </p>
+          </section>
+
+          <section id="template-refs">
+            <h2>4. Template Reference Variables</h2>
+            <p>
+              A <code>#name</code> on any element gives you a handle to it — the DOM element, or the
+              component/directive instance if there is one — usable anywhere else in that same
+              template.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">search.html</div>
+              <pre><code>&lt;input #searchBox type="text" (keyup.enter)="search(searchBox.value)" /&gt;
+&lt;button (click)="search(searchBox.value)"&gt;Search&lt;/button&gt;
+</code></pre>
+            </div>
+
+            <p>
+              This is a lightweight escape hatch for simple cases — reading an input's current value
+              without wiring up a full <code>FormControl</code> (which you'll learn properly in Week
+              12). For anything beyond "read this one value," reactive forms are the better tool.
+            </p>
+          </section>
+
+          <section id="containers">
+            <h2>5. <code>ng-template</code> &amp; <code>ng-container</code></h2>
+            <p>
+              <code>ng-container</code> groups elements — for a binding, or just for organization —
+              <strong>without</strong> adding an extra element to the rendered DOM. It's invisible at
+              runtime.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">ng-container.html</div>
+              <pre><code>&lt;ng-container [ngTemplateOutlet]="header"&gt;&lt;/ng-container&gt;
+
+&lt;!-- No wrapping &lt;div&gt; in the rendered output -- useful when you need
+     a binding target but a real DOM element would break your CSS layout --&gt;
+</code></pre>
+            </div>
+
+            <p>
+              <code>ng-template</code> defines a block of markup that <strong>isn't rendered by
+              default</strong> — something else decides when (or whether) to render it. You'll meet it
+              again this way in Week 11, where <code>@defer</code> uses a similar "placeholder content"
+              idea for lazy-loaded UI:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">ng-template.html</div>
+              <pre><code>@for (item of items(); track item.id) {
+  &lt;li&gt;{{ item.name }}&lt;/li&gt;
+} @empty {
+  &lt;ng-template #noItems&gt;
+    &lt;li&gt;No items yet.&lt;/li&gt;
+  &lt;/ng-template&gt;
+}
+</code></pre>
+            </div>
+
+            <p>
+              In practice, you'll write <code>@if</code>/<code>@for</code>'s own <code>@empty</code>
+              and <code>@else</code> blocks (Week 6) far more often than a raw <code>ng-template</code>
+              — but recognizing it matters, because libraries and older codebases still use it directly.
+            </p>
+          </section>
+
+          <section id="lifecycle">
+            <h2>6. Lifecycle Hooks &amp; Signal-Based Alternatives</h2>
+            <p>
+              Angular calls specific methods on your component class at specific moments. The three
+              you'll use most:
+            </p>
+            <ul>
+              <li><code>ngOnInit()</code> — once, after the component's inputs are first set</li>
+              <li><code>ngOnChanges(changes)</code> — whenever an <code>@Input()</code>-decorated property changes</li>
+              <li><code>ngOnDestroy()</code> — right before the component is removed, for cleanup (unsubscribing, clearing timers)</li>
+            </ul>
+
+            <div class="code-block">
+              <div class="code-block__label">classic lifecycle hooks</div>
+              <pre><code>import { Component, OnInit, OnDestroy } from '@angular/core';
+
+export class SearchBox implements OnInit, OnDestroy {
+  private intervalId?: ReturnType&lt;typeof setInterval&gt;;
+
+  ngOnInit() {
+    this.intervalId = setInterval(() =&gt; this.refresh(), 30_000);
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+  }
+
+  refresh() { /* ... */ }
+}
+</code></pre>
+            </div>
+
+            <p>
+              With signals, <code>ngOnChanges</code> specifically is often unnecessary —
+              <code>effect()</code> (Week 5) reacts to a signal input changing directly, without the
+              boilerplate of comparing an old and new value yourself:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">signal-based alternative</div>
+              <pre><code>import { Component, input, effect } from '@angular/core';
+
+export class SearchBox {
+  query = input('');
+
+  constructor() {
+    effect(() =&gt; {
+      const q = this.query(); // re-runs automatically whenever `query` changes
+      console.log('Query changed to', q);
+    });
+  }
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>ngOnInit</code> and <code>ngOnDestroy</code> remain useful and aren't going
+              anywhere — it's specifically <code>ngOnChanges</code> that signals make largely
+              redundant.
+            </p>
+          </section>
+
+          <section id="exercise">
+            <h2>7. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build a reusable rating-stars component</h3>
+              <p>Turn the code from Section 3 into a fully working, reusable component.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Create <code>RatingStars</code> with a required <code>max</code> input, a <code>readOnly</code> input defaulting to <code>false</code>, a two-way <code>value</code> via <code>model()</code>, and a <code>rated</code> output.</li>
+                <li>In the template, render <code>max</code> star icons (plain <code>★</code>/<code>☆</code> characters are fine) and highlight however many match the current <code>value</code>.</li>
+                <li>Clicking a star updates <code>value</code> and emits <code>rated</code> — unless <code>readOnly</code> is <code>true</code>, in which case clicks do nothing.</li>
+                <li>In a parent component, bind <code>[(value)]</code> to a signal and display the live value next to the component, proving the two-way binding works both directions (also try setting the parent's signal programmatically and confirm the stars update).</li>
+                <li>Render a second, <code>readOnly</code> instance of the same component to prove one component handles both modes.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>To render "max stars, some filled," an <code>@for</code> loop over an array built with <code>Array.from({ length: this.max() })</code> works well — you'll get proper practice with the new control-flow syntax a couple weeks early.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>8. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>What does <code>[(value)]="productRating"</code> actually expand to?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p><code>[value]="productRating"</code> plus <code>(valueChange)="productRating = $event"</code>. It's shorthand for a property binding and an event binding to a conventionally-named <code>xChange</code> output at once — <code>model()</code> is what generates that paired output automatically.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>When would you need <code>[attr.data-id]="..."</code> instead of a plain property binding?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Whenever there's no matching DOM <em>property</em> to bind to — custom <code>data-*</code> attributes, ARIA attributes, and SVG attributes are the common cases. Angular's default <code>[x]="..."</code> binds a DOM property; <code>[attr.x]="..."</code> explicitly sets the HTML attribute instead.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What's the key difference between <code>ng-container</code> and <code>ng-template</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p><code>ng-container</code> renders its contents immediately, just without adding a wrapping DOM element. <code>ng-template</code>'s contents render <em>not at all</em> by default — something else (a structural directive, <code>@defer</code>, a template outlet) has to explicitly decide to render them.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Why does <code>effect()</code> often replace the need for <code>ngOnChanges</code>, but not <code>ngOnInit</code> or <code>ngOnDestroy</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p><code>ngOnChanges</code> exists specifically to react to input changes — which <code>effect()</code> does automatically and more precisely, by tracking exactly which signals it reads. <code>ngOnInit</code> (run setup once) and <code>ngOnDestroy</code> (run cleanup once) aren't about reacting to changing values at all, so an effect isn't a substitute for either.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-03.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 3: Standalone Components &amp; the Angular Mental Model</span>
+          </a>
+          <a href="week-05.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 5: Signals Deep Dive →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <span class="brand__mark">CV</span>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

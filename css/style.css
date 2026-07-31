@@ -1267,6 +1267,7 @@ code, .mono {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
   font-family: var(--font-mono);
   font-size: 0.76rem;
   font-weight: 700;
