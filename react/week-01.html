@@ -1,0 +1,541 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 1: React Fundamentals, JSX &amp; the Component Model — CodeVerse Creatives</title>
+<meta name="description" content="Week 1 of the React curriculum: JSX and elements, the virtual DOM mental model, props vs. state, one-way data flow, Vite project setup, and building your first components." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 1 · React Fundamentals</a>
+        <span>/</span>
+        <span aria-current="page">Week 1</span>
+      </div>
+
+      <h1>Week 1: React Fundamentals, JSX &amp; the Component Model</h1>
+      <p class="lesson-header__lede">
+        Every pattern later in this course — hooks in Week 2, routing in Week 6, server state in
+        Week 8 — is built on top of one idea: a component is a function that takes data in and
+        returns UI out. This week makes that idea concrete: what JSX actually compiles to, how
+        React decides what to re-render, and the props-vs-state distinction that trips up almost
+        everyone the first time they meet it.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 1 of 13</span>
+        <span class="chip">Week 1 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain what JSX compiles to and why React re-renders when it does</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build components that split cleanly along props vs. state</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Set up and navigate a Vite + React + TypeScript project</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#setup"><span>1</span> Project Setup</a>
+        <a href="#jsx"><span>2</span> JSX &amp; Elements</a>
+        <a href="#vdom"><span>3</span> The Virtual DOM</a>
+        <a href="#props-state"><span>4</span> Props vs. State</a>
+        <a href="#composition"><span>5</span> Composing Components</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="setup">
+            <h2>1. Project Setup with Vite</h2>
+            <p>
+              This course uses <strong>Vite</strong> to scaffold and run React apps — it's faster
+              than older tooling like Create React App (now discontinued) and is what most new
+              React projects reach for today. One command gets you a working TypeScript project:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm create vite@latest week-01 -- --template react-ts
+cd week-01
+npm install
+npm run dev
+</code></pre>
+            </div>
+
+            <p>
+              <code>npm run dev</code> starts a local dev server (usually at
+              <code>http://localhost:5173</code>) with hot module replacement — save a file and
+              the browser updates instantly, without a full page reload or losing component state.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">project layout</div>
+              <pre><code>week-01/
+├── index.html
+├── package.json
+├── vite.config.ts
+└── src/
+    ├── main.tsx      ← mounts the app into index.html
+    ├── App.tsx        ← root component
+    └── App.css
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">src/main.tsx</div>
+              <pre><code>import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App';
+
+createRoot(document.getElementById('root')!).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+);
+</code></pre>
+            </div>
+
+            <p>
+              <code>createRoot(...).render(&lt;App /&gt;)</code> is the one line where React takes
+              over a DOM node and starts managing everything inside it. Everything else in this
+              course happens inside that tree.
+            </p>
+          </section>
+
+          <section id="jsx">
+            <h2>2. JSX &amp; Elements</h2>
+            <p>
+              JSX — the HTML-like syntax inside your <code>.tsx</code> files — isn't valid
+              JavaScript on its own. A build tool (Vite, via esbuild) compiles it into plain
+              function calls before your code ever runs in the browser.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">what you write</div>
+              <pre><code>const heading = &lt;h1 className="title"&gt;Hello, React&lt;/h1&gt;;
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">what it compiles to</div>
+              <pre><code>const heading = jsx('h1', { className: 'title', children: 'Hello, React' });
+</code></pre>
+            </div>
+
+            <p>
+              That function call returns a plain JavaScript object — a React <strong>element</strong>
+              — describing what should appear on screen: a type, some props, and children. React
+              elements are cheap, immutable descriptions, not real DOM nodes yet.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">expressions in JSX</div>
+              <pre><code>function Greeting({ name }: { name: string }) {
+  const hour = new Date().getHours();
+  const greeting = hour &lt; 12 ? 'Good morning' : 'Good afternoon';
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{greeting}, {name}!&lt;/p&gt;
+      {name === 'Ada' &amp;&amp; &lt;span&gt;⭐ Welcome back&lt;/span&gt;}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              Curly braces <code>{'{ }'}</code> drop back into JavaScript inside JSX — any
+              expression works, including ternaries for either/or rendering and <code>&amp;&amp;</code>
+              for conditionally rendering something or nothing.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Why <code>className</code>, not <code>class</code>?</strong>
+                <p>JSX attributes are JavaScript object properties under the hood, and <code>class</code> is a reserved word in JavaScript. This is also why event handlers are <code>onClick</code> (camelCase), not <code>onclick</code> — JSX props follow JS naming conventions, not HTML's.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="vdom">
+            <h2>3. The Virtual DOM: Why React Re-Renders</h2>
+            <p>
+              Every time a component's state or props change, React calls that component's
+              function again, producing a new tree of elements. Instead of touching the real DOM
+              immediately, React <strong>diffs</strong> the new element tree against the previous
+              one, and only applies the minimal set of real DOM changes needed.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">Counter.tsx</div>
+              <pre><code>import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  console.log('Counter rendered'); // logs on every click
+
+  return (
+    &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
+      Clicked {count} times
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              Clicking the button calls <code>setCount</code>, which schedules a re-render:
+              <code>Counter()</code> runs again from the top, producing a new element tree. React
+              compares it to the previous tree, sees only the text node changed, and updates
+              <em>just that text node</em> in the real DOM — not the whole button, and definitely
+              not the whole page.
+            </p>
+
+            <p>
+              This is the core mental model you'll build on for the rest of the course: <strong>a
+              render is not the same thing as a DOM update.</strong> "Rendering" means React calling
+              your component function to figure out what <em>should</em> be on screen; the actual
+              DOM only changes where the result differs from last time.
+            </p>
+          </section>
+
+          <section id="props-state">
+            <h2>4. Props vs. State — and One-Way Data Flow</h2>
+            <p>
+              This is the distinction that causes the most confusion in your first week with React,
+              so it's worth being precise: <strong>props</strong> are data passed <em>into</em> a
+              component by its parent — read-only from the component's own point of view.
+              <strong>State</strong> is data a component owns and can change itself, via
+              <code>useState</code> (which you'll go deep on in Week 2).
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">props-vs-state.tsx</div>
+              <pre><code>interface UserCardProps {
+  name: string;   // prop -- the parent decides this, UserCard can't change it
+}
+
+function UserCard({ name }: UserCardProps) {
+  const [expanded, setExpanded] = useState(false); // state -- UserCard owns this
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;{name}&lt;/p&gt;
+      &lt;button onClick={() =&gt; setExpanded(!expanded)}&gt;
+        {expanded ? 'Show less' : 'Show more'}
+      &lt;/button&gt;
+      {expanded &amp;&amp; &lt;p&gt;Extra details about {name}...&lt;/p&gt;}
+    &lt;/div&gt;
+  );
+}
+
+// The parent controls the prop; UserCard controls its own state
+&lt;UserCard name="Ada Lovelace" /&gt;
+</code></pre>
+            </div>
+
+            <p>
+              Data flows <strong>one way</strong>: from parent to child, via props. A child can
+              never directly hand a new value back up into its parent's state — if a child needs
+              to change something the parent owns, the parent passes down a <em>function</em> as a
+              prop, and the child calls it:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">lifting state up</div>
+              <pre><code>function Parent() {
+  const [selected, setSelected] = useState&lt;string | null&gt;(null);
+
+  return &lt;OptionList selected={selected} onSelect={setSelected} /&gt;;
+}
+
+function OptionList({ selected, onSelect }: {
+  selected: string | null;
+  onSelect: (value: string) =&gt; void;
+}) {
+  return (
+    &lt;button onClick={() =&gt; onSelect('blue')}&gt;
+      {selected === 'blue' ? '✓ ' : ''}Blue
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              This pattern — called <strong>lifting state up</strong> — is how two sibling
+              components end up "sharing" state: the state actually lives in their closest common
+              parent, and both children receive it (and a way to change it) via props.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Why this matters later</strong>
+                <p>Lifting state up works fine for a few components. Once you're lifting the same piece of state through five layers just to pass it down, that's the exact pain point Context (Week 10) and global state libraries solve.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="composition">
+            <h2>5. Composing Components</h2>
+            <p>
+              A React app is a tree of components rendering other components. The <code>children</code>
+              prop is what lets a component wrap arbitrary content it doesn't need to know the
+              shape of — the same pattern behind every layout, card, and modal you'll build:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">Card.tsx</div>
+              <pre><code>interface CardProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+function Card({ title, children }: CardProps) {
+  return (
+    &lt;div className="card"&gt;
+      &lt;h3&gt;{title}&lt;/h3&gt;
+      &lt;div className="card__body"&gt;{children}&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+
+// Usage -- Card has no idea what's inside it, and doesn't need to
+&lt;Card title="Profile"&gt;
+  &lt;UserCard name="Grace Hopper" /&gt;
+  &lt;button&gt;Edit&lt;/button&gt;
+&lt;/Card&gt;
+</code></pre>
+            </div>
+
+            <p>
+              Notice <code>Card</code> is completely reusable — it knows how to render a titled
+              box, and nothing about what goes inside one. This "wrap arbitrary children" shape
+              reappears constantly: layout components, modals, list wrappers, and — in Week 11 —
+              the compound-component pattern built entirely on top of it.
+            </p>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build a filterable profile list from scratch</h3>
+              <p>Practice the props/state/composition split by building a small, real UI — no external libraries, just what this week covered.</p>
+
+              <div class="code-block">
+                <div class="code-block__label">starter data</div>
+                <pre><code>const people = [
+  { id: 1, name: 'Ada Lovelace', role: 'Mathematician' },
+  { id: 2, name: 'Grace Hopper', role: 'Computer Scientist' },
+  { id: 3, name: 'Alan Turing', role: 'Mathematician' },
+  { id: 4, name: 'Katherine Johnson', role: 'Physicist' },
+];
+</code></pre>
+              </div>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Scaffold a new Vite + React + TypeScript project and get it running with <code>npm run dev</code>.</li>
+                <li>Build a <code>PersonCard</code> component that takes a person as props and renders their name and role.</li>
+                <li>Build a <code>PersonList</code> component that owns a <code>filterText</code> piece of state (via <code>useState</code>) and a text input bound to it, rendering one <code>PersonCard</code> per person whose name matches the filter (case-insensitive).</li>
+                <li>Wrap the whole list in a <code>Card</code> component (from Section 5) that takes a <code>title</code> prop and renders <code>PersonList</code> as its <code>children</code>.</li>
+                <li>Add a "no results" message, rendered conditionally, when the filter matches nobody.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>The filter state belongs in <code>PersonList</code>, not <code>PersonCard</code> — <code>PersonCard</code> should stay a "dumb" component that only receives props. If you find yourself wanting state inside <code>PersonCard</code> for this exercise, that's a sign the state lives one level too low.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>What does a line of JSX like <code>&lt;h1&gt;Hi&lt;/h1&gt;</code> actually become before it reaches the browser?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>The build tool compiles it into a plain function call (like <code>jsx('h1', { children: 'Hi' })</code>) that returns a JavaScript object describing the element — type, props, and children. It's a description of what should be on screen, not a real DOM node.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>When state changes and a component "re-renders," does React necessarily touch the real DOM?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Not necessarily, and even when it does, not everywhere. "Re-rendering" means React calls the component function again and gets a new element tree, which it diffs against the previous tree. Only the parts of the real DOM that actually differ get updated — a render and a DOM update are two different things.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>Why can't a child component directly modify a piece of state that lives in its parent?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>React data flow is one-directional: props only travel from parent to child, never back up automatically. A child can only affect a parent's state if the parent explicitly passes down a function as a prop (like <code>onSelect</code>) for the child to call — the parent still owns and controls the actual state update.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>What makes the <code>children</code> prop different from a regular prop like <code>title</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Nothing structurally — it's still just a prop. The difference is convention and syntax: whatever you nest between a component's opening and closing JSX tags gets passed automatically as its <code>children</code> prop, which lets a wrapper component (like <code>Card</code>) render arbitrary, unknown content without needing a dedicated prop for every possible thing you might put inside it.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="../react-syllabus.html#timeline" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Full Syllabus</span>
+          </a>
+          <span class="lesson-pager__link lesson-pager__link--next is-disabled">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 2: State &amp; Effects — coming soon</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

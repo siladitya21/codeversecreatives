@@ -1,0 +1,540 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 4: useReducer &amp; Custom Hooks — CodeVerse Creatives</title>
+<meta name="description" content="Week 4 of the React curriculum: modeling complex state transitions with useReducer, the actions/reducer pattern, writing custom hooks, and the Rules of Hooks." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 3 · Advanced Hooks</a>
+        <span>/</span>
+        <span aria-current="page">Week 4</span>
+      </div>
+
+      <h1>Week 4: <code>useReducer</code> &amp; Custom Hooks</h1>
+      <p class="lesson-header__lede">
+        Some state doesn't fit cleanly into a handful of independent <code>useState</code> calls —
+        several fields need to change together, in response to a small set of well-defined actions.
+        This week covers <code>useReducer</code> for exactly that case, then moves to the single
+        highest-leverage skill in the hooks system: extracting your own reusable logic into a
+        custom hook.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 3 of 13</span>
+        <span class="chip">Week 4 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Model multi-field state transitions with <code>useReducer</code></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Extract stateful logic into your own custom hooks</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Apply the Rules of Hooks correctly, and explain why they exist</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#usereducer"><span>1</span> useReducer</a>
+        <a href="#actions"><span>2</span> Actions &amp; the Reducer Pattern</a>
+        <a href="#first-custom-hook"><span>3</span> Your First Custom Hook</a>
+        <a href="#hooks-wrapping-effects"><span>4</span> Custom Hooks Wrapping Effects</a>
+        <a href="#rules"><span>5</span> The Rules of Hooks</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="usereducer">
+            <h2>1. <code>useReducer</code>: Modeling Complex State Transitions</h2>
+            <p>
+              Consider a shopping cart: adding an item, removing one, and changing a quantity all
+              touch the same array, and each needs slightly different logic. Doing this with
+              several separate <code>useState</code> calls tends to scatter that logic across every
+              event handler that touches the cart. <code>useReducer</code> centralizes it into one
+              place: a single function that takes the current state and an "action," and returns
+              the next state.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">cart-reducer.ts</div>
+              <pre><code>interface CartItem {
+  id: number;
+  name: string;
+  quantity: number;
+}
+
+type CartAction =
+  | { type: 'add'; item: Omit&lt;CartItem, 'quantity'&gt; }
+  | { type: 'remove'; id: number }
+  | { type: 'setQuantity'; id: number; quantity: number };
+
+function cartReducer(state: CartItem[], action: CartAction): CartItem[] {
+  switch (action.type) {
+    case 'add': {
+      const existing = state.find(item =&gt; item.id === action.item.id);
+      if (existing) {
+        return state.map(item =&gt;
+          item.id === action.item.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...state, { ...action.item, quantity: 1 }];
+    }
+    case 'remove':
+      return state.filter(item =&gt; item.id !== action.id);
+    case 'setQuantity':
+      return state.map(item =&gt;
+        item.id === action.id ? { ...item, quantity: action.quantity } : item
+      );
+  }
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">Cart.tsx</div>
+              <pre><code>import { useReducer } from 'react';
+
+function Cart() {
+  const [items, dispatch] = useReducer(cartReducer, []);
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt; dispatch({ type: 'add', item: { id: 1, name: 'Keyboard' } })}&gt;
+        Add Keyboard
+      &lt;/button&gt;
+      {items.map(item =&gt; (
+        &lt;div key={item.id}&gt;
+          {item.name} × {item.quantity}
+          &lt;button onClick={() =&gt; dispatch({ type: 'remove', id: item.id })}&gt;Remove&lt;/button&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>useReducer(reducer, initialState)</code> returns the current state and a
+              <code>dispatch</code> function. Every state transition goes through
+              <code>dispatch(action)</code>, which calls <code>cartReducer(currentState, action)</code>
+              and re-renders with whatever it returns. Notice the component itself never computes
+              cart logic directly — it just describes <em>what happened</em> ("add", "remove") and
+              the reducer decides what that means for state.
+            </p>
+          </section>
+
+          <section id="actions">
+            <h2>2. Actions &amp; the Reducer Pattern</h2>
+            <p>
+              This structure — a typed <code>action</code> describing an event, and a pure function
+              computing the next state from it — is the exact pattern behind Redux (Week 10), just
+              without a library. Two properties make it worth learning here first, by hand:
+            </p>
+
+            <ul>
+              <li><strong>The reducer is a pure function.</strong> Same state + same action always produces the same result, with no side effects — no API calls, no <code>Math.random()</code>, no mutating the input <code>state</code> directly. That purity is what makes reducer logic easy to test in isolation, without rendering any component at all.</li>
+              <li><strong>Actions describe intent, not implementation.</strong> <code>{'{ type: 'remove', id: 1 }'}</code> reads like something that happened in the UI, not "splice index 2 out of the array." This separation is what lets the same event handler logic stay stable even if you later change exactly how removal is implemented internally.</li>
+            </ul>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong><code>useState</code> or <code>useReducer</code>?</strong>
+                <p>If a piece of state is a single, independent value (a boolean toggle, a text input), <code>useState</code> is simpler and correct. Reach for <code>useReducer</code> when several related values update together in response to the same set of events, or when the "next state" logic itself is complex enough to be worth testing on its own.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="first-custom-hook">
+            <h2>3. Your First Custom Hook</h2>
+            <p>
+              A custom hook is nothing magical — it's a regular function whose name starts with
+              <code>use</code>, that calls other hooks inside it. That naming convention is what
+              lets React's linter (and other hooks) verify the Rules of Hooks are being followed.
+              Its entire purpose is extracting logic you'd otherwise duplicate across components.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">before — duplicated in two components</div>
+              <pre><code>function ProfileForm() {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () =&gt; setIsOpen(prev =&gt; !prev);
+  // ...
+}
+
+function Sidebar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const toggle = () =&gt; setIsOpen(prev =&gt; !prev);
+  // ...
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">useToggle.ts</div>
+              <pre><code>import { useState, useCallback } from 'react';
+
+function useToggle(initial = false) {
+  const [value, setValue] = useState(initial);
+  const toggle = useCallback(() =&gt; setValue(prev =&gt; !prev), []);
+  return [value, toggle] as const;
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">after</div>
+              <pre><code>function ProfileForm() {
+  const [isOpen, toggleOpen] = useToggle();
+  // ...
+}
+
+function Sidebar() {
+  const [isOpen, toggleOpen] = useToggle();
+  // ...
+}
+</code></pre>
+            </div>
+
+            <p>
+              A crucial thing to understand: <code>useToggle</code> doesn't share state between the
+              two components. Each call creates its own independent <code>useState</code> — you've
+              extracted and reused the <em>logic</em>, not a shared value. Sharing an actual value
+              across components is Week 10's job (Context and global state), not a custom hook's.
+            </p>
+          </section>
+
+          <section id="hooks-wrapping-effects">
+            <h2>4. Custom Hooks That Wrap Effects</h2>
+            <p>
+              The most common real-world custom hooks wrap a <code>useEffect</code> (plus often
+              some state) behind a clean, reusable name — hiding setup/cleanup details a consuming
+              component shouldn't need to think about.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">useLocalStorage.ts</div>
+              <pre><code>import { useState, useEffect } from 'react';
+
+function useLocalStorage&lt;T&gt;(key: string, initialValue: T) {
+  const [value, setValue] = useState&lt;T&gt;(() =&gt; {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : initialValue;
+  });
+
+  useEffect(() =&gt; {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue] as const;
+}
+
+// Usage -- looks exactly like useState, but persists automatically
+function Settings() {
+  const [theme, setTheme] = useLocalStorage('theme', 'light');
+  return &lt;button onClick={() =&gt; setTheme(theme === 'light' ? 'dark' : 'light')}&gt;{theme}&lt;/button&gt;;
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">useDebouncedValue.ts</div>
+              <pre><code>function useDebouncedValue&lt;T&gt;(value: T, delayMs: number): T {
+  const [debounced, setDebounced] = useState(value);
+
+  useEffect(() =&gt; {
+    const timeout = setTimeout(() =&gt; setDebounced(value), delayMs);
+    return () =&gt; clearTimeout(timeout); // cancel if value changes before delay elapses
+  }, [value, delayMs]);
+
+  return debounced;
+}
+
+// Usage -- delays reacting to fast typing until it pauses
+function SearchBox() {
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebouncedValue(query, 300);
+
+  // An effect depending on debouncedQuery only fires 300ms after typing stops
+  useEffect(() =&gt; {
+    if (debouncedQuery) console.log('searching for', debouncedQuery);
+  }, [debouncedQuery]);
+
+  return &lt;input value={query} onChange={e =&gt; setQuery(e.target.value)} /&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              Notice how much Week 2 knowledge is packed into these eight lines: state, an effect
+              with a dependency array, and a cleanup function that cancels a stale timeout. This is
+              exactly the pattern you'll reach for constantly once real network requests enter the
+              picture in Week 8 — debouncing a search input before firing a request on every
+              keystroke.
+            </p>
+          </section>
+
+          <section id="rules">
+            <h2>5. The Rules of Hooks</h2>
+            <p>
+              Hooks work by relying on being called in the <strong>exact same order</strong> on
+              every render — React matches each <code>useState</code>/<code>useEffect</code> call
+              to its stored data by call order, not by name. Break that order, and hooks silently
+              read the wrong stored data. Two rules keep that order stable:
+            </p>
+
+            <ol>
+              <li><strong>Only call hooks at the top level.</strong> Never inside a condition, loop, or nested function.</li>
+              <li><strong>Only call hooks from React function components or other custom hooks.</strong> Never from a regular function or a class method.</li>
+            </ol>
+
+            <div class="code-block">
+              <div class="code-block__label">breaks the rules</div>
+              <pre><code>function Profile({ showBio }: { showBio: boolean }) {
+  if (showBio) {
+    const [bio, setBio] = useState(''); // conditional hook call -- illegal
+  }
+  // If showBio flips between renders, every hook AFTER this one
+  // shifts position and reads the wrong stored state.
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">follows the rules</div>
+              <pre><code>function Profile({ showBio }: { showBio: boolean }) {
+  const [bio, setBio] = useState(''); // always called, unconditionally
+
+  if (showBio) {
+    return &lt;p&gt;{bio}&lt;/p&gt;; // conditional RENDERING is fine -- just not conditional hooks
+  }
+  return null;
+}
+</code></pre>
+            </div>
+
+            <p>
+              The fix is always the same shape: call the hook unconditionally at the top, and put
+              the conditional logic in what you <em>do</em> with its value afterward. React's ESLint
+              plugin (<code>eslint-plugin-react-hooks</code>, included by default in a Vite React
+              template) catches almost every violation of this automatically — treat its warnings
+              as errors, not suggestions.
+            </p>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build a reducer-powered todo list, then extract a reusable hook from it</h3>
+              <p>Combine this week's two ideas: centralized state transitions, and reusable logic extraction.</p>
+
+              <p><strong>Part 1 — Reducer:</strong></p>
+              <ol>
+                <li>Define a <code>Todo</code> type (<code>{'{ id, text, done }'}</code>) and a <code>TodoAction</code> union with <code>add</code>, <code>toggle</code>, <code>remove</code>, and <code>clearCompleted</code> variants.</li>
+                <li>Write <code>todoReducer(state, action)</code> handling all four actions, and use it via <code>useReducer</code> in a <code>TodoApp</code> component with a text input, an add button, a list of toggleable items, and a "Clear completed" button.</li>
+              </ol>
+
+              <p><strong>Part 2 — Extract a custom hook:</strong></p>
+              <ol>
+                <li>Move the <code>useReducer</code> call and all four <code>dispatch(...)</code> calls out of <code>TodoApp</code> into a <code>useTodos()</code> custom hook that returns <code>{'{ todos, addTodo, toggleTodo, removeTodo, clearCompleted }'}</code> — named functions instead of raw <code>dispatch</code> calls.</li>
+                <li><code>TodoApp</code> should now call <code>const { todos, addTodo, ... } = useTodos();</code> and never reference <code>dispatch</code> or the reducer directly.</li>
+                <li>Persist the todos with <code>useLocalStorage</code> (from Section 4) inside <code>useTodos</code>, so the list survives a page refresh.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>You can't directly combine <code>useReducer</code> and <code>useLocalStorage</code> as written this week — instead, initialize the reducer's state from <code>localStorage</code> (like <code>useLocalStorage</code>'s lazy initializer) and add a <code>useEffect</code> inside <code>useTodos</code> that writes <code>todos</code> back to <code>localStorage</code> whenever it changes.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>What two things does <code>useReducer</code> return, and what does <code>dispatch</code> actually do?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>The current state and a <code>dispatch</code> function. Calling <code>dispatch(action)</code> runs your reducer with the current state and that action, and schedules a re-render with whatever the reducer returns — it never mutates state directly, it just triggers the same "compute next state" flow every action goes through.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>Why must a reducer function be pure — no API calls, no <code>Math.random()</code>, no mutating its input?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>React may call a reducer more than once per action in some cases (like Strict Mode's development double-invoking, used to surface exactly these kinds of bugs), and relies on being able to predict its output from its inputs. A side effect or non-deterministic result inside the reducer would run at unpredictable times or produce inconsistent state, and mutating the input directly breaks React's reference-equality change detection entirely.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>When two components both call <code>useToggle()</code>, do they share the same boolean value?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>No. A custom hook is just a function that calls other hooks — each call site gets its own completely independent <code>useState</code> internally. A custom hook reuses <em>logic</em>, not state; making two components share an actual value requires lifting that state up or using Context (Week 10), not a custom hook on its own.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Why does calling <code>useState</code> inside an <code>if</code> block break a component?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>React identifies each hook's stored data by the order hooks are called in, not by name or variable — it assumes call #3 this render is the same hook as call #3 last render. If a condition makes that hook call happen sometimes and not others, every hook after it shifts position between renders, and React ends up reading the wrong stored state for each one.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-03.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 3: useMemo, useCallback &amp; useRef</span>
+          </a>
+          <a href="week-05.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 5: Forms &amp; Controlled Inputs →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

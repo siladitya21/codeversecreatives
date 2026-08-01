@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 21: SSR, Hydration &amp; Deployment — CodeVerse Creatives</title>
+<meta name="description" content="Week 21 of the Angular curriculum: server-side rendering, hydration and avoiding mismatches, incremental hydration with @defer, build budgets, deploying to production, and monitoring a live app." />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="favicon.ico" sizes="any" />
+<link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="apple-touch-icon.png" />
+<link rel="manifest" href="site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="angular">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html" aria-current="page">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../angular-syllabus.html">Angular Syllabus</a>
+        <span>/</span>
+        <a href="../angular-syllabus.html#phase-5">Phase 5 · Quality &amp; Performance</a>
+        <span>/</span>
+        <span aria-current="page">Week 21</span>
+      </div>
+
+      <h1>Week 21: SSR, Hydration &amp; Deployment</h1>
+      <p class="lesson-header__lede">
+        The last week of Phase 5 takes your app from <code>ng serve</code> on your machine to a
+        real, server-rendered URL the public can visit. Every optimization from Week 20 matters more
+        once real users — on real networks — are the ones waiting for it to load.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Phase 5 of 7</span>
+        <span class="chip">Week 21 of 26</span>
+        <span class="chip">~4–5 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Take an app from local dev to a deployed, server-rendered build</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Diagnose and fix a hydration mismatch instead of just silencing the warning</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Know what to watch once an app is actually live</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#ssr"><span>1</span> Server-Side Rendering</a>
+        <a href="#hydration"><span>2</span> Hydration &amp; Mismatches</a>
+        <a href="#incremental-hydration"><span>3</span> Incremental Hydration</a>
+        <a href="#budgets"><span>4</span> Build Budgets</a>
+        <a href="#deploying"><span>5</span> Deploying to Production</a>
+        <a href="#monitoring"><span>6</span> Monitoring a Live App</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="ssr">
+            <h2>1. Server-Side Rendering with Angular</h2>
+            <p>
+              Without SSR, a browser downloads a nearly-empty HTML shell, then waits for JavaScript to
+              download, parse, and run before anything appears. SSR renders the initial HTML on the
+              server instead — the user sees real content immediately, before any JavaScript has run
+              at all.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal — adding SSR to an existing app</div>
+              <pre><code>ng add @angular/ssr
+</code></pre>
+            </div>
+
+            <p>
+              This schematic generates a server entry point and wires up
+              <code>provideServerRendering()</code>, which tells Angular to render your component
+              tree to a string of HTML on the server for each incoming request, before any client-side
+              JavaScript is involved.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app.config.server.ts</div>
+              <pre><code>import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
+import { provideServerRendering } from '@angular/ssr';
+import { appConfig } from './app.config';
+
+const serverConfig: ApplicationConfig = {
+  providers: [provideServerRendering()],
+};
+
+export const config = mergeApplicationConfig(appConfig, serverConfig);
+</code></pre>
+            </div>
+
+            <p>
+              Notice this <em>merges</em> with your existing <code>appConfig</code> from Week 3 rather
+              than replacing it — the same providers, routes, and services run on the server as run in
+              the browser, with one addition specific to server rendering.
+            </p>
+          </section>
+
+          <section id="hydration">
+            <h2>2. Hydration &amp; Avoiding Mismatches</h2>
+            <p>
+              After the server-rendered HTML reaches the browser, Angular needs to "wake it up" —
+              attach event listeners, restore signal state, make it interactive — without throwing
+              away and re-rendering the DOM the server already produced. This process is
+              <strong>hydration</strong>.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app.config.ts</div>
+              <pre><code>import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideClientHydration(withEventReplay()), // captures clicks during hydration, replays them after
+  ],
+};
+</code></pre>
+            </div>
+
+            <p>
+              A <strong>hydration mismatch</strong> happens when the HTML the client renders doesn't
+              match what the server produced — Angular logs a warning and, in the mismatched section,
+              falls back to discarding and re-rendering that DOM, losing the performance benefit SSR
+              was meant to provide.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">a classic mismatch source</div>
+              <pre><code>// BAD: Date.now() produces a DIFFERENT value on the server vs. the client
+&lt;p&gt;Loaded at: {{ Date.now() }}&lt;/p&gt;
+
+// BAD: directly reading `window` during rendering -- doesn't exist on the server at all
+&lt;p&gt;Screen width: {{ window.innerWidth }}&lt;/p&gt;
+</code></pre>
+            </div>
+
+            <p>
+              The fix is the same in both cases: compute anything environment-dependent
+              <em>after</em> the component has rendered — inside <code>afterNextRender()</code> —
+              rather than directly in a template expression that runs during the render itself, on
+              both server and client.
+            </p>
+          </section>
+
+          <section id="incremental-hydration">
+            <h2>3. Incremental Hydration &amp; <code>@defer</code> on the Server</h2>
+            <p>
+              Full hydration processes the entire page at once. <strong>Incremental hydration</strong>
+              extends Week 11's <code>@defer</code> blocks to hydration itself — a deferred block can
+              render as static HTML from the server, then hydrate independently, later, on its own
+              trigger.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app.config.ts</div>
+              <pre><code>import { provideClientHydration, withIncrementalHydration } from '@angular/platform-browser';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideClientHydration(withIncrementalHydration()),
+  ],
+};
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">product-page.html</div>
+              <pre><code>@defer (hydrate on interaction) {
+  &lt;app-comments-section [productId]="product().id" /&gt;
+} @placeholder {
+  &lt;div class="comments-skeleton"&gt;&lt;/div&gt;
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>hydrate on interaction</code> means the comments section renders as plain HTML
+              immediately (good for SEO and first paint) but doesn't cost any JavaScript execution
+              until a user actually interacts with it — a below-the-fold, rarely-interacted-with
+              section no longer competes for the browser's attention during initial load.
+            </p>
+          </section>
+
+          <section id="budgets">
+            <h2>4. Build Budgets &amp; Production Configuration</h2>
+            <p>
+              <code>angular.json</code> lets you set size budgets per bundle — the build
+              <strong>warns</strong> or <strong>fails</strong> once a bundle crosses a threshold,
+              catching bundle bloat (an accidentally-eager import, from Week 20) before it ships
+              rather than after.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">angular.json (excerpt)</div>
+              <pre><code>{
+  "budgets": [
+    {
+      "type": "initial",
+      "maximumWarning": "500kb",
+      "maximumError": "1mb"
+    },
+    {
+      "type": "anyComponentStyle",
+      "maximumWarning": "4kb",
+      "maximumError": "8kb"
+    }
+  ]
+}
+</code></pre>
+            </div>
+
+            <p>
+              Treat a budget crossing as a real signal worth investigating, not noise to raise the
+              threshold past — it's specifically designed to catch the moment your bundle started
+              growing for a reason nobody intended.
+            </p>
+          </section>
+
+          <section id="deploying">
+            <h2>5. Deploying to a Hosting Provider</h2>
+            <p>
+              An SSR app needs a Node.js server to run — different from a pure static app, which is
+              just files served by any web host.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal — building for production</div>
+              <pre><code>ng build
+
+# Output:
+# dist/my-app/browser/   -- static assets, served directly to the client
+# dist/my-app/server/    -- the Node.js server that renders on each request
+</code></pre>
+            </div>
+
+            <ul>
+              <li><strong>Static hosting</strong> (no SSR, or pre-rendered routes) — any CDN or static host works: Netlify, GitHub Pages, Cloudflare Pages.</li>
+              <li><strong>SSR hosting</strong> — needs a Node.js runtime: Vercel, a container platform (Cloud Run, Fly.io), or your own Node server running <code>dist/my-app/server/server.mjs</code>.</li>
+            </ul>
+
+            <p>
+              A middle ground worth knowing: <strong>prerendering</strong> (<code>ng build
+              --prerender</code>) runs SSR once, at build time, for routes with no per-request dynamic
+              data — producing pure static HTML for those routes, deployable to any static host with
+              none of SSR's runtime server requirement.
+            </p>
+          </section>
+
+          <section id="monitoring">
+            <h2>6. Monitoring a Live App</h2>
+            <p>
+              Once real users are involved, "does it work on my machine" stops being a useful
+              question. Two categories worth tracking from day one:
+            </p>
+            <ul>
+              <li><strong>Error tracking</strong> — a service (Sentry and similar) that captures uncaught exceptions in production, with the stack trace and enough context to actually reproduce the bug — errors you'd otherwise never know happened.</li>
+              <li><strong>Core Web Vitals</strong> — Google's standardized real-user performance metrics: <strong>LCP</strong> (Largest Contentful Paint — how fast the main content appears), <strong>CLS</strong> (Cumulative Layout Shift — how much content jumps around, directly tied to Week 20's <code>NgOptimizedImage</code> guidance), and <strong>INP</strong> (Interaction to Next Paint — how responsive the app feels to input).</li>
+            </ul>
+
+            <p>
+              These aren't lab measurements from your own machine — they're collected from actual
+              visitors, on their actual devices and networks, which is precisely why they can reveal
+              problems a fast development laptop never would.
+            </p>
+          </section>
+
+          <section id="exercise">
+            <h2>7. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Add SSR to your dashboard app and deploy it</h3>
+              <p>Take the app you've been building since Week 9 all the way to a live, public URL.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Run <code>ng add @angular/ssr</code> on your dashboard app, and confirm it renders server-side (view page source — real content should be present, not an empty shell).</li>
+                <li>Enable <code>provideClientHydration(withEventReplay())</code>, and fix every hydration mismatch warning in the console — not by suppressing them, but by moving the offending logic into <code>afterNextRender()</code>.</li>
+                <li>Convert at least one section (a comments area, a rarely-used panel) to incremental hydration with an appropriate trigger.</li>
+                <li>Set realistic build budgets in <code>angular.json</code> and confirm your current build passes them.</li>
+                <li>Deploy the built app to a real hosting provider that supports Node.js SSR, and confirm the live URL actually works — including a hard refresh on an inner route, which is the case most likely to reveal a routing/SSR misconfiguration.</li>
+                <li>Set up basic error tracking (a free tier is fine) and confirm it captures a deliberately-thrown test error.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If a hard refresh on an inner route (like <code>/projects/42</code>) 404s while navigating there from the home page works fine, the issue is almost always server-side routing configuration — the server needs to know to run your Angular app's router for that path too, not just serve a literal file.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>8. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>What does hydration actually do to server-rendered HTML, and why doesn't Angular just discard it and re-render from scratch?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Hydration attaches event listeners and restores application state to the existing server-rendered DOM, making it interactive. Discarding and re-rendering from scratch would throw away the entire performance benefit of SSR — the user would briefly see fast, static content, then experience a visible flash as it's replaced by the client-rendered version.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>Why does reading <code>Date.now()</code> directly in a template cause a hydration mismatch?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>The server renders the template at request time, and the client renders (or hydrates) it moments later — <code>Date.now()</code> returns a genuinely different value each time it's called, so the server's HTML and the client's expected output disagree. Angular detects this and cannot cleanly hydrate that portion of the DOM.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What does <code>hydrate on interaction</code> actually change about when a deferred block becomes interactive?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>The block still renders as real HTML from the server immediately (so it's visible and indexable right away), but Angular delays running the JavaScript needed to make it interactive until the user actually interacts with it — rather than hydrating it eagerly along with the rest of the page on load.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Why are Core Web Vitals collected from real users instead of measured once on a developer's machine?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A developer's machine typically has a fast connection, a powerful CPU, and a warm cache — none of which represent the actual range of devices and networks real visitors use. Real-user measurement captures the experience of someone on a slow connection or an older phone, which a controlled lab test on fast hardware would never surface.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-20.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 20: Performance Optimization &amp; Zoneless Change Detection</span>
+          </a>
+          <a href="week-22.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 22: Animations, Accessibility &amp; Internationalization →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
