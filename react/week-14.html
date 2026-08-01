@@ -1,0 +1,461 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 14: Profiling &amp; Code-Splitting — CodeVerse Creatives</title>
+<meta name="description" content="Week 14 of the React curriculum: profiling re-renders with React DevTools, route-based code-splitting with React.lazy and Suspense, and basic bundle analysis." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 10 · Performance</a>
+        <span>/</span>
+        <span aria-current="page">Week 14</span>
+      </div>
+
+      <h1>Week 14: Profiling &amp; Code-Splitting</h1>
+      <p class="lesson-header__lede">
+        Week 3 taught <code>useMemo</code> and <code>useCallback</code> from first principles, but
+        applying them without measuring first is guessing. This week starts with the tool that
+        tells you where time is actually going, then covers the highest-leverage performance win
+        for most apps: not sending code to the browser until it's actually needed.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 10 of 13</span>
+        <span class="chip">Week 14 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Profile a render to find which components are actually slow</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Code-split a route so its bundle loads only when visited</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Read a bundle analysis to find what's actually bloating your app</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#profiler"><span>1</span> React DevTools Profiler</a>
+        <a href="#memo-revisited"><span>2</span> React.memo, Revisited</a>
+        <a href="#code-splitting"><span>3</span> Route-Based Code-Splitting</a>
+        <a href="#lazy-loading"><span>4</span> Lazy-Loading Non-Route Code</a>
+        <a href="#bundle-analysis"><span>5</span> Bundle Analysis</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="profiler">
+            <h2>1. React DevTools Profiler</h2>
+            <p>
+              Before optimizing anything, measure. The React DevTools browser extension includes a
+              <strong>Profiler</strong> tab: click record, interact with your app, stop recording,
+              and see exactly which components rendered, how long each took, and — critically —
+              <em>why</em> each one rendered.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">what the Profiler shows per commit</div>
+              <pre><code>// For each component that rendered during the recording:
+// - Render duration (ms)
+// - "Why did this render?" -- props changed, state changed, parent re-rendered, context changed
+// - A flame graph: wider bars = more time spent
+</code></pre>
+            </div>
+
+            <p>
+              The "why did this render" information is the most actionable part — it tells you
+              directly whether a slow component is slow because of expensive work inside it (a
+              candidate for <code>useMemo</code>, Week 3) or because it re-rendered unnecessarily
+              due to a parent re-rendering with a fresh prop reference (a candidate for
+              <code>React.memo</code> + <code>useCallback</code>, also Week 3).
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Measure first, always</strong>
+                <p>It's tempting to sprinkle <code>useMemo</code> everywhere "to be safe" — Week 3 already covered why that's a net negative for cheap computations. The Profiler turns "I think this might be slow" into "this component genuinely took 40ms and re-rendered 12 times it didn't need to," which is what should actually guide where you spend optimization effort.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="memo-revisited">
+            <h2>2. <code>React.memo</code>, Revisited</h2>
+            <p>
+              Week 3 introduced <code>useCallback</code> in the context of <code>React.memo</code>
+              without deep-diving <code>memo</code> itself. <code>React.memo</code> wraps a
+              component so React skips re-rendering it when its props are shallowly equal to last
+              time:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">ProductCard.tsx</div>
+              <pre><code>const ProductCard = React.memo(function ProductCard({ product }: { product: Product }) {
+  console.log('rendering', product.name);
+  return &lt;div&gt;{product.name} — ${product.price}&lt;/div&gt;;
+});
+</code></pre>
+            </div>
+
+            <p>
+              "Shallowly equal" means each individual prop is compared with <code>Object.is</code>
+              — exactly the same comparison Week 2's dependency arrays use. This is precisely why a
+              fresh object or function reference on every render (an inline handler, an inline
+              array literal) defeats <code>memo</code> even when the data inside it is identical —
+              the same lesson Week 3 covered for <code>useCallback</code>, now generalized: memoization
+              only works when the things being compared are actually stable across renders.
+            </p>
+
+            <p>
+              A quick heuristic for when <code>React.memo</code> is worth adding: the component
+              renders often relative to how often its actual props change, and rendering it is
+              measurably not free — confirmed by the Profiler, not guessed at.
+            </p>
+          </section>
+
+          <section id="code-splitting">
+            <h2>3. Route-Based Code-Splitting</h2>
+            <p>
+              By default, a bundler ships your <em>entire</em> app as one (or a few) JavaScript
+              files — a user visiting the login page downloads the code for the admin dashboard
+              too, even though they'll likely never see it. <strong>Code-splitting</strong> breaks
+              the bundle into pieces loaded on demand.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">before — everything in one bundle</div>
+              <pre><code>import DashboardPage from './pages/DashboardPage';
+import SettingsPage from './pages/SettingsPage';
+import AdminPage from './pages/AdminPage'; // large, rarely visited -- shipped to everyone anyway
+
+const router = createBrowserRouter([
+  { path: '/dashboard', element: &lt;DashboardPage /&gt; },
+  { path: '/settings', element: &lt;SettingsPage /&gt; },
+  { path: '/admin', element: &lt;AdminPage /&gt; },
+]);
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">after — AdminPage loads only when visited</div>
+              <pre><code>import { lazy, Suspense } from 'react';
+import DashboardPage from './pages/DashboardPage';
+import SettingsPage from './pages/SettingsPage';
+
+const AdminPage = lazy(() =&gt; import('./pages/AdminPage'));
+
+const router = createBrowserRouter([
+  { path: '/dashboard', element: &lt;DashboardPage /&gt; },
+  { path: '/settings', element: &lt;SettingsPage /&gt; },
+  {
+    path: '/admin',
+    element: (
+      &lt;Suspense fallback={&lt;PageSkeleton /&gt;}&gt;
+        &lt;AdminPage /&gt;
+      &lt;/Suspense&gt;
+    ),
+  },
+]);
+</code></pre>
+            </div>
+
+            <p>
+              <code>React.lazy(() =&gt; import('./pages/AdminPage'))</code> tells the bundler to put
+              <code>AdminPage</code> and everything it imports into a separate file, fetched only
+              the first time a user actually navigates to <code>/admin</code>. This is the exact
+              same <code>Suspense</code> component from Week 12 — <code>lazy</code> is a component
+              that suspends while its chunk downloads, using the identical mechanism as a
+              suspending data fetch.
+            </p>
+          </section>
+
+          <section id="lazy-loading">
+            <h2>4. Lazy-Loading Non-Route Code</h2>
+            <p>
+              The same pattern applies to anything heavy and conditionally shown, not just whole
+              routes — a modal, a rich text editor, a charting library only used on one rarely-visited
+              screen:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">SettingsPage.tsx</div>
+              <pre><code>import { lazy, Suspense, useState } from 'react';
+
+const AvatarCropper = lazy(() =&gt; import('./AvatarCropper')); // pulls in a large image library
+
+function SettingsPage() {
+  const [isCropping, setIsCropping] = useState(false);
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt; setIsCropping(true)}&gt;Change avatar&lt;/button&gt;
+      {isCropping &amp;&amp; (
+        &lt;Suspense fallback={&lt;p&gt;Loading editor...&lt;/p&gt;}&gt;
+          &lt;AvatarCropper /&gt;
+        &lt;/Suspense&gt;
+      )}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              Most users who visit <code>SettingsPage</code> never click "Change avatar" at all —
+              lazy-loading <code>AvatarCropper</code> means its (potentially large) image-processing
+              dependencies never download for those users, only for the ones who actually trigger it.
+            </p>
+          </section>
+
+          <section id="bundle-analysis">
+            <h2>5. Bundle Analysis</h2>
+            <p>
+              To know what's actually worth splitting, you need to see what's in your bundle in the
+              first place. <code>rollup-plugin-visualizer</code> (Vite is built on Rollup) generates
+              an interactive treemap of your final bundle:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm install -D rollup-plugin-visualizer
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">vite.config.ts</div>
+              <pre><code>import { visualizer } from 'rollup-plugin-visualizer';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    visualizer({ open: true, gzipSize: true }),
+  ],
+});
+</code></pre>
+            </div>
+
+            <p>
+              Running a production build (<code>npm run build</code>) now opens a treemap where box
+              size represents each dependency's actual size in the final bundle. This routinely
+              surfaces surprises: a date library pulled in wholesale for one formatting call, a
+              charting library imported at the top level when only one rarely-visited page uses it
+              — both are prime code-splitting candidates once you can actually see them.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Rendering performance vs. loading performance</strong>
+                <p>Sections 1–2 (Profiler, <code>memo</code>) are about how fast components render once their code is already downloaded. Sections 3–5 are about how fast the code arrives in the first place. Both matter, but they're solved with completely different tools — don't reach for <code>useMemo</code> to fix a slow initial page load; that's a bundle-size problem.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Profile, split, and measure the difference</h3>
+              <p>Find a real bottleneck, fix it two different ways, and prove the fix worked with actual measurements.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Take an app from an earlier week (Week 3's 20,000-row product list is a good candidate) and record a profile of an interaction that feels sluggish using the React DevTools Profiler.</li>
+                <li>Identify, from the profile's "why did this render" data, one component re-rendering unnecessarily, and fix it with <code>React.memo</code> + <code>useCallback</code>. Re-profile and confirm the fix in the flame graph.</li>
+                <li>Add a second route to the app behind a heavy component (import a large library like a charting library, or just a component with a deliberately large inline array as filler) and code-split it with <code>React.lazy</code>.</li>
+                <li>Run a production build with the bundle visualizer enabled, and confirm visually that the lazy-loaded route appears as a separate chunk, not part of the main bundle.</li>
+                <li>Open your browser's Network tab, load the app, and confirm the heavy route's code only downloads when you actually navigate to it.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>The Profiler only records while you're actively recording — click "Record," perform the exact interaction you're investigating, then stop. Recording your app's initial load or unrelated interactions will bury the signal you're actually looking for in noise.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>What specific piece of information does the React DevTools Profiler give you that a general "this feels slow" hunch doesn't?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Exactly which components rendered, how long each took, and why each one rendered (props changed, state changed, parent re-rendered, context changed). That last part tells you whether a slow component needs <code>useMemo</code> for genuinely expensive work, or <code>React.memo</code>/<code>useCallback</code> because it's re-rendering unnecessarily — two different problems with two different fixes.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>What comparison does <code>React.memo</code> use to decide whether to skip a re-render?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A shallow, per-prop <code>Object.is</code> comparison against the previous render's props — the same comparison used by dependency arrays and by <code>useMemo</code>/<code>useCallback</code> internally. That's why a fresh object or function reference passed as a prop on every render defeats the memoization, even if its contents are identical.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What relationship does <code>React.lazy</code> have to Week 12's <code>Suspense</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>They use the same underlying mechanism — a lazily-loaded component suspends (in the exact technical sense from Week 12) while its JavaScript chunk downloads, and the nearest wrapping <code>Suspense</code> boundary shows its fallback until that download completes. It's the same "not ready yet" signal Week 12 used for data fetching, applied here to loading code instead of loading data.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Would using <code>useMemo</code> more aggressively fix a slow initial page load caused by a large JavaScript bundle?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>No. <code>useMemo</code> addresses render-time cost — how long a component takes to compute its output once its code is already downloaded and running. A slow initial load is a bundle-size/loading-time problem, solved by code-splitting (Sections 3–4) and understanding what's actually in the bundle (Section 5) — a completely different bottleneck requiring different tools.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-13.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 13: Testing React Apps</span>
+          </a>
+          <a href="week-15.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 15: List Virtualization →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

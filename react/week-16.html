@@ -1,0 +1,445 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 16: Next.js — Server vs. Client Components — CodeVerse Creatives</title>
+<meta name="description" content="Week 16 of the React curriculum: what Next.js adds over a Vite SPA, the App Router's project structure, server components by default, and the 'use client' directive." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 11 · Next.js</a>
+        <span>/</span>
+        <span aria-current="page">Week 16</span>
+      </div>
+
+      <h1>Week 16: Next.js — Server vs. Client Components</h1>
+      <p class="lesson-header__lede">
+        Everything so far has been a client-side single-page app: one HTML shell, all rendering
+        done in the browser. Next.js changes where components actually run — some render on the
+        server and never ship their code to the browser at all. This is the single biggest mental
+        shift in the whole course, and this week builds it from the ground up.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 11 of 13</span>
+        <span class="chip">Week 16 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain what Next.js adds on top of the React you already know</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Navigate the App Router's file-based routing conventions</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Decide correctly between a server component and a client component</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#what-nextjs-adds"><span>1</span> What Next.js Adds</a>
+        <a href="#project-setup"><span>2</span> Project Setup &amp; File-Based Routing</a>
+        <a href="#server-components"><span>3</span> Server Components by Default</a>
+        <a href="#use-client"><span>4</span> The 'use client' Directive</a>
+        <a href="#choosing"><span>5</span> Choosing Server vs. Client</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="what-nextjs-adds">
+            <h2>1. What Next.js Adds</h2>
+            <p>
+              Everything through Week 15 was a <strong>client-side rendered (CSR)</strong> app:
+              Vite ships one near-empty HTML file, and the browser downloads and runs JavaScript
+              that builds the entire page from scratch. That means a real, if brief, blank moment
+              before anything appears, and search engines/link previews see very little without
+              executing JavaScript first.
+            </p>
+
+            <p>
+              <strong>Next.js</strong> is a React framework that adds server-side rendering,
+              file-based routing, and a build/deployment pipeline on top of React itself — it
+              doesn't replace anything you've learned; hooks, components, props and state all work
+              exactly the same. What changes is <em>where code runs</em> and <em>how routing and
+              data fetching are wired up</em>.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npx create-next-app@latest my-app
+cd my-app
+npm run dev
+</code></pre>
+            </div>
+          </section>
+
+          <section id="project-setup">
+            <h2>2. Project Setup &amp; File-Based Routing</h2>
+            <p>
+              The <strong>App Router</strong> (Next.js's current, recommended routing system) maps
+              your file structure directly to URLs — no route configuration array like Week 6's
+              <code>createBrowserRouter</code>. A folder is a URL segment; specific filenames
+              inside it have special meaning.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/ directory structure</div>
+              <pre><code>app/
+├── layout.tsx          # root layout -- wraps every page
+├── page.tsx             # matches "/"
+├── products/
+│   ├── page.tsx          # matches "/products"
+│   └── [productId]/
+│       └── page.tsx      # matches "/products/:productId" -- dynamic segment
+└── about/
+    └── page.tsx          # matches "/about"
+</code></pre>
+            </div>
+
+            <p>
+              <code>page.tsx</code> defines the UI for that route; <code>layout.tsx</code> wraps
+              every page beneath it — directly analogous to Week 6's <code>&lt;Outlet /&gt;</code>-based
+              nested layouts, except the nesting is expressed as folder nesting rather than a
+              route config array. <code>[productId]</code> — square brackets around a folder name
+              — is the App Router's equivalent of Week 6's <code>:productId</code> dynamic segment.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/[productId]/page.tsx</div>
+              <pre><code>export default function ProductDetailPage({
+  params,
+}: {
+  params: { productId: string };
+}) {
+  return &lt;h1&gt;Product #{params.productId}&lt;/h1&gt;;
+}
+</code></pre>
+            </div>
+          </section>
+
+          <section id="server-components">
+            <h2>3. Server Components by Default</h2>
+            <p>
+              This is the biggest conceptual shift: in the App Router, <strong>every component is
+              a Server Component by default</strong>. A Server Component renders entirely on the
+              server — its code, and any large libraries it imports, never gets sent to the
+              browser at all. The browser receives only the resulting HTML (and a lightweight
+              description React uses to reconcile it) — not JavaScript for that component.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/page.tsx — a Server Component</div>
+              <pre><code>async function getProducts() {
+  const res = await fetch('https://api.example.com/products');
+  return res.json();
+}
+
+export default async function ProductsPage() {
+  const products = await getProducts(); // runs on the SERVER, not in the browser
+
+  return (
+    &lt;ul&gt;
+      {products.map((p: Product) =&gt; &lt;li key={p.id}&gt;{p.name}&lt;/li&gt;)}
+    &lt;/ul&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              Notice <code>ProductsPage</code> is an <code>async</code> function component — that's
+              only valid for Server Components, and it means you can <code>await</code> data
+              directly in the component body, no <code>useEffect</code> or <code>useQuery</code>
+              needed for this kind of fetch. The generated HTML arrives already containing the
+              product list; there's no client-side loading spinner for this data at all, because
+              no client-side fetch ever happens.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Server Components can't use hooks</strong>
+                <p><code>useState</code>, <code>useEffect</code>, <code>useContext</code> — none of Weeks 2–12's hooks work in a Server Component, because it never runs in a browser at all and has no concept of "re-rendering in response to state." Any interactivity needs a Client Component (Section 4).</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="use-client">
+            <h2>4. The <code>'use client'</code> Directive</h2>
+            <p>
+              A component needs to be a <strong>Client Component</strong> — hydrated and running
+              in the browser, exactly like everything from Weeks 1–15 — the moment it needs
+              interactivity: <code>useState</code>, event handlers, effects, browser-only APIs.
+              Opt in with a <code>'use client'</code> directive at the top of the file.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/AddToCartButton.tsx</div>
+              <pre><code>'use client'; // must be the very first line -- opts this whole module into the client bundle
+
+import { useState } from 'react';
+
+export function AddToCartButton({ productId }: { productId: number }) {
+  const [added, setAdded] = useState(false);
+
+  return (
+    &lt;button onClick={() =&gt; setAdded(true)}&gt;
+      {added ? 'Added ✓' : 'Add to cart'}
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/[productId]/page.tsx — mixing both</div>
+              <pre><code>import { AddToCartButton } from '../AddToCartButton';
+
+export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
+  const product = await getProduct(params.productId); // runs on the server
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{product.name}&lt;/h1&gt;               {/* rendered on the server, zero JS shipped for this part */}
+      &lt;AddToCartButton productId={product.id} /&gt; {/* hydrated, interactive, runs in the browser */}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              This is the pattern almost every real Next.js page follows: a Server Component
+              handles data fetching and static content, and imports small, focused Client
+              Components only for the specific pieces that need interactivity — the button, not
+              the whole page. Everything outside those client islands ships zero JavaScript.
+            </p>
+          </section>
+
+          <section id="choosing">
+            <h2>5. Choosing Server vs. Client</h2>
+            <p>
+              Default to a Server Component; add <code>'use client'</code> only when you hit a
+              genuine requirement for it:
+            </p>
+
+            <ul>
+              <li><strong>Stay a Server Component when:</strong> fetching data directly, reading environment secrets/API keys, rendering static or server-computed content, or including large dependencies you don't want shipped to the browser at all.</li>
+              <li><strong>Switch to a Client Component when:</strong> using <code>useState</code>/<code>useEffect</code>/any hook, attaching event handlers (<code>onClick</code>, <code>onChange</code>), using browser-only APIs (<code>localStorage</code>, <code>window</code>), or using a third-party library that itself depends on hooks or browser APIs.</li>
+            </ul>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Push <code>'use client'</code> as far down the tree as possible</strong>
+                <p>Marking your whole page <code>'use client'</code> because one small button needs state defeats the entire benefit — that reverts the whole tree to the CSR model from Weeks 1–15. Extract the interactive piece into its own small client component (like <code>AddToCartButton</code> above) and keep everything around it as a Server Component.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Port Week 6's product catalog to the Next.js App Router</h3>
+              <p>Rebuild the same feature you already know, this time drawing the server/client line deliberately.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Scaffold a new Next.js app with <code>create-next-app</code> and set up <code>app/products/page.tsx</code> and <code>app/products/[productId]/page.tsx</code>, following Section 2's file-based routing.</li>
+                <li>Fetch your product data directly inside each <code>async</code> page component (simulate an API with a delay, as in earlier weeks) — no <code>useQuery</code>, no client-side fetch, for the base list and detail views.</li>
+                <li>Extract exactly one interactive piece — a "favorite" toggle button on each product card — into its own <code>'use client'</code> component, and confirm (via a comment or a quick build-output check) that everything else on the page stays a Server Component.</li>
+                <li>Add a shared <code>app/layout.tsx</code> with a nav bar, confirming it wraps every route without needing to be repeated per page.</li>
+                <li>In your browser's DevTools, view the page source (not the rendered DOM, the actual HTML response) for the products list and confirm the product names are present in the raw HTML — proof the content was server-rendered, not just client-rendered after the fact.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>"View Page Source" (not "Inspect Element") shows the actual HTML the server sent, before any client-side JavaScript runs — that's the honest test of whether something was truly server-rendered, since the rendered DOM in DevTools always looks complete either way.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>What is fundamentally different about where a Server Component's code runs, compared to everything built in Weeks 1–15?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It renders entirely on the server, and its code — along with anything it imports — is never sent to the browser at all. Everything through Week 15 ran as client-side JavaScript in the browser; a Server Component's only output the browser receives is the resulting HTML.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>Why can't a Server Component use <code>useState</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It never runs in a browser and is never hydrated into an interactive, re-renderable instance — it renders once, on the server, and produces static HTML. <code>useState</code> requires a live component instance that can re-render in response to changing state, which only exists for Client Components running in the browser.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What does the <code>'use client'</code> directive at the top of a file actually do?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It marks that module (and everything it exports) as a Client Component, meaning its code is bundled and sent to the browser to be hydrated and run there — opting that specific piece of the tree into the interactive, hook-enabled behavior React has always had, rather than the server-only rendering that's now the default.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Why is marking an entire page <code>'use client'</code> just because one button needs <code>useState</code> considered a mistake?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It forces the entire page's code to ship to and run in the browser, eliminating the server-rendering benefit for all the static content on that page too — effectively reverting the whole page to the pre-Next.js CSR model. Extracting just the interactive piece into its own small client component keeps the rest of the page server-rendered and JavaScript-free.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-15.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 15: List Virtualization</span>
+          </a>
+          <a href="week-17.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 17: App Router Data Fetching &amp; Streaming →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,417 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 17: App Router Data Fetching, Layouts &amp; Streaming — CodeVerse Creatives</title>
+<meta name="description" content="Week 17 of the React curriculum: nested layouts, streaming with Suspense boundaries in the App Router, generateStaticParams, and SSR vs. SSG vs. client rendering." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 11 · Next.js</a>
+        <span>/</span>
+        <span aria-current="page">Week 17</span>
+      </div>
+
+      <h1>Week 17: App Router Data Fetching, Layouts &amp; Streaming</h1>
+      <p class="lesson-header__lede">
+        Week 16 established the server/client split. This week builds on it: how nested layouts
+        avoid redundant work, how Suspense (Week 12) lets slow parts of a page stream in without
+        blocking the fast parts, and the real question every page needs an answer to — should
+        this render at request time, at build time, or in the browser?
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 11 of 13</span>
+        <span class="chip">Week 17 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build nested layouts that avoid redundant re-fetching</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Stream a slow section of a page without blocking the rest</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Choose correctly between SSR, SSG and client rendering for a given page</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#layouts"><span>1</span> Nested Layouts</a>
+        <a href="#loading-ui"><span>2</span> loading.tsx &amp; Automatic Suspense</a>
+        <a href="#streaming"><span>3</span> Streaming with Suspense Boundaries</a>
+        <a href="#ssg"><span>4</span> Static Generation with generateStaticParams</a>
+        <a href="#ssr-vs-ssg-vs-csr"><span>5</span> SSR vs. SSG vs. Client Rendering</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="layouts">
+            <h2>1. Nested Layouts</h2>
+            <p>
+              A <code>layout.tsx</code> file wraps every page and layout nested inside its folder —
+              and critically, <strong>a layout doesn't re-render when navigating between its child
+              pages</strong>. Navigating from <code>/dashboard/overview</code> to
+              <code>/dashboard/settings</code> re-renders only the changing part; the shared
+              <code>dashboard/layout.tsx</code> around them stays mounted.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/dashboard/layout.tsx</div>
+              <pre><code>export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;div className="dashboard"&gt;
+      &lt;DashboardSidebar /&gt; {/* stays mounted across dashboard/* navigations */}
+      &lt;main&gt;{children}&lt;/main&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              This matters for data fetching specifically: if <code>DashboardSidebar</code> fetches
+              the current user inside the layout, that fetch runs once when the layout first
+              mounts, not again on every navigation between dashboard sub-pages — a meaningfully
+              different (and better) default than Week 6's <code>&lt;Outlet /&gt;</code> pattern,
+              where re-fetching on every route change required deliberate caching (Week 8) to avoid.
+            </p>
+          </section>
+
+          <section id="loading-ui">
+            <h2>2. <code>loading.tsx</code> &amp; Automatic Suspense</h2>
+            <p>
+              A file named <code>loading.tsx</code> in any route folder is automatically wrapped
+              around that route's <code>page.tsx</code> as a <code>Suspense</code> fallback — no
+              manual <code>&lt;Suspense&gt;</code> JSX required, unlike Week 12's hand-wired version.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/loading.tsx</div>
+              <pre><code>export default function Loading() {
+  return &lt;ProductListSkeleton /&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              Next.js effectively wraps <code>app/products/page.tsx</code> in
+              <code>&lt;Suspense fallback={'<Loading />'}&gt;</code> automatically. While
+              <code>ProductsPage</code>'s <code>await getProducts()</code> (Week 16) is pending,
+              <code>Loading</code> shows instead — the same underlying Suspense mechanism, now a
+              file-naming convention instead of explicit JSX.
+            </p>
+          </section>
+
+          <section id="streaming">
+            <h2>3. Streaming with Suspense Boundaries</h2>
+            <p>
+              A page-level <code>loading.tsx</code> blocks the <em>entire</em> page until its
+              slowest fetch resolves. If a page has one fast piece of data and one genuinely slow
+              one, wrapping just the slow piece in its own <code>Suspense</code> lets the fast
+              content <strong>stream</strong> to the browser immediately, with the slow section's
+              fallback showing only where that section will eventually appear.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/[productId]/page.tsx</div>
+              <pre><code>import { Suspense } from 'react';
+
+export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
+  const product = await getProduct(params.productId); // fast -- awaited directly
+
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{product.name}&lt;/h1&gt; {/* streams to the browser immediately */}
+
+      &lt;Suspense fallback={&lt;ReviewsSkeleton /&gt;}&gt;
+        &lt;ProductReviews productId={product.id} /&gt; {/* slow -- streams in separately, later */}
+      &lt;/Suspense&gt;
+    &lt;/div&gt;
+  );
+}
+
+async function ProductReviews({ productId }: { productId: string }) {
+  const reviews = await getReviews(productId); // a slow, separate fetch
+  return &lt;ul&gt;{reviews.map((r: Review) =&gt; &lt;li key={r.id}&gt;{r.text}&lt;/li&gt;)}&lt;/ul&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              The product name appears the instant its own fast fetch resolves; the reviews
+              section's skeleton shows in place until <code>getReviews</code> finishes, at which
+              point that piece of HTML streams in and swaps the skeleton out — all in a single page
+              load, no client-side JavaScript request involved. This is the same
+              <code>ErrorBoundary</code> + <code>Suspense</code> composition from Week 12, now
+              streaming real server-rendered HTML instead of client-fetched data.
+            </p>
+          </section>
+
+          <section id="ssg">
+            <h2>4. Static Generation with <code>generateStaticParams</code></h2>
+            <p>
+              For dynamic routes whose full set of possible values is known ahead of time (a
+              blog's slugs, a fixed product catalog), Next.js can render every page
+              <strong>at build time</strong> instead of on every request — the fastest possible
+              option, since there's no server work left to do when a real user requests the page.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/blog/[slug]/page.tsx</div>
+              <pre><code>export async function generateStaticParams() {
+  const posts = await getAllPostSlugs(); // e.g. [{ slug: 'hello-world' }, { slug: 'react-tips' }]
+  return posts; // Next.js pre-renders one static page per entry, at build time
+}
+
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = await getPostBySlug(params.slug);
+  return &lt;article&gt;{post.content}&lt;/article&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>generateStaticParams</code> tells Next.js the complete list of
+              <code>slug</code> values to pre-render during <code>next build</code> — the resulting
+              HTML for each is generated once and served identically to every visitor, like a
+              plain static file, until the next deploy.
+            </p>
+          </section>
+
+          <section id="ssr-vs-ssg-vs-csr">
+            <h2>5. SSR vs. SSG vs. Client Rendering — When to Use Each</h2>
+            <p>
+              Three genuinely different rendering strategies, each right for a different shape of
+              content:
+            </p>
+
+            <ul>
+              <li><strong>SSG (Static Site Generation)</strong> — rendered once at build time. Fastest possible response, but content is only as fresh as the last deploy. Right for: blog posts, marketing pages, documentation, a product catalog that changes infrequently.</li>
+              <li><strong>SSR (Server-Side Rendering)</strong> — rendered fresh on every request, on the server (the default for a Server Component without <code>generateStaticParams</code>). Right for: personalized content, data that must always be current, pages depending on request-specific data like cookies.</li>
+              <li><strong>Client Rendering</strong> — a Client Component (Week 16) fetching with <code>useQuery</code> (Week 8) after the page loads. Right for: highly interactive, frequently-changing data behind an already-loaded shell — a live dashboard, a chat window, anything where Week 8–9's caching and mutation behavior is the actual point.</li>
+            </ul>
+
+            <p>
+              These aren't mutually exclusive within one app, or even one page — Section 3's
+              example mixes an awaited server fetch (effectively SSR for that piece) with a
+              streamed, separately-loading section, and a real page might further nest a Client
+              Component using <code>useMutation</code> for a comment form. Choosing the right
+              strategy per piece of content, not per whole app, is the actual skill.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>The question to ask per page (or per section)</strong>
+                <p>"Does this need to be different for every request, or could it be the same for everyone until the next deploy?" A yes to the second half of that question is a strong signal for SSG; a genuine need for per-user or always-current data points to SSR or client-side fetching instead.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build a small blog: static posts, a streamed comments section</h3>
+              <p>Combine static generation, layouts, and streaming in one small but realistic app.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Create an <code>app/blog/[slug]/page.tsx</code> with a hardcoded array of 5 blog posts (in a data file), using <code>generateStaticParams</code> so every post is statically generated at build time.</li>
+                <li>Add a <code>app/blog/layout.tsx</code> with a shared sidebar listing all post titles, and confirm — by adding a temporary <code>console.log</code> — that it doesn't re-run its data loading on every navigation between posts.</li>
+                <li>Add a <code>ProductReviews</code>-style comments section to each post, deliberately delayed (~2 seconds) and wrapped in its own <code>Suspense</code> with a skeleton fallback, so the post content appears immediately while comments stream in after.</li>
+                <li>Run <code>next build</code> and confirm in the build output that your blog post routes were generated as static pages, not marked for server rendering on every request.</li>
+                <li>Add one genuinely dynamic page — <code>app/dashboard/page.tsx</code> showing the current server time on every load (no caching) — and explain in a comment why this page is a poor fit for <code>generateStaticParams</code>.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>next build</code>'s output prints a route table with symbols indicating each route's rendering strategy (static vs. dynamic) — check the CLI output directly rather than guessing from behavior alone.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why doesn't a shared <code>layout.tsx</code> re-fetch its data when navigating between two pages nested inside it?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>The layout stays mounted across navigations between its child pages — only the changing page content re-renders, not the layout wrapping it. Any data fetching inside the layout itself runs once when it first mounts, not again on every navigation, which is a structural guarantee of nested layouts rather than something requiring caching to achieve.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>What does a <code>loading.tsx</code> file do, mechanically?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Next.js automatically wraps the corresponding <code>page.tsx</code> in a <code>Suspense</code> boundary using that file as the <code>fallback</code> — the same underlying Suspense mechanism from Week 12, applied via a file-naming convention instead of explicit JSX you write by hand.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>In the streaming example, why does the product name appear before the reviews section, without any client-side JavaScript fetch involved?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Only the reviews section is wrapped in its own <code>Suspense</code> boundary, so the server can stream the already-resolved product name's HTML to the browser immediately, without waiting for the separately-fetched, slower reviews data. The reviews' skeleton shows in its place until that piece of server-rendered HTML streams in later, in the same page load.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Why would a live, current-server-time dashboard be a poor fit for <code>generateStaticParams</code>/static generation?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Static generation renders a page once at build time and serves that same HTML to every visitor until the next deploy — exactly wrong for content that must be different on every single request. A page whose content is meaningfully different moment to moment needs SSR (rendered fresh per request) or client-side fetching, not a strategy whose whole benefit comes from content staying the same.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-16.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 16: Server vs. Client Components</span>
+          </a>
+          <a href="week-18.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 18: Styling Systems &amp; Accessibility →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

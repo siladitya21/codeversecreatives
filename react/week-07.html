@@ -1,0 +1,518 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 7: Loaders, Actions &amp; Protected Routes — CodeVerse Creatives</title>
+<meta name="description" content="Week 7 of the React curriculum: route loaders for pre-render data fetching, actions for form submissions, pending UI with useNavigation, and protected routes." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 5 · Routing</a>
+        <span>/</span>
+        <span aria-current="page">Week 7</span>
+      </div>
+
+      <h1>Week 7: Loaders, Actions &amp; Protected Routes</h1>
+      <p class="lesson-header__lede">
+        Last week's routes rendered a component, and that component then fetched its own data with
+        an effect — the Week 2 pattern. React Router can do better: a <strong>loader</strong> fetches
+        a route's data <em>before</em> it renders, and an <strong>action</strong> handles a form
+        submission through the same routing system. This week also covers the pattern every app
+        with a login screen needs: protecting a route from unauthenticated access.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 5 of 13</span>
+        <span class="chip">Week 7 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Fetch a route's data with a loader instead of an effect</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Handle form submissions through a route action</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a protected route that redirects unauthenticated users</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#loaders"><span>1</span> Route Loaders</a>
+        <a href="#pending-ui"><span>2</span> Pending UI with useNavigation</a>
+        <a href="#actions"><span>3</span> Route Actions</a>
+        <a href="#error-elements"><span>4</span> errorElement &amp; Not-Found Routes</a>
+        <a href="#protected"><span>5</span> Protected Routes</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="loaders">
+            <h2>1. Route Loaders</h2>
+            <p>
+              Fetching data inside a <code>useEffect</code> after a component mounts means the user
+              sees an empty or loading component first, then data pops in a moment later — a
+              waterfall. A <strong>loader</strong> runs <em>before</em> React Router renders the
+              route at all, so the data is already available on the first render.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">route config with a loader</div>
+              <pre><code>import { createBrowserRouter } from 'react-router';
+
+const router = createBrowserRouter([
+  {
+    path: 'products/:productId',
+    element: &lt;ProductDetailPage /&gt;,
+    loader: async ({ params }) =&gt; {
+      const response = await fetch(`/api/products/${params.productId}`);
+      if (!response.ok) throw new Response('Not Found', { status: 404 });
+      return response.json();
+    },
+  },
+]);
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">ProductDetailPage.tsx</div>
+              <pre><code>import { useLoaderData } from 'react-router';
+
+function ProductDetailPage() {
+  const product = useLoaderData(); // already resolved -- no loading state to handle here
+
+  return &lt;h1&gt;{product.name}&lt;/h1&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              The loader receives the same <code>params</code> you'd get from <code>useParams()</code>,
+              runs when navigation to that route starts, and React Router waits for it to resolve
+              before rendering <code>ProductDetailPage</code> at all. <code>useLoaderData()</code>
+              then just reads the already-resolved result — no <code>isLoading</code> flag to check
+              inside the component, because the component never renders until the data exists.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Loaders vs. TanStack Query (next week)</strong>
+                <p>A loader is React Router's built-in answer to "fetch before render," and is enough for many apps. Week 8 introduces TanStack Query, which adds caching, background refetching, and mutation handling on top — the two can be combined (a loader can even call a Query client), but for now, treat loaders as the simpler, router-native tool.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="pending-ui">
+            <h2>2. Pending UI with <code>useNavigation</code></h2>
+            <p>
+              A loader still takes time over the network — the difference is <em>where</em> the
+              waiting happens. <code>useNavigation()</code> exposes the router's current navigation
+              state, so you can show pending UI (like a top-of-page progress bar) without each page
+              managing its own loading flag:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">AppLayout.tsx</div>
+              <pre><code>import { Outlet, useNavigation } from 'react-router';
+
+function AppLayout() {
+  const navigation = useNavigation();
+  const isNavigating = navigation.state === 'loading';
+
+  return (
+    &lt;div&gt;
+      {isNavigating &amp;&amp; &lt;div className="top-progress-bar" /&gt;}
+      &lt;Outlet /&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>navigation.state</code> is <code>"idle"</code>, <code>"loading"</code> (a loader
+              is running for the next page), or <code>"submitting"</code> (an action, Section 3, is
+              running). Placing this check in the shared layout means every route gets consistent
+              pending UI for free, instead of each page reimplementing its own spinner.
+            </p>
+          </section>
+
+          <section id="actions">
+            <h2>3. Route Actions</h2>
+            <p>
+              An <strong>action</strong> is a loader's counterpart for writes: a function that
+              handles a form submission for a route, runs the mutation, and lets React Router
+              manage the pending/error state the same way it does for loaders.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">route config with an action</div>
+              <pre><code>const router = createBrowserRouter([
+  {
+    path: 'contacts/new',
+    element: &lt;NewContactPage /&gt;,
+    action: async ({ request }) =&gt; {
+      const formData = await request.formData();
+      const name = formData.get('name');
+
+      const response = await fetch('/api/contacts', {
+        method: 'POST',
+        body: JSON.stringify({ name }),
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (!response.ok) throw new Response('Failed to create contact', { status: 500 });
+      return redirect('/contacts'); // navigate away on success
+    },
+  },
+]);
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">NewContactPage.tsx</div>
+              <pre><code>import { Form, useNavigation } from 'react-router';
+
+function NewContactPage() {
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
+
+  return (
+    &lt;Form method="post"&gt;
+      &lt;input name="name" required /&gt;
+      &lt;button type="submit" disabled={isSubmitting}&gt;
+        {isSubmitting ? 'Saving...' : 'Save contact'}
+      &lt;/button&gt;
+    &lt;/Form&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              React Router's own <code>&lt;Form&gt;</code> (capital F, imported from
+              <code>react-router</code>) looks like a plain HTML form but intercepts the submit,
+              bundles the fields into a <code>FormData</code> object, and routes it to the matching
+              route's <code>action</code> — no manual <code>onSubmit</code>, no manual
+              <code>fetch</code> call, and <code>useNavigation</code> reports
+              <code>"submitting"</code> automatically while it runs.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>This isn't the only way to submit a form</strong>
+                <p>React Hook Form (Week 5) is still the right tool when you need rich client-side validation before submission. Router actions shine for simpler forms where the interesting logic is the server round-trip itself — the two approaches solve different problems and can coexist in the same app.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="error-elements">
+            <h2>4. <code>errorElement</code> &amp; Not-Found Routes</h2>
+            <p>
+              When a loader or action throws — like the 404 <code>Response</code> from Section 1 —
+              React Router doesn't crash the whole app. It renders the nearest route's
+              <code>errorElement</code> instead:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">route config with error handling</div>
+              <pre><code>{
+  path: 'products/:productId',
+  element: &lt;ProductDetailPage /&gt;,
+  errorElement: &lt;ProductError /&gt;,
+  loader: productLoader,
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">ProductError.tsx</div>
+              <pre><code>import { useRouteError, isRouteErrorResponse } from 'react-router';
+
+function ProductError() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error) &amp;&amp; error.status === 404) {
+    return &lt;p&gt;That product doesn't exist.&lt;/p&gt;;
+  }
+
+  return &lt;p&gt;Something went wrong loading this product.&lt;/p&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>isRouteErrorResponse</code> distinguishes a deliberate <code>Response</code>
+              thrown from a loader/action (like the 404 from Section 1) from an unexpected
+              JavaScript error, letting you show a precise message for expected failure cases and a
+              generic one for everything else.
+            </p>
+          </section>
+
+          <section id="protected">
+            <h2>5. Protected Routes</h2>
+            <p>
+              A protected route needs to check auth status before rendering, and redirect to a
+              login page if the user isn't authenticated. The cleanest implementation is a wrapper
+              component used as a parent route's <code>element</code>:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">RequireAuth.tsx</div>
+              <pre><code>import { Navigate, Outlet, useLocation } from 'react-router';
+import { useAuth } from './useAuth'; // your own auth hook/context
+
+function RequireAuth() {
+  const { user } = useAuth();
+  const location = useLocation();
+
+  if (!user) {
+    // Redirect to login, remembering where the user was trying to go
+    return &lt;Navigate to="/login" state={{ from: location }} replace /&gt;;
+  }
+
+  return &lt;Outlet /&gt;; // authenticated -- render whichever child route matched
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">route config</div>
+              <pre><code>const router = createBrowserRouter([
+  { path: '/login', element: &lt;LoginPage /&gt; },
+  {
+    element: &lt;RequireAuth /&gt;, // no path -- wraps its children with the auth check
+    children: [
+      { path: '/dashboard', element: &lt;DashboardPage /&gt; },
+      { path: '/settings', element: &lt;SettingsPage /&gt; },
+    ],
+  },
+]);
+</code></pre>
+            </div>
+
+            <p>
+              A route object with <code>children</code> but no <code>path</code> acts as a pure
+              wrapper — it doesn't match a URL segment itself, it just runs
+              <code>RequireAuth</code>'s check before any of its children can render.
+              <code>replace</code> on the <code>Navigate</code> avoids leaving the blocked page in
+              browser history, so the back button doesn't return the user to a bounce-redirect loop.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Client-side protection is UX, not security</strong>
+                <p><code>RequireAuth</code> hides a page from a user without a valid session, but the JavaScript bundle and route config are always visible in the browser. Any data this route reveals must <em>also</em> be protected by real server-side authorization — client-side route guards are about experience, never the actual security boundary.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Add a loader, an action, and a protected route to last week's catalog</h3>
+              <p>Extend Week 6's product catalog with this week's router-native data layer.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Replace the <code>useParams</code>-based lookup on the product detail page with a real <code>loader</code> that "fetches" the product (simulate with a <code>Promise</code> + <code>setTimeout</code> over your in-memory array), throwing a 404 <code>Response</code> when the ID doesn't match.</li>
+                <li>Add an <code>errorElement</code> for the detail route that distinguishes a 404 from a generic failure using <code>isRouteErrorResponse</code>.</li>
+                <li>Add a top-of-page progress bar in <code>AppLayout</code> driven by <code>useNavigation().state === 'loading'</code>.</li>
+                <li>Add a simple <code>/login</code> page and a fake <code>useAuth</code> hook (a piece of state toggled by a "Log in" button is enough) and wrap a new <code>/admin</code> route in <code>RequireAuth</code>, redirecting to <code>/login</code> when logged out.</li>
+                <li>Add a <code>/contacts/new</code> route with a React Router <code>&lt;Form&gt;</code> and an <code>action</code> that adds the contact to your in-memory list and redirects to a contacts list route on success.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>To simulate a network delay for your loader without a real backend: <code>await new Promise(resolve =&gt; setTimeout(resolve, 500));</code> before returning the data — this is what makes the progress bar from step 3 actually visible.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>What's the key timing difference between fetching data in a loader vs. fetching it in a <code>useEffect</code> after the component mounts?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A loader runs and resolves <em>before</em> the route's component renders at all, so the component's first render already has real data — no loading state to render through. An effect-based fetch renders the component first (with no data yet), then fetches, then re-renders once the data arrives — a visible waterfall the loader approach avoids.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>What does React Router's <code>&lt;Form&gt;</code> component do differently from a plain HTML <code>&lt;form&gt;</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It intercepts the submit event, bundles the fields into a <code>FormData</code> object, and routes it to the matching route's <code>action</code> client-side — instead of triggering the browser's default full-page form submission. It also automatically updates <code>useNavigation().state</code> to <code>"submitting"</code> while the action runs.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>Why does a route object with <code>children</code> but no <code>path</code> work as an auth guard?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Without a <code>path</code>, the route never matches a URL segment on its own — it exists purely to wrap its children, meaning its <code>element</code> (like <code>RequireAuth</code>) always runs first and its <code>&lt;Outlet /&gt;</code> is the only way any child route can actually render. That gives the wrapper a chance to redirect before any protected child ever mounts.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Why isn't a client-side <code>RequireAuth</code> check sufficient on its own to secure a page's data?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>All client-side code — including the route guard's logic — is downloaded to and runs in the user's own browser, where it can be inspected or bypassed. It's a UX mechanism for hiding pages from users without a session, not a security boundary; the server must independently verify authorization on every request for any data the page displays.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-06.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 6: Routing with React Router</span>
+          </a>
+          <a href="week-08.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 8: TanStack Query — Queries &amp; Caching →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

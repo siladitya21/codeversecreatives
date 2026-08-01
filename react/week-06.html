@@ -1,0 +1,502 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 6: Routing with React Router — CodeVerse Creatives</title>
+<meta name="description" content="Week 6 of the React curriculum: client-side routing, nested routes and layouts, dynamic URL segments with useParams, and programmatic navigation with search params." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 5 · Routing</a>
+        <span>/</span>
+        <span aria-current="page">Week 6</span>
+      </div>
+
+      <h1>Week 6: Routing with React Router</h1>
+      <p class="lesson-header__lede">
+        Every component tree so far has rendered from one static entry point. This week turns that
+        into a real multi-page application: different URLs rendering different components, shared
+        layouts wrapping multiple pages, and URLs that carry actual data — like which product page
+        you're on — instead of every screen living behind the same root path.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 5 of 13</span>
+        <span class="chip">Week 6 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Set up route configuration and shared layouts with React Router</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Read dynamic URL segments and query parameters</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Navigate programmatically in response to app logic, not just link clicks</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#why-routing"><span>1</span> Why Client-Side Routing</a>
+        <a href="#setup"><span>2</span> Setting Up React Router</a>
+        <a href="#nested"><span>3</span> Nested Routes &amp; Layouts</a>
+        <a href="#dynamic"><span>4</span> Dynamic Segments</a>
+        <a href="#navigation"><span>5</span> Programmatic Navigation</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="why-routing">
+            <h2>1. Why Client-Side Routing</h2>
+            <p>
+              A traditional multi-page site sends a new HTML document from the server on every
+              navigation — the browser tears down the whole page and rebuilds it. A React
+              single-page app (SPA) instead loads one HTML shell, and JavaScript swaps out which
+              components render based on the current URL — no full page reload, no losing
+              in-memory state that shouldn't be lost (like a half-filled form in a persistent
+              header).
+            </p>
+
+            <p>
+              <strong>React Router</strong> is the library that makes this possible: it intercepts
+              link clicks and browser back/forward navigation, updates the URL via the History API
+              without a network round-trip, and renders whichever component your route
+              configuration says matches that URL.
+            </p>
+          </section>
+
+          <section id="setup">
+            <h2>2. Setting Up React Router</h2>
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm install react-router
+</code></pre>
+            </div>
+
+            <p>
+              The modern setup defines your routes as data — an array of route objects — and hands
+              them to <code>createBrowserRouter</code>, then renders the result with
+              <code>RouterProvider</code> at your app's root:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">main.tsx</div>
+              <pre><code>import { createRoot } from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import HomePage from './pages/HomePage';
+import ProductsPage from './pages/ProductsPage';
+import AboutPage from './pages/AboutPage';
+
+const router = createBrowserRouter([
+  { path: '/', element: &lt;HomePage /&gt; },
+  { path: '/products', element: &lt;ProductsPage /&gt; },
+  { path: '/about', element: &lt;AboutPage /&gt; },
+]);
+
+createRoot(document.getElementById('root')!).render(
+  &lt;RouterProvider router={router} /&gt;
+);
+</code></pre>
+            </div>
+
+            <p>
+              Inside any routed page, use <code>&lt;Link&gt;</code> instead of a plain
+              <code>&lt;a&gt;</code> tag — a regular anchor tag triggers a full page reload;
+              <code>Link</code> intercepts the click and lets React Router handle it client-side:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">Nav.tsx</div>
+              <pre><code>import { Link } from 'react-router';
+
+function Nav() {
+  return (
+    &lt;nav&gt;
+      &lt;Link to="/"&gt;Home&lt;/Link&gt;
+      &lt;Link to="/products"&gt;Products&lt;/Link&gt;
+      &lt;Link to="/about"&gt;About&lt;/Link&gt;
+    &lt;/nav&gt;
+  );
+}
+</code></pre>
+            </div>
+          </section>
+
+          <section id="nested">
+            <h2>3. Nested Routes &amp; Layouts</h2>
+            <p>
+              Most real apps share UI across many pages — a header, a sidebar, a footer — without
+              wanting to repeat that markup in every page component. Nested routes solve this: a
+              parent route renders a shared layout, and an <code>&lt;Outlet /&gt;</code> inside it
+              marks where the matched child route should render.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">AppLayout.tsx</div>
+              <pre><code>import { Outlet } from 'react-router';
+import Nav from './Nav';
+
+function AppLayout() {
+  return (
+    &lt;div&gt;
+      &lt;Nav /&gt;
+      &lt;main&gt;
+        &lt;Outlet /&gt; {/* the matched child route renders here */}
+      &lt;/main&gt;
+      &lt;footer&gt;© 2026&lt;/footer&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">main.tsx — nested route config</div>
+              <pre><code>const router = createBrowserRouter([
+  {
+    path: '/',
+    element: &lt;AppLayout /&gt;,
+    children: [
+      { index: true, element: &lt;HomePage /&gt; },        // matches "/" exactly
+      { path: 'products', element: &lt;ProductsPage /&gt; }, // matches "/products"
+      { path: 'about', element: &lt;AboutPage /&gt; },        // matches "/about"
+    ],
+  },
+]);
+</code></pre>
+            </div>
+
+            <p>
+              <code>Nav</code> and the footer now render exactly once, no matter which child route
+              is active — only the <code>&lt;Outlet /&gt;</code> content swaps as the URL changes.
+              The <code>index: true</code> route is what matches the parent path exactly, playing
+              the role a plain <code>path: '/'</code> would at the top level.
+            </p>
+          </section>
+
+          <section id="dynamic">
+            <h2>4. Dynamic Segments &amp; <code>useParams</code></h2>
+            <p>
+              A product page needs a different product per URL — <code>/products/1</code>,
+              <code>/products/2</code> — without defining a separate route for every possible ID. A
+              <strong>dynamic segment</strong>, written with a leading colon, matches any value at
+              that position in the path:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">route config</div>
+              <pre><code>{ path: 'products/:productId', element: &lt;ProductDetailPage /&gt; }
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">ProductDetailPage.tsx</div>
+              <pre><code>import { useParams } from 'react-router';
+
+function ProductDetailPage() {
+  const { productId } = useParams(); // string | undefined, matching the :productId segment
+
+  if (!productId) return &lt;p&gt;Not found&lt;/p&gt;;
+
+  return &lt;p&gt;Showing product #{productId}&lt;/p&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              Visiting <code>/products/42</code> matches this route and gives
+              <code>useParams()</code> back <code>{'{ productId: "42" }'}</code> — note it's always
+              a <em>string</em>, straight from the URL, so convert it (<code>Number(productId)</code>)
+              before using it as a number for something like an API lookup.
+            </p>
+          </section>
+
+          <section id="navigation">
+            <h2>5. Programmatic Navigation &amp; Search Params</h2>
+            <p>
+              Not every navigation is a link click — submitting a form and redirecting to a new
+              page, or navigating after an async action completes, both need to trigger navigation
+              from code. <code>useNavigate</code> returns a function for exactly that:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">LoginForm.tsx</div>
+              <pre><code>import { useNavigate } from 'react-router';
+
+function LoginForm() {
+  const navigate = useNavigate();
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    const success = await login(); // pretend this calls an API
+    if (success) {
+      navigate('/dashboard'); // programmatic navigation, no &lt;Link&gt; involved
+    }
+  }
+
+  return &lt;form onSubmit={handleSubmit}&gt;{/* ... */}&lt;/form&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              <strong>Search params</strong> (the <code>?key=value</code> part of a URL) are the
+              standard place for state that should survive a page refresh and be shareable via URL
+              — a search query, a filter, a pagination page number. <code>useSearchParams</code>
+              reads and writes them, keeping them in sync with the URL:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">ProductsPage.tsx</div>
+              <pre><code>import { useSearchParams } from 'react-router';
+
+function ProductsPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get('category') ?? 'all';
+
+  function handleCategoryChange(next: string) {
+    setSearchParams({ category: next }); // updates the URL: /products?category=next
+  }
+
+  return (
+    &lt;select value={category} onChange={e =&gt; handleCategoryChange(e.target.value)}&gt;
+      &lt;option value="all"&gt;All&lt;/option&gt;
+      &lt;option value="electronics"&gt;Electronics&lt;/option&gt;
+    &lt;/select&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              Because this lives in the URL rather than local component state, refreshing the page
+              or sharing the link preserves the selected filter — something a plain
+              <code>useState</code> could never do on its own.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Dynamic segment or search param?</strong>
+                <p>Use a dynamic segment (<code>:productId</code>) for a value that identifies <em>which resource</em> you're looking at — it's part of what page this is. Use a search param for optional, non-identifying state layered on top of a page — filters, sort order, pagination. A good test: would this page still make sense with the value removed? If yes, it's a search param.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build a small multi-page product catalog</h3>
+              <p>Wire up nested layouts, a dynamic product route, and URL-driven filtering in one app.</p>
+
+              <div class="code-block">
+                <div class="code-block__label">starter data</div>
+                <pre><code>const products = [
+  { id: 1, name: 'Mechanical Keyboard', category: 'electronics' },
+  { id: 2, name: 'Standing Desk', category: 'furniture' },
+  { id: 3, name: 'Wireless Mouse', category: 'electronics' },
+  { id: 4, name: 'Desk Lamp', category: 'furniture' },
+];
+</code></pre>
+              </div>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Set up <code>createBrowserRouter</code> with an <code>AppLayout</code> parent route (shared nav) containing three children: an <code>index</code> home page, <code>products</code> (list), and <code>products/:productId</code> (detail).</li>
+                <li>The products list page reads a <code>category</code> search param via <code>useSearchParams</code> and filters the rendered list; add buttons/links to switch categories that update the search param.</li>
+                <li>Each product in the list links (via <code>&lt;Link&gt;</code>) to its own <code>/products/:productId</code> detail page, which reads <code>productId</code> via <code>useParams</code> and looks up the matching product.</li>
+                <li>On the detail page, add a "Back to products" button using <code>useNavigate(-1)</code> instead of a <code>Link</code>, to go back exactly one step in history.</li>
+                <li>Handle the case where <code>productId</code> doesn't match any product — render a clear "Product not found" message instead of crashing.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>navigate(-1)</code> tells the browser history to go back one entry, the same as clicking the browser's back button — different from <code>navigate('/products')</code>, which always pushes a specific new URL regardless of where the user came from.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why does clicking a React Router <code>&lt;Link&gt;</code> not cause a full page reload, while a plain <code>&lt;a href&gt;</code> would?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p><code>Link</code> intercepts the click event, calls <code>preventDefault()</code> on it, and updates the URL via the browser's History API instead of letting the browser navigate normally. React Router then re-renders only the components whose matched route changed — no request to the server for a new HTML document, no full page teardown.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>What does <code>&lt;Outlet /&gt;</code> do inside a layout component?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It marks the exact position where the currently matched <em>child</em> route's element should render. The parent route's own markup (nav, footer, anything outside <code>&lt;Outlet /&gt;</code>) renders once and stays in place across navigations between its children — only the outlet's content swaps.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>For the route <code>products/:productId</code> and the URL <code>/products/42</code>, what type is <code>useParams().productId</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A string — <code>"42"</code>, not the number <code>42</code>. Every dynamic segment comes straight out of the URL text, which has no concept of numeric types; you need to explicitly convert it (<code>Number(productId)</code>) before using it anywhere that expects a number, such as comparing against a numeric <code>id</code> field.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Why put a filter's selected category in a search param instead of a plain <code>useState</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p><code>useState</code> lives only in memory and resets on a page refresh, and can't be shared by copying a link. Putting the filter in the URL via <code>useSearchParams</code> means refreshing the page preserves the selected filter, and sending someone the URL shows them the same filtered view — neither is possible with state alone.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-05.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 5: Forms &amp; Controlled Inputs</span>
+          </a>
+          <a href="week-07.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 7: Loaders, Actions &amp; Protected Routes →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

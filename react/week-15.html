@@ -1,0 +1,441 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 15: List Virtualization — CodeVerse Creatives</title>
+<meta name="description" content="Week 15 of the React curriculum: why rendering huge lists is slow, the windowing concept, and implementing list virtualization with TanStack Virtual." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 10 · Performance</a>
+        <span>/</span>
+        <span aria-current="page">Week 15</span>
+      </div>
+
+      <h1>Week 15: List Virtualization</h1>
+      <p class="lesson-header__lede">
+        Week 3's 20,000-row product list dodged its performance problem by filtering the array
+        down before rendering. Sometimes you genuinely need to show all of it. This week covers
+        the technique that makes that possible: rendering only the handful of rows actually
+        visible on screen, no matter how large the underlying list is.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 10 of 13</span>
+        <span class="chip">Week 15 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain why rendering thousands of DOM nodes is slow, independent of React</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Implement a virtualized list with TanStack Virtual</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Virtualize a list with variable-height rows</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#why-slow"><span>1</span> Why Huge Lists Are Slow</a>
+        <a href="#windowing"><span>2</span> The Windowing Concept</a>
+        <a href="#tanstack-virtual"><span>3</span> TanStack Virtual</a>
+        <a href="#variable-height"><span>4</span> Variable-Height Rows</a>
+        <a href="#when-to-virtualize"><span>5</span> When to Reach for This</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="why-slow">
+            <h2>1. Why Huge Lists Are Slow — Independent of React</h2>
+            <p>
+              Rendering 20,000 <code>&lt;div&gt;</code> elements is slow even with no JavaScript
+              framework involved at all — it's a fundamental browser cost, not a React-specific
+              one. Every DOM node the browser creates costs memory and layout/paint time; scrolling
+              a page with tens of thousands of live nodes means the browser is constantly
+              recalculating layout across all of them, whether or not they're currently visible.
+            </p>
+
+            <p>
+              Week 3's <code>useMemo</code> and <code>React.memo</code> optimize how efficiently
+              React <em>decides what to update</em> — they don't reduce how many actual DOM nodes
+              exist. A perfectly memoized component tree with 20,000 real DOM nodes is still 20,000
+              real DOM nodes the browser has to manage.
+            </p>
+          </section>
+
+          <section id="windowing">
+            <h2>2. The Windowing Concept</h2>
+            <p>
+              <strong>Virtualization</strong> (also called windowing) solves this by never creating
+              DOM nodes for off-screen items in the first place — only the rows currently visible
+              in the viewport (plus a small buffer) actually exist in the DOM at any moment.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">the core idea</div>
+              <pre><code>// A list of 20,000 items, but the viewport only shows ~15 rows at once.
+//
+// Instead of rendering all 20,000 &lt;div&gt;s:
+// 1. Render a container with the FULL scroll height of all 20,000 items
+//    (so the scrollbar behaves correctly)
+// 2. As the user scrolls, calculate which ~15-20 items are currently visible
+// 3. Render ONLY those items, absolutely positioned at their correct scroll offset
+// 4. Everything else has zero DOM nodes -- not hidden, not display:none, simply not rendered
+</code></pre>
+            </div>
+
+            <p>
+              The scrollbar and scroll behavior feel completely normal to the user — the container
+              genuinely has the height all 20,000 rows would occupy — but the DOM at any instant
+              contains only a couple dozen actual elements, regardless of whether the underlying
+              list has 200 items or 2 million.
+            </p>
+          </section>
+
+          <section id="tanstack-virtual">
+            <h2>3. TanStack Virtual</h2>
+            <p>
+              Implementing windowing correctly by hand — tracking scroll position, calculating
+              visible ranges, handling resize — is fiddly and easy to get subtly wrong.
+              <strong>TanStack Virtual</strong> (from the same team as Week 8's Query) handles the
+              math; you provide the data and a way to measure each row.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm install @tanstack/react-virtual
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">VirtualProductList.tsx</div>
+              <pre><code>import { useRef } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
+
+function VirtualProductList({ products }: { products: Product[] }) {
+  const parentRef = useRef&lt;HTMLDivElement&gt;(null);
+
+  const virtualizer = useVirtualizer({
+    count: products.length,           // total item count -- not how many actually render
+    getScrollElement: () =&gt; parentRef.current,
+    estimateSize: () =&gt; 56,           // estimated row height in px
+    overscan: 5,                      // extra rows rendered beyond the visible viewport
+  });
+
+  return (
+    &lt;div ref={parentRef} style={{ height: '600px', overflow: 'auto' }}&gt;
+      &lt;div style={{ height: `${virtualizer.getTotalSize()}px`, position: 'relative' }}&gt;
+        {virtualizer.getVirtualItems().map((virtualRow) =&gt; {
+          const product = products[virtualRow.index];
+          return (
+            &lt;div
+              key={product.id}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: `${virtualRow.size}px`,
+                transform: `translateY(${virtualRow.start}px)`,
+              }}
+            &gt;
+              {product.name} — ${product.price}
+            &lt;/div&gt;
+          );
+        })}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>getTotalSize()</code> gives the inner div the full scroll height all 20,000
+              rows would occupy, so the scrollbar behaves correctly. <code>getVirtualItems()</code>
+              returns only the currently-visible rows (plus <code>overscan</code> extra on each
+              side, to reduce blank flashes during fast scrolling), each with a
+              <code>start</code> offset used to position it absolutely at its correct place in
+              that scroll height. Everything outside that returned list simply isn't in the
+              <code>.map()</code> output — no DOM node exists for it at all.
+            </p>
+          </section>
+
+          <section id="variable-height">
+            <h2>4. Variable-Height Rows</h2>
+            <p>
+              The example above assumes every row is the same height — fine for a uniform list,
+              wrong for content like chat messages or comments where each row's height depends on
+              its content. TanStack Virtual supports measuring real rendered height via a ref
+              callback:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">measuring real, variable heights</div>
+              <pre><code>const virtualizer = useVirtualizer({
+  count: messages.length,
+  getScrollElement: () =&gt; parentRef.current,
+  estimateSize: () =&gt; 80, // a rough guess -- corrected once each row actually renders
+});
+
+// ...
+
+{virtualizer.getVirtualItems().map((virtualRow) =&gt; (
+  &lt;div
+    key={messages[virtualRow.index].id}
+    data-index={virtualRow.index}
+    ref={virtualizer.measureElement} // measures this row's REAL height after render
+    style={{
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      transform: `translateY(${virtualRow.start}px)`,
+    }}
+  &gt;
+    {messages[virtualRow.index].text}
+  &lt;/div&gt;
+))}
+</code></pre>
+            </div>
+
+            <p>
+              <code>estimateSize</code> is now just a starting guess used before a row has ever
+              rendered; <code>measureElement</code> corrects it to the row's real height once it
+              actually mounts, and the virtualizer recalculates scroll positions for everything
+              below it accordingly. Note the <code>height</code> style is gone entirely here — the
+              row is left to size itself naturally based on its content, which is exactly what's
+              being measured.
+            </p>
+          </section>
+
+          <section id="when-to-virtualize">
+            <h2>5. When to Reach for This</h2>
+            <p>
+              Virtualization adds real complexity — absolute positioning, manual scroll container
+              management, occasional friction with browser find-in-page or accessibility tooling
+              that expects normal document flow. It's worth that cost specifically when a list is
+              large enough that DOM node count is the actual bottleneck (roughly hundreds to
+              thousands of rows and up), not as a default for every list in an app.
+            </p>
+
+            <ul>
+              <li><strong>Good fit:</strong> a chat history, a large data table, an infinite-scroll feed, a searchable dropdown with thousands of options.</li>
+              <li><strong>Poor fit:</strong> a 20-item navigation menu, a typical product grid a user will paginate through anyway. Pagination or Week 3's memoization alone is often simpler and sufficient.</li>
+            </ul>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Virtualization and Week 14's DevTools Profiler go together</strong>
+                <p>Confirm with the Profiler that a long list's render/scroll time is actually the bottleneck before reaching for this — the same "measure first" discipline from Week 14, applied to a different tool.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Virtualize Week 3's 20,000-row list, then add variable-height rows</h3>
+              <p>Prove virtualization works by comparing DOM node counts directly, then handle a realistic variable-content case.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Take Week 3's 20,000-product array (or generate a fresh one) and render it without virtualization first. Using your browser's DevTools, count the actual <code>&lt;div&gt;</code> elements in the DOM.</li>
+                <li>Rebuild the same list with <code>useVirtualizer</code>, fixed-height rows, and confirm — again by counting DOM nodes — that only a few dozen rows exist at any moment, regardless of scroll position.</li>
+                <li>Build a second virtualized list of "chat messages" with randomly generated text of varying length (some one line, some five), using <code>measureElement</code> for real variable-height measurement.</li>
+                <li>Scroll to the bottom of the chat list, then scroll back to the top, and confirm scroll position and row alignment stay correct — a common bug in hand-rolled virtualization that TanStack Virtual handles for you.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If rows appear to "jump" or overlap while scrolling quickly, check that every rendered row includes <code>data-index</code> and the <code>measureElement</code> ref — skipping either on the variable-height version is the most common cause of misaligned rows.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why is rendering 20,000 DOM nodes slow, even with a perfectly memoized React component tree?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Memoization (Week 3) only affects how efficiently React decides what needs updating — it doesn't reduce the number of actual DOM nodes that exist. The browser itself pays memory and layout/paint cost for every live DOM node regardless of how it got there, which is a cost outside React's control entirely.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>Why does the virtualized container still need a full-height inner element sized to fit all 20,000 rows, if most of them are never actually rendered?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>So the scrollbar and scroll range behave correctly — the browser needs an element with the correct total scrollable height to produce a normal-feeling scrollbar and scroll position, even though most of that space contains no actual child elements. Without it, the scrollbar would only reflect however many rows happen to be currently rendered.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What does the <code>overscan</code> option control, and why not set it to 0?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It's the number of extra rows rendered just beyond the visible viewport on each side. With <code>overscan: 0</code>, scrolling quickly would briefly show blank space while new rows render just as they enter the viewport — a small overscan buffer means those rows already exist in the DOM slightly before they become visible, avoiding that flash.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Would virtualizing a 20-item navigation menu be a good idea?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>No. Twenty DOM nodes are nowhere near the point where node count is an actual bottleneck, so virtualization would add real complexity (absolute positioning, scroll container management, occasional friction with browser find-in-page and accessibility tooling) for zero measurable benefit — exactly the kind of premature optimization Week 14's "measure first" principle warns against.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-14.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 14: Profiling &amp; Code-Splitting</span>
+          </a>
+          <a href="week-16.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 16: Next.js — Server vs. Client Components →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,523 @@
+?<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 13: Testing React Apps — CodeVerse Creatives</title>
+<meta name="description" content="Week 13 of the React curriculum: Vitest setup, React Testing Library's philosophy, queries and user events, mocking network requests with MSW, and end-to-end smoke tests with Playwright." />
+<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../favicon.ico" sizes="any" />
+<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+<link rel="manifest" href="../site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../css/style.css" />
+</head>
+<body data-course="react">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html" aria-current="page">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../react-syllabus.html">React Syllabus</a>
+        <span>/</span>
+        <a href="../react-syllabus.html#timeline">Module 9 · Testing</a>
+        <span>/</span>
+        <span aria-current="page">Week 13</span>
+      </div>
+
+      <h1>Week 13: Testing React Apps</h1>
+      <p class="lesson-header__lede">
+        Every component you've built since Week 1 has been manually clicked through in a browser
+        to check it works. This week builds an automated safety net instead — tests that catch a
+        broken form or a silently-failing button before a user ever does, and that survive
+        refactors instead of needing to be rewritten every time an implementation detail changes.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 9 of 13</span>
+        <span class="chip">Week 13 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Write component tests that test behavior, not implementation</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Simulate real user interaction and mock network requests in tests</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Write a basic end-to-end smoke test with Playwright</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#vitest-setup"><span>1</span> Vitest Setup</a>
+        <a href="#rtl-philosophy"><span>2</span> React Testing Library's Philosophy</a>
+        <a href="#queries-events"><span>3</span> Queries &amp; User Events</a>
+        <a href="#mocking"><span>4</span> Mocking Network Requests with MSW</a>
+        <a href="#e2e"><span>5</span> End-to-End Tests with Playwright</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="vitest-setup">
+            <h2>1. Vitest Setup</h2>
+            <p>
+              <strong>Vitest</strong> is a test runner built for Vite projects — same
+              configuration, same fast dev-server-style re-runs, and a Jest-compatible API if
+              you've used Jest before.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm install -D vitest @testing-library/react @testing-library/user-event @testing-library/jest-dom jsdom
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">vite.config.ts — add a test block</div>
+              <pre><code>import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: 'jsdom', // simulates a browser DOM in Node
+    setupFiles: './src/test-setup.ts',
+    globals: true,
+  },
+});
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">src/test-setup.ts</div>
+              <pre><code>import '@testing-library/jest-dom'; // adds matchers like .toBeInTheDocument()
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">a first test — sum.test.ts</div>
+              <pre><code>import { describe, it, expect } from 'vitest';
+
+function sum(a: number, b: number) {
+  return a + b;
+}
+
+describe('sum', () =&gt; {
+  it('adds two numbers', () =&gt; {
+    expect(sum(2, 3)).toBe(5);
+  });
+});
+</code></pre>
+            </div>
+
+            <p>
+              <code>jsdom</code> is what makes browser-like testing possible in Node at all — it
+              simulates a DOM well enough that React can render into it and your test can query the
+              result, without ever opening a real browser.
+            </p>
+          </section>
+
+          <section id="rtl-philosophy">
+            <h2>2. React Testing Library's Philosophy</h2>
+            <p>
+              React Testing Library (RTL) is built around one guiding principle, printed on its own
+              homepage: <strong>"the more your tests resemble the way your software is used, the
+              more confidence they can give you."</strong> In practice, that means testing what a
+              user sees and does — visible text, buttons, form fields — rather than a component's
+              internal state or implementation details.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">the wrong way — testing implementation</div>
+              <pre><code>// Fragile: breaks if you rename the internal state variable,
+// even if the component's actual behavior is unchanged.
+expect(wrapper.state('isOpen')).toBe(true);
+expect(wrapper.find('.internal-class-name')).toHaveLength(1);
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">the RTL way — testing behavior</div>
+              <pre><code>// Resilient: this passes as long as the user-visible outcome is correct,
+// regardless of how the component achieves it internally.
+expect(screen.getByRole('dialog')).toBeInTheDocument();
+expect(screen.getByText('Settings saved')).toBeInTheDocument();
+</code></pre>
+            </div>
+
+            <p>
+              This philosophy is why RTL deliberately has no API for reaching into a component's
+              props or internal state — it's a constraint, not a missing feature. A test written
+              this way keeps passing through a component being refactored from
+              <code>useReducer</code> to <code>useState</code>, or from a class to a function,
+              because none of that changes what the user actually sees or can click.
+            </p>
+          </section>
+
+          <section id="queries-events">
+            <h2>3. Queries &amp; User Events</h2>
+            <p>
+              RTL's queries (<code>getByRole</code>, <code>getByLabelText</code>,
+              <code>getByText</code>...) find elements the way an assistive technology or a real
+              user would identify them — which is also why writing tests this way tends to surface
+              accessibility problems (Week 18) for free.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">Counter.test.tsx</div>
+              <pre><code>import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { describe, it, expect } from 'vitest';
+import Counter from './Counter';
+
+describe('Counter', () =&gt; {
+  it('increments when the button is clicked', async () =&gt; {
+    const user = userEvent.setup();
+    render(&lt;Counter /&gt;);
+
+    expect(screen.getByText('Count: 0')).toBeInTheDocument();
+
+    const button = screen.getByRole('button', { name: /increment/i });
+    await user.click(button);
+
+    expect(screen.getByText('Count: 1')).toBeInTheDocument();
+  });
+});
+</code></pre>
+            </div>
+
+            <p>
+              <code>getByRole('button', {'{ name: /increment/i }'})</code> finds the button the
+              same way a screen reader would announce it — by its accessible role and name — not
+              by a CSS class or test-specific attribute. <code>@testing-library/user-event</code>
+              (not the lower-level <code>fireEvent</code>) simulates a real click as a full sequence
+              of browser events (pointer down, focus, pointer up, click), catching bugs a
+              simplified synthetic event would miss.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">testing a form — combining Week 5's work</div>
+              <pre><code>it('shows a validation error for an invalid email', async () =&gt; {
+  const user = userEvent.setup();
+  render(&lt;SignupForm /&gt;);
+
+  await user.type(screen.getByLabelText('Email'), 'not-an-email');
+  await user.click(screen.getByRole('button', { name: /sign up/i }));
+
+  expect(await screen.findByText(/enter a valid email/i)).toBeInTheDocument();
+});
+</code></pre>
+            </div>
+
+            <p>
+              <code>findByText</code> (rather than <code>getByText</code>) returns a promise and
+              retries until the element appears or a timeout elapses — necessary here because
+              React Hook Form's validation (Week 5) runs asynchronously after submission, so the
+              error message isn't in the DOM the instant <code>click</code> resolves.
+            </p>
+          </section>
+
+          <section id="mocking">
+            <h2>4. Mocking Network Requests with MSW</h2>
+            <p>
+              A component test shouldn't depend on a real backend being available and returning
+              consistent data. <strong>Mock Service Worker (MSW)</strong> intercepts actual
+              <code>fetch</code> calls at the network level and returns data you control — your
+              component code doesn't know it's being tested at all.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm install -D msw
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">src/mocks/handlers.ts</div>
+              <pre><code>import { http, HttpResponse } from 'msw';
+
+export const handlers = [
+  http.get('/api/users/:id', ({ params }) =&gt; {
+    return HttpResponse.json({ id: Number(params.id), name: 'Ada Lovelace' });
+  }),
+];
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">src/test-setup.ts — wired into every test</div>
+              <pre><code>import '@testing-library/jest-dom';
+import { setupServer } from 'msw/node';
+import { handlers } from './mocks/handlers';
+
+const server = setupServer(...handlers);
+
+beforeAll(() =&gt; server.listen());
+afterEach(() =&gt; server.resetHandlers());
+afterAll(() =&gt; server.close());
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">UserProfile.test.tsx — component uses real fetch, MSW intercepts it</div>
+              <pre><code>it('shows the fetched user name', async () =&gt; {
+  render(&lt;UserProfile userId={5} /&gt;);
+  expect(await screen.findByText('Ada Lovelace')).toBeInTheDocument();
+});
+</code></pre>
+            </div>
+
+            <p>
+              This is a meaningfully better approach than mocking your <code>fetchUser</code>
+              function directly — <code>UserProfile</code> runs its actual, real fetch call, and
+              only the network layer underneath it is faked. The test verifies your real request
+              logic and real response handling, not just that a mocked function was called with
+              the right arguments.
+            </p>
+          </section>
+
+          <section id="e2e">
+            <h2>5. End-to-End Tests with Playwright</h2>
+            <p>
+              Component tests (this week, so far) run in a simulated DOM and mock network layer —
+              fast, but they never prove the whole app actually works together in a real browser.
+              An end-to-end (e2e) test drives an actual browser against your actual running app.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm init playwright@latest
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">e2e/signup.spec.ts</div>
+              <pre><code>import { test, expect } from '@playwright/test';
+
+test('a user can sign up successfully', async ({ page }) =&gt; {
+  await page.goto('/signup');
+
+  await page.getByLabel('Name').fill('Grace Hopper');
+  await page.getByLabel('Email').fill('grace@example.com');
+  await page.getByLabel('Password').fill('supersecure123');
+  await page.getByLabel('Confirm password').fill('supersecure123');
+
+  await page.getByRole('button', { name: /sign up/i }).click();
+
+  await expect(page.getByText(/welcome, grace/i)).toBeVisible();
+});
+</code></pre>
+            </div>
+
+            <p>
+              Notice the same accessible-query philosophy as RTL (<code>getByLabel</code>,
+              <code>getByRole</code>) — Playwright's API was deliberately designed to feel
+              consistent with Testing Library's. The key difference is scope: this test exercises
+              your real router (Weeks 6–7), your real form validation (Week 5), and a real network
+              request to whatever backend the app is actually pointed at — proving the whole
+              system works together, not just one component in isolation.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>The testing pyramid, in practice</strong>
+                <p>Write many fast component tests (this week's RTL work) covering individual pieces of behavior, and a small number of e2e tests covering only your most critical user flows (signup, checkout, login) end to end. E2e tests are slower and more brittle to run at scale — reserve them for the paths where "does this actually work in a real browser" matters most.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Write a full test suite for Week 5's signup form</h3>
+              <p>Cover the form with component tests, then add one end-to-end smoke test.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Set up Vitest + React Testing Library + <code>jest-dom</code> in a project containing Week 5's signup form.</li>
+                <li>Write a test confirming the form renders all expected fields with correct labels (<code>getByLabelText</code> for each).</li>
+                <li>Write a test confirming a validation error appears when submitting with a mismatched <code>password</code>/<code>confirmPassword</code>, using <code>userEvent.type</code> and <code>findByText</code>.</li>
+                <li>Write a test confirming a successful submission (valid data) shows a success message — mock the "submit" network call with MSW rather than testing against a real endpoint.</li>
+                <li>Add one Playwright e2e test that fills out and submits the real form in a real browser, confirming the success message appears.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If <code>getByLabelText</code> can't find a field, it's almost always because the <code>&lt;label&gt;</code>'s <code>htmlFor</code> doesn't match the input's <code>id</code> — the same accessibility wiring from Week 5's exercise. A failing test here is often catching a real a11y bug, not just a test-configuration problem.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why does React Testing Library deliberately not provide a way to read a component's internal state directly?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Its guiding principle is testing behavior the way a real user experiences it, not implementation details. Tests that check internal state break whenever that implementation changes — even if the user-visible behavior is identical — while tests written against visible text and roles keep passing through refactors, because they verify the same thing a user would actually notice.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>Why prefer <code>getByRole('button', {'{ name: ... }'})</code> over something like <code>getByClassName</code> or a test ID?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It finds the element the same way an assistive technology would identify it — by its accessible role and name — which both survives CSS/styling refactors that would break a class-name query, and doubles as an accessibility check: if <code>getByRole</code> can't find your button, a screen reader user likely can't either.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What does MSW actually intercept, and why is that better than mocking your <code>fetchUser</code> function directly?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It intercepts the actual network request at the network layer, letting your component's real <code>fetchUser</code> code run exactly as it would in production — only the response is faked. Mocking <code>fetchUser</code> itself skips testing that function's real logic entirely, so a bug inside it (a wrong URL, a wrong header) would go completely undetected.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>What can a Playwright e2e test verify that an RTL component test cannot?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>That the whole system genuinely works together in a real browser — real routing, a real (or real-staging) backend, real network requests, real browser rendering and CSS. An RTL test runs one component in isolation inside a simulated DOM with mocked network calls; it can't catch an integration problem between pieces that only shows up when the full app runs together for real.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-12.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 12: Error Boundaries &amp; Suspense</span>
+          </a>
+          <a href="week-14.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 14: Profiling &amp; Code-Splitting →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../index.html">Home</a>
+      <a href="../angular-syllabus.html">Angular</a>
+      <a href="../react-syllabus.html">React</a>
+      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
+      <a href="../spring-boot-syllabus.html">Spring Boot</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
