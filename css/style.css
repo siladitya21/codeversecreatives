@@ -1629,6 +1629,7 @@ code, .mono {
   .nav-dropdown[data-open="true"] .nav-dropdown__panel {
     max-height: 600px;
     padding-bottom: 8px;
+    transform: none;
   }
 
   .timeline::before { left: 20px; }
