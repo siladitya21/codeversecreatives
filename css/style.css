@@ -388,6 +388,11 @@ code, .mono {
 }
 
 .nav-course-card__icon svg { width: 18px; height: 18px; }
+.nav-course-card__icon img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
 
 .nav-course-card__title {
   display: block;
@@ -695,6 +700,39 @@ code, .mono {
 }
 
 .course-card__icon svg { width: 26px; height: 26px; }
+.course-card__icon img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.course-icon--angular {
+  filter: brightness(0) saturate(100%) invert(31%) sepia(69%) saturate(2384%) hue-rotate(332deg) brightness(93%) contrast(91%);
+}
+
+.course-icon--react {
+  filter: brightness(0) saturate(100%) invert(76%) sepia(82%) saturate(1406%) hue-rotate(161deg) brightness(101%) contrast(97%);
+}
+
+.course-icon--java {
+  filter: brightness(0) saturate(100%) invert(76%) sepia(35%) saturate(802%) hue-rotate(44deg) brightness(91%) contrast(87%);
+}
+
+.course-icon--devops {
+  filter: brightness(0) saturate(100%) invert(66%) sepia(95%) saturate(2032%) hue-rotate(359deg) brightness(101%) contrast(103%);
+}
+
+.course-icon--cpp {
+  filter: brightness(0) saturate(100%) invert(38%) sepia(34%) saturate(1470%) hue-rotate(192deg) brightness(89%) contrast(88%);
+}
+
+.course-icon--python {
+  filter: brightness(0) saturate(100%) invert(87%) sepia(76%) saturate(887%) hue-rotate(334deg) brightness(105%) contrast(101%);
+}
+
+.course-icon--ai {
+  filter: brightness(0) saturate(100%) invert(65%) sepia(25%) saturate(1209%) hue-rotate(214deg) brightness(99%) contrast(98%);
+}
 
 .course-card__eyebrow {
   font-size: 0.76rem;
