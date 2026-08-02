@@ -81,29 +81,49 @@ button {
   color-scheme: light;
 }
 
-/* Per-course accent palettes */
+/* Per-course accent palettes — each course gets its own single hue family,
+   expressed as a dark-to-light gradient of that one color, so no two
+   courses read as the same color at a glance. */
 body[data-course="angular"] {
-  --accent: #e2384a;
-  --accent-2: #ff8a65;
+  --accent: #b3222f;
+  --accent-2: #e2384a;
   --accent-soft: rgba(226, 56, 74, 0.14);
 }
 
+body[data-course="react"] {
+  --accent: #0e7ea8;
+  --accent-2: #61dafb;
+  --accent-soft: rgba(20, 158, 202, 0.14);
+}
+
 body[data-course="llm-ml"] {
-  --accent: #7c5cff;
-  --accent-2: #22d3ee;
+  --accent: #5b3fd6;
+  --accent-2: #a78bfa;
   --accent-soft: rgba(124, 92, 255, 0.14);
 }
 
 body[data-course="spring-boot"] {
-  --accent: #6db33f;
-  --accent-2: #14b8a6;
+  --accent: #4a7c2e;
+  --accent-2: #8bc34a;
   --accent-soft: rgba(109, 179, 63, 0.14);
 }
 
-body[data-course="react"] {
-  --accent: #149eca;
-  --accent-2: #61dafb;
-  --accent-soft: rgba(20, 158, 202, 0.14);
+body[data-course="devops-cloud"] {
+  --accent: #c2650a;
+  --accent-2: #ff9900;
+  --accent-soft: rgba(255, 153, 0, 0.14);
+}
+
+body[data-course="python"] {
+  --accent: #a16207;
+  --accent-2: #ffd43b;
+  --accent-soft: rgba(255, 212, 59, 0.14);
+}
+
+body[data-course="dsa-cpp"] {
+  --accent: #1e2f6b;
+  --accent-2: #4a63c4;
+  --accent-soft: rgba(30, 47, 107, 0.14);
 }
 
 /* ---------- Base ---------- */
@@ -270,6 +290,118 @@ code, .mono {
 }
 
 .nav-toggle svg { width: 18px; height: 18px; }
+
+/* ---------- Courses dropdown (nav) ---------- */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+
+.nav-dropdown__trigger:hover {
+  color: var(--text);
+}
+
+.nav-dropdown[data-active="true"] .nav-dropdown__trigger {
+  color: var(--text);
+  position: relative;
+}
+
+.nav-dropdown[data-active="true"] .nav-dropdown__trigger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 20px;
+  bottom: -10px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.nav-dropdown__chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.nav-dropdown[data-open="true"] .nav-dropdown__chevron {
+  transform: rotate(180deg);
+}
+
+.nav-dropdown__panel {
+  position: absolute;
+  top: calc(100% + 18px);
+  left: 50%;
+  transform: translate(-50%, -8px);
+  width: min(560px, 86vw);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  padding: 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 110;
+}
+
+.nav-dropdown[data-open="true"] .nav-dropdown__panel {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  pointer-events: auto;
+}
+
+.nav-course-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: var(--radius-md);
+  transition: background 0.15s ease;
+}
+
+.nav-course-card:hover,
+.nav-course-card[aria-current="page"] {
+  background: var(--surface-2);
+}
+
+.nav-course-card__icon {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.nav-course-card__icon svg { width: 18px; height: 18px; }
+
+.nav-course-card__title {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.nav-course-card__meta {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
 
 /* ---------- Buttons & chips ---------- */
 .btn {
@@ -588,6 +720,54 @@ code, .mono {
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 24px;
+}
+
+.course-card__demand {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  margin-bottom: 20px;
+}
+
+.course-card__demand-eyebrow {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.course-card__demand-value {
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.course-card__demand-kolkata {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.demand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--success);
+  flex-shrink: 0;
+}
+
+.course-grid__footnote {
+  margin-top: 24px;
+  font-size: 0.8rem;
+  color: var(--text-faint);
+  text-align: center;
 }
 
 .course-card__cta {
@@ -1418,6 +1598,37 @@ code, .mono {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+  }
+
+  .nav-dropdown { width: 100%; }
+
+  .nav-dropdown__trigger {
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 0;
+  }
+
+  .nav-dropdown[data-active="true"] .nav-dropdown__trigger::after { right: 0; }
+
+  .nav-dropdown__panel {
+    position: static;
+    transform: none;
+    width: 100%;
+    grid-template-columns: 1fr;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    padding: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 1;
+    pointer-events: auto;
+    transition: max-height 0.25s ease;
+  }
+
+  .nav-dropdown[data-open="true"] .nav-dropdown__panel {
+    max-height: 600px;
+    padding-bottom: 8px;
   }
 
   .timeline::before { left: 20px; }

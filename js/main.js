@@ -30,6 +30,28 @@
     });
   }
 
+  /* Courses dropdown */
+  var courseDropdown = document.querySelector("[data-nav-dropdown]");
+  var courseDropdownTrigger = document.querySelector("[data-nav-dropdown-trigger]");
+  if (courseDropdown && courseDropdownTrigger) {
+    courseDropdownTrigger.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var isOpen = courseDropdown.getAttribute("data-open") === "true";
+      courseDropdown.setAttribute("data-open", isOpen ? "false" : "true");
+      courseDropdownTrigger.setAttribute("aria-expanded", isOpen ? "false" : "true");
+    });
+    document.addEventListener("click", function () {
+      courseDropdown.setAttribute("data-open", "false");
+      courseDropdownTrigger.setAttribute("aria-expanded", "false");
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        courseDropdown.setAttribute("data-open", "false");
+        courseDropdownTrigger.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
   /* Expand-all / collapse-all for curriculum week accordions */
   var expandAllBtn = document.querySelector("[data-expand-all]");
   if (expandAllBtn) {
