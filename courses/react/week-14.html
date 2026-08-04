@@ -14,18 +14,18 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Week 13: Testing React Apps — CodeVerse Creatives</title>
-<meta name="description" content="Week 13 of the React curriculum: Vitest setup, React Testing Library's philosophy, queries and user events, mocking network requests with MSW, and end-to-end smoke tests with Playwright." />
-<link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-<link rel="icon" href="../favicon.ico" sizes="any" />
-<link rel="icon" href="../favicon-32x32.png" sizes="32x32" type="image/png" />
-<link rel="icon" href="../favicon-16x16.png" sizes="16x16" type="image/png" />
-<link rel="apple-touch-icon" href="../apple-touch-icon.png" />
-<link rel="manifest" href="../site.webmanifest" />
+<title>Week 14: Unit Testing React Apps — CodeVerse Creatives</title>
+<meta name="description" content="Week 14 of the React curriculum: Vitest setup, React Testing Library's philosophy, queries and user events, mocking network requests with MSW, and testing custom hooks." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="../css/style.css" />
+<link rel="stylesheet" href="../../css/style.css" />
 </head>
 <body data-course="react">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
@@ -39,76 +39,76 @@
 
 <header class="navbar" data-navbar>
   <div class="container navbar__inner">
-    <a href="../index.html" class="brand">
+    <a href="../../index.html" class="brand">
       <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
       CodeVerse Creatives
     </a>
 
     <nav class="nav-links" data-nav-links>
-      <a href="../index.html">Home</a>
+      <a href="../../index.html">Home</a>
       <div class="nav-dropdown" data-nav-dropdown data-active="true">
         <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
           Courses
           <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="nav-dropdown__panel" data-nav-dropdown-panel>
-          <a href="../angular-syllabus.html" class="nav-course-card" style="--accent:#b3222f;">
+          <a href="../angular/index.html" class="nav-course-card c-angular">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Angular</span>
               <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
-          <a href="../react-syllabus.html" class="nav-course-card" aria-current="page" style="--accent:#0e7ea8;">
+          <a href="../react/index.html" class="nav-course-card c-react" aria-current="page">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React</span>
-              <span class="nav-course-card__meta">20 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
-          <a href="../llm-ml-syllabus.html" class="nav-course-card" style="--accent:#5b3fd6;">
+          <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">LLM &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
-          <a href="../spring-boot-syllabus.html" class="nav-course-card" style="--accent:#4a7c2e;">
+          <a href="../spring-boot/index.html" class="nav-course-card c-spring-boot">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Spring Boot</span>
               <span class="nav-course-card__meta">15 Weeks</span>
             </span>
           </a>
-          <a href="../devops-cloud-syllabus.html" class="nav-course-card" style="--accent:#c2650a;">
+          <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DevOps &amp; Cloud</span>
               <span class="nav-course-card__meta">15 Weeks</span>
             </span>
           </a>
-          <a href="../python-syllabus.html" class="nav-course-card" style="--accent:#a16207;">
+          <a href="../python/index.html" class="nav-course-card c-python">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Python</span>
               <span class="nav-course-card__meta">15 Weeks</span>
             </span>
           </a>
-          <a href="../dsa-cpp-syllabus.html" class="nav-course-card" style="--accent:#1e2f6b;">
+          <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DSA in C++</span>
               <span class="nav-course-card__meta">15 Weeks</span>
             </span>
           </a>
-          <a href="../system-design-syllabus.html" class="nav-course-card" style="--accent:#334155;">
+          <a href="../system-design/index.html" class="nav-course-card c-system-design">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">System Design</span>
               <span class="nav-course-card__meta">15 Weeks</span>
             </span>
           </a>
-          <a href="../node-express-syllabus.html" class="nav-course-card" style="--accent:#0d9488;">
+          <a href="../node-express/index.html" class="nav-course-card c-node-express">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Node.js &amp; Express</span>
@@ -136,14 +136,14 @@
   <section class="lesson-header">
     <div class="container">
       <div class="lesson-crumb">
-        <a href="../react-syllabus.html">React Syllabus</a>
+        <a href="../react/index.html">React Syllabus</a>
         <span>/</span>
-        <a href="../react-syllabus.html#timeline">Module 9 · Testing</a>
+        <a href="../react/index.html#timeline">Module 9 · Testing</a>
         <span>/</span>
-        <span aria-current="page">Week 13</span>
+        <span aria-current="page">Week 14</span>
       </div>
 
-      <h1>Week 13: Testing React Apps</h1>
+      <h1>Week 14: Unit Testing React Apps</h1>
       <p class="lesson-header__lede">
         Every component you've built since Week 1 has been manually clicked through in a browser
         to check it works. This week builds an automated safety net instead — tests that catch a
@@ -152,8 +152,8 @@
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 9 of 13</span>
-        <span class="chip">Week 13 of 20</span>
+        <span class="chip chip--accent">Module 9 of 17</span>
+        <span class="chip">Week 14 of 26</span>
         <span class="chip">~3–4 Hours</span>
         <span class="chip">Hands-on Exercise Included</span>
       </div>
@@ -163,7 +163,7 @@
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Write component tests that test behavior, not implementation</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Simulate real user interaction and mock network requests in tests</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Write a basic end-to-end smoke test with Playwright</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Test a custom hook in isolation and reason about what's worth covering</li>
         </ul>
       </div>
 
@@ -172,7 +172,7 @@
         <a href="#rtl-philosophy"><span>2</span> React Testing Library's Philosophy</a>
         <a href="#queries-events"><span>3</span> Queries &amp; User Events</a>
         <a href="#mocking"><span>4</span> Mocking Network Requests with MSW</a>
-        <a href="#e2e"><span>5</span> End-to-End Tests with Playwright</a>
+        <a href="#hooks-coverage"><span>5</span> Testing Custom Hooks &amp; Coverage</a>
         <a href="#exercise"><span>6</span> Exercise</a>
         <a href="#quiz"><span>7</span> Knowledge Check</a>
       </div>
@@ -287,7 +287,7 @@ expect(screen.getByText('Settings saved')).toBeInTheDocument();
               RTL's queries (<code>getByRole</code>, <code>getByLabelText</code>,
               <code>getByText</code>...) find elements the way an assistive technology or a real
               user would identify them — which is also why writing tests this way tends to surface
-              accessibility problems (Week 18) for free.
+              accessibility problems (Week 21) for free.
             </p>
 
             <div class="code-block">
@@ -403,53 +403,77 @@ afterAll(() =&gt; server.close());
             </p>
           </section>
 
-          <section id="e2e">
-            <h2>5. End-to-End Tests with Playwright</h2>
+          <section id="hooks-coverage">
+            <h2>5. Testing Custom Hooks &amp; Coverage</h2>
             <p>
-              Component tests (this week, so far) run in a simulated DOM and mock network layer —
-              fast, but they never prove the whole app actually works together in a real browser.
-              An end-to-end (e2e) test drives an actual browser against your actual running app.
+              A custom hook (Week 4) is just a function, but it can't be called directly in a test
+              the way a plain function can — it uses <code>useState</code>/<code>useEffect</code>
+              internally, which only work inside React's render cycle. <strong>Testing
+              Library's <code>renderHook</code></strong> solves this by mounting the hook inside a
+              minimal invisible component for you.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">terminal</div>
-              <pre><code>npm init playwright@latest
+              <div class="code-block__label">useCounter.ts — the hook under test</div>
+              <pre><code>import { useState, useCallback } from 'react';
+
+export function useCounter(initial = 0) {
+  const [count, setCount] = useState(initial);
+  const increment = useCallback(() =&gt; setCount((c) =&gt; c + 1), []);
+  const reset = useCallback(() =&gt; setCount(initial), [initial]);
+  return { count, increment, reset };
+}
 </code></pre>
             </div>
 
             <div class="code-block">
-              <div class="code-block__label">e2e/signup.spec.ts</div>
-              <pre><code>import { test, expect } from '@playwright/test';
+              <div class="code-block__label">useCounter.test.ts</div>
+              <pre><code>import { renderHook, act } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
+import { useCounter } from './useCounter';
 
-test('a user can sign up successfully', async ({ page }) =&gt; {
-  await page.goto('/signup');
+describe('useCounter', () =&gt; {
+  it('increments and resets', () =&gt; {
+    const { result } = renderHook(() =&gt; useCounter(5));
 
-  await page.getByLabel('Name').fill('Grace Hopper');
-  await page.getByLabel('Email').fill('grace@example.com');
-  await page.getByLabel('Password').fill('supersecure123');
-  await page.getByLabel('Confirm password').fill('supersecure123');
+    expect(result.current.count).toBe(5);
 
-  await page.getByRole('button', { name: /sign up/i }).click();
+    act(() =&gt; result.current.increment());
+    expect(result.current.count).toBe(6);
 
-  await expect(page.getByText(/welcome, grace/i)).toBeVisible();
+    act(() =&gt; result.current.reset());
+    expect(result.current.count).toBe(5);
+  });
 });
 </code></pre>
             </div>
 
             <p>
-              Notice the same accessible-query philosophy as RTL (<code>getByLabel</code>,
-              <code>getByRole</code>) — Playwright's API was deliberately designed to feel
-              consistent with Testing Library's. The key difference is scope: this test exercises
-              your real router (Weeks 6–7), your real form validation (Week 5), and a real network
-              request to whatever backend the app is actually pointed at — proving the whole
-              system works together, not just one component in isolation.
+              <code>act()</code> wraps any code that triggers a state update outside of an event
+              RTL already wraps for you (like calling <code>result.current.increment()</code>
+              directly) — it flushes React's pending updates before the next assertion runs, the
+              same guarantee <code>userEvent</code> gives you for free in component tests.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal — coverage report</div>
+              <pre><code>npx vitest run --coverage
+</code></pre>
+            </div>
+
+            <p>
+              A coverage percentage tells you which lines <em>executed</em> during your test run —
+              it says nothing about whether the right <em>assertions</em> ran against them.
+              100% coverage with weak assertions (<code>expect(result).toBeTruthy()</code>
+              everywhere) is worse than 70% coverage of your app's actual critical paths — signup,
+              checkout, anything money or auth touches — tested thoroughly.
             </p>
 
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>The testing pyramid, in practice</strong>
-                <p>Write many fast component tests (this week's RTL work) covering individual pieces of behavior, and a small number of e2e tests covering only your most critical user flows (signup, checkout, login) end to end. E2e tests are slower and more brittle to run at scale — reserve them for the paths where "does this actually work in a real browser" matters most.</p>
+                <strong>Coverage as a floor, not a target</strong>
+                <p>A CI coverage threshold (<code>vitest run --coverage --coverage.thresholds.lines=80</code>) is useful for catching an untested file slipping in unnoticed — treat it as a minimum bar, not a goal to chase for its own sake. Week 15 picks this thread back up at a larger scale: integration and end-to-end tests that verify these unit-tested pieces actually work together.</p>
               </div>
             </div>
           </section>
@@ -461,8 +485,8 @@ test('a user can sign up successfully', async ({ page }) =&gt; {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Write a full test suite for Week 5's signup form</h3>
-              <p>Cover the form with component tests, then add one end-to-end smoke test.</p>
+              <h3>Write a full unit test suite for Week 5's signup form</h3>
+              <p>Cover the form with component tests, then test one custom hook it depends on in isolation.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
@@ -470,7 +494,8 @@ test('a user can sign up successfully', async ({ page }) =&gt; {
                 <li>Write a test confirming the form renders all expected fields with correct labels (<code>getByLabelText</code> for each).</li>
                 <li>Write a test confirming a validation error appears when submitting with a mismatched <code>password</code>/<code>confirmPassword</code>, using <code>userEvent.type</code> and <code>findByText</code>.</li>
                 <li>Write a test confirming a successful submission (valid data) shows a success message — mock the "submit" network call with MSW rather than testing against a real endpoint.</li>
-                <li>Add one Playwright e2e test that fills out and submits the real form in a real browser, confirming the success message appears.</li>
+                <li>If the form uses a custom hook (e.g. a <code>useFormStatus</code> or field-validation hook), test it directly with <code>renderHook</code>, independent of the component that consumes it.</li>
+                <li>Run <code>vitest run --coverage</code> and confirm the form and its hook are both meaningfully covered — not just executed, but covered by assertions that would actually fail on a real regression.</li>
               </ol>
 
               <div class="callout callout--tip">
@@ -537,13 +562,13 @@ test('a user can sign up successfully', async ({ page }) =&gt; {
                 <summary>
                   <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>What can a Playwright e2e test verify that an RTL component test cannot?</h4>
+                    <h4>Why does testing a custom hook require <code>renderHook</code> instead of just calling the hook function directly in a test?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>That the whole system genuinely works together in a real browser — real routing, a real (or real-staging) backend, real network requests, real browser rendering and CSS. An RTL test runs one component in isolation inside a simulated DOM with mocked network calls; it can't catch an integration problem between pieces that only shows up when the full app runs together for real.</p>
+                    <p>Hooks like <code>useState</code> and <code>useEffect</code> only work inside React's render cycle — calling a custom hook as a plain function outside a component throws, because there's no fiber for React to associate the state with. <code>renderHook</code> mounts the hook inside a minimal invisible test component so it behaves exactly as it would in real usage, while still giving the test direct access to its return value via <code>result.current</code>.</p>
                   </div>
                 </div>
               </details>
@@ -553,13 +578,13 @@ test('a user can sign up successfully', async ({ page }) =&gt; {
         </article>
 
         <div class="lesson-pager">
-          <a href="week-12.html" class="lesson-pager__link lesson-pager__link--prev">
+          <a href="week-13.html" class="lesson-pager__link lesson-pager__link--prev">
             <span class="lesson-pager__label">← Back to</span>
-            <span class="lesson-pager__title">Week 12: Error Boundaries &amp; Suspense</span>
+            <span class="lesson-pager__title">Week 13: Error Boundaries &amp; Suspense</span>
           </a>
-          <a href="week-14.html" class="lesson-pager__link lesson-pager__link--next">
+          <a href="week-15.html" class="lesson-pager__link lesson-pager__link--next">
             <span class="lesson-pager__label">Up next</span>
-            <span class="lesson-pager__title">Week 14: Profiling &amp; Code-Splitting →</span>
+            <span class="lesson-pager__title">Week 15: Integration &amp; E2E Testing →</span>
           </a>
         </div>
       </div>
@@ -569,27 +594,27 @@ test('a user can sign up successfully', async ({ page }) =&gt; {
 
 <footer class="footer">
   <div class="container footer__inner">
-    <a href="../index.html" class="brand">
+    <a href="../../index.html" class="brand">
       <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
       CodeVerse Creatives
     </a>
     <nav class="footer__links">
-      <a href="../index.html">Home</a>
-      <a href="../angular-syllabus.html">Angular</a>
-      <a href="../react-syllabus.html">React</a>
-      <a href="../llm-ml-syllabus.html">LLM &amp; ML</a>
-      <a href="../spring-boot-syllabus.html">Spring Boot</a>
-      <a href="../devops-cloud-syllabus.html">DevOps &amp; Cloud</a>
-      <a href="../python-syllabus.html">Python</a>
-      <a href="../dsa-cpp-syllabus.html">DSA in C++</a>
-      <a href="../system-design-syllabus.html">System Design</a>
-      <a href="../node-express-syllabus.html">Node.js &amp; Express</a>
+      <a href="../../index.html">Home</a>
+      <a href="../angular/index.html">Angular</a>
+      <a href="../react/index.html">React</a>
+      <a href="../llm-ml/index.html">LLM &amp; ML</a>
+      <a href="../spring-boot/index.html">Spring Boot</a>
+      <a href="../devops-cloud/index.html">DevOps &amp; Cloud</a>
+      <a href="../python/index.html">Python</a>
+      <a href="../dsa-cpp/index.html">DSA in C++</a>
+      <a href="../system-design/index.html">System Design</a>
+      <a href="../node-express/index.html">Node.js &amp; Express</a>
       <a href="#top">Back to top</a>
     </nav>
     <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
   </div>
 </footer>
 
-<script src="../js/main.js"></script>
+<script src="../../js/main.js"></script>
 </body>
 </html>
