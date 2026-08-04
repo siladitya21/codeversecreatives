@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 15: Capstone — Ship a Production Node & Express API — CodeVerse Creatives</title>
+<meta name="description" content="The Node.js & Express capstone: design, build, test, secure and deploy a complete production-shaped REST API with authentication, persistence, a real-time feature, a full test suite and a CI/CD pipeline." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body data-course="node-express">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown data-active="true">
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../spring-boot/index.html" class="nav-course-card c-spring-boot">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../python/index.html" class="nav-course-card c-python">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../node-express/index.html" class="nav-course-card c-node-express" aria-current="page">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../node-express/index.html">Node.js &amp; Express Syllabus</a>
+        <span>/</span>
+        <a href="../node-express/index.html#timeline">Module 12 · Capstone</a>
+        <span>/</span>
+        <span aria-current="page">Week 15</span>
+      </div>
+
+      <h1>Week 15: Capstone — Ship a Production Node &amp; Express API</h1>
+      <p class="lesson-header__lede">
+        This is the final week — no new concepts, just everything from Weeks 1–14 applied to one
+        real service. TypeScript, Express routing, Prisma persistence, authentication, a full test
+        suite, real-time updates over WebSockets, caching, background jobs, observability, and a
+        containerized deployment, combined into one well-scoped API you design, build, and ship
+        yourself.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 12 of 12</span>
+        <span class="chip">Week 15 of 15</span>
+        <span class="chip">~10–15 Hours</span>
+        <span class="chip">Capstone Project</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this capstone, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Scope and architect a production-shaped Express API from scratch</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Implement it with the full stack from this course — persistence, auth, testing, real-time, observability</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deploy it for real and produce a portfolio-ready write-up</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#planning"><span>1</span> Project Planning &amp; Scoping</a>
+        <a href="#architecture"><span>2</span> Architecture Decisions &amp; Tradeoffs</a>
+        <a href="#implementation"><span>3</span> Full Implementation, in a Sensible Order</a>
+        <a href="#quality-pass"><span>4</span> Testing, Observability &amp; Performance Pass</a>
+        <a href="#deployment"><span>5</span> Deployment &amp; Portfolio Write-Up</a>
+        <a href="#project"><span>6</span> The Capstone Project</a>
+        <a href="#checklist"><span>7</span> Final Checklist</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="planning">
+            <h2>1. Project Planning &amp; Scoping</h2>
+            <p>
+              Before writing a single Express route, write down what this API actually does, for
+              whom, and what "working" concretely means. Pick a real, well-scoped backend problem —
+              not a toy CRUD demo, but not an unbounded platform either:
+            </p>
+            <ul>
+              <li><strong>A collaborative task board</strong> — boards, lists and cards where multiple users see updates live, a natural fit for Week 9–10's WebSocket work.</li>
+              <li><strong>A booking/reservation API</strong> — appointments against limited capacity, where double-booking is a real bug to prevent under concurrent writes.</li>
+              <li><strong>A notification service</strong> — accepts events, fans them out over email and in-app channels via Week 12's background job queue, with a live in-app feed over WebSockets.</li>
+            </ul>
+            <p>
+              Whichever domain you pick, define the core resource model and API surface before
+              writing code: the two or three central entities, the main read and write operations
+              against them, and which of those a reviewer would actually exercise to judge whether
+              the service works. Write success criteria down now, not after the fact — a specific,
+              short list of flows that must work end to end, decided before you build.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">API surface sketch — task board example</div>
+              <pre><code>// Written down before any of it exists.
+
+// POST   /api/boards                    create a board
+// GET    /api/boards/:id                fetch a board with its lists/cards
+// POST   /api/boards/:id/cards          create a card (broadcasts a WS event)
+// PATCH  /api/cards/:id                 move/update a card (broadcasts a WS event)
+// POST   /api/auth/register             create an account
+// POST   /api/auth/login                issue a JWT
+
+interface CreateCardRequest {
+  listId: string;
+  title: string;
+}
+
+interface CardView {
+  id: string;
+  listId: string;
+  title: string;
+  position: number;
+  updatedAt: string;
+}
+</code></pre>
+            </div>
+          </section>
+
+          <section id="architecture">
+            <h2>2. Architecture Decisions &amp; Tradeoffs</h2>
+            <p>
+              With the API scoped, make deliberate choices using the tradeoffs this course already
+              gave you a framework for — and be ready to justify each one in writing, not just make
+              it:
+            </p>
+            <ul>
+              <li><strong>What needs real-time (Weeks 9–10) vs. what's fine as plain REST</strong> — only the interactions that genuinely benefit from a live push (card moves on a shared board) justify a WebSocket channel; everything else stays a normal request/response endpoint.</li>
+              <li><strong>What needs a background job (Week 12) vs. what can run inline</strong> — anything slow enough to make a request wait unnecessarily (sending an email, generating a report) belongs in a queue; a fast database write does not need one just because queues exist.</li>
+              <li><strong>What needs caching (Week 11) vs. what doesn't</strong> — cache read-heavy, slow-changing data; never cache anything where staleness would let two users act on conflicting state.</li>
+            </ul>
+            <p>
+              The justification is the actual work here. "I kept card updates synchronous and only
+              made the WebSocket broadcast fire-and-forget after the write succeeded, because
+              clients need to see the definitive saved state, not an optimistic one that might roll
+              back" is an architectural decision; using every technique from the course by default
+              is not. Write the reasoning down alongside the choice — Section 5's write-up depends
+              on it.
+            </p>
+          </section>
+
+          <section id="implementation">
+            <h2>3. Full Implementation, in a Sensible Order</h2>
+            <p>
+              Build in an order that lets you validate each layer before the next depends on it —
+              the same incremental discipline this course used from Week 4 onward, now spanning the
+              whole service:
+            </p>
+            <div class="code-block">
+              <div class="code-block__label">a sensible build order</div>
+              <pre><code>// 1. Prisma schema and persistence first (Weeks 4-5) -- get the
+//    domain model into a real database with migrations, before
+//    any HTTP layer exists.
+// 2. Express routes (Weeks 2-3) -- controllers, DTOs, and Zod
+//    validation over that persisted model; confirm every core
+//    flow works unauthenticated.
+// 3. Auth (Weeks 6-7) -- add JWT-based authentication and RBAC
+//    once the unsecured flows are already correct, not before.
+// 4. Real-time (Weeks 9-10) -- Socket.IO broadcasting on the
+//    write paths that actually need it, ONLY if Section 2's
+//    architecture calls for it.
+// 5. Background jobs & caching (Weeks 11-12) -- applied last,
+//    to the specific slow operations and read-heavy endpoints
+//    Section 2 identified, once their synchronous behavior is
+//    already correct.
+</code></pre>
+            </div>
+            <p>
+              This order matters for the same reason it mattered in Week 4's exercise: it's far
+              cheaper to discover your Prisma schema or REST resource shape needs to change while
+              only the persistence and routing layers exist, than after auth, real-time and
+              background jobs are all built on top of an assumption that turns out to be wrong.
+              Validate each layer — a passing request against it, by hand or by test — before
+              adding the next.
+            </p>
+          </section>
+
+          <section id="quality-pass">
+            <h2>4. Testing, Observability &amp; Performance Pass</h2>
+            <p>
+              Apply Weeks 8 and 13 in full, not as an afterthought bolted on at the end:
+            </p>
+            <ul>
+              <li><strong>A full Week 8-style test suite</strong> — Vitest unit tests for anything with real logic, and Supertest integration tests hitting real routes against a real test database, not a mocked one.</li>
+              <li><strong>Week 13 observability</strong> — structured JSON logs with a request-correlation ID, a <code>/health</code> endpoint checking real dependencies, and basic request metrics.</li>
+              <li><strong>A basic performance sanity check</strong> — confirm Prisma isn't issuing an N+1 query on any endpoint returning a list with relations (Week 4's lesson), and that your Redis cache from Week 11 is actually being hit on repeat requests, not silently bypassed.</li>
+            </ul>
+            <p>
+              None of this is optional polish. A service with no Supertest coverage against a real
+              database hasn't actually proven its persistence layer works correctly, and a service
+              with no health checks or logs can't prove it's healthy in production even if it
+              happens to be — both are exactly the gaps this pass exists to close.
+            </p>
+          </section>
+
+          <section id="deployment">
+            <h2>5. Deployment &amp; Portfolio Write-Up</h2>
+            <p>
+              A correct API nobody else can reach is far less useful as a portfolio piece than a
+              modest one that's actually live. Containerize and deploy it per Week 14 — a
+              multi-stage <code>Dockerfile</code>, a CI/CD pipeline that tests before it builds,
+              and a real deployment target with a reachable public URL.
+            </p>
+            <ul>
+              <li><strong>An architecture diagram or description</strong> — what the service looks like, from Section 2's decisions.</li>
+              <li><strong>The tradeoffs made, and why</strong> — the written justifications from Section 2, not just the final list of technologies used.</li>
+              <li><strong>What you'd do differently</strong> — an honest note on what you'd change with more time, which reads as more credible than pretending the first version is the final one.</li>
+              <li><strong>A reachable endpoint</strong> — the deployed API itself, since the write-up is what a reader actually evaluates the project by.</li>
+            </ul>
+          </section>
+
+          <section id="project">
+            <h2>6. The Capstone Project</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Capstone
+              </span>
+              <h3>Design, build, test, secure and deploy a complete Node &amp; Express API</h3>
+              <p>
+                Pick a real, well-scoped backend problem — a task board, a booking API, a
+                notification service — and take it fully through Sections 1–5: planned,
+                architected, implemented, tested and observable, and deployed.
+              </p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Write the project scope and API surface (Section 1) before writing any code: core resource model, key endpoints, and success criteria.</li>
+                <li>Justify your architecture in writing (Section 2): what needed real-time, what needed a background job, and what you chose to cache.</li>
+                <li>Implement incrementally through Section 3's layers — Prisma persistence, Express routes, auth, real-time if applicable, caching and jobs — validating each before adding the next.</li>
+                <li>Complete the full testing and observability pass from Section 4, including Supertest integration tests against a real database and real health checks.</li>
+                <li>Deploy it for real — containerized, with a live, reachable endpoint and a portfolio write-up (Section 5).</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>What makes a strong backend capstone</strong>
+                  <p>Not scope or technique count — a small API that's fully working, well-tested, and clearly explained reads as far more credible to anyone reviewing it (an employer, a collaborator, future-you) than an ambitious service that uses every pattern from the course but is only half-finished and untested.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="checklist">
+            <h2>7. Final Checklist</h2>
+            <p>Before calling the capstone — and the course — done, confirm each of these honestly:</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Was the scope and API surface written down before any code was written?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>If the resource model and endpoint list were written after the API already existed, they describe what got built rather than what was planned — the same discipline behind writing a test's expectations before, not after, checking what the code currently does. A capstone with a scope document written first has a real definition of "done" to be judged against.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Can every major architectural choice — real-time or not, what's queued, what's cached — be justified, rather than just having used every technique from the course?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Every WebSocket channel, job queue, and cache layer is added complexity and failure surface to maintain. A capstone that can justify each choice crisply — real-time only where a live push genuinely matters, a cache only on the read-heavy endpoint, nothing queued that could just run inline — reads as far stronger engineering judgment than one that reached for everything the course covered regardless of fit.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Does the full test suite pass, including Supertest integration tests against a real database?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Unit tests alone can pass against mocks while the real integration between your routes, Prisma models, and an actual database is still broken. Supertest tests hitting real routes against a real (test) database are the ones that prove the service works end to end — without them, "the tests pass" is a weaker claim than it sounds like.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Is the API actually deployed and reachable, with a write-up someone could evaluate without reading the source?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Source code sitting in a repository nobody has run proves far less than a live endpoint someone can actually call, alongside a written explanation of what was built and why. The write-up is what a reviewer evaluates the project by first — treat it as a real deliverable, not an afterthought once the code is "done."</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-14.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 14: Containerization &amp; Deployment</span>
+          </a>
+          <a href="../node-express/index.html#timeline" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Finished!</span>
+            <span class="lesson-pager__title">Back to Full Syllabus →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../../index.html">Home</a>
+      <a href="../angular/index.html">Angular</a>
+      <a href="../react/index.html">React</a>
+      <a href="../llm-ml/index.html">LLM &amp; ML</a>
+      <a href="../spring-boot/index.html">Spring Boot</a>
+      <a href="../devops-cloud/index.html">DevOps &amp; Cloud</a>
+      <a href="../python/index.html">Python</a>
+      <a href="../dsa-cpp/index.html">DSA in C++</a>
+      <a href="../system-design/index.html">System Design</a>
+      <a href="../node-express/index.html">Node.js &amp; Express</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>

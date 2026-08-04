@@ -81,49 +81,166 @@ button {
   color-scheme: light;
 }
 
-/* Per-course accent palettes — each course gets its own single hue family,
-   expressed as a dark-to-light gradient of that one color, so no two
-   courses read as the same color at a glance. */
-body[data-course="angular"] {
-  --accent: #b3222f;
-  --accent-2: #e2384a;
-  --accent-soft: rgba(226, 56, 74, 0.14);
+/* ---------- Per-course accent palettes ----------
+   Nine hues spaced 40deg apart in OKLCh, all at matched perceptual lightness,
+   so no two courses read alike and no card shouts louder than its neighbours.
+   Each course carries a dark-theme and a light-theme accent: one hex cannot
+   stay vivid against both #151923 and #ffffff. Every value clears WCAG AA
+   against its own theme's surface. --accent-deep is the theme-independent
+   solid fill for buttons, which carry white text.
+
+   Applied two ways: .c-<slug> tints one card inside any page,
+   body[data-course="<slug>"] tints a whole course page. */
+
+body[data-course="angular"],
+.c-angular {
+  --accent: #ff807f;
+  --accent-2: #ffa09c;
+  --accent-soft: rgba(255, 160, 156, 0.14);
+  --accent-deep: #ae2c35;
+  --accent-deep-2: #c04448;
 }
 
-body[data-course="react"] {
-  --accent: #0e7ea8;
-  --accent-2: #61dafb;
-  --accent-soft: rgba(20, 158, 202, 0.14);
+body[data-course="react"],
+.c-react {
+  --accent: #00bfea;
+  --accent-2: #22d1ff;
+  --accent-soft: rgba(34, 209, 255, 0.14);
+  --accent-deep: #006e89;
+  --accent-deep-2: #0081a0;
 }
 
-body[data-course="llm-ml"] {
-  --accent: #5b3fd6;
-  --accent-2: #a78bfa;
-  --accent-soft: rgba(124, 92, 255, 0.14);
+body[data-course="llm-ml"],
+.c-llm-ml {
+  --accent: #bf92fd;
+  --accent-2: #ccabff;
+  --accent-soft: rgba(204, 171, 255, 0.14);
+  --accent-deep: #7645b0;
+  --accent-deep-2: #8758c1;
 }
 
-body[data-course="spring-boot"] {
-  --accent: #4a7c2e;
-  --accent-2: #8bc34a;
-  --accent-soft: rgba(109, 179, 63, 0.14);
+body[data-course="spring-boot"],
+.c-spring-boot {
+  --accent: #6ec466;
+  --accent-2: #82d67a;
+  --accent-soft: rgba(130, 214, 122, 0.14);
+  --accent-deep: #107906;
+  --accent-deep-2: #2f8a27;
 }
 
-body[data-course="devops-cloud"] {
-  --accent: #c2650a;
-  --accent-2: #ff9900;
-  --accent-soft: rgba(255, 153, 0, 0.14);
+body[data-course="devops-cloud"],
+.c-devops-cloud {
+  --accent: #f1932f;
+  --accent-2: #ffa752;
+  --accent-soft: rgba(255, 167, 82, 0.14);
+  --accent-deep: #915100;
+  --accent-deep-2: #a96000;
 }
 
-body[data-course="python"] {
-  --accent: #a16207;
-  --accent-2: #ffd43b;
-  --accent-soft: rgba(255, 212, 59, 0.14);
+body[data-course="python"],
+.c-python {
+  --accent: #c1af06;
+  --accent-2: #d1c038;
+  --accent-soft: rgba(209, 192, 56, 0.14);
+  --accent-deep: #706500;
+  --accent-deep-2: #837600;
 }
 
-body[data-course="dsa-cpp"] {
-  --accent: #1e2f6b;
-  --accent-2: #4a63c4;
-  --accent-soft: rgba(30, 47, 107, 0.14);
+body[data-course="dsa-cpp"],
+.c-dsa-cpp {
+  --accent: #7eabff;
+  --accent-2: #9abeff;
+  --accent-soft: rgba(154, 190, 255, 0.14);
+  --accent-deep: #2a5dbf;
+  --accent-deep-2: #3d70d1;
+}
+
+body[data-course="system-design"],
+.c-system-design {
+  --accent: #ed82c8;
+  --accent-2: #ff95d9;
+  --accent-soft: rgba(255, 149, 217, 0.14);
+  --accent-deep: #9e317d;
+  --accent-deep-2: #b0478e;
+}
+
+body[data-course="node-express"],
+.c-node-express {
+  --accent: #00c7b3;
+  --accent-2: #00dbc5;
+  --accent-soft: rgba(0, 219, 197, 0.14);
+  --accent-deep: #007467;
+  --accent-deep-2: #008779;
+}
+
+/* Light theme: the same nine hues, darkened to hold contrast on white. */
+
+:root[data-theme="light"] body[data-course="angular"],
+:root[data-theme="light"] .c-angular {
+  --accent: #bf3e43;
+  --accent-2: #d95a5c;
+  --accent-soft: rgba(191, 62, 67, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="react"],
+:root[data-theme="light"] .c-react {
+  --accent: #007e9c;
+  --accent-2: #0098bb;
+  --accent-soft: rgba(0, 126, 156, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="llm-ml"],
+:root[data-theme="light"] .c-llm-ml {
+  --accent: #8554c0;
+  --accent-2: #9c6ed8;
+  --accent-soft: rgba(133, 84, 192, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="spring-boot"],
+:root[data-theme="light"] .c-spring-boot {
+  --accent: #27881f;
+  --accent-2: #47a03f;
+  --accent-soft: rgba(39, 136, 31, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="devops-cloud"],
+:root[data-theme="light"] .c-devops-cloud {
+  --accent: #a55d00;
+  --accent-2: #c67100;
+  --accent-soft: rgba(165, 93, 0, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="python"],
+:root[data-theme="light"] .c-python {
+  --accent: #7f7300;
+  --accent-2: #9a8b00;
+  --accent-soft: rgba(127, 115, 0, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="dsa-cpp"],
+:root[data-theme="light"] .c-dsa-cpp {
+  --accent: #386cd0;
+  --accent-2: #5185e9;
+  --accent-soft: rgba(56, 108, 208, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="system-design"],
+:root[data-theme="light"] .c-system-design {
+  --accent: #ae418c;
+  --accent-2: #c85ca4;
+  --accent-soft: rgba(174, 65, 140, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="node-express"],
+:root[data-theme="light"] .c-node-express {
+  --accent: #008476;
+  --accent-2: #009f8e;
+  --accent-soft: rgba(0, 132, 118, 0.1);
+}
+
+/* Course pages fill solid buttons from the deep pair so white text stays legible. */
+body[data-course] .btn--primary {
+  background: linear-gradient(135deg, var(--accent-deep), var(--accent-deep-2));
 }
 
 /* ---------- Base ---------- */
@@ -393,6 +510,7 @@ code, .mono {
   height: 22px;
   object-fit: contain;
 }
+.nav-course-card__icon .fa-brands { font-size: 18px; line-height: 1; }
 
 .nav-course-card__title {
   display: block;
@@ -705,34 +823,12 @@ code, .mono {
   height: 32px;
   object-fit: contain;
 }
+.course-card__icon .fa-brands { font-size: 26px; line-height: 1; }
 
-.course-icon--angular {
-  filter: brightness(0) saturate(100%) invert(31%) sepia(69%) saturate(2384%) hue-rotate(332deg) brightness(93%) contrast(91%);
-}
-
-.course-icon--react {
-  filter: brightness(0) saturate(100%) invert(76%) sepia(82%) saturate(1406%) hue-rotate(161deg) brightness(101%) contrast(97%);
-}
-
-.course-icon--java {
-  filter: brightness(0) saturate(100%) invert(76%) sepia(35%) saturate(802%) hue-rotate(44deg) brightness(91%) contrast(87%);
-}
-
-.course-icon--devops {
-  filter: brightness(0) saturate(100%) invert(66%) sepia(95%) saturate(2032%) hue-rotate(359deg) brightness(101%) contrast(103%);
-}
-
-.course-icon--cpp {
-  filter: brightness(0) saturate(100%) invert(38%) sepia(34%) saturate(1470%) hue-rotate(192deg) brightness(89%) contrast(88%);
-}
-
-.course-icon--python {
-  filter: brightness(0) saturate(100%) invert(87%) sepia(76%) saturate(887%) hue-rotate(334deg) brightness(105%) contrast(101%);
-}
-
-.course-icon--ai {
-  filter: brightness(0) saturate(100%) invert(65%) sepia(25%) saturate(1209%) hue-rotate(214deg) brightness(99%) contrast(98%);
-}
+/* Course icons are full-colour artwork and render as-is. They used to be
+   Font Awesome glyphs tinted with --accent, and three of them were flattened
+   to a single-colour silhouette by a hard-coded filter chain; both are gone
+   now that every icon is a PNG, so all nine read the same way. */
 
 .course-card__eyebrow {
   font-size: 0.76rem;

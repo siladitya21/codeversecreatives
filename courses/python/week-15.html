@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 15: Capstone: Ship a Production FastAPI Service — CodeVerse Creatives</title>
+<meta name="description" content="Week 15 — the Python &amp; FastAPI capstone: scope a real service and API contract, secure and test it with the practices from Weeks 6-12, then containerize, deploy and document it well enough for a stranger to run and verify." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+</head><body data-course="python"><svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:var(--accent)"/><stop offset="100%" style="stop-color:var(--accent-2)"/></linearGradient></defs></svg>
+<header class="navbar" data-navbar><div class="container navbar__inner"><a href="../../index.html" class="brand"><svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M46 28 22 50l24 22M54 28l24 22-24 22" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>CodeVerse Creatives</a><nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown data-active="true">
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../spring-boot/index.html" class="nav-course-card c-spring-boot">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../python/index.html" class="nav-course-card c-python" aria-current="page">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../node-express/index.html" class="nav-course-card c-node-express">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </nav><div class="navbar__actions"><button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2"/></svg></button><button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button></div></div></header>
+
+<main>
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../python/index.html">Python Syllabus</a>
+        <span>/</span>
+        <a href="../python/index.html#timeline">Module 12 · Capstone</a>
+        <span>/</span>
+        <span aria-current="page">Week 15</span>
+      </div>
+
+      <h1>Week 15: Capstone — Ship a Production FastAPI Service</h1>
+      <p class="lesson-header__lede">
+        There's no new syntax this week. You're picking a real project — an issue tracker, a
+        booking system, or an inventory service — and building it to the standard every earlier
+        week set: typed and validated endpoints, real auth, a layered test suite, structured logs
+        and health checks, a non-root container, and a deploy a stranger could actually reach.
+        The hard part of a capstone is almost never the code; it's resisting the urge to build
+        fifteen resources instead of doing three resources properly, all the way through to a
+        deployed URL.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 12 of 12</span>
+        <span class="chip">Week 15 of 15</span>
+        <span class="chip">~8–12 Hours</span>
+        <span class="chip">Capstone Project</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Scope a real service and sketch its resource model and API contract before writing implementation code</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Secure the service with real auth, and back it with a unit, integration and API-level test suite</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Containerize, deploy and document the service well enough that a stranger can run and verify it</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#plan"><span>1</span> Plan a Coherent Service &amp; API Contract</a>
+        <a href="#secure-test-observe"><span>2</span> Secure, Test &amp; Observe the System</a>
+        <a href="#ship"><span>3</span> Containerize, Deploy &amp; Document It</a>
+        <a href="#exercise"><span>4</span> Exercise</a>
+        <a href="#quiz"><span>5</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="plan">
+            <h2>1. Plan a Coherent Service &amp; API Contract</h2>
+            <p>
+              Pick one project and commit to it: an <strong>issue tracker</strong> (projects,
+              issues, comments, status transitions), a <strong>booking system</strong> (resources,
+              time slots, reservations, cancellation rules), or an <strong>inventory service</strong>
+              (products, warehouses, stock movements, low-stock alerts) all give you enough surface
+              area to demonstrate everything from Weeks 2–13 without needing to invent scope. Any
+              of the three works equally well as a portfolio piece — what matters is depth on one
+              of them, not breadth across all three.
+            </p>
+            <p>
+              Before writing a single Pydantic model, sketch the resource model and the endpoints
+              that operate on it. What are the nouns? What relationships exist between them (an
+              issue belongs to a project; a comment belongs to an issue)? What state transitions
+              are legal (an issue moves from <code>open</code> to <code>in_progress</code> to
+              <code>closed</code>, but not directly from <code>closed</code> back to
+              <code>open</code> without a reason)? Writing this down as a short table — resource,
+              endpoint, method, auth requirement, status codes — forces the ambiguous decisions to
+              happen on paper, where they're cheap to change, instead of three files deep into an
+              implementation where they're expensive to unwind.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">issue-tracker-contract.md</div>
+              <pre><code>Resource: Project (owner_id, name, slug)
+Resource: Issue   (project_id, title, status, assignee_id, created_by)
+Resource: Comment (issue_id, author_id, body)
+
+POST   /projects                     auth: any user          -&gt; 201
+GET    /projects/{id}                auth: member of project -&gt; 200 | 404
+POST   /projects/{id}/issues         auth: member of project -&gt; 201
+GET    /projects/{id}/issues         auth: member of project -&gt; 200
+PATCH  /issues/{id}/status           auth: assignee or owner -&gt; 200 | 409 (illegal transition)
+POST   /issues/{id}/comments         auth: member of project -&gt; 201
+GET    /healthz                      auth: none               -&gt; 200
+</code></pre>
+            </div>
+
+            <p>
+              Over-scoping is the single most common way capstones fail — not technical
+              difficulty, but running out of the week partway through a sprawling schema with no
+              tests, no auth, and nothing deployed. A tightly scoped service with three resources,
+              real authorization, a real test suite, and a working deployment is a dramatically
+              stronger portfolio piece than ten resources with none of that. Decide upfront what's
+              explicitly <em>out of scope</em> — real-time notifications, file uploads, a full
+              permissions matrix — and write that decision into your README rather than discovering
+              it by running out of time.
+            </p>
+          </section>
+
+          <section id="secure-test-observe">
+            <h2>2. Secure, Test &amp; Observe the System</h2>
+            <p>
+              Apply Weeks 6–7 for real: every write endpoint should require authentication via the
+              OAuth2 password flow and JWTs, and authorization should be enforced with dependencies
+              that check <em>ownership or membership</em>, not just "is logged in." In the issue
+              tracker example, a user should only be able to change the status of an issue in a
+              project they belong to — that check belongs in a reusable dependency, not duplicated
+              across every route that touches issues.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">deps.py</div>
+              <pre><code>async def require_project_member(
+    project_id: int,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+) -&gt; User:
+    is_member = await memberships.exists(db, project_id, current_user.id)
+    if not is_member:
+        raise HTTPException(status_code=403, detail="Not a member of this project")
+    return current_user
+</code></pre>
+            </div>
+
+            <p>
+              Back it with the layered suite from Week 8: unit tests for pure business logic (is
+              this status transition legal?) that need no database at all, integration tests
+              against a real test database via Testcontainers for your repository layer, and
+              API-level tests through <code>TestClient</code> that exercise the full HTTP stack —
+              auth, validation, and response shape together. A capstone with only one of these
+              layers is missing the failure modes the others exist to catch: unit tests alone miss
+              broken SQL; API tests alone are too slow and coarse to pin down which layer regressed.
+            </p>
+
+            <p>
+              Then wire in Week 11 and Week 12's observability practices: structured JSON logs that
+              include a request ID so a single request's log lines can be traced through the
+              system, a <code>/healthz</code> endpoint that checks the database connection (not
+              just "the process is alive"), and a handful of <code>prometheus-client</code> metrics
+              — request count, request duration, and something domain-specific like issues created
+              per hour. None of this is decoration; it's the difference between finding out a
+              deployed instance is broken because a user complained, versus finding out because a
+              health check failed.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Test the rejection paths, not just the happy path</strong>
+                <p>A reviewer skimming your test suite will notice immediately if every test asserts a 200 or 201. Deliberately test that an unauthenticated request gets a 401, that a non-member gets a 403, that an illegal status transition gets a 409, and that a malformed request body gets a 422 — these are the tests that demonstrate you actually understood the contract you designed in Topic 1, not just the happy path through it.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="ship">
+            <h2>3. Containerize, Deploy &amp; Document It</h2>
+            <p>
+              Apply Week 13's Docker approach directly: a multi-stage build that installs
+              dependencies in a builder stage and copies only the resulting virtual environment
+              into a slim runtime image, running as a non-root user, with migrations run as an
+              explicit release step rather than on every worker's startup. Wire a minimal CI
+              pipeline — even just "install dependencies, run the test suite, build the image" on
+              every push — so the deployed image is provably the one that passed your tests, not
+              whatever happened to be on your laptop.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">.github/workflows/ci.yml</div>
+              <pre><code>name: CI
+on: [push]
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install poetry &amp;&amp; poetry install
+      - run: poetry run pytest
+      - run: docker build -t capstone-service .
+</code></pre>
+            </div>
+
+            <p>
+              Deploy the image somewhere a link can actually reach — a free tier on Fly.io, Render,
+              or Railway is enough; the point isn't the hosting bill, it's proving the container
+              runs correctly outside your own machine, with real environment variables and a real
+              (even small) managed database instead of <code>localhost</code>. Then write the
+              README a stranger — a recruiter, an interviewer, a future teammate — actually needs:
+              what the service does and why you scoped it the way you did, how to run it locally
+              and run the test suite, which environment variables it needs and where to get test
+              values for them, and the deployed URL with a couple of example requests they can run
+              immediately without reading your source code first.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Document decisions, not just commands</strong>
+                <p>A README that's only setup commands tells a reviewer nothing about your judgment. Add a short "design decisions" section: why you chose this scope, what you deliberately left out and why, and one tradeoff you'd revisit with more time. That's the section that actually differentiates a capstone in a portfolio review.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>4. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Capstone
+              </span>
+              <h3>Build and deploy a portfolio-grade FastAPI service</h3>
+              <p>Pick issue tracking, bookings, or inventory (or a comparable scope you can justify), and apply every module from this course to it. This is a definition-of-done checklist, not a suggestion list — treat every item as required for the capstone to count as complete.</p>
+
+              <p><strong>Definition of done:</strong></p>
+              <ol>
+                <li>A documented resource model and API contract exist before implementation, with an explicit "out of scope" note for anything you deliberately excluded.</li>
+                <li>Database migrations exist for the full schema, and a seed script can populate a fresh database with realistic sample data.</li>
+                <li>Every write endpoint requires authentication, and authorization is enforced by ownership or membership checks — not just "is any user logged in."</li>
+                <li>A layered test suite exists: unit tests for business logic, integration tests against a real test database, and API-level tests through <code>TestClient</code>, including deliberate tests of 401/403/409/422 rejection paths.</li>
+                <li>The service emits structured logs with a request ID, exposes a <code>/healthz</code> endpoint that checks real dependencies, and reports at least a handful of Prometheus metrics.</li>
+                <li>A multi-stage, non-root Docker image builds in CI, with the test suite gating the build so a broken build can never reach the image step.</li>
+                <li>The service is deployed to a real (free-tier is fine) host at a URL that's actually reachable, backed by a real managed database rather than an in-memory or SQLite fallback.</li>
+                <li>A README documents setup, environment variables, how to run the test suite, the deployed URL with example requests, and the architectural decisions behind your scope.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Work top to bottom through this checklist in order, and get item 7 — an actual deployed URL — done earlier than feels natural, even with a half-finished feature set. A service that's deployed early and grown incrementally almost always ends the week in better shape than one where deployment was saved for "once everything's ready," because deployment surfaces environment and configuration problems you want to find on day one, not day six.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>5. Knowledge Check</h2>
+            <p>Four reflective questions — there's no single correct answer, but a strong capstone submission should be able to defend its position on each.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>What makes a project production-ready rather than merely feature-complete?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Feature-complete means the happy path through every endpoint works when you try it yourself. Production-ready means it has the operational qualities that let it survive contact with real, unpredictable use: security that actually restricts who can do what, a test suite that catches regressions before users do, deliberate handling of failure and rejection paths (not just success), observability that tells you something's wrong before a user reports it, a repeatable deployment process, and documentation that lets someone other than you operate it. A demo can be feature-complete in an afternoon; production-readiness is what the rest of this course was actually teaching.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>How should you decide the scope of your capstone so it's realistically finishable in the time available?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Pick the smallest set of resources that still lets you demonstrate a real relationship and a real state transition — not "how many resources can I fit," but "what's the minimum surface area that isn't trivial." An issue tracker with just projects and issues, done with real auth, full test coverage, and a deployment, beats an issue tracker with projects, issues, comments, labels, notifications, and attachments where only the first two are actually finished. Write down what's out of scope explicitly and early, rather than discovering the cutoff by running out of time on the last day.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>Why is a single "it works on my machine" pytest run insufficient evidence that the service is ready to ship?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>It only proves the code works against whatever database, environment variables, and dependency versions happen to be installed on your machine right now — none of which are guaranteed to match production. A test suite that only ever runs locally also doesn't prove anything about the next change someone makes; without CI enforcing it on every push, a passing suite today says nothing about whether the version you actually deploy tomorrow still passes. Running the same tests in a clean CI environment against a containerized database, and gating the Docker build on them passing, is what turns "it worked when I ran it" into an actual guarantee about what ships.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>Who is the real audience for your capstone README, and what should it let them do without asking you anything?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A stranger with no prior context — a recruiter skimming your portfolio, an interviewer preparing questions, or a future teammate onboarding onto the project. That README should let them clone the repository, set up the required environment variables, run it locally, run the test suite, and hit the deployed URL with example requests, all without messaging you first. It should also explain the scope decisions behind the project, since a reviewer who understands why you built it the way you did learns more about your judgment than one who only sees the endpoints.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-14.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">Previous</span>
+            <span class="lesson-pager__title">Week 14: Async Python &amp; Concurrency</span>
+          </a>
+          <a href="../python/index.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Course complete</span>
+            <span class="lesson-pager__title">Back to syllabus</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer"><div class="container footer__inner"><a href="../../index.html" class="brand">CodeVerse Creatives</a><nav class="footer__links"><a href="../python/index.html">Python syllabus</a><a href="#top">Back to top</a></nav><small>&copy; 2026 CodeVerse Creatives.</small></div></footer><script src="../../js/main.js"></script></body></html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 14: Dynamic Programming II &amp; Advanced Structures — CodeVerse Creatives</title>
+<meta name="description" content="Week 14 of the DSA in C++ curriculum: DP on grids with obstacles, DP on trees, segment trees, Fenwick trees (Binary Indexed Trees), and choosing the right structure under interview time pressure." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body data-course="dsa-cpp">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown data-active="true">
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../spring-boot/index.html" class="nav-course-card c-spring-boot">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../python/index.html" class="nav-course-card c-python">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp" aria-current="page">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../node-express/index.html" class="nav-course-card c-node-express">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../dsa-cpp/index.html">DSA in C++ Syllabus</a>
+        <span>/</span>
+        <a href="../dsa-cpp/index.html#timeline">Module 11 · Dynamic Programming II &amp; Advanced Structures</a>
+        <span>/</span>
+        <span aria-current="page">Week 14</span>
+      </div>
+
+      <h1>Week 14: Dynamic Programming II &amp; Advanced Structures</h1>
+      <p class="lesson-header__lede">
+        Last week's DP recurrences were all defined over a single index or a pair of string
+        positions — this week extends the same "define the state, write the recurrence" discipline
+        to two dimensions with obstacles and to the tree structures you built back in Module 7.
+        Then it pivots to a different kind of problem entirely: answering range queries fast when
+        the underlying array keeps changing, using segment trees and Fenwick trees. You'll close by
+        practicing the decision-making skill that matters most under interview time pressure —
+        picking the right structure in seconds, which is exactly what the capstone project in Week
+        15 will demand of you across a whole system.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 11 of 12</span>
+        <span class="chip">Week 14 of 15</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this week, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Solve grid DP problems with obstacles and DP problems defined on tree structures</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build and query a segment tree for range queries and updates in O(log n)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Implement a Fenwick tree (BIT) for prefix-sum queries and choose the right structure quickly under time pressure</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#grid-dp"><span>1</span> DP on Grids</a>
+        <a href="#tree-dp"><span>2</span> DP on Trees</a>
+        <a href="#segment-trees"><span>3</span> Segment Trees</a>
+        <a href="#fenwick"><span>4</span> Fenwick Trees</a>
+        <a href="#choosing"><span>5</span> Choosing the Right Structure</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="grid-dp">
+            <h2>1. DP on Grids with Obstacles</h2>
+            <p>
+              Grid DP extends the "define <code>dp[i]</code> in terms of earlier states" idea to
+              two dimensions: <code>dp[i][j]</code> depends on the cell above it and the cell to
+              its left. Obstacles are handled by forcing any blocked cell's count to zero, which
+              then correctly propagates "unreachable" forward through the rest of the grid.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">grid_dp.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+using namespace std;
+
+// Count paths from top-left to bottom-right, moving only right/down,
+// where grid[i][j] == 1 marks an obstacle -- O(rows * cols) time and space
+int uniquePathsWithObstacles(const vector&lt;vector&lt;int&gt;&gt;&amp; grid) {
+    int rows = grid.size(), cols = grid[0].size();
+    vector&lt;vector&lt;long long&gt;&gt; dp(rows, vector&lt;long long&gt;(cols, 0));
+
+    for (int i = 0; i &lt; rows; i++) {
+        for (int j = 0; j &lt; cols; j++) {
+            if (grid[i][j] == 1) {
+                dp[i][j] = 0;   // obstacle: unreachable
+                continue;
+            }
+            if (i == 0 &amp;&amp; j == 0) {
+                dp[i][j] = 1;   // starting cell
+            } else {
+                long long fromTop = (i &gt; 0) ? dp[i - 1][j] : 0;
+                long long fromLeft = (j &gt; 0) ? dp[i][j - 1] : 0;
+                dp[i][j] = fromTop + fromLeft;
+            }
+        }
+    }
+    return (int)dp[rows - 1][cols - 1];
+}
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Fill order matters just as much as the recurrence</strong>
+                <p>Processing cells in row-major order guarantees <code>dp[i-1][j]</code> and <code>dp[i][j-1]</code> are always already computed before you need them — the same "process dependencies before dependents" discipline you used for topological order in Week 12, just applied along two axes instead of one.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="tree-dp">
+            <h2>2. DP on Trees</h2>
+            <p>
+              DP on trees runs a post-order recursion where each call returns not just one number,
+              but a small bundle of answers under different local constraints — one per child
+              state the parent might care about. The classic example is "House Robber III": robbing
+              houses arranged in a binary tree, where you can't rob two directly-connected nodes.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">tree_dp.cpp</div>
+              <pre><code>#include &lt;algorithm&gt;
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    TreeNode(int v) : val(v), left(nullptr), right(nullptr) {}
+};
+
+// Returns {best sum if we ROB this node, best sum if we DON'T rob this node}
+pair&lt;int,int&gt; robTreeHelper(TreeNode* node) {
+    if (!node) return {0, 0};
+
+    auto [leftRob, leftSkip] = robTreeHelper(node-&gt;left);
+    auto [rightRob, rightSkip] = robTreeHelper(node-&gt;right);
+
+    int rob = node-&gt;val + leftSkip + rightSkip;                     // take node -> children must be skipped
+    int skip = max(leftRob, leftSkip) + max(rightRob, rightSkip);   // free choice per child
+
+    return {rob, skip};
+}
+
+// O(n) time -- one post-order pass, O(h) space for the call stack
+int robTree(TreeNode* root) {
+    auto [rob, skip] = robTreeHelper(root);
+    return max(rob, skip);
+}
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Same shape as diameter-of-tree</strong>
+                <p>Returning a small struct or pair of "answer under each local constraint" from every recursive call, computed post-order, is the same pattern you used for the diameter-of-a-tree problem in Week 10 — DP on trees is almost always that pattern with a different pair of values being tracked.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="segment-trees">
+            <h2>3. Segment Trees</h2>
+            <p>
+              A segment tree answers range queries (sum, min, max, gcd) over an array that also
+              supports point updates, both in <code>O(log n)</code>. It's a binary tree stored in
+              an array where each node covers a contiguous range, and a parent's value is the
+              merge of its two children's values.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">segment_tree.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+using namespace std;
+
+class SegmentTree {
+public:
+    SegmentTree(const vector&lt;int&gt;&amp; nums) {
+        n = nums.size();
+        tree.assign(4 * n, 0);
+        if (n &gt; 0) build(nums, 1, 0, n - 1);
+    }
+
+    // Sum of nums[l..r] inclusive -- O(log n)
+    int query(int l, int r) {
+        return query(1, 0, n - 1, l, r);
+    }
+
+    // Set nums[idx] = val -- O(log n)
+    void update(int idx, int val) {
+        update(1, 0, n - 1, idx, val);
+    }
+
+private:
+    vector&lt;int&gt; tree;
+    int n;
+
+    void build(const vector&lt;int&gt;&amp; nums, int node, int lo, int hi) {
+        if (lo == hi) { tree[node] = nums[lo]; return; }
+        int mid = lo + (hi - lo) / 2;
+        build(nums, 2 * node, lo, mid);
+        build(nums, 2 * node + 1, mid + 1, hi);
+        tree[node] = tree[2 * node] + tree[2 * node + 1];
+    }
+
+    int query(int node, int lo, int hi, int l, int r) {
+        if (r &lt; lo || hi &lt; l) return 0;                  // no overlap
+        if (l &lt;= lo &amp;&amp; hi &lt;= r) return tree[node];        // total overlap
+        int mid = lo + (hi - lo) / 2;
+        return query(2 * node, lo, mid, l, r) + query(2 * node + 1, mid + 1, hi, l, r);
+    }
+
+    void update(int node, int lo, int hi, int idx, int val) {
+        if (lo == hi) { tree[node] = val; return; }
+        int mid = lo + (hi - lo) / 2;
+        if (idx &lt;= mid) update(2 * node, lo, mid, idx, val);
+        else update(2 * node + 1, mid + 1, hi, idx, val);
+        tree[node] = tree[2 * node] + tree[2 * node + 1];
+    }
+};
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Change the merge, get a different query</strong>
+                <p>Swap <code>tree[node] = tree[2*node] + tree[2*node+1]</code> for <code>min(...)</code> or <code>max(...)</code> (and change the "no overlap" sentinel from 0 to <code>INT_MAX</code> or <code>INT_MIN</code>) and the exact same recursive structure answers range-min or range-max queries instead of range-sum.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="fenwick">
+            <h2>4. Fenwick Trees (Binary Indexed Trees)</h2>
+            <p>
+              A Fenwick tree (BIT) answers prefix-sum queries and point updates in
+              <code>O(log n)</code>, with far less code than a segment tree — at the cost of only
+              supporting operations that are <strong>invertible</strong>, like sum or XOR, not
+              min or max.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">fenwick_tree.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+using namespace std;
+
+class FenwickTree {
+public:
+    FenwickTree(int n) : tree(n + 1, 0) {}
+
+    // Add delta to index i (1-indexed) -- O(log n)
+    void update(int i, int delta) {
+        for (; i &lt; (int)tree.size(); i += i &amp; (-i)) {
+            tree[i] += delta;
+        }
+    }
+
+    // Prefix sum of [1..i] -- O(log n)
+    int prefixSum(int i) {
+        int sum = 0;
+        for (; i &gt; 0; i -= i &amp; (-i)) {
+            sum += tree[i];
+        }
+        return sum;
+    }
+
+    // Range sum [l..r], both 1-indexed and inclusive -- O(log n)
+    int rangeSum(int l, int r) {
+        return prefixSum(r) - prefixSum(l - 1);
+    }
+
+private:
+    vector&lt;int&gt; tree;
+};
+</code></pre>
+            </div>
+
+            <p>
+              <code>i &amp; (-i)</code> isolates the lowest set bit of <code>i</code>, which is the
+              size of the range that index is responsible for. <code>update</code> walks upward
+              adding that range size to move to the next node that needs updating; <code>prefixSum</code>
+              walks downward subtracting it to accumulate the answer — the same bit trick powers
+              both directions.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Default to Fenwick when sum is all you need</strong>
+                <p>Whenever a problem needs point updates plus range-sum (or prefix-sum) queries, a Fenwick tree is usually the faster thing to code correctly under time pressure — reach for a segment tree only when the operation isn't invertible (min, max, gcd) or you need range updates too.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="choosing">
+            <h2>5. Choosing the Right Structure Under Time Pressure</h2>
+            <p>
+              By this point in the course you have several structures that all "answer questions
+              about ranges or subsets of data" — prefix sums, Fenwick trees, segment trees, and
+              Union-Find. Picking the wrong one costs minutes you don't have in an interview, so
+              it helps to have a quick decision path memorized.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">static_prefix_sum.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+using namespace std;
+
+// No updates at all: a plain prefix-sum array beats both trees -- O(n) build, O(1) query
+vector&lt;long long&gt; buildPrefixSum(const vector&lt;int&gt;&amp; nums) {
+    vector&lt;long long&gt; prefix(nums.size() + 1, 0);
+    for (size_t i = 0; i &lt; nums.size(); i++) {
+        prefix[i + 1] = prefix[i] + nums[i];
+    }
+    return prefix;
+}
+
+// Sum of nums[l..r] inclusive, 0-indexed -- O(1)
+long long rangeSumStatic(const vector&lt;long long&gt;&amp; prefix, int l, int r) {
+    return prefix[r + 1] - prefix[l];
+}
+</code></pre>
+            </div>
+
+            <p>
+              A practical decision path: if the array never changes, use a plain prefix-sum array
+              — building a segment tree for static data is unnecessary complexity. If there are
+              point updates and you only need range sums, reach for a Fenwick tree first since it's
+              faster to code correctly. If you need range min/max/gcd, or the query type isn't
+              invertible, use a segment tree. If the question is really about connectivity or
+              grouping rather than numeric ranges, it's Union-Find, not a tree, that you want.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Say your choice out loud before coding it</strong>
+                <p>Stating "this needs point updates and range-sum queries, so I'll use a Fenwick tree" before writing any code signals to an interviewer that your structure choice was deliberate, not accidental — and it forces you to double check the choice actually fits the constraints before you've invested ten minutes in the wrong implementation.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Hands-on
+              </span>
+              <h3>Build a Range Query Toolkit</h3>
+              <p>Implement all four range-query approaches from this week and confirm they agree with each other.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Implement <code>buildPrefixSum</code> / <code>rangeSumStatic</code> for the no-updates case.</li>
+                <li>Implement <code>FenwickTree</code> with <code>update</code> and <code>rangeSum</code>, and confirm it matches the static prefix sum on data that never changes.</li>
+                <li>Implement <code>SegmentTree</code> with a range-MIN query instead of range-sum by adapting the merge step and the "no overlap" sentinel.</li>
+                <li>Implement <code>robTree</code> on a sample binary tree and confirm it matches a brute-force recursive solution that doesn't use the post-order pair trick.</li>
+                <li>Implement <code>uniquePathsWithObstacles</code> and test it on a grid with a fully blocked row (expect 0 paths).</li>
+                <li>Write a one-line comment above each structure stating when to reach for it and its Big-O for build/update/query.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Adapting the segment tree from sum to min only requires two changes: the merge line becomes <code>tree[node] = min(tree[2*node], tree[2*node+1])</code>, and the query's "no overlap" return value becomes <code>INT_MAX</code> instead of <code>0</code> — the recursive shape never changes.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q1</span>
+                  <div class="week-item__heading">
+                    <h4>Why does the DP-on-trees pattern for House Robber III return a pair (rob this node, skip this node) from each recursive call instead of a single value?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A parent node's own decision depends on whether each child was robbed or skipped — if the parent is robbed, its children must be in their "skip" state, but if the parent is skipped, each child is free to be in whichever state is larger. Returning only one number per child would throw away exactly the information the parent needs to make that decision correctly.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q2</span>
+                  <div class="week-item__heading">
+                    <h4>Given a problem with many point updates and many range-sum queries, why would you reach for a Fenwick tree before a segment tree, and when would that choice be wrong?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A Fenwick tree needs far less code — a single array and two short loops — and runs in the same O(log n) per operation as a segment tree, so for a pure point-update/range-sum problem it's simply faster to write correctly under time pressure. It would be the wrong choice if the query type isn't invertible, like range-min or range-max, or if the problem also needs range updates rather than only point updates, since a plain Fenwick tree doesn't support either.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q3</span>
+                  <div class="week-item__heading">
+                    <h4>What does <code>i &amp; (-i)</code> compute in a Fenwick tree, and why is that the key operation behind both <code>update</code> and <code>prefixSum</code>?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p><code>i &amp; (-i)</code> isolates the lowest set bit of <code>i</code>, which equals the size of the contiguous range that index <code>i</code> is responsible for in the tree's implicit structure. <code>update</code> repeatedly adds that value to <code>i</code> to climb to the next node whose range includes the updated index, while <code>prefixSum</code> repeatedly subtracts it to descend through the ranges that together sum to <code>[1..i]</code> — both directions rely on the exact same bit trick.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q4</span>
+                  <div class="week-item__heading">
+                    <h4>If a problem never mutates the input array and only asks range-sum queries, why is a full segment tree or Fenwick tree the wrong choice?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Both structures exist specifically to keep queries fast in the presence of updates — without updates, a plain prefix-sum array answers any range-sum query in O(1) after a single O(n) build, which is strictly faster and simpler than either tree's O(log n) per query. Reaching for a tree here adds implementation risk and code volume for a capability (fast updates) the problem never actually uses.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-13.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 13: Dynamic Programming I: Foundations</span>
+          </a>
+          <a href="week-15.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 15: Capstone: Build a Mini Expression Interpreter →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../../index.html">Home</a>
+      <a href="../angular/index.html">Angular</a>
+      <a href="../react/index.html">React</a>
+      <a href="../llm-ml/index.html">LLM &amp; ML</a>
+      <a href="../spring-boot/index.html">Spring Boot</a>
+      <a href="../devops-cloud/index.html">DevOps &amp; Cloud</a>
+      <a href="../python/index.html">Python</a>
+      <a href="../dsa-cpp/index.html">DSA in C++</a>
+      <a href="../system-design/index.html">System Design</a>
+      <a href="../node-express/index.html">Node.js &amp; Express</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
