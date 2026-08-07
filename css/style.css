@@ -173,7 +173,16 @@ body[data-course="node-express"],
   --accent-deep-2: #008779;
 }
 
-/* Light theme: the same nine hues, darkened to hold contrast on white. */
+body[data-course="servicenow"],
+.c-servicenow {
+  --accent: #8bc639;
+  --accent-2: #a2d161;
+  --accent-soft: rgba(162, 209, 97, 0.14);
+  --accent-deep: #46631d;
+  --accent-deep-2: #547722;
+}
+
+/* Light theme: the same ten hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
 :root[data-theme="light"] .c-angular {
@@ -236,6 +245,13 @@ body[data-course="node-express"],
   --accent: #008476;
   --accent-2: #009f8e;
   --accent-soft: rgba(0, 132, 118, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="servicenow"],
+:root[data-theme="light"] .c-servicenow {
+  --accent: #4f721d;
+  --accent-2: #5f8b23;
+  --accent-soft: rgba(79, 114, 29, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */

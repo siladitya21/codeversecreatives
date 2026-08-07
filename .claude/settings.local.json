@@ -154,7 +154,10 @@
       "Bash(xargs sed -i 's/20 Weeks/26 Weeks/g')",
       "Bash(node \"C:/Users/SILAD_~1/AppData/Local/Temp/claude/e--Projects-codeversecreatives/b74cd8c8-ea05-40e9-8747-a86da51e9258/scratchpad/renumber.js\")",
       "Bash(sed -i 's/Module 12 · Styling/Module 13 · Styling/; s/Module 12 of 17/Module 13 of 17/' week-21.html)",
-      "Bash(sed -i 's/Module 13 · Capstone/Module 17 · Capstone/; s/Module 13 of 17/Module 17 of 17/' week-25.html)"
+      "Bash(sed -i 's/Module 13 · Capstone/Module 17 · Capstone/; s/Module 13 of 17/Module 17 of 17/' week-25.html)",
+      "Bash(grep -rA1 'nav-course-card__title\">DSA in C++</span>' --include=\"*.html\" .)",
+      "Bash(perl -v)",
+      "Bash(grep -rA1 'nav-course-card__title\">Python</span>' --include=\"*.html\" ./courses/dsa-cpp/week-01.html)"
     ]
   }
 }

@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Week 14: Dynamic Programming II &amp; Advanced Structures — CodeVerse Creatives</title>
-<meta name="description" content="Week 14 of the DSA in C++ curriculum: DP on grids with obstacles, DP on trees, segment trees, Fenwick trees (Binary Indexed Trees), and choosing the right structure under interview time pressure." />
+<title>Week 14: Dynamic Programming II: Grids, Trees &amp; Interval DP — CodeVerse Creatives</title>
+<meta name="description" content="Week 14 of the DSA in C++ curriculum: DP on grids with obstacles, DP on trees, interval DP with matrix chain multiplication, and palindrome partitioning." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -98,7 +98,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DSA in C++</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../system-design/index.html" class="nav-course-card c-system-design">
@@ -113,6 +113,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Node.js &amp; Express</span>
               <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2a2 2 0 0 0 4 0h6a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2h-6a2 2 0 0 0-4 0H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">ServiceNow</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
         </div>
@@ -138,26 +145,28 @@
       <div class="lesson-crumb">
         <a href="../dsa-cpp/index.html">DSA in C++ Syllabus</a>
         <span>/</span>
-        <a href="../dsa-cpp/index.html#timeline">Module 11 · Dynamic Programming II &amp; Advanced Structures</a>
+        <a href="../dsa-cpp/index.html#timeline">Module 11 · Dynamic Programming II: Grids, Trees &amp; Interval DP</a>
         <span>/</span>
         <span aria-current="page">Week 14</span>
       </div>
 
-      <h1>Week 14: Dynamic Programming II &amp; Advanced Structures</h1>
+      <h1>Week 14: Dynamic Programming II: Grids, Trees &amp; Interval DP</h1>
       <p class="lesson-header__lede">
         Last week's DP recurrences were all defined over a single index or a pair of string
         positions — this week extends the same "define the state, write the recurrence" discipline
         to two dimensions with obstacles and to the tree structures you built back in Module 7.
-        Then it pivots to a different kind of problem entirely: answering range queries fast when
-        the underlying array keeps changing, using segment trees and Fenwick trees. You'll close by
-        practicing the decision-making skill that matters most under interview time pressure —
-        picking the right structure in seconds, which is exactly what the capstone project in Week
-        15 will demand of you across a whole system.
+        Then it pivots to a shape that trips up most candidates the first time they see it: interval
+        DP, where the state is a range <code>[i, j]</code> rather than a prefix, and the recurrence
+        tries every way to split that range in two. You'll close by applying that same interval
+        thinking to a second classic problem, palindrome partitioning — good preparation for the
+        range-query data structures in Module 16 and the bitmask and digit DP in Module 15, both of
+        which build directly on the "index the state by more than one dimension" habit this week
+        establishes.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 11 of 12</span>
-        <span class="chip">Week 14 of 15</span>
+        <span class="chip chip--accent">Module 11 of 17</span>
+        <span class="chip">Week 14 of 20</span>
         <span class="chip">~3–4 Hours</span>
         <span class="chip">Hands-on Exercise Included</span>
       </div>
@@ -166,19 +175,18 @@
         <h2>By the end of this week, you'll be able to</h2>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Solve grid DP problems with obstacles and DP problems defined on tree structures</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build and query a segment tree for range queries and updates in O(log n)</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Implement a Fenwick tree (BIT) for prefix-sum queries and choose the right structure quickly under time pressure</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Recognize and solve interval DP problems by defining state over a range <code>[i, j]</code> and trying every split point</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Apply interval DP to matrix chain multiplication and minimum-cut palindrome partitioning</li>
         </ul>
       </div>
 
       <div class="phase-nav">
         <a href="#grid-dp"><span>1</span> DP on Grids</a>
         <a href="#tree-dp"><span>2</span> DP on Trees</a>
-        <a href="#segment-trees"><span>3</span> Segment Trees</a>
-        <a href="#fenwick"><span>4</span> Fenwick Trees</a>
-        <a href="#choosing"><span>5</span> Choosing the Right Structure</a>
-        <a href="#exercise"><span>6</span> Exercise</a>
-        <a href="#quiz"><span>7</span> Knowledge Check</a>
+        <a href="#matrix-chain"><span>3</span> Interval DP: Matrix Chain</a>
+        <a href="#palindrome-partition"><span>4</span> Palindrome Partitioning</a>
+        <a href="#exercise"><span>5</span> Exercise</a>
+        <a href="#quiz"><span>6</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -289,219 +297,165 @@ int robTree(TreeNode* root) {
             </div>
           </section>
 
-          <section id="segment-trees">
-            <h2>3. Segment Trees</h2>
+          <section id="matrix-chain">
+            <h2>3. Interval DP: Matrix Chain Multiplication</h2>
             <p>
-              A segment tree answers range queries (sum, min, max, gcd) over an array that also
-              supports point updates, both in <code>O(log n)</code>. It's a binary tree stored in
-              an array where each node covers a contiguous range, and a parent's value is the
-              merge of its two children's values.
+              Every DP you've written so far indexes state by a prefix — <code>dp[i]</code> or
+              <code>dp[i][j]</code> meaning "the best answer using the first <code>i</code>
+              elements." Interval DP indexes state by a <strong>range</strong> instead:
+              <code>dp[i][j]</code> means "the best answer for the subarray from <code>i</code> to
+              <code>j</code> inclusive," and the recurrence tries every way to split that range at
+              some point <code>k</code> and combines the two halves. Matrix chain multiplication is
+              the canonical example: given a chain of matrices, find the parenthesization that
+              minimizes the total number of scalar multiplications, since multiplication is
+              associative but the cost of each order differs enormously.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">segment_tree.cpp</div>
+              <div class="code-block__label">matrix_chain.cpp</div>
               <pre><code>#include &lt;vector&gt;
+#include &lt;climits&gt;
 using namespace std;
 
-class SegmentTree {
-public:
-    SegmentTree(const vector&lt;int&gt;&amp; nums) {
-        n = nums.size();
-        tree.assign(4 * n, 0);
-        if (n &gt; 0) build(nums, 1, 0, n - 1);
-    }
+// dims[i-1] x dims[i] is the shape of matrix i (1-indexed), for i in [1, n]
+// dp[i][j] = min scalar multiplications to compute the product of matrices i..j
+// O(n^3) time, O(n^2) space
+int matrixChainOrder(vector&lt;int&gt;&amp; dims) {
+    int n = dims.size() - 1;              // number of matrices
+    vector&lt;vector&lt;int&gt;&gt; dp(n + 1, vector&lt;int&gt;(n + 1, 0));
 
-    // Sum of nums[l..r] inclusive -- O(log n)
-    int query(int l, int r) {
-        return query(1, 0, n - 1, l, r);
-    }
-
-    // Set nums[idx] = val -- O(log n)
-    void update(int idx, int val) {
-        update(1, 0, n - 1, idx, val);
-    }
-
-private:
-    vector&lt;int&gt; tree;
-    int n;
-
-    void build(const vector&lt;int&gt;&amp; nums, int node, int lo, int hi) {
-        if (lo == hi) { tree[node] = nums[lo]; return; }
-        int mid = lo + (hi - lo) / 2;
-        build(nums, 2 * node, lo, mid);
-        build(nums, 2 * node + 1, mid + 1, hi);
-        tree[node] = tree[2 * node] + tree[2 * node + 1];
-    }
-
-    int query(int node, int lo, int hi, int l, int r) {
-        if (r &lt; lo || hi &lt; l) return 0;                  // no overlap
-        if (l &lt;= lo &amp;&amp; hi &lt;= r) return tree[node];        // total overlap
-        int mid = lo + (hi - lo) / 2;
-        return query(2 * node, lo, mid, l, r) + query(2 * node + 1, mid + 1, hi, l, r);
-    }
-
-    void update(int node, int lo, int hi, int idx, int val) {
-        if (lo == hi) { tree[node] = val; return; }
-        int mid = lo + (hi - lo) / 2;
-        if (idx &lt;= mid) update(2 * node, lo, mid, idx, val);
-        else update(2 * node + 1, mid + 1, hi, idx, val);
-        tree[node] = tree[2 * node] + tree[2 * node + 1];
-    }
-};
-</code></pre>
-            </div>
-
-            <div class="callout callout--tip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
-              <div>
-                <strong>Change the merge, get a different query</strong>
-                <p>Swap <code>tree[node] = tree[2*node] + tree[2*node+1]</code> for <code>min(...)</code> or <code>max(...)</code> (and change the "no overlap" sentinel from 0 to <code>INT_MAX</code> or <code>INT_MIN</code>) and the exact same recursive structure answers range-min or range-max queries instead of range-sum.</p>
-              </div>
-            </div>
-          </section>
-
-          <section id="fenwick">
-            <h2>4. Fenwick Trees (Binary Indexed Trees)</h2>
-            <p>
-              A Fenwick tree (BIT) answers prefix-sum queries and point updates in
-              <code>O(log n)</code>, with far less code than a segment tree — at the cost of only
-              supporting operations that are <strong>invertible</strong>, like sum or XOR, not
-              min or max.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">fenwick_tree.cpp</div>
-              <pre><code>#include &lt;vector&gt;
-using namespace std;
-
-class FenwickTree {
-public:
-    FenwickTree(int n) : tree(n + 1, 0) {}
-
-    // Add delta to index i (1-indexed) -- O(log n)
-    void update(int i, int delta) {
-        for (; i &lt; (int)tree.size(); i += i &amp; (-i)) {
-            tree[i] += delta;
+    // len is the interval length -- intervals of length 1 (single matrices) cost 0
+    for (int len = 2; len &lt;= n; len++) {
+        for (int i = 1; i &lt;= n - len + 1; i++) {
+            int j = i + len - 1;
+            dp[i][j] = INT_MAX;
+            for (int k = i; k &lt; j; k++) {        // try every split point
+                int cost = dp[i][k] + dp[k + 1][j]
+                         + dims[i - 1] * dims[k] * dims[j];
+                dp[i][j] = min(dp[i][j], cost);
+            }
         }
     }
-
-    // Prefix sum of [1..i] -- O(log n)
-    int prefixSum(int i) {
-        int sum = 0;
-        for (; i &gt; 0; i -= i &amp; (-i)) {
-            sum += tree[i];
-        }
-        return sum;
-    }
-
-    // Range sum [l..r], both 1-indexed and inclusive -- O(log n)
-    int rangeSum(int l, int r) {
-        return prefixSum(r) - prefixSum(l - 1);
-    }
-
-private:
-    vector&lt;int&gt; tree;
-};
-</code></pre>
-            </div>
-
-            <p>
-              <code>i &amp; (-i)</code> isolates the lowest set bit of <code>i</code>, which is the
-              size of the range that index is responsible for. <code>update</code> walks upward
-              adding that range size to move to the next node that needs updating; <code>prefixSum</code>
-              walks downward subtracting it to accumulate the answer — the same bit trick powers
-              both directions.
-            </p>
-
-            <div class="callout callout--tip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
-              <div>
-                <strong>Default to Fenwick when sum is all you need</strong>
-                <p>Whenever a problem needs point updates plus range-sum (or prefix-sum) queries, a Fenwick tree is usually the faster thing to code correctly under time pressure — reach for a segment tree only when the operation isn't invertible (min, max, gcd) or you need range updates too.</p>
-              </div>
-            </div>
-          </section>
-
-          <section id="choosing">
-            <h2>5. Choosing the Right Structure Under Time Pressure</h2>
-            <p>
-              By this point in the course you have several structures that all "answer questions
-              about ranges or subsets of data" — prefix sums, Fenwick trees, segment trees, and
-              Union-Find. Picking the wrong one costs minutes you don't have in an interview, so
-              it helps to have a quick decision path memorized.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">static_prefix_sum.cpp</div>
-              <pre><code>#include &lt;vector&gt;
-using namespace std;
-
-// No updates at all: a plain prefix-sum array beats both trees -- O(n) build, O(1) query
-vector&lt;long long&gt; buildPrefixSum(const vector&lt;int&gt;&amp; nums) {
-    vector&lt;long long&gt; prefix(nums.size() + 1, 0);
-    for (size_t i = 0; i &lt; nums.size(); i++) {
-        prefix[i + 1] = prefix[i] + nums[i];
-    }
-    return prefix;
-}
-
-// Sum of nums[l..r] inclusive, 0-indexed -- O(1)
-long long rangeSumStatic(const vector&lt;long long&gt;&amp; prefix, int l, int r) {
-    return prefix[r + 1] - prefix[l];
+    return dp[1][n];
 }
 </code></pre>
             </div>
 
             <p>
-              A practical decision path: if the array never changes, use a plain prefix-sum array
-              — building a segment tree for static data is unnecessary complexity. If there are
-              point updates and you only need range sums, reach for a Fenwick tree first since it's
-              faster to code correctly. If you need range min/max/gcd, or the query type isn't
-              invertible, use a segment tree. If the question is really about connectivity or
-              grouping rather than numeric ranges, it's Union-Find, not a tree, that you want.
+              The outer loop over <code>len</code> is what makes this DP correct: to fill
+              <code>dp[i][j]</code> you need every smaller sub-interval already computed, so
+              processing intervals in increasing order of length guarantees every
+              <code>dp[i][k]</code> and <code>dp[k+1][j]</code> the inner loop reads is ready before
+              it's read — the same "dependencies before dependents" discipline as grid DP's
+              row-major fill, just organized by interval size instead of row.
             </p>
 
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>Say your choice out loud before coding it</strong>
-                <p>Stating "this needs point updates and range-sum queries, so I'll use a Fenwick tree" before writing any code signals to an interviewer that your structure choice was deliberate, not accidental — and it forces you to double check the choice actually fits the constraints before you've invested ten minutes in the wrong implementation.</p>
+                <strong>Recognize the shape, not the story</strong>
+                <p>Any problem asking "what's the optimal way to combine/merge/multiply a sequence, where order changes the cost" is almost always interval DP wearing a different costume — burst balloons, optimal BST construction, and polygon triangulation all reduce to the exact same <code>dp[i][j] = min over k of dp[i][k] + dp[k+1][j] + mergeCost(i, k, j)</code> recurrence.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="palindrome-partition">
+            <h2>4. Palindrome Partitioning: Minimum Cuts</h2>
+            <p>
+              Given a string, partition it into the fewest possible substrings such that every
+              substring is a palindrome, and return the minimum number of cuts needed. This
+              combines interval thinking (precomputing which <code>[i, j]</code> ranges are
+              palindromes) with prefix DP (the fewest cuts to partition everything up to index
+              <code>i</code>).
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">palindrome_partition.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// Minimum cuts to partition s into palindromic substrings -- O(n^2) time and space
+int minCut(const string&amp; s) {
+    int n = s.size();
+
+    // isPalin[i][j]: is s[i..j] a palindrome? Built from shorter intervals outward.
+    vector&lt;vector&lt;bool&gt;&gt; isPalin(n, vector&lt;bool&gt;(n, false));
+    for (int len = 1; len &lt;= n; len++) {
+        for (int i = 0; i + len - 1 &lt; n; i++) {
+            int j = i + len - 1;
+            if (s[i] != s[j]) continue;
+            isPalin[i][j] = (len &lt;= 2) || isPalin[i + 1][j - 1];
+        }
+    }
+
+    // cuts[i] = min cuts needed for the prefix s[0..i]
+    vector&lt;int&gt; cuts(n, 0);
+    for (int i = 0; i &lt; n; i++) {
+        if (isPalin[0][i]) { cuts[i] = 0; continue; }   // whole prefix is already a palindrome
+        cuts[i] = i;   // worst case: cut before every character
+        for (int j = 1; j &lt;= i; j++) {
+            if (isPalin[j][i] &amp;&amp; cuts[j - 1] + 1 &lt; cuts[i]) {
+                cuts[i] = cuts[j - 1] + 1;
+            }
+        }
+    }
+    return cuts[n - 1];
+}
+</code></pre>
+            </div>
+
+            <p>
+              Precomputing <code>isPalin</code> is itself interval DP — <code>s[i..j]</code> is a
+              palindrome exactly when its endpoints match <em>and</em> the interval one shorter on
+              each side, <code>s[i+1..j-1]</code>, is also a palindrome, filled in order of
+              increasing length just like matrix chain. That precomputation turns what would be an
+              <code>O(n)</code> palindrome check inside the main loop into an <code>O(1)</code>
+              lookup, which is what keeps the overall algorithm at <code>O(n&sup2;)</code> instead
+              of <code>O(n&sup3;)</code>.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Precompute the interval table before the prefix DP</strong>
+                <p>Whenever a prefix or subsequence DP's transition needs to ask "is this range valid/a palindrome/sorted?" repeatedly, build an <code>O(n&sup2;)</code> lookup table for that question first with its own interval DP, exactly like <code>isPalin</code> here — recomputing the check inline is the single most common way this pattern accidentally becomes <code>O(n&sup3;)</code> or worse.</p>
               </div>
             </div>
           </section>
 
           <section id="exercise">
-            <h2>6. Hands-on Exercise</h2>
+            <h2>5. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Build a Range Query Toolkit</h3>
-              <p>Implement all four range-query approaches from this week and confirm they agree with each other.</p>
+              <h3>Build a Two-Dimensional DP Toolkit</h3>
+              <p>Implement all four state shapes from this week and confirm each on a hand-worked example.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Implement <code>buildPrefixSum</code> / <code>rangeSumStatic</code> for the no-updates case.</li>
-                <li>Implement <code>FenwickTree</code> with <code>update</code> and <code>rangeSum</code>, and confirm it matches the static prefix sum on data that never changes.</li>
-                <li>Implement <code>SegmentTree</code> with a range-MIN query instead of range-sum by adapting the merge step and the "no overlap" sentinel.</li>
-                <li>Implement <code>robTree</code> on a sample binary tree and confirm it matches a brute-force recursive solution that doesn't use the post-order pair trick.</li>
                 <li>Implement <code>uniquePathsWithObstacles</code> and test it on a grid with a fully blocked row (expect 0 paths).</li>
-                <li>Write a one-line comment above each structure stating when to reach for it and its Big-O for build/update/query.</li>
+                <li>Implement <code>robTree</code> on a sample binary tree and confirm it matches a brute-force recursive solution that doesn't use the post-order pair trick.</li>
+                <li>Implement <code>matrixChainOrder</code> for the dims array <code>{40, 20, 30, 10, 30}</code> and confirm it returns <code>26000</code>.</li>
+                <li>Implement <code>minCut</code> for <code>"aab"</code> and confirm it returns <code>1</code> (cut into <code>"aa"</code> and <code>"b"</code>), and for <code>"a"</code> confirm it returns <code>0</code>.</li>
+                <li>Extend <code>matrixChainOrder</code> to also return the actual optimal parenthesization as a string, by tracking the best split point <code>k</code> for each <code>dp[i][j]</code> in a separate table and reconstructing recursively.</li>
+                <li>Write a one-line comment above each function stating its state definition (what <code>dp[i][j]</code> or the returned pair means) and its time complexity.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>Adapting the segment tree from sum to min only requires two changes: the merge line becomes <code>tree[node] = min(tree[2*node], tree[2*node+1])</code>, and the query's "no overlap" return value becomes <code>INT_MAX</code> instead of <code>0</code> — the recursive shape never changes.</p>
+                  <p>For the reconstruction in requirement 5, add a parallel <code>vector&lt;vector&lt;int&gt;&gt; split</code> table sized like <code>dp</code>; every time you update <code>dp[i][j]</code> to a new best cost inside the <code>k</code> loop, also record <code>split[i][j] = k</code>. A small recursive helper that reads <code>split[i][j]</code> can then rebuild the full parenthesization from <code>dp[1][n]</code> down.</p>
                 </div>
               </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>7. Knowledge Check</h2>
+            <h2>6. Knowledge Check</h2>
             <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
@@ -524,13 +478,13 @@ long long rangeSumStatic(const vector&lt;long long&gt;&amp; prefix, int l, int r
                 <summary>
                   <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>Given a problem with many point updates and many range-sum queries, why would you reach for a Fenwick tree before a segment tree, and when would that choice be wrong?</h4>
+                    <h4>In matrix chain multiplication, why must the outer loop iterate by increasing interval length rather than by increasing <code>i</code>?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A Fenwick tree needs far less code — a single array and two short loops — and runs in the same O(log n) per operation as a segment tree, so for a pure point-update/range-sum problem it's simply faster to write correctly under time pressure. It would be the wrong choice if the query type isn't invertible, like range-min or range-max, or if the problem also needs range updates rather than only point updates, since a plain Fenwick tree doesn't support either.</p>
+                    <p>Computing <code>dp[i][j]</code> requires <code>dp[i][k]</code> and <code>dp[k+1][j]</code> for every split point <code>k</code> — both of which are strictly shorter intervals than <code>[i, j]</code>. Iterating by increasing length guarantees every shorter interval a longer one depends on has already been filled in, while iterating by increasing <code>i</code> alone gives no such guarantee, since <code>dp[i][j]</code> for a large <code>j</code> could still depend on an unfilled <code>dp[k+1][j]</code> with a larger starting index.</p>
                   </div>
                 </div>
               </details>
@@ -539,13 +493,13 @@ long long rangeSumStatic(const vector&lt;long long&gt;&amp; prefix, int l, int r
                 <summary>
                   <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>What does <code>i &amp; (-i)</code> compute in a Fenwick tree, and why is that the key operation behind both <code>update</code> and <code>prefixSum</code>?</h4>
+                    <h4>In the palindrome partitioning solution, what would go wrong (asymptotically) if <code>isPalin</code> were not precomputed and each palindrome check were done inline instead?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p><code>i &amp; (-i)</code> isolates the lowest set bit of <code>i</code>, which equals the size of the contiguous range that index <code>i</code> is responsible for in the tree's implicit structure. <code>update</code> repeatedly adds that value to <code>i</code> to climb to the next node whose range includes the updated index, while <code>prefixSum</code> repeatedly subtracts it to descend through the ranges that together sum to <code>[1..i]</code> — both directions rely on the exact same bit trick.</p>
+                    <p>The main loop already does O(n&sup2;) work — an outer loop over <code>i</code> and an inner loop over <code>j</code>. An inline palindrome check on <code>s[j..i]</code> costs O(n) in the worst case, which multiplied across that O(n&sup2;) loop pushes the total to O(n&sup3;). Precomputing <code>isPalin</code> first, itself an O(n&sup2;) pass, turns every check inside the main loop into an O(1) lookup and keeps the overall algorithm at O(n&sup2;).</p>
                   </div>
                 </div>
               </details>
@@ -554,13 +508,13 @@ long long rangeSumStatic(const vector&lt;long long&gt;&amp; prefix, int l, int r
                 <summary>
                   <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>If a problem never mutates the input array and only asks range-sum queries, why is a full segment tree or Fenwick tree the wrong choice?</h4>
+                    <h4>What is the general signal that a problem calls for interval DP (state over a range) rather than prefix DP (state over a prefix)?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Both structures exist specifically to keep queries fast in the presence of updates — without updates, a plain prefix-sum array answers any range-sum query in O(1) after a single O(n) build, which is strictly faster and simpler than either tree's O(log n) per query. Reaching for a tree here adds implementation risk and code volume for a capability (fast updates) the problem never actually uses.</p>
+                    <p>Interval DP fits when the answer for a segment depends on how that segment itself gets split or combined internally — merging matrices, cutting a string, triangulating a polygon — so the recurrence needs to try every internal split point <code>k</code> and combine both halves. Prefix DP fits when each new element is decided once, in order, based only on what came before it, with no need to reconsider how an earlier segment was internally structured.</p>
                   </div>
                 </div>
               </details>
@@ -576,7 +530,7 @@ long long rangeSumStatic(const vector&lt;long long&gt;&amp; prefix, int l, int r
           </a>
           <a href="week-15.html" class="lesson-pager__link lesson-pager__link--next">
             <span class="lesson-pager__label">Up next</span>
-            <span class="lesson-pager__title">Week 15: Capstone: Build a Mini Expression Interpreter →</span>
+            <span class="lesson-pager__title">Week 15: Advanced Graphs: MST &amp; Shortest Paths II →</span>
           </a>
         </div>
       </div>
@@ -601,6 +555,7 @@ long long rangeSumStatic(const vector&lt;long long&gt;&amp; prefix, int l, int r
       <a href="../dsa-cpp/index.html">DSA in C++</a>
       <a href="../system-design/index.html">System Design</a>
       <a href="../node-express/index.html">Node.js &amp; Express</a>
+      <a href="../servicenow/index.html">ServiceNow</a>
       <a href="#top">Back to top</a>
     </nav>
     <small>© 2026 CodeVerse Creatives. All rights reserved.</small>

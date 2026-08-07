@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Week 15: Capstone — Build a Mini Expression Interpreter — CodeVerse Creatives</title>
-<meta name="description" content="The DSA in C++ capstone: build a mini expression interpreter combining a tokenizer, a recursive-descent parser producing an expression tree, a stack-based evaluation alternative, and a recursive evaluator with error handling." />
+<title>Week 15: Advanced Graphs: MST &amp; Shortest Paths II — CodeVerse Creatives</title>
+<meta name="description" content="Week 15 of the DSA in C++ curriculum: minimum spanning trees with Kruskal's and Prim's algorithms, Bellman-Ford for negative weights, and Floyd-Warshall for all-pairs shortest paths." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -98,7 +98,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DSA in C++</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../system-design/index.html" class="nav-course-card c-system-design">
@@ -113,6 +113,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Node.js &amp; Express</span>
               <span class="nav-course-card__meta">15 Weeks</span>
+            </span>
+          </a>
+          <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2a2 2 0 0 0 4 0h6a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2h-6a2 2 0 0 0-4 0H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">ServiceNow</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
         </div>
@@ -138,47 +145,48 @@
       <div class="lesson-crumb">
         <a href="../dsa-cpp/index.html">DSA in C++ Syllabus</a>
         <span>/</span>
-        <a href="../dsa-cpp/index.html#timeline">Module 12 · Capstone</a>
+        <a href="../dsa-cpp/index.html#timeline">Module 12 · Advanced Graphs</a>
         <span>/</span>
         <span aria-current="page">Week 15</span>
       </div>
 
-      <h1>Week 15: Capstone — Build a Mini Expression Interpreter</h1>
+      <h1>Week 15: Advanced Graphs — Minimum Spanning Trees &amp; Shortest Paths II</h1>
       <p class="lesson-header__lede">
-        This is the final week — no new algorithms, just three of them working together on one
-        real project. A calculator that evaluates <code>"3 + 4 * (2 - 1)"</code> correctly needs
-        exactly the tools this course spent fifteen weeks building: a linear scan through text
-        (Week 4's string handling), a stack to track structure and precedence (Week 7), and
-        recursion over a tree-shaped result (Weeks 8 through 10). You'll build a tokenizer, an
-        expression tree, a recursive-descent parser, a second stack-based evaluator as an
-        alternative implementation, and a recursive evaluator with real error handling — a
-        portfolio-ready project, not an isolated LeetCode problem.
+        Week 12 covered the graph questions where you just need to <em>reach</em> every node —
+        BFS, DFS, and Dijkstra for the single-source, non-negative-weight case. This week covers
+        the two families of graph problems interviewers reach for once they want to see whether
+        you actually understand the algorithms rather than having memorized one shortest-path
+        routine: building a minimum-cost network that connects every node (a minimum spanning
+        tree, via Kruskal's or Prim's) and finding shortest paths when Dijkstra's assumptions
+        break down — negative edge weights (Bellman-Ford) or needing every pair's distance at once
+        (Floyd-Warshall). Kruskal's leans directly on the Union-Find you built in Week 12, and
+        Prim's reuses the priority-queue instinct from Week 11's top-K pattern — this week is as
+        much about combining earlier tools as it is about new ones.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 12 of 12</span>
-        <span class="chip">Week 15 of 15</span>
-        <span class="chip">~10–15 Hours</span>
-        <span class="chip">Capstone Project</span>
+        <span class="chip chip--accent">Module 12 of 17</span>
+        <span class="chip">Week 15 of 20</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
       </div>
 
       <div class="obj-recap reveal">
-        <h2>By the end of this capstone, you'll be able to</h2>
+        <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Tokenize a raw string into a stream of typed tokens</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build an expression tree with a recursive-descent parser that respects operator precedence</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Evaluate the tree recursively and handle malformed input without crashing</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a minimum spanning tree with Kruskal's algorithm using Union-Find, and with Prim's algorithm using a priority queue</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Run Bellman-Ford to find shortest paths with negative edge weights, and detect a negative-weight cycle</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Compute all-pairs shortest paths with Floyd-Warshall and know when it beats running Dijkstra from every node</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#scope"><span>1</span> Project Scope &amp; Grammar</a>
-        <a href="#tokenizer"><span>2</span> The Tokenizer</a>
-        <a href="#parser"><span>3</span> Expression Tree &amp; Recursive-Descent Parser</a>
-        <a href="#stack-parser"><span>4</span> An Alternative: Two-Stack Evaluation</a>
-        <a href="#evaluator"><span>5</span> Evaluating the Tree &amp; Handling Errors</a>
-        <a href="#project"><span>6</span> The Capstone Project</a>
-        <a href="#checklist"><span>7</span> Final Checklist</a>
+        <a href="#kruskal"><span>1</span> Kruskal's MST</a>
+        <a href="#prim"><span>2</span> Prim's MST</a>
+        <a href="#bellman-ford"><span>3</span> Bellman-Ford</a>
+        <a href="#floyd-warshall"><span>4</span> Floyd-Warshall</a>
+        <a href="#exercise"><span>5</span> Exercise</a>
+        <a href="#quiz"><span>6</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -189,483 +197,363 @@
       <div class="lesson-layout">
         <article class="lesson-article">
 
-          <section id="scope">
-            <h2>1. Project Scope &amp; Grammar</h2>
+          <section id="kruskal">
+            <h2>1. Minimum Spanning Trees: Kruskal's Algorithm</h2>
             <p>
-              Before writing a tokenizer or a parser, write down exactly what your interpreter
-              accepts — an interpreter with an undefined grammar has no way to say a given input
-              is invalid, only ways to fail unpredictably on it. A well-scoped mini interpreter for
-              this capstone supports:
+              A <strong>spanning tree</strong> of a connected, undirected, weighted graph is a
+              subset of its edges that connects every node with no cycles — exactly
+              <code>n - 1</code> edges for <code>n</code> nodes. A <strong>minimum</strong> spanning
+              tree (MST) is the spanning tree whose edge weights sum to the least possible total,
+              the graph-theory version of "cheapest way to wire every node together."
+              Kruskal's algorithm builds one greedily: sort every edge by weight, then repeatedly
+              add the cheapest remaining edge <em>unless</em> it would connect two nodes already
+              in the same component — which is exactly the question Week 12's Union-Find answers
+              in near-<code>O(1)</code>.
             </p>
-            <ul>
-              <li>Integer and decimal number literals (<code>3</code>, <code>4.5</code>)</li>
-              <li>The four binary operators <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, with standard precedence (<code>*</code>/<code>/</code> bind tighter than <code>+</code>/<code>-</code>)</li>
-              <li>Parentheses for explicit grouping, e.g. <code>(2 + 3) * 4</code></li>
-              <li>Unary minus, e.g. <code>-(3 + 4)</code></li>
-            </ul>
-            <p>
-              Writing that grammar as a small set of production rules up front is what makes the
-              rest of the build mechanical instead of guesswork — every rule below maps directly
-              onto one function in Section 3's parser:
-            </p>
-            <div class="code-block">
-              <div class="code-block__label">grammar.txt</div>
-              <pre><code>expression := term (('+' | '-') term)*
-term       := factor (('*' | '/') factor)*
-factor     := NUMBER
-            | '(' expression ')'
-            | '-' factor
-</code></pre>
-            </div>
-            <p>
-              Notice the grammar is structured in layers — <code>expression</code> is built from
-              <code>term</code>s, and <code>term</code> is built from <code>factor</code>s. That
-              layering is precedence encoded directly into the grammar: because <code>term</code>
-              (multiplication/division) sits "closer" to the leaves than <code>expression</code>
-              (addition/subtraction), a recursive-descent parser built from these rules will always
-              group <code>*</code> and <code>/</code> tighter than <code>+</code> and <code>-</code>
-              without any extra precedence-tracking logic.
-            </p>
-          </section>
 
-          <section id="tokenizer">
-            <h2>2. The Tokenizer</h2>
-            <p>
-              The tokenizer's job is narrow on purpose: turn a raw <code>std::string</code> into a
-              flat sequence of typed tokens, and reject anything that isn't a number, operator, or
-              parenthesis. Nothing about precedence or grouping happens here — that's the parser's
-              job in Section 3. Keeping the tokenizer this dumb is what makes it easy to get
-              completely correct.
-            </p>
             <div class="code-block">
-              <div class="code-block__label">token.hpp</div>
-              <pre><code>#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;stdexcept&gt;
-#include &lt;cctype&gt;
+              <div class="code-block__label">kruskal.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;numeric&gt;
 using namespace std;
 
-enum class TokenType { NUMBER, PLUS, MINUS, STAR, SLASH, LPAREN, RPAREN, END };
+struct Edge { int u, v, weight; };
 
-struct Token {
-    TokenType type;
-    double value;   // only meaningful when type == NUMBER
-};
+struct DSU {
+    vector&lt;int&gt; parent, rank_;
+    DSU(int n) : parent(n), rank_(n, 0) { iota(parent.begin(), parent.end(), 0); }
 
-vector&lt;Token&gt; tokenize(const string&amp; src) {
-    vector&lt;Token&gt; tokens;
-    size_t i = 0;
-
-    while (i &lt; src.size()) {
-        char c = src[i];
-
-        if (isspace(static_cast&lt;unsigned char&gt;(c))) { i++; continue; }
-
-        if (isdigit(static_cast&lt;unsigned char&gt;(c)) || c == '.') {
-            size_t start = i;
-            while (i &lt; src.size() &amp;&amp;
-                   (isdigit(static_cast&lt;unsigned char&gt;(src[i])) || src[i] == '.')) i++;
-            tokens.push_back({TokenType::NUMBER, stod(src.substr(start, i - start))});
-            continue;
-        }
-
-        switch (c) {
-            case '+': tokens.push_back({TokenType::PLUS, 0});   break;
-            case '-': tokens.push_back({TokenType::MINUS, 0});  break;
-            case '*': tokens.push_back({TokenType::STAR, 0});   break;
-            case '/': tokens.push_back({TokenType::SLASH, 0});  break;
-            case '(': tokens.push_back({TokenType::LPAREN, 0}); break;
-            case ')': tokens.push_back({TokenType::RPAREN, 0}); break;
-            default:
-                throw runtime_error(string("Unexpected character: '") + c + "'");
-        }
-        i++;
+    int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);   // path compression
+        return parent[x];
     }
 
-    tokens.push_back({TokenType::END, 0});   // sentinel -- lets the parser peek safely
-    return tokens;
+    bool unite(int a, int b) {
+        int ra = find(a), rb = find(b);
+        if (ra == rb) return false;               // already connected -- would form a cycle
+        if (rank_[ra] &lt; rank_[rb]) swap(ra, rb);
+        parent[rb] = ra;
+        if (rank_[ra] == rank_[rb]) rank_[ra]++;
+        return true;
+    }
+};
+
+// Returns the MST's total weight -- O(E log E) time, dominated by the sort
+int kruskalMST(int n, vector&lt;Edge&gt;&amp; edges) {
+    sort(edges.begin(), edges.end(),
+         [](const Edge&amp; a, const Edge&amp; b) { return a.weight &lt; b.weight; });
+
+    DSU dsu(n);
+    int totalWeight = 0, edgesUsed = 0;
+
+    for (const Edge&amp; e : edges) {
+        if (dsu.unite(e.u, e.v)) {          // only adds the edge if it doesn't form a cycle
+            totalWeight += e.weight;
+            edgesUsed++;
+            if (edgesUsed == n - 1) break;  // spanning tree is complete
+        }
+    }
+    return totalWeight;
 }
 </code></pre>
             </div>
+
+            <p>
+              Sorting the edges costs <code>O(E log E)</code>, and each of the <code>E</code>
+              Union-Find operations is nearly <code>O(1)</code> with path compression and union by
+              rank — so the sort dominates, giving <code>O(E log E)</code> overall. Kruskal's
+              greedy choice is provably safe: the cheapest edge in the whole graph can always be
+              added to some MST without ever needing to be removed later, which is what lets a
+              purely local decision (is this the cheapest remaining edge that doesn't cycle?) build
+              a globally optimal structure.
+            </p>
+
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>Why an <code>END</code> sentinel</strong>
-                <p>Without a terminating token, every "what's the next token?" check in the parser would need a separate bounds check against <code>tokens.size()</code>. Appending an explicit <code>END</code> token means the parser can always safely call <code>peek()</code> — the same trick as a sentinel node in a linked list, or the null terminator at the end of a C string.</p>
+                <strong>Kruskal's is really "sort, then Union-Find"</strong>
+                <p>If you already have Week 12's <code>DSU</code> struct memorized, Kruskal's algorithm is only two new ideas on top of it: sort edges by weight, and stop early once you've used <code>n - 1</code> edges. That's a low-risk algorithm to reach for under time pressure precisely because most of its logic is a structure you've already built and tested.</p>
               </div>
             </div>
           </section>
 
-          <section id="parser">
-            <h2>3. Expression Tree &amp; Recursive-Descent Parser</h2>
+          <section id="prim">
+            <h2>2. Minimum Spanning Trees: Prim's Algorithm</h2>
             <p>
-              The expression tree is a binary tree exactly like the ones from Weeks 9–10: an
-              internal node holds an operator and two children, a leaf holds a number. Evaluating
-              <code>3 + 4 * 2</code> correctly means the tree must group <code>4 * 2</code> as one
-              subtree before it's added to <code>3</code> — which is exactly what the grammar from
-              Section 1 guarantees when translated directly into functions:
+              Prim's algorithm builds the same minimum spanning tree by growing a single tree one
+              node at a time, instead of considering all edges globally: start from any node, and
+              repeatedly add the cheapest edge that connects the growing tree to a node not yet in
+              it. That "cheapest edge available right now" question is exactly what a min-heap
+              priority queue answers in <code>O(log n)</code>, the same structure Week 11 used for
+              the top-K pattern.
             </p>
+
             <div class="code-block">
-              <div class="code-block__label">ast.hpp</div>
-              <pre><code>#include &lt;memory&gt;
+              <div class="code-block__label">prim.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;climits&gt;
 using namespace std;
 
-struct Node {
-    TokenType op;                 // meaningful only for internal (non-leaf) nodes
-    double value = 0;             // meaningful only for leaf nodes
-    bool isLeaf = false;
-    unique_ptr&lt;Node&gt; left, right;
-};
+// adj[u] = list of {weight, v} for each edge u--v -- O(E log V) time
+int primMST(int n, vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt;&amp; adj) {
+    vector&lt;bool&gt; inMST(n, false);
+    priority_queue&lt;pair&lt;int,int&gt;, vector&lt;pair&lt;int,int&gt;&gt;, greater&lt;&gt;&gt; pq;  // {weight, node}
+    pq.push({0, 0});   // start from node 0 with a free "entry edge"
 
-unique_ptr&lt;Node&gt; makeLeaf(double v) {
-    auto n = make_unique&lt;Node&gt;();
-    n-&gt;isLeaf = true;
-    n-&gt;value = v;
-    return n;
-}
+    int totalWeight = 0, nodesAdded = 0;
 
-unique_ptr&lt;Node&gt; makeBinary(TokenType op, unique_ptr&lt;Node&gt; l, unique_ptr&lt;Node&gt; r) {
-    auto n = make_unique&lt;Node&gt;();
-    n-&gt;op = op;
-    n-&gt;left = move(l);
-    n-&gt;right = move(r);
-    return n;
+    while (!pq.empty() &amp;&amp; nodesAdded &lt; n) {
+        auto [weight, u] = pq.top(); pq.pop();
+        if (inMST[u]) continue;             // stale entry -- a cheaper edge to u already won
+
+        inMST[u] = true;
+        totalWeight += weight;
+        nodesAdded++;
+
+        for (auto&amp; [w, v] : adj[u]) {
+            if (!inMST[v]) pq.push({w, v});  // candidate edge into the growing tree
+        }
+    }
+    return totalWeight;
 }
 </code></pre>
             </div>
+
             <p>
-              <code>unique_ptr</code> gives the tree the ownership semantics it needs for free —
-              each node owns its children outright, and the whole tree is freed automatically when
-              its root goes out of scope, with no manual <code>delete</code> anywhere in the parser
-              or evaluator.
+              Every node can be pushed onto the heap once per incident edge, so the heap holds up
+              to <code>O(E)</code> entries, and each push/pop costs <code>O(log E)</code> — giving
+              <code>O(E log E)</code> overall, the same bound as Kruskal's, though Prim's tends to
+              win on dense graphs where <code>E</code> is close to <code>V&sup2;</code>. The
+              <code>if (inMST[u]) continue;</code> line is essential: because the same node can be
+              pushed multiple times at different candidate weights before its cheapest edge is
+              popped, skipping already-settled nodes is what keeps a stale, more expensive entry
+              from corrupting the running total — the same "lazy deletion" idea Dijkstra's
+              implementation in Week 12 relies on.
             </p>
-            <p>
-              The parser itself is <strong>recursive descent</strong>: one function per grammar
-              rule from Section 1, each calling the next one down and combining the result. This is
-              the same "trust the recursive call to solve the smaller problem" discipline from
-              Week 8 — <code>parseExpression</code> doesn't know how <code>parseTerm</code> handles
-              multiplication, it just trusts it to return a correct subtree:
-            </p>
-            <div class="code-block">
-              <div class="code-block__label">parser.hpp</div>
-              <pre><code>class Parser {
-public:
-    explicit Parser(vector&lt;Token&gt; toks) : tokens(move(toks)), pos(0) {}
 
-    unique_ptr&lt;Node&gt; parseExpression() {
-        auto node = parseTerm();
-        while (peek().type == TokenType::PLUS || peek().type == TokenType::MINUS) {
-            TokenType op = advance().type;
-            node = makeBinary(op, move(node), parseTerm());
-        }
-        return node;
-    }
-
-private:
-    vector&lt;Token&gt; tokens;
-    size_t pos;
-
-    const Token&amp; peek() const { return tokens[pos]; }
-    Token advance() { return tokens[pos++]; }
-
-    unique_ptr&lt;Node&gt; parseTerm() {
-        auto node = parseFactor();
-        while (peek().type == TokenType::STAR || peek().type == TokenType::SLASH) {
-            TokenType op = advance().type;
-            node = makeBinary(op, move(node), parseFactor());
-        }
-        return node;
-    }
-
-    unique_ptr&lt;Node&gt; parseFactor() {
-        if (peek().type == TokenType::NUMBER) {
-            return makeLeaf(advance().value);
-        }
-        if (peek().type == TokenType::MINUS) {          // unary minus
-            advance();
-            return makeBinary(TokenType::MINUS, makeLeaf(0), parseFactor());
-        }
-        if (peek().type == TokenType::LPAREN) {
-            advance();                                    // consume '('
-            auto node = parseExpression();
-            if (peek().type != TokenType::RPAREN)
-                throw runtime_error("Expected ')'");
-            advance();                                    // consume ')'
-            return node;
-        }
-        throw runtime_error("Unexpected token while parsing expression");
-    }
-};
-</code></pre>
-            </div>
-            <p>
-              Trace <code>3 + 4 * 2</code> through this: <code>parseExpression</code> calls
-              <code>parseTerm</code>, which calls <code>parseFactor</code> and returns the leaf
-              <code>3</code> (no <code>*</code>/<code>/</code> follows, so <code>parseTerm</code>
-              returns immediately). Back in <code>parseExpression</code>, the next token is
-              <code>+</code>, so it consumes it and calls <code>parseTerm</code> again — that call
-              parses <code>4</code>, sees <code>*</code>, and folds in <code>2</code> before
-              returning the <code>4 * 2</code> subtree. <code>parseExpression</code> then combines
-              <code>3</code> and that subtree under <code>+</code>, giving exactly the tree
-              <code>3 + (4 * 2)</code> that correct precedence requires.
-            </p>
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>The grammar layering IS the precedence</strong>
-                <p>Nowhere in this parser is there an if-statement checking "is <code>*</code> higher precedence than <code>+</code>?" The precedence is entirely a consequence of which function calls which: <code>parseTerm</code> is only ever called from inside <code>parseExpression</code> or by itself, so <code>*</code>/<code>/</code> subtrees are always fully built before a <code>+</code>/<code>-</code> node can wrap them.</p>
+                <strong>Kruskal's vs. Prim's: pick by graph shape</strong>
+                <p>Reach for Kruskal's when the graph is sparse or you're already given a flat edge list — sorting a short list is cheap. Reach for Prim's when the graph is dense or handed to you as an adjacency list, since it never needs to look at every edge globally the way a sort does.</p>
               </div>
             </div>
           </section>
 
-          <section id="stack-parser">
-            <h2>4. An Alternative: Two-Stack Evaluation</h2>
+          <section id="bellman-ford">
+            <h2>3. Bellman-Ford: Shortest Paths with Negative Weights</h2>
             <p>
-              Section 3's recursive-descent parser is the cleanest way to get a reusable expression
-              <em>tree</em>. But you can also evaluate an expression directly, without ever building
-              a tree, using two stacks — one for pending values, one for pending operators. This is
-              the same monotonic-stack instinct from Week 7 applied to arithmetic: keep popping and
-              resolving the stack as long as doing so is unambiguous, and push when it isn't yet.
+              Dijkstra's algorithm assumes every edge weight is non-negative — its greedy "the
+              closest unvisited node's distance is already final" claim breaks the moment a
+              negative edge exists, because a longer-looking path could later use a negative edge
+              to become cheaper. Bellman-Ford drops that assumption. Instead of greedily finalizing
+              one node at a time, it relaxes <em>every</em> edge, <code>V - 1</code> times over:
             </p>
+
             <div class="code-block">
-              <div class="code-block__label">stack_eval.hpp</div>
-              <pre><code>#include &lt;stack&gt;
+              <div class="code-block__label">bellman_ford.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+#include &lt;climits&gt;
 using namespace std;
 
-int precedence(TokenType op) {
-    if (op == TokenType::PLUS || op == TokenType::MINUS) return 1;
-    if (op == TokenType::STAR || op == TokenType::SLASH) return 2;
-    return 0;
-}
+struct Edge { int u, v, weight; };
 
-double applyOp(double a, double b, TokenType op) {
-    switch (op) {
-        case TokenType::PLUS:  return a + b;
-        case TokenType::MINUS: return a - b;
-        case TokenType::STAR:  return a * b;
-        case TokenType::SLASH:
-            if (b == 0) throw runtime_error("Division by zero");
-            return a / b;
-        default:
-            throw runtime_error("Unknown operator");
-    }
-}
+// Returns distances from src, or an empty vector if a negative cycle is reachable
+// O(V * E) time
+vector&lt;long long&gt; bellmanFord(int n, vector&lt;Edge&gt;&amp; edges, int src) {
+    vector&lt;long long&gt; dist(n, LLONG_MAX);
+    dist[src] = 0;
 
-double evaluateWithStacks(const vector&lt;Token&gt;&amp; tokens) {
-    stack&lt;double&gt; values;
-    stack&lt;TokenType&gt; ops;
-
-    auto reduceOnce = [&amp;]() {
-        TokenType op = ops.top(); ops.pop();
-        double b = values.top(); values.pop();
-        double a = values.top(); values.pop();
-        values.push(applyOp(a, b, op));
-    };
-
-    for (const Token&amp; tok : tokens) {
-        if (tok.type == TokenType::NUMBER) {
-            values.push(tok.value);
-        } else if (tok.type == TokenType::LPAREN) {
-            ops.push(tok.type);
-        } else if (tok.type == TokenType::RPAREN) {
-            while (!ops.empty() &amp;&amp; ops.top() != TokenType::LPAREN) reduceOnce();
-            ops.pop();                          // discard the matching '('
-        } else if (tok.type == TokenType::END) {
-            break;
-        } else {                                 // PLUS, MINUS, STAR or SLASH
-            while (!ops.empty() &amp;&amp; ops.top() != TokenType::LPAREN &amp;&amp;
-                   precedence(ops.top()) &gt;= precedence(tok.type)) {
-                reduceOnce();
+    for (int i = 0; i &lt; n - 1; i++) {                 // relax every edge V-1 times
+        for (const Edge&amp; e : edges) {
+            if (dist[e.u] == LLONG_MAX) continue;      // u not reachable yet
+            if (dist[e.u] + e.weight &lt; dist[e.v]) {
+                dist[e.v] = dist[e.u] + e.weight;
             }
-            ops.push(tok.type);
         }
     }
-    while (!ops.empty()) reduceOnce();
-    return values.top();
+
+    // One more pass: if anything still relaxes, a negative-weight cycle is reachable from src
+    for (const Edge&amp; e : edges) {
+        if (dist[e.u] != LLONG_MAX &amp;&amp; dist[e.u] + e.weight &lt; dist[e.v]) {
+            return {};    // signal: negative cycle detected, shortest paths are undefined
+        }
+    }
+    return dist;
 }
 </code></pre>
             </div>
+
             <p>
-              The key rule is the <code>while</code> loop before pushing a new operator: it reduces
-              every pending operator on the stack that has <em>equal or higher</em> precedence than
-              the incoming one before pushing. That's what makes <code>4 * 2 + 1</code> reduce
-              <code>4 * 2</code> the moment <code>+</code> arrives (lower precedence, so the
-              multiplication must resolve first), while <code>4 + 2 * 1</code> instead pushes both
-              operators and waits, because <code>*</code> has strictly higher precedence than the
-              <code>+</code> already on the stack.
+              Any shortest path visits at most <code>V - 1</code> edges (a path that revisits a
+              node could only be shortened by removing the cycle, assuming no negative cycle
+              exists), so after <code>V - 1</code> full relaxation passes every shortest distance
+              is guaranteed correct — that bound is exactly where the <code>O(V &middot; E)</code>
+              time complexity comes from, noticeably slower than Dijkstra's
+              <code>O(E log V)</code>. The extra <code>V</code>-th pass is what makes Bellman-Ford
+              useful beyond "slower Dijkstra": if any edge can still be relaxed after
+              <code>V - 1</code> passes should have stabilized everything, that's proof a
+              negative-weight cycle is reachable and pulling the "shortest path" toward negative
+              infinity.
             </p>
+
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>Tree vs. direct evaluation — when to use which</strong>
-                <p>Direct stack evaluation is leaner when you only ever need the final number once. Building a tree costs more memory and code, but pays off the moment you need the expression more than once — evaluate it with different variable values, simplify it symbolically, or pretty-print it back out — because the tree is a reusable structure and a stack evaluation's result is just a number with no memory of how it was produced.</p>
+                <strong>Say why you're not using Dijkstra's</strong>
+                <p>If a problem mentions negative weights or asks you to detect an arbitrage-style cycle (a loop whose total is negative), name Bellman-Ford immediately and explain why: Dijkstra's greedy finalization is unsound the moment a negative edge exists, full stop, regardless of how "rare" it looks in practice.</p>
               </div>
             </div>
           </section>
 
-          <section id="evaluator">
-            <h2>5. Evaluating the Tree &amp; Handling Errors</h2>
+          <section id="floyd-warshall">
+            <h2>4. Floyd-Warshall: All-Pairs Shortest Paths</h2>
             <p>
-              Evaluating the expression tree from Section 3 is a two-line recursive function — the
-              same "solve the leaves, combine going back up" shape as every tree problem since
-              Week 9:
+              Dijkstra's and Bellman-Ford both answer "shortest path from <em>one</em> source."
+              When a problem needs the shortest distance between <em>every</em> pair of nodes,
+              running one of those <code>V</code> times costs at least <code>O(V &middot; E log
+              V)</code>. Floyd-Warshall answers the same question directly in <code>O(V&sup3;)</code>
+              with dynamic programming: <code>dist[i][j]</code> is repeatedly improved by asking
+              "is going through node <code>k</code> shorter than the current best?", for every
+              <code>k</code> in turn.
             </p>
+
             <div class="code-block">
-              <div class="code-block__label">evaluator.hpp</div>
-              <pre><code>double evaluate(const Node* node) {
-    if (node-&gt;isLeaf) return node-&gt;value;
-
-    double l = evaluate(node-&gt;left.get());
-    double r = evaluate(node-&gt;right.get());
-
-    switch (node-&gt;op) {
-        case TokenType::PLUS:  return l + r;
-        case TokenType::MINUS: return l - r;
-        case TokenType::STAR:  return l * r;
-        case TokenType::SLASH:
-            if (r == 0) throw runtime_error("Division by zero");
-            return l / r;
-        default:
-            throw runtime_error("Unknown operator in tree");
-    }
-}
-
-double interpret(const string&amp; src) {
-    auto tokens = tokenize(src);          // throws on an invalid character
-    Parser parser(tokens);
-    auto tree = parser.parseExpression(); // throws on a malformed expression
-    return evaluate(tree.get());          // throws on e.g. division by zero
-}
-</code></pre>
-            </div>
-            <p>
-              A mini interpreter is only as trustworthy as its error handling — an interpreter that
-              silently returns <code>0</code> on <code>"3 + / 4"</code> is far more dangerous than
-              one that throws, because a wrong-but-plausible answer is much harder to catch than a
-              loud failure. Each of the three stages throws a specific <code>runtime_error</code> at
-              the exact point it detects a problem: the tokenizer on an unrecognized character, the
-              parser on a token that doesn't fit the grammar (like a missing closing paren), and
-              the evaluator on a runtime failure like division by zero that no amount of valid
-              syntax could have prevented.
-            </p>
-            <div class="code-block">
-              <div class="code-block__label">main.cpp — driving it end to end</div>
-              <pre><code>#include &lt;iostream&gt;
+              <div class="code-block__label">floyd_warshall.cpp</div>
+              <pre><code>#include &lt;vector&gt;
+#include &lt;climits&gt;
 using namespace std;
 
-int main() {
-    vector&lt;string&gt; tests = {
-        "3 + 4 * (2 - 1)",
-        "-(3 + 4) / 2",
-        "10 / 0",
-        "3 + / 4"
-    };
+const long long INF = LLONG_MAX / 2;   // avoid overflow when adding two INFs
 
-    for (const string&amp; expr : tests) {
-        try {
-            cout &lt;&lt; expr &lt;&lt; " = " &lt;&lt; interpret(expr) &lt;&lt; "\n";
-        } catch (const exception&amp; e) {
-            cout &lt;&lt; expr &lt;&lt; " -&gt; error: " &lt;&lt; e.what() &lt;&lt; "\n";
+// dist[i][j] initialized to edge weight, or INF if no direct edge, 0 if i == j
+// O(V^3) time, O(V^2) space
+void floydWarshall(vector&lt;vector&lt;long long&gt;&gt;&amp; dist) {
+    int n = dist.size();
+    for (int k = 0; k &lt; n; k++) {              // try routing through k
+        for (int i = 0; i &lt; n; i++) {
+            for (int j = 0; j &lt; n; j++) {
+                if (dist[i][k] + dist[k][j] &lt; dist[i][j]) {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
         }
     }
 }
 </code></pre>
             </div>
+
+            <p>
+              The loop order is the entire algorithm: by the time <code>k</code> finishes its
+              pass, <code>dist[i][j]</code> is the shortest path using only intermediate nodes from
+              <code>{0, ..., k}</code> — an interval-DP-flavored invariant, expanding the allowed
+              set of intermediate nodes one at a time rather than expanding a range. It handles
+              negative edges correctly (unlike Dijkstra's) as long as no negative cycle exists; a
+              negative value appearing on the diagonal, <code>dist[i][i] &lt; 0</code>, after
+              running is the all-pairs equivalent of Bellman-Ford's extra relaxation check.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Only reach for it when V is genuinely small</strong>
+                <p><code>O(V&sup3;)</code> is fine for a few hundred nodes and turns painful fast beyond that — for a sparse graph with a large <code>V</code>, running Dijkstra's from every source is usually cheaper than Floyd-Warshall despite the extra factor of <code>V</code>, precisely because Dijkstra's per-run cost depends on <code>E</code>, not <code>V&sup2;</code>.</p>
+              </div>
+            </div>
           </section>
 
-          <section id="project">
-            <h2>6. The Capstone Project</h2>
+          <section id="exercise">
+            <h2>5. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
-                Capstone
+                Hands-on
               </span>
-              <h3>Build, test and extend a complete expression interpreter</h3>
-              <p>
-                Combine Sections 2–5 into one working program, then push past the minimum grammar
-                with at least one real extension of your own.
-              </p>
+              <h3>Build a network cost toolkit and detect arbitrage</h3>
+              <p>Combine all four algorithms into one program that answers three related but distinct questions about the same weighted graph.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Implement <code>tokenize</code>, the <code>Node</code>/expression-tree types, the recursive-descent <code>Parser</code>, and <code>evaluate</code> exactly as built in Sections 2, 3 and 5, in one buildable project.</li>
-                <li>Also implement <code>evaluateWithStacks</code> from Section 4, and write a small test harness that checks it agrees with the tree-based <code>evaluate</code> on at least 10 expressions, including nested parentheses.</li>
-                <li>Handle every error case explicitly with a test for each: an unknown character, a missing closing parenthesis, an expression ending mid-operator (e.g. <code>"3 +"</code>), and division by zero.</li>
-                <li>Pick <strong>one</strong> real extension and implement it fully: exponentiation (<code>^</code>, right-associative), named variables with a <code>string → double</code> environment map, or a modulo operator with integer-only semantics.</li>
-                <li>Write a short README explaining your grammar (updated for your extension), and note one input your interpreter still can't handle and why.</li>
+                <li>Implement <code>kruskalMST</code> and <code>primMST</code> on the same test graph and confirm they return the same total weight (they may pick different edges when weights tie, but the total must match).</li>
+                <li>Implement <code>bellmanFord</code> and test it on a small graph containing a negative edge but no negative cycle; confirm the distances match what you'd compute by hand.</li>
+                <li>Add a second test graph that <em>does</em> contain a negative cycle, and confirm your implementation correctly returns the empty-vector signal for it.</li>
+                <li>Implement <code>floydWarshall</code> and confirm <code>dist[i][j]</code> for every pair matches running <code>bellmanFord</code> from each node individually.</li>
+                <li>Model currency exchange rates as a graph where edge weight is <code>-log(rate)</code>, and use your negative-cycle detector to determine whether an arbitrage opportunity (a cycle that multiplies your money) exists — explain in a comment why <code>-log(rate)</code> turns "multiply along a cycle to profit" into "sum along a cycle is negative."</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
-                  <strong>Why variables are the most instructive extension</strong>
-                  <p>Adding a variable lookup (<code>x</code> resolving to a value from an <code>unordered_map&lt;string, double&gt;</code>) forces the tokenizer to recognize identifiers alongside numbers, forces the grammar to add a new <code>factor</code> alternative, and forces the evaluator to take an environment argument — touching all three layers the way a real feature would in production code, which is exactly what makes it worth doing over a smaller change.</p>
+                  <strong>Hint</strong>
+                  <p>For requirement 5: since <code>log(a &middot; b) = log(a) + log(b)</code>, multiplying exchange rates around a cycle is the same operation as summing their logs. Negating each log turns "product &gt; 1 is profitable" into "sum &lt; 0 is profitable" — exactly the negative-cycle condition Bellman-Ford already detects.</p>
                 </div>
               </div>
             </div>
           </section>
 
-          <section id="checklist">
-            <h2>7. Final Checklist</h2>
-            <p>Before calling the capstone — and the course — done, confirm each of these honestly:</p>
+          <section id="quiz">
+            <h2>6. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>Was the grammar written down before the tokenizer and parser were built?</h4>
+                    <h4>Why does Kruskal's algorithm need Union-Find specifically, rather than just checking adjacency directly, to decide whether an edge would form a cycle?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A grammar written after the parser exists just describes whatever the code happens to accept, including any accidental gaps. A grammar written first — like Section 1's production rules — gives you something independent to check the implementation against, and it's what let Section 3's parser be written mechanically, one function per rule, instead of guessed at.</p>
+                    <p>An edge forms a cycle exactly when its two endpoints are already connected through some other path of already-chosen edges, not necessarily a direct edge between them — so the question isn't "are these two nodes adjacent?" but "are these two nodes in the same connected component?" Union-Find answers exactly that question in near-O(1) per query, which is what keeps Kruskal's overall runtime dominated by the sort rather than by cycle checking.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>Do the tree-based evaluator and the two-stack evaluator agree on every test expression, including ones with nested parentheses?</h4>
+                    <h4>In Prim's algorithm, why is the <code>if (inMST[u]) continue;</code> check necessary given that the same node can be pushed onto the heap multiple times?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Two independently-written implementations of the same grammar agreeing on every test is strong evidence both are correct, in the same way a brute-force solution cross-checked against an optimized one catches bugs that a single implementation's own tests would miss. If they disagree, nested parentheses and operator-precedence edge cases are the first place to look — they're where both implementations are most likely to have a subtle bug.</p>
+                    <p>Whenever a new node joins the growing tree, its neighbors get pushed as candidate edges, but a neighbor already reachable via an earlier, cheaper edge might get pushed again at a worse weight before its best entry is popped. Without the check, popping that later, more expensive stale entry and treating it as the node's real cost would inflate the MST's total weight with an edge that was never actually needed.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>Does every error case — bad character, unbalanced parens, trailing operator, division by zero — fail with a clear message instead of crashing or returning a wrong number?</h4>
+                    <h4>Why does Bellman-Ford need exactly <code>V - 1</code> relaxation passes to guarantee correct shortest distances, and what does a successful relaxation on the <code>V</code>-th pass prove?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>An interpreter that segfaults or silently returns <code>0</code> on malformed input is broken in a way that's much harder to debug than one that throws a specific <code>runtime_error</code> naming exactly what went wrong and where. Section 5's explicit throw at each of the three stages — tokenizing, parsing, evaluating — is what makes every failure traceable to a specific cause instead of an undefined one.</p>
+                    <p>Any shortest path in a graph with no negative cycle visits at most V - 1 edges, since a path with V or more edges must revisit a node and could only get longer or equal by keeping that revisit. Each full relaxation pass extends the guaranteed-correct path length by one edge, so V - 1 passes are enough to cover every possible shortest path; if the V-th pass can still relax an edge, that distance would keep shrinking forever, which is only possible if a negative-weight cycle is reachable.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>Was a real extension implemented fully, touching the tokenizer, grammar, and evaluator, rather than left as an idea in the README?</h4>
+                    <h4>For a sparse graph with a large number of nodes, why might running Dijkstra's algorithm from every node be faster overall than a single run of Floyd-Warshall?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Building exactly the minimum from Sections 2–5 proves you can follow a spec; extending it — adding <code>^</code>, variables, or modulo, and getting the grammar, tokenizer and evaluator to agree on the new rule — proves you understand the three layers well enough to change them without breaking what already worked. That's the difference a reviewer is actually looking for in a capstone.</p>
+                    <p>Floyd-Warshall's cost is a fixed O(V&sup3;) regardless of how many edges the graph actually has. Running Dijkstra's from every node costs O(V &middot; E log V) instead, and on a sparse graph E is much closer to V than to V&sup2; — so the V-runs-of-Dijkstra total can be substantially smaller than V&sup3; once V grows large, even though it means V separate algorithm runs instead of one.</p>
                   </div>
                 </div>
               </details>
@@ -677,11 +565,11 @@ int main() {
         <div class="lesson-pager">
           <a href="week-14.html" class="lesson-pager__link lesson-pager__link--prev">
             <span class="lesson-pager__label">← Back to</span>
-            <span class="lesson-pager__title">Week 14: Dynamic Programming II &amp; Advanced Structures</span>
+            <span class="lesson-pager__title">Week 14: Dynamic Programming II: Grids, Trees &amp; Interval DP</span>
           </a>
-          <a href="../dsa-cpp/index.html#timeline" class="lesson-pager__link lesson-pager__link--next">
-            <span class="lesson-pager__label">Finished!</span>
-            <span class="lesson-pager__title">Back to Full Syllabus →</span>
+          <a href="week-16.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 16: Advanced Strings →</span>
           </a>
         </div>
       </div>
@@ -706,6 +594,7 @@ int main() {
       <a href="../dsa-cpp/index.html">DSA in C++</a>
       <a href="../system-design/index.html">System Design</a>
       <a href="../node-express/index.html">Node.js &amp; Express</a>
+      <a href="../servicenow/index.html">ServiceNow</a>
       <a href="#top">Back to top</a>
     </nav>
     <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
