@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Week 22: Animations &amp; Internationalization — CodeVerse Creatives</title>
-<meta name="description" content="Week 22 of the React curriculum: CSS transitions and keyframes, Framer Motion fundamentals, prefers-reduced-motion, internationalizing with react-i18next/next-intl, and locale-aware formatting." />
+<title>Week 22: Deployment, CI/CD &amp; Production Ops — CodeVerse Creatives</title>
+<meta name="description" content="Week 22 of the React curriculum: production builds and environment variables, deploying to Vercel/Netlify with preview deployments, a GitHub Actions CI pipeline, Sentry error monitoring, and rollback strategy." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React</span>
-              <span class="nav-course-card__meta">26 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -77,21 +77,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Spring Boot</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DevOps &amp; Cloud</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../python/index.html" class="nav-course-card c-python">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Python</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
@@ -105,14 +105,14 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">System Design</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Node.js &amp; Express</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -120,6 +120,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">ServiceNow</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
         </div>
@@ -145,22 +152,23 @@
       <div class="lesson-crumb">
         <a href="../react/index.html">React Syllabus</a>
         <span>/</span>
-        <a href="../react/index.html#timeline">Module 14 · Animations &amp; Internationalization</a>
+        <a href="../react/index.html#timeline">Module 12 · Deployment &amp; Production Ops</a>
         <span>/</span>
         <span aria-current="page">Week 22</span>
       </div>
 
-      <h1>Week 22: Animations &amp; Internationalization</h1>
+      <h1>Week 22: Deployment, CI/CD &amp; Production Ops</h1>
       <p class="lesson-header__lede">
-        Week 21 covered styling and accessibility as static concerns — how something looks and
-        whether it's operable. This week adds two more dimensions that make an app feel finished:
-        motion that guides attention without being gratuitous, and text, dates, and numbers that
-        work correctly for users who aren't reading English in the US.
+        Everything so far has run on <code>localhost</code>. This week ships it — turning a working
+        app into something real users can actually reach, safely and repeatably. That means
+        production builds that don't leak secrets, a host that rebuilds automatically on every
+        push, a CI pipeline that catches mistakes before they go live, and a plan for the moment
+        something still gets through anyway.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 14 of 17</span>
-        <span class="chip">Week 22 of 26</span>
+        <span class="chip chip--accent">Module 12 of 17</span>
+        <span class="chip">Week 22 of 28</span>
         <span class="chip">~3–4 Hours</span>
         <span class="chip">Hands-on Exercise Included</span>
       </div>
@@ -168,19 +176,19 @@
       <div class="obj-recap reveal">
         <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build CSS-based transitions and keyframe animations, and know when reaching for a library beats plain CSS</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Use Framer Motion for gesture and layout animations while respecting <code>prefers-reduced-motion</code></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Internationalize an app with react-i18next or next-intl, including locale-aware date/number/plural formatting</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Configure production builds and environment variables without leaking secrets to the client bundle</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deploy an app to Vercel or Netlify with automatic preview deployments per pull request</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Set up a CI pipeline that lints, tests and builds before every deploy, with monitoring and a rollback plan for when something still slips through</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#css-transitions"><span>1</span> CSS Transitions &amp; Keyframes</a>
-        <a href="#framer-motion"><span>2</span> Framer Motion Fundamentals</a>
-        <a href="#layout-gestures"><span>3</span> Layout Animations &amp; Gestures</a>
-        <a href="#reduced-motion"><span>4</span> Respecting prefers-reduced-motion</a>
-        <a href="#i18n-setup"><span>5</span> Internationalization with react-i18next</a>
-        <a href="#locale-formatting"><span>6</span> Locale Routing &amp; Formatting</a>
+        <a href="#env-vars"><span>1</span> Production Builds &amp; Env Vars</a>
+        <a href="#vercel-deploy"><span>2</span> Deploying to Vercel or Netlify</a>
+        <a href="#preview-deployments"><span>3</span> Preview Deployments &amp; Branches</a>
+        <a href="#ci-pipeline"><span>4</span> CI Pipeline with GitHub Actions</a>
+        <a href="#monitoring"><span>5</span> Error Monitoring with Sentry</a>
+        <a href="#rollbacks"><span>6</span> Rollbacks &amp; Release Safety</a>
         <a href="#exercise"><span>7</span> Exercise</a>
         <a href="#quiz"><span>8</span> Knowledge Check</a>
       </div>
@@ -193,331 +201,322 @@
       <div class="lesson-layout">
         <article class="lesson-article">
 
-          <section id="css-transitions">
-            <h2>1. CSS Transitions &amp; Keyframes in React</h2>
+          <section id="env-vars">
+            <h2>1. Production Builds &amp; Environment Variables</h2>
             <p>
-              The simplest animation in React is still plain CSS, driven by a class toggled from
-              state — no new dependency, no new mental model, just Week 2's <code>useState</code>
-              controlling which class is applied.
+              <code>npm run dev</code> serves unminified code with hot reloading and verbose error
+              overlays — none of that belongs in front of real users. A production build strips all
+              of it, minifies and tree-shakes the bundle, and produces the static assets your host
+              actually serves.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">Toast.tsx — mount/unmount driven by a CSS class</div>
-              <pre><code>function Toast({ message, visible }: { message: string; visible: boolean }) {
-  return (
-    &lt;div className={`toast ${visible ? 'toast--visible' : ''}`}&gt;
-      {message}
-    &lt;/div&gt;
-  );
-}
-</code></pre>
-            </div>
+              <div class="code-block__label">terminal — Next.js production build</div>
+              <pre><code>npm run build
 
-            <div class="code-block">
-              <div class="code-block__label">toast.css</div>
-              <pre><code>.toast {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 200ms ease, transform 200ms ease;
-}
+Route (app)                              Size     First Load JS
+┌ ○ /                                    142 B          87.3 kB
+├ ○ /products                            1.2 kB         92.1 kB
+└ ƒ /products/[productId]                891 B          88.9 kB
 
-.toast--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.04); }
-}
-
-.toast--urgent {
-  animation: pulse 1.2s ease-in-out infinite;
-}
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
 </code></pre>
             </div>
 
             <p>
-              Notice both examples only ever animate <code>opacity</code> and <code>transform</code>
-              — never <code>width</code>, <code>height</code>, <code>top</code>, or <code>left</code>.
-              The browser can animate <code>transform</code>/<code>opacity</code> entirely on the
-              compositor thread, without re-running layout or paint on every frame. Animating
-              <code>width</code> or <code>top</code> forces the browser to recompute layout on every
-              single frame, which is measurably slower and the single most common cause of janky CSS
-              animations.
+              The route table from Week 19's <code>next build</code> doubles as a production sanity
+              check — confirm the routes you expect to be static (○) actually are, before anything
+              ships. A Vite SPA's equivalent is <code>npm run build</code>, which outputs a
+              <code>dist/</code> folder of hashed, minified static assets ready to serve from any
+              static host.
             </p>
-          </section>
 
-          <section id="framer-motion">
-            <h2>2. Framer Motion Fundamentals</h2>
             <p>
-              Plain CSS handles simple, state-driven transitions well, but breaks down for anything
-              needing to animate <em>out</em> before a component actually unmounts — React removes
-              the DOM node immediately, before a CSS transition has a chance to play. Framer Motion
-              (installed as <code>framer-motion</code>) solves this with <code>motion</code>
-              components and <code>AnimatePresence</code>.
+              Environment variables split into two categories, and the difference is a safety
+              boundary, not a naming convention. A plain <code>DATABASE_URL</code> stays on the
+              server — never bundled into the JavaScript sent to the browser. Prefixing a variable
+              with <code>NEXT_PUBLIC_</code> (Next.js) or <code>VITE_</code> (Vite) is a deliberate,
+              explicit opt-in: it tells the build tool "yes, inline this value into the client
+              bundle, where anyone can read it via DevTools." Forgetting the prefix means the
+              variable silently stays <code>undefined</code> in the browser; adding it to something
+              that shouldn't be public is the actual danger.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">terminal</div>
-              <pre><code>npm install framer-motion
+              <div class="code-block__label">.env.production</div>
+              <pre><code># server-only -- never sent to the browser, safe for real secrets
+DATABASE_URL=postgres://prod-user:***@db.internal:5432/app
+STRIPE_SECRET_KEY=sk_live_***
+SENTRY_AUTH_TOKEN=***
+
+# client-exposed -- inlined into the JS bundle, readable by anyone
+NEXT_PUBLIC_API_BASE_URL=https://api.example.com
+NEXT_PUBLIC_SENTRY_DSN=https://examplePublicKey@o0.ingest.sentry.io/0
 </code></pre>
             </div>
-
-            <div class="code-block">
-              <div class="code-block__label">Toast.tsx — a Framer Motion version, with a real exit animation</div>
-              <pre><code>import { motion, AnimatePresence } from 'framer-motion';
-
-function ToastContainer({ toast }: { toast: { id: string; message: string } | null }) {
-  return (
-    &lt;AnimatePresence&gt;
-      {toast &amp;&amp; (
-        &lt;motion.div
-          key={toast.id}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.2 }}
-          className="toast"
-        &gt;
-          {toast.message}
-        &lt;/motion.div&gt;
-      )}
-    &lt;/AnimatePresence&gt;
-  );
-}
-</code></pre>
-            </div>
-
-            <p>
-              <code>initial</code> is the state a <code>motion.div</code> animates <em>from</em> on
-              mount, <code>animate</code> is its resting state, and <code>exit</code> is the state it
-              animates <em>to</em> before actually being removed from the DOM. Without
-              <code>AnimatePresence</code> wrapping it, React would unmount <code>toast</code>'s DOM
-              node the instant it becomes <code>null</code>, giving <code>exit</code> no chance to
-              run — <code>AnimatePresence</code> is specifically what delays the real unmount until
-              the exit animation finishes.
-            </p>
-          </section>
-
-          <section id="layout-gestures">
-            <h2>3. Layout Animations &amp; Gestures</h2>
-            <p>
-              Adding a single <code>layout</code> prop to a <code>motion</code> component makes
-              Framer Motion automatically animate any change to that element's position or size —
-              reordering a list, an accordion expanding, a filter changing how many items render —
-              using the same FLIP (First, Last, Invert, Play) technique you'd otherwise hand-roll.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">ReorderableList.tsx — layout animations on filter/reorder</div>
-              <pre><code>import { motion, AnimatePresence } from 'framer-motion';
-
-function ReorderableList({ items }: { items: { id: string; label: string }[] }) {
-  return (
-    &lt;ul&gt;
-      &lt;AnimatePresence&gt;
-        {items.map((item) =&gt; (
-          &lt;motion.li
-            key={item.id}
-            layout                                  // animates position changes automatically
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          &gt;
-            {item.label}
-          &lt;/motion.li&gt;
-        ))}
-      &lt;/AnimatePresence&gt;
-    &lt;/ul&gt;
-  );
-}
-</code></pre>
-            </div>
-
-            <p>
-              When <code>items</code> reorders or shrinks, every remaining <code>motion.li</code>
-              with <code>layout</code> smoothly animates to its new position instead of snapping
-              there instantly — Framer Motion measures each element's position before and after the
-              re-render and interpolates between them. <code>whileHover</code> and
-              <code>whileTap</code> are declarative gesture props: state that only applies while the
-              corresponding pointer interaction is active, no manual <code>onMouseEnter</code>/
-              <code>onMouseLeave</code> state tracking required.
-            </p>
-          </section>
-
-          <section id="reduced-motion">
-            <h2>4. Respecting <code>prefers-reduced-motion</code></h2>
-            <p>
-              Some users — for vestibular disorders, motion sensitivity, or simple preference — set
-              their OS to request reduced motion. This isn't a style preference to politely consider;
-              large or fast motion can trigger real physical symptoms for some users, which is why
-              it's treated as an accessibility requirement, on the same tier as Week 21's keyboard
-              support.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">AnimatedPanel.tsx — swapping a slide for an instant fade</div>
-              <pre><code>import { motion, useReducedMotion } from 'framer-motion';
-
-function AnimatedPanel({ children }: { children: React.ReactNode }) {
-  const shouldReduceMotion = useReducedMotion();
-
-  return (
-    &lt;motion.div
-      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 40 }}
-      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-      transition={{ duration: shouldReduceMotion ? 0.01 : 0.3 }}
-    &gt;
-      {children}
-    &lt;/motion.div&gt;
-  );
-}
-</code></pre>
-            </div>
-
-            <p>
-              <code>useReducedMotion()</code> reads the <code>prefers-reduced-motion</code> media
-              query reactively and returns <code>true</code> when the user has requested it. Rather
-              than disabling the animation outright (which can feel visually abrupt), the pattern
-              above keeps a fade for continuity but drops the large positional slide — motion that
-              communicates state change without the large-scale movement that's the actual problem
-              for sensitive users.
-            </p>
 
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>The plain-CSS equivalent</strong>
-                <p>Section 1's hand-written CSS should wrap its <code>transition</code>/<code>animation</code> declarations in a <code>@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }</code> block — the same requirement applies whether you're using Framer Motion or plain CSS; <code>useReducedMotion</code> is simply the React-idiomatic way to read that same OS-level signal.</p>
+                <strong>Never commit real secrets to the repo</strong>
+                <p><code>.env.production</code> above is illustrative — actual secret values belong in your host's environment variable dashboard (Vercel/Netlify project settings), not in a file that gets committed. Keep <code>.env*</code> in <code>.gitignore</code> and commit only a <code>.env.example</code> with placeholder values, so a leaked git history never doubles as a leaked credential dump.</p>
               </div>
             </div>
           </section>
 
-          <section id="i18n-setup">
-            <h2>5. Internationalization with react-i18next</h2>
+          <section id="vercel-deploy">
+            <h2>2. Deploying to Vercel or Netlify</h2>
             <p>
-              Internationalization (i18n) separates user-facing text from your components entirely,
-              so the same UI can render in any language by swapping which translation file is
-              active — no hardcoded English strings scattered across the codebase.
+              Both platforms work the same way at a high level: connect a GitHub repository, tell
+              them how to build your app, and every push to your default branch triggers a new
+              production deploy automatically — no manual upload step, no SSH-ing into a server.
+            </p>
+
+            <p>
+              Connecting a repo is a few clicks in either dashboard — "Import Project" (Vercel) or
+              "Add new site from Git" (Netlify) — after which the platform detects your framework
+              and pre-fills sensible build settings. It's worth knowing what those settings actually
+              mean, since a Next.js app and a Vite SPA need different values.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">terminal</div>
-              <pre><code>npm install react-i18next i18next
+              <div class="code-block__label">build settings — Next.js app</div>
+              <pre><code>Build command:     next build
+Output directory:  .next        (Vercel reads this automatically; framework-managed)
+Install command:   npm install
 </code></pre>
             </div>
 
             <div class="code-block">
-              <div class="code-block__label">locales/en.json</div>
-              <pre><code>{
-  "greeting": "Hello, {{name}}!",
-  "cartItems_one": "{{count}} item in your cart",
-  "cartItems_other": "{{count}} items in your cart"
-}
-</code></pre>
-            </div>
-
-            <div class="code-block">
-              <div class="code-block__label">locales/es.json</div>
-              <pre><code>{
-  "greeting": "¡Hola, {{name}}!",
-  "cartItems_one": "{{count}} artículo en tu carrito",
-  "cartItems_other": "{{count}} artículos en tu carrito"
-}
-</code></pre>
-            </div>
-
-            <div class="code-block">
-              <div class="code-block__label">CartSummary.tsx</div>
-              <pre><code>import { useTranslation } from 'react-i18next';
-
-function CartSummary({ userName, itemCount }: { userName: string; itemCount: number }) {
-  const { t } = useTranslation();
-
-  return (
-    &lt;div&gt;
-      &lt;p&gt;{t('greeting', { name: userName })}&lt;/p&gt;
-      &lt;p&gt;{t('cartItems', { count: itemCount })}&lt;/p&gt;
-    &lt;/div&gt;
-  );
-}
+              <div class="code-block__label">build settings — Vite SPA</div>
+              <pre><code>Build command:     npm run build
+Output directory:  dist         (plain static files -- any static host can serve these)
+Install command:   npm install
 </code></pre>
             </div>
 
             <p>
-              <code>t('greeting', { name: userName })</code> interpolates <code>userName</code> into
-              the <code>{'{{name}}'}</code> placeholder from the active locale's JSON file.
-              <code>cartItems_one</code>/<code>cartItems_other</code> is i18next's pluralization
-              convention — <code>t('cartItems', { count })</code> automatically picks the right key
-              based on <code>count</code>, which matters because pluralization rules genuinely differ
-              by language (some languages have more than two plural forms), not something you can
-              hand-roll with a single <code>count === 1 ? singular : plural</code> ternary and expect
-              to generalize.
+              A Next.js app needs a platform that understands its server runtime (Vercel is built by
+              the Next.js team specifically for this); a Vite SPA is just static HTML/JS/CSS and can
+              be served by literally any static host, Vercel and Netlify included. Config files let
+              you pin these settings in the repo instead of the dashboard, which keeps deploy
+              behavior reviewable in a pull request like any other code change.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">vercel.json — Vite SPA, with client-side routing rewrite</div>
+              <pre><code>{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">netlify.toml — equivalent config</div>
+              <pre><code>[build]
+  command = "npm run build"
+  publish = "dist"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+</code></pre>
+            </div>
+
+            <p>
+              The rewrite/redirect rule matters for a Vite SPA using Week 6's client-side router:
+              without it, refreshing the browser on <code>/products/42</code> asks the static host
+              for a file at that literal path, which doesn't exist — the host needs to be told to
+              serve <code>index.html</code> for every path and let the router handle it client-side.
             </p>
           </section>
 
-          <section id="locale-formatting">
-            <h2>6. Locale Routing &amp; Formatting</h2>
+          <section id="preview-deployments">
+            <h2>3. Preview Deployments &amp; Branch Workflows</h2>
             <p>
-              Translated strings are only half the problem — dates, currency, and numbers also
-              follow locale-specific conventions (decimal separators, currency symbol placement,
-              date order) that are easy to get subtly wrong by hand-formatting them yourself.
+              Beyond the production deploy on your default branch, both platforms deploy
+              <strong>every pull request</strong> to its own unique, shareable URL — built from that
+              branch's exact code, updated automatically on every new commit pushed to it.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">formatting.ts — don't hand-roll this</div>
-              <pre><code>const price = 1234.5;
-const date = new Date();
-
-new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
-// "$1,234.50"
-
-new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(price);
-// "1.234,50 €"
-
-new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(date);
-// "August 5, 2026"
-
-new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date);
-// "2026年8月5日"
+              <div class="code-block__label">a preview URL, generated automatically per PR</div>
+              <pre><code>my-app-git-fix-cart-total-yourteam.vercel.app
 </code></pre>
             </div>
 
             <p>
-              <code>Intl.NumberFormat</code> and <code>Intl.DateTimeFormat</code> are built into
-              every JavaScript engine and encode the actual formatting rules for every supported
-              locale — separator placement, symbol position, calendar conventions — correctly,
-              which a hand-written <code>`$${price.toFixed(2)}`</code> simply can't do once a
-              non-US locale is involved.
+              This changes the code-review workflow in a real way: a reviewer doesn't have to read a
+              diff and imagine how the UI change looks or behaves — they click a link and use the
+              actual running app, with the actual change applied, including anything that's hard to
+              see in a diff (a layout shift, an animation, a genuinely broken interaction). It also
+              means designers and non-engineers who could never review a diff can weigh in directly
+              on the real thing, before it reaches production.
             </p>
 
             <p>
-              For a Next.js app (Weeks 18–19), <code>next-intl</code> extends this to full
-              locale-prefixed routing — <code>/en/products</code>, <code>/es/products</code> — with
-              middleware that detects a visitor's preferred locale and redirects accordingly, and a
-              <code>useTranslations</code> hook mirroring react-i18next's <code>useTranslation</code>
-              API for Server and Client Components alike.
-            </p>
-
-            <p>
-              Right-to-left languages (Arabic, Hebrew) need one more layer: setting
-              <code>dir="rtl"</code> on the root element flips the reading direction, but a stylesheet
-              hardcoded with <code>margin-left</code>/<code>padding-right</code> won't flip with it.
-              Logical CSS properties — <code>margin-inline-start</code> instead of
-              <code>margin-left</code>, <code>padding-inline-end</code> instead of
-              <code>padding-right</code> — describe "start" and "end" relative to the current reading
-              direction, so the same stylesheet works correctly in both LTR and RTL without a
-              separate RTL override file.
+              Once a pull request is approved and merged into the default branch, the platform
+              automatically promotes that exact build to production — the same artifact that was
+              being reviewed at the preview URL, not a fresh rebuild that could behave differently.
+              Vercel additionally lets you manually "Promote to Production" any past deployment
+              (preview or production) straight from the dashboard, independent of a git merge —
+              useful during Section 6's rollback discussion.
             </p>
 
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong><code>dir="rtl"</code> alone isn't enough</strong>
-                <p>Flipping <code>dir</code> without also using logical properties leaves physical <code>margin-left</code>/<code>margin-right</code> rules pointing the wrong way — a sidebar that should now hug the right edge stays hugging the left. <code>dir="rtl"</code> and logical CSS properties solve the problem together; either alone leaves a half-flipped layout.</p>
+                <strong>Preview environments still need real (test) data</strong>
+                <p>A preview deployment usually shares environment variables with production by default — worth deliberately pointing preview builds at a staging database or a test Stripe key, so a reviewer clicking around a preview URL can't accidentally mutate real production data.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="ci-pipeline">
+            <h2>4. CI Pipeline with GitHub Actions</h2>
+            <p>
+              A host's automatic build-on-push is not the same thing as CI. It happily deploys code
+              that fails your Week 14 test suite or has broken lint rules — it only knows whether
+              the build compiled, not whether the app actually works. A dedicated CI workflow runs
+              alongside it, gating merges on lint, tests, and a build all passing first.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">.github/workflows/ci.yml</div>
+              <pre><code>name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint-test-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test -- --run   # Vitest (Week 14), non-watch mode in CI
+
+      - name: Build
+        run: npm run build
+</code></pre>
+            </div>
+
+            <p>
+              Each step runs in order, and a non-zero exit code from <em>any</em> step — a failing
+              ESLint rule, a failing Vitest assertion, a build error — halts the job and marks it
+              red on the pull request. Branch protection rules (in GitHub's repo settings) can then
+              require this check to pass before the "Merge" button is even clickable, which is what
+              actually makes this a gate rather than just a notification someone might ignore.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Fail the build, don't just warn</strong>
+                <p>A CI step that logs a warning and exits 0 anyway provides zero actual protection — nothing stops a red-but-ignorable check from merging. The entire value of CI comes from a failing step returning a genuinely non-zero exit code, which is what blocks the merge button when branch protection is configured to require it.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="monitoring">
+            <h2>5. Error Monitoring with Sentry</h2>
+            <p>
+              A bug that throws in a user's browser produces an error in <em>their</em> console —
+              invisible to you unless they screenshot it and file a support ticket, which almost
+              never happens. Error monitoring closes that gap: it captures the error, the stack
+              trace, and the state of the app when it happened, and reports it back to you
+              automatically.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm install @sentry/react
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">src/main.tsx — minimal init, near the app's entry point</div>
+              <pre><code>import * as Sentry from '@sentry/react';
+
+Sentry.init({
+  dsn: import.meta.env.VITE_SENTRY_DSN, // client-exposed by design -- a DSN isn't a secret
+  environment: import.meta.env.MODE,     // "production" vs "development"
+  tracesSampleRate: 0.1,                 // sample 10% of transactions, not every single one
+});
+</code></pre>
+            </div>
+
+            <p>
+              For a Next.js app, <code>@sentry/nextjs</code>'s setup wizard
+              (<code>npx @sentry/wizard@latest -i nextjs</code>) wires up equivalent config files for
+              both the server and client runtimes, since Week 18's server/client split means errors
+              can originate on either side. Once initialized, an uncaught error anywhere in the
+              component tree — including inside a Week 13 error boundary's <code>onError</code>
+              callback, wired up explicitly — is captured with a full stack trace, browser/OS
+              details, and (if configured) the logged-in user, letting you reproduce and fix issues
+              you'd otherwise never even know occurred.
+            </p>
+          </section>
+
+          <section id="rollbacks">
+            <h2>6. Rollbacks &amp; Release Safety</h2>
+            <p>
+              CI and monitoring reduce how often something bad reaches production; they don't
+              eliminate it. The remaining question is how fast you can undo damage once it's live,
+              and that's a deploy-level operation, not a git-level one.
+            </p>
+
+            <p>
+              Vercel and Netlify both keep every past deployment around and let you instantly
+              re-point production traffic at any previous one, directly from the dashboard — no
+              rebuild, no waiting on CI, live again in the time it takes to click a button. This is
+              meaningfully faster than <code>git revert</code> plus a fresh push-and-rebuild cycle,
+              and it's the correct first move when something is actively broken for users right now.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">a feature flag, softer than a full rollback</div>
+              <pre><code>function CheckoutPage() {
+  const newFlowEnabled = useFeatureFlag('new-checkout-flow');
+
+  return newFlowEnabled ? &lt;NewCheckoutFlow /&gt; : &lt;LegacyCheckoutFlow /&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              A feature flag lets you disable just the broken piece of a release without rolling
+              back everything else that shipped alongside it — useful when only one feature in a
+              larger deploy is misbehaving, and reverting the whole deploy would also undo unrelated,
+              working changes. Flags cost more up front (every flagged feature needs the conditional
+              logic and, eventually, cleanup once it's fully rolled out) but buy much finer-grained
+              control when something does go wrong.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>What actually broke in prod — a short incident checklist</strong>
+                <p>1) Check Sentry for a spike in a specific error, not just "something feels off." 2) Confirm which deployment introduced it by comparing the error's first-seen timestamp against your deploy history. 3) Roll back that deployment immediately if users are affected right now — investigate the root cause afterward, not before, since "stop the bleeding" and "understand the bug" are separate steps with different urgency.</p>
               </div>
             </div>
           </section>
@@ -529,23 +528,23 @@ new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date);
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>An animated, internationalized shopping list</h3>
-              <p>Combine motion and i18n on the same small component, since real features need both together.</p>
+              <h3>Ship a real app: hosting, CI, monitoring, and a rollback plan</h3>
+              <p>Take an app you've already built in this course and put the full production pipeline around it.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Build a list of items with add/remove controls, animating additions and removals with <code>motion.li</code> and <code>AnimatePresence</code> per Sections 2–3, including a <code>layout</code> prop so remaining items reflow smoothly when one is removed.</li>
-                <li>Use <code>useReducedMotion()</code> so the animation degrades to an instant or fade-only transition when <code>prefers-reduced-motion</code> is enabled — test it by toggling the OS setting (or DevTools' emulation) rather than assuming the code is correct.</li>
-                <li>Set up react-i18next with <code>en.json</code> and <code>es.json</code> translation files, and translate every user-facing string in the component, including a pluralized "N items in your list" string using the <code>_one</code>/<code>_other</code> convention from Section 5.</li>
-                <li>Add a "last updated" timestamp to the list, formatted with <code>Intl.DateTimeFormat</code> using the currently active locale — confirm it actually renders differently between the English and Spanish locales.</li>
-                <li>Add a locale switcher and confirm every piece — translated strings, the plural count, and the formatted date — updates correctly when you switch locales.</li>
+                <li>Push the app to a GitHub repository and connect it to Vercel or Netlify, confirming a production deploy succeeds and that any secret values live in the host's environment variable settings, not in the repo.</li>
+                <li>Open a pull request with a small, visible change and confirm a preview deployment URL is generated automatically for it; click through the preview to verify the change is actually live there.</li>
+                <li>Add a <code>.github/workflows/ci.yml</code> following Section 4, running lint, your Week 14 Vitest suite, and a production build on every pull request — then deliberately break a test to confirm the check goes red and (if you enable branch protection) blocks the merge.</li>
+                <li>Install and initialize Sentry (or an equivalent) with a minimal client-side config, and confirm a deliberately thrown test error actually shows up in the dashboard.</li>
+                <li>Write, as a short markdown checklist inside your repo (e.g. <code>ROLLBACK.md</code>), the exact steps you'd personally take to roll back a bad deploy — from noticing the problem to production traffic pointing at the previous working deployment again.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>Test the pluralization with a count of exactly 1 and a count of 0 or 2+ separately — it's an easy place to accidentally hardcode the English "singular vs. everything else" rule instead of actually relying on i18next's <code>_one</code>/<code>_other</code> key selection.</p>
+                  <p>Deliberately breaking a test and watching the CI check actually go red is the only way to confirm the gate works — a workflow file that's never seen a real failure might be silently misconfigured (wrong script name, wrong working directory) and passing green for the wrong reason.</p>
                 </div>
               </div>
             </div>
@@ -560,13 +559,13 @@ new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date);
                 <summary>
                   <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>Why should an animation prefer changing <code>transform</code> and <code>opacity</code> over properties like <code>width</code> or <code>top</code>?</h4>
+                    <h4>Why do client-exposed environment variables need an explicit prefix like <code>NEXT_PUBLIC_</code> or <code>VITE_</code>, rather than every variable being available by default?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p><code>transform</code> and <code>opacity</code> can be animated entirely on the compositor thread, without the browser recomputing layout or repainting on every frame. Animating <code>width</code>, <code>top</code>, or similar layout-affecting properties forces a layout recalculation each frame, which is the most common cause of a janky, dropped-frame CSS animation.</p>
+                    <p>The prefix is a deliberate safety boundary: it's the explicit act of opting a specific value into the client bundle, where anyone can read it via DevTools. Making every variable available by default would mean a genuine secret (a database password, a private API key) could end up shipped to the browser simply by existing in <code>.env</code>, with no separate step required to catch that mistake.</p>
                   </div>
                 </div>
               </details>
@@ -575,13 +574,13 @@ new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date);
                 <summary>
                   <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>What does Framer Motion's <code>useReducedMotion()</code> do, and why does it matter for accessibility rather than just aesthetics?</h4>
+                    <h4>What is a preview deployment, and why does it change the code-review workflow?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>It reactively reads the OS-level <code>prefers-reduced-motion</code> setting, letting a component swap out large or fast motion for something calmer. It's an accessibility requirement, not a style preference, because large-scale motion can trigger real physical symptoms — dizziness, nausea — for users with vestibular disorders or motion sensitivity, which is why the setting exists at the OS level at all.</p>
+                    <p>It's a real, running deployment of a pull request's exact branch, built automatically and given its own shareable URL. It changes review because a reviewer can click the link and interact with the actual app as changed, rather than reading a diff and imagining how it looks or behaves — catching visual and interactive issues a diff alone can't show.</p>
                   </div>
                 </div>
               </details>
@@ -590,13 +589,13 @@ new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date);
                 <summary>
                   <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>Why does <code>Intl.NumberFormat</code> beat hand-formatting a currency string like <code>`$${price.toFixed(2)}`</code>?</h4>
+                    <h4>Why should a CI pipeline fail the build on a lint or test failure, rather than just logging a warning and continuing?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A hand-written template string bakes in one locale's conventions (USD, dollar sign in front, period as decimal separator) and breaks silently for any other — German currency formatting, for example, uses a comma as the decimal separator and places the symbol after the number. <code>Intl.NumberFormat</code> encodes the correct formatting rules for every locale built into the JavaScript engine, so switching locales just works without separate formatting logic per language.</p>
+                    <p>A step that warns but still exits 0 provides no actual protection — nothing stops the pull request from merging regardless. Only a genuinely non-zero exit code, paired with a branch protection rule requiring that check to pass, actually blocks a broken change from being merged, which is the entire point of putting checks in CI in the first place.</p>
                   </div>
                 </div>
               </details>
@@ -605,13 +604,13 @@ new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date);
                 <summary>
                   <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>Why do <code>dir="rtl"</code> and logical CSS properties like <code>margin-inline-start</code> need to be used together for a correct right-to-left layout?</h4>
+                    <h4>When you "roll back" a deployment on Vercel or Netlify, what exactly gets reverted?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p><code>dir="rtl"</code> flips the reading direction, but physical properties like <code>margin-left</code> stay pointing left regardless, leaving elements hugging the wrong edge. Logical properties describe spacing relative to "start" and "end" of the current reading direction rather than a fixed physical side, so the same stylesheet automatically produces a correctly mirrored layout once <code>dir="rtl"</code> is set — neither one alone is sufficient.</p>
+                    <p>It re-points production traffic at a previous, already-built deployment — not a git-level operation like <code>git revert</code>, and it doesn't change your repository's commit history at all. That's what makes it fast: there's no rebuild and no waiting on CI, since the previous deployment's build artifact already exists and is simply served again.</p>
                   </div>
                 </div>
               </details>
@@ -621,13 +620,13 @@ new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date);
         </article>
 
         <div class="lesson-pager">
-          <a href="week-21.html" class="lesson-pager__link lesson-pager__link--prev">
+          <a href="week-19.html" class="lesson-pager__link lesson-pager__link--prev">
             <span class="lesson-pager__label">← Back to</span>
-            <span class="lesson-pager__title">Week 21: Styling Systems &amp; Accessibility</span>
+            <span class="lesson-pager__title">Week 19: App Router Data Fetching, Layouts &amp; Streaming</span>
           </a>
           <a href="week-23.html" class="lesson-pager__link lesson-pager__link--next">
             <span class="lesson-pager__label">Up next</span>
-            <span class="lesson-pager__title">Week 23: Security, Authentication &amp; Authorization →</span>
+            <span class="lesson-pager__title">Week 23: Styling Systems &amp; Accessibility →</span>
           </a>
         </div>
       </div>
@@ -653,6 +652,7 @@ new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date);
       <a href="../system-design/index.html">System Design</a>
       <a href="../node-express/index.html">Node.js &amp; Express</a>
       <a href="../servicenow/index.html">ServiceNow</a>
+      <a href="../aptitude/index.html">Numerical Aptitude</a>
       <a href="#top">Back to top</a>
     </nav>
     <small>© 2026 CodeVerse Creatives. All rights reserved.</small>

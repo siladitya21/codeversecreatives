@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Week 15: Capstone — Ship a Production Spring Boot Service — CodeVerse Creatives</title>
-<meta name="description" content="The capstone of the Spring Boot curriculum: apply every module — REST APIs, JPA, security, testing, messaging, caching and observability — to one deployed, portfolio-ready Spring Boot service, containerized for Kubernetes." />
+<title>Week 15: Advanced Spring Data — Specifications, Projections &amp; Query Optimization — CodeVerse Creatives</title>
+<meta name="description" content="Week 15 of the Java &amp; Spring Boot curriculum: dynamic queries with JPA Specifications, DTO projections and entity graphs for solving N+1, batch operations, and native queries." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React</span>
-              <span class="nav-course-card__meta">26 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -77,21 +77,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Spring Boot</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DevOps &amp; Cloud</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../python/index.html" class="nav-course-card c-python">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Python</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
@@ -105,14 +105,14 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">System Design</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Node.js &amp; Express</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -120,6 +120,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">ServiceNow</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
         </div>
@@ -145,44 +152,44 @@
       <div class="lesson-crumb">
         <a href="../spring-boot/index.html">Spring Boot Syllabus</a>
         <span>/</span>
-        <a href="../spring-boot/index.html#timeline">Module 12 · Capstone</a>
+        <a href="../spring-boot/index.html#timeline">Module 12 · Advanced Spring Data</a>
         <span>/</span>
         <span aria-current="page">Week 15</span>
       </div>
 
-      <h1>Week 15: Capstone — Ship a Production Spring Boot Service</h1>
+      <h1>Week 15: Advanced Spring Data — Specifications, Projections &amp; Query Optimization</h1>
       <p class="lesson-header__lede">
-        This is the final week — no new concepts, just everything from Weeks 1–14 applied to one
-        real service. REST APIs, JPA persistence, Spring Security, a real test suite, resilient
-        service-to-service and event-driven messaging, caching, observability, and a containerized
-        Kubernetes deployment, combined into one well-scoped backend you design, build, and ship
-        yourself.
+        Weeks 4–5 got you to <code>JpaRepository</code>, derived query methods, and relationships
+        that work. That's enough for most CRUD screens; it stops being enough the moment a search
+        form needs five optional filters combined at runtime, or a list endpoint needs to return
+        twelve fields instead of a whole entity graph. This week covers the query patterns that
+        actually show up in production repositories: building queries dynamically, shaping exactly
+        the data you return, and fixing the N+1 problem for good instead of hoping it doesn't
+        happen.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 12 of 12</span>
-        <span class="chip">Week 15 of 15</span>
-        <span class="chip">~10–15 Hours</span>
-        <span class="chip">Capstone Project</span>
+        <span class="chip chip--accent">Module 12 of 22</span>
+        <span class="chip">Week 15 of 26</span>
+        <span class="chip">~4–5 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
       </div>
 
       <div class="obj-recap reveal">
-        <h2>By the end of this capstone, you'll be able to</h2>
+        <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Scope and architect a production-shaped Spring Boot service from scratch</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Implement it with the full stack from this course — persistence, security, testing, resilience, observability</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deploy it for real and produce a portfolio-ready write-up</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build dynamic, runtime-composed queries with JPA Specifications</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Return DTO projections and use entity graphs to eliminate N+1 queries</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Reach for batch operations and native queries when JPQL genuinely can't do the job</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#planning"><span>1</span> Project Planning &amp; Scoping</a>
-        <a href="#architecture"><span>2</span> Architecture Decisions &amp; Tradeoffs</a>
-        <a href="#implementation"><span>3</span> Full Implementation, in a Sensible Order</a>
-        <a href="#quality-pass"><span>4</span> Testing, Observability &amp; Performance Pass</a>
-        <a href="#deployment"><span>5</span> Deployment &amp; Portfolio Write-Up</a>
-        <a href="#project"><span>6</span> The Capstone Project</a>
-        <a href="#checklist"><span>7</span> Final Checklist</a>
+        <a href="#specifications"><span>1</span> Dynamic Queries with Specifications</a>
+        <a href="#projections"><span>2</span> DTO Projections &amp; Entity Graphs</a>
+        <a href="#batch-native"><span>3</span> Batch Operations &amp; Native Queries</a>
+        <a href="#exercise"><span>4</span> Exercise</a>
+        <a href="#quiz"><span>5</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -193,244 +200,299 @@
       <div class="lesson-layout">
         <article class="lesson-article">
 
-          <section id="planning">
-            <h2>1. Project Planning &amp; Scoping</h2>
+          <section id="specifications">
+            <h2>1. Dynamic Queries with JPA Specifications</h2>
             <p>
-              Before writing a single <code>@RestController</code>, write down what this service
-              actually does, for whom, and what "working" concretely means. Pick a real,
-              well-scoped backend problem — not a toy CRUD demo, but not an unbounded platform
-              either:
-            </p>
-            <ul>
-              <li><strong>A booking system</strong> — appointments or reservations against limited capacity, where double-booking is a real bug to prevent, not a hypothetical.</li>
-              <li><strong>An inventory/order service</strong> — stock levels that must stay consistent under concurrent orders, with a clear order lifecycle.</li>
-              <li><strong>A small SaaS billing service</strong> — plans, usage, and invoices, where correctness (nobody gets billed twice) matters more than feature count.</li>
-            </ul>
-            <p>
-              Whichever domain you pick, define the core domain model and API surface before
-              writing code: what are the two or three central entities, what are the main
-              read and write operations against them, and which of those operations are the ones
-              a reviewer would actually exercise to judge whether the service works. Sketch the
-              key endpoints as a short list — resource, verb, and what changes — the same way
-              you'd plan a REST resource model in Week 3, before any of it exists.
-            </p>
-            <p>
-              Finally, write success criteria down now, not after the fact: a specific, short list
-              of flows that must work end to end (create a booking, prevent a conflicting one,
-              cancel it, see it reflected in availability) decided before you build, so "done"
-              isn't retroactively defined by whatever happened to get built.
+              A derived query method like <code>findByStatusAndCategory</code> works when the set
+              of filters is fixed. It stops working the moment a search endpoint needs to combine
+              an arbitrary, optional subset of filters — a user might filter by status alone, by
+              category alone, by both, or by neither. Writing a derived method for every
+              combination doesn't scale (five optional filters is already 32 combinations); a
+              <strong>Specification</strong> lets you build the query's <code>WHERE</code> clause
+              programmatically, adding only the conditions that actually apply.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">API surface sketch — booking example</div>
-              <pre><code>package com.codeverse.capstone.booking;
+              <div class="code-block__label">TaskSpecifications.java</div>
+              <pre><code>package com.codeverse.week15;
 
-// Written down before any of it exists -- the resource, the verb, what
-// changes. Fill this in for your own domain before opening an IDE.
+import org.springframework.data.jpa.domain.Specification;
 
-// POST   /api/bookings              create a booking (or 409 on conflict)
-// GET    /api/bookings/{id}         fetch one booking
-// DELETE /api/bookings/{id}         cancel a booking
-// GET    /api/availability?date=... read-heavy -- a caching candidate (Week 11)
+class TaskSpecifications {
 
-public record CreateBookingRequest(Long resourceId, Instant start, Instant end) {}
-public record BookingView(Long id, Long resourceId, Instant start, Instant end, String status) {}
+    static Specification&lt;Task&gt; hasStatus(String status) {
+        return (root, query, cb) -&gt;
+            status == null ? null : cb.equal(root.get("status"), status);
+    }
+
+    static Specification&lt;Task&gt; hasCategory(String category) {
+        return (root, query, cb) -&gt;
+            category == null ? null : cb.equal(root.get("category"), category);
+    }
+
+    static Specification&lt;Task&gt; createdAfter(Instant after) {
+        return (root, query, cb) -&gt;
+            after == null ? null : cb.greaterThan(root.get("createdAt"), after);
+    }
+}
 </code></pre>
             </div>
-          </section>
 
-          <section id="architecture">
-            <h2>2. Architecture Decisions &amp; Tradeoffs</h2>
             <p>
-              With the service scoped, make deliberate choices using the tradeoffs this course
-              already gave you a framework for — and be ready to justify each one in writing,
-              not just make it:
+              Returning <code>null</code> from a Specification is deliberate, not a bug — Spring
+              Data JPA's <code>Specification.where()</code> and <code>.and()</code> silently skip
+              any <code>null</code> predicate, so a filter that wasn't supplied simply doesn't
+              appear in the final <code>WHERE</code> clause at all, instead of matching everything
+              or nothing.
             </p>
-            <ul>
-              <li><strong>Monolith vs. a couple of services (Weeks 9–10)</strong> — a single well-structured Spring Boot application is the right default for a capstone-sized domain; only split out a second service if there's a genuinely separate responsibility (e.g. a notification worker consuming events) that benefits from failing and scaling independently.</li>
-              <li><strong>Sync vs. async communication</strong> — if there is any inter-service call at all, decide per interaction: a synchronous REST call (Week 9's <code>RestClient</code> plus resilience patterns) for anything the caller needs an immediate answer to, an event published to a broker (Week 10) for anything that can happen after the response has already gone out.</li>
-              <li><strong>What needs caching (Week 11) vs. what doesn't</strong> — cache read-heavy, slow-changing data (a catalog, availability lookups); never cache anything where staleness would let two people book the same slot or double-spend the same balance.</li>
-            </ul>
-            <p>
-              The justification is the actual work here. "I kept this as one service because the
-              domain is small and a network hop between two services would only add latency and
-              failure modes for no real benefit" is an architectural decision; using every
-              technique from the course by default — a message broker for a single-writer
-              counter, caching on a field that changes every request — is not. Write the reasoning
-              down alongside the choice; Section 5's write-up depends on it.
-            </p>
-          </section>
 
-          <section id="implementation">
-            <h2>3. Full Implementation, in a Sensible Order</h2>
-            <p>
-              Build in an order that lets you validate each layer before the next depends on it —
-              the same incremental discipline this course used from Week 5 onward, now spanning
-              the whole service:
-            </p>
             <div class="code-block">
-              <div class="code-block__label">a sensible build order</div>
-              <pre><code>// 1. Entities and persistence first (Weeks 4-5) -- get the domain model
-//    into a real database with migrations, before any HTTP layer exists.
-// 2. REST layer (Week 3) -- controllers, DTOs, and validation over that
-//    persisted model; confirm every core flow works unauthenticated.
-// 3. Security (Weeks 6-7) -- add authentication and authorization once
-//    the unsecured flows are already correct, not before.
-// 4. Service-to-service or messaging (Weeks 9-10) -- ONLY if Section 2's
-//    architecture actually calls for it.
-// 5. Caching (Week 11) -- applied last, to endpoints Section 2 identified
-//    as read-heavy, once their uncached behavior is already correct.
+              <div class="code-block__label">TaskRepository.java &amp; the service composing filters at runtime</div>
+              <pre><code>interface TaskRepository extends JpaRepository&lt;Task, Long&gt;,
+                                  JpaSpecificationExecutor&lt;Task&gt; {}
+
+// in the service layer
+Specification&lt;Task&gt; spec = Specification
+    .where(TaskSpecifications.hasStatus(filter.status()))
+    .and(TaskSpecifications.hasCategory(filter.category()))
+    .and(TaskSpecifications.createdAfter(filter.createdAfter()));
+
+List&lt;Task&gt; results = taskRepository.findAll(spec);
 </code></pre>
             </div>
+
             <p>
-              This order matters for the same reason it mattered in Week 5's and Week 9's
-              exercises: it's far cheaper to discover your entity relationships or API shape need
-              to change while only the persistence and REST layers exist, than after security,
-              messaging, and caching are all built on top of an assumption that turns out to be
-              wrong. Validate each layer — a passing request against it, by hand or by test —
-              before adding the next.
+              Extending <code>JpaSpecificationExecutor&lt;Task&gt;</code> alongside
+              <code>JpaRepository</code> is what unlocks <code>findAll(Specification)</code> — the
+              repository doesn't need a single new method written for this to work; the same
+              interface now accepts any combination of the Specifications above, composed at
+              request time based on which filter fields the caller actually supplied.
             </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Specifications trade query readability for flexibility — use them where you need the flexibility</strong>
+                <p>A Criteria API lambda is harder to read at a glance than a named derived method or a <code>@Query</code> annotation. Reach for Specifications specifically for genuinely dynamic, multi-filter search endpoints — for a query with a fixed, known shape, a derived method or <code>@Query</code> stays more readable and is the better default.</p>
+              </div>
+            </div>
           </section>
 
-          <section id="quality-pass">
-            <h2>4. Testing, Observability &amp; Performance Pass</h2>
+          <section id="projections">
+            <h2>2. DTO Projections &amp; Entity Graphs</h2>
             <p>
-              Apply Weeks 8 and 12 in full, not as an afterthought bolted on at the end:
+              <code>findAll()</code> returning full <code>Task</code> entities is wasteful the
+              moment a list endpoint only needs three of a table's fifteen columns — every unused
+              column still gets selected, mapped, and (worse) can trigger lazy-loading of
+              associations nobody asked for. A <strong>DTO projection</strong> asks the repository
+              to select and construct exactly the shape you need, directly at the query level.
             </p>
-            <ul>
-              <li><strong>A full Week 8-style test suite</strong> — unit tests for anything with real logic, <code>@WebMvcTest</code>/<code>@DataJpaTest</code> slice tests for controllers and repositories in isolation, and Testcontainers integration tests that exercise the full stack against a real database (and a real broker, if Section 2 added one).</li>
-              <li><strong>Week 12 observability</strong> — Spring Boot Actuator health checks wired to real dependency checks (not just "the app is up"), meaningful custom metrics beyond the defaults, structured JSON logs, and distributed tracing if the architecture genuinely has more than one service to trace across.</li>
-              <li><strong>A basic performance sanity check</strong> — connection pool sizing that's been deliberately set rather than left at a default nobody looked at, and an N+1 query check (Week 5's and Week 11's lesson) on every endpoint that returns a collection with associations.</li>
-            </ul>
+
+            <div class="code-block">
+              <div class="code-block__label">an interface-based projection</div>
+              <pre><code>interface TaskSummary {
+    Long getId();
+    String getTitle();
+    String getStatus();
+}
+
+interface TaskRepository extends JpaRepository&lt;Task, Long&gt; {
+    List&lt;TaskSummary&gt; findByStatus(String status);   // selects only 3 columns
+}
+</code></pre>
+            </div>
+
             <p>
-              None of this is optional polish. A service with no Testcontainers coverage hasn't
-              actually proven it talks to a real database correctly, and a service with no health
-              checks or metrics can't prove it's healthy in production even if it happens to be —
-              both are exactly the gaps this pass exists to close.
+              Spring Data generates a proxy implementing <code>TaskSummary</code> at runtime and,
+              critically, restricts the generated SQL's <code>SELECT</code> clause to only the
+              columns the interface's getters expose — this is a real query-level optimization, not
+              just a Java-side filter applied after fetching everything.
             </p>
+
+            <p>
+              The other half of this section is Week 4's N+1 problem, revisited properly. Lazy
+              associations avoid loading data you don't need — until you iterate a list and access
+              that association on every element, which fires one extra query per row. An
+              <strong>entity graph</strong> tells JPA up front which associations to fetch eagerly,
+              in the <em>same</em> query, for this specific repository call:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">solving N+1 with @EntityGraph</div>
+              <pre><code>interface TaskRepository extends JpaRepository&lt;Task, Long&gt; {
+
+    @EntityGraph(attributePaths = {"assignee", "tags"})
+    List&lt;Task&gt; findByProjectId(Long projectId);
+}
+</code></pre>
+            </div>
+
+            <p>
+              Without the entity graph, fetching 50 tasks and touching <code>task.getAssignee()</code>
+              on each one fires 1 query for the tasks plus 50 more — one per row — for the lazily
+              loaded assignee. With it, JPA generates a single query with the appropriate joins,
+              because the entity graph declares the intent up front instead of discovering it
+              lazily, one row at a time, during iteration.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Enable SQL logging while you work on this section</strong>
+                <p><code>spring.jpa.show-sql=true</code> plus <code>logging.level.org.hibernate.SQL=debug</code> in <code>application.properties</code> makes N+1 impossible to miss — you'll see the extra 50 queries scroll by in the console the moment you iterate a lazy association without an entity graph, which is a far more convincing signal than reading the code and guessing.</p>
+              </div>
+            </div>
           </section>
 
-          <section id="deployment">
-            <h2>5. Deployment &amp; Portfolio Write-Up</h2>
+          <section id="batch-native">
+            <h2>3. Batch Operations &amp; Native Queries</h2>
             <p>
-              A correct service nobody else can reach is far less useful as a portfolio piece than
-              a modest one that's actually live. Containerize and deploy it per Week 13 — Cloud
-              Native Buildpacks or a hand-written <code>Dockerfile</code>, a CI/CD pipeline that
-              builds and pushes the image on every push, and a real deployment target: Kubernetes
-              if the architecture warrants it, or a simpler managed platform if it doesn't.
+              Calling <code>save()</code> in a loop for 10,000 rows issues 10,000 individual
+              <code>INSERT</code> statements (or worse, one <code>SELECT</code> per row first, to
+              check whether it's an insert or an update). <strong>Batch inserts</strong> group
+              statements together and send them to the database in chunks:
             </p>
-            <ul>
-              <li><strong>An architecture diagram or description</strong> — what the service (or services) look like, from Section 2's decisions.</li>
-              <li><strong>The tradeoffs made, and why</strong> — the written justifications from Section 2, not just the final list of technologies used.</li>
-              <li><strong>What you'd do differently</strong> — an honest note on what you'd change with more time, which reads as more credible than pretending the first version is the final one.</li>
-              <li><strong>A reachable endpoint</strong> — the deployed service itself, since the write-up is what a reader actually evaluates the project by, not the source code they'd otherwise have to dig through.</li>
-            </ul>
+
+            <div class="code-block">
+              <div class="code-block__label">application.properties — enabling JDBC batching</div>
+              <pre><code>spring.jpa.properties.hibernate.jdbc.batch_size=50
+spring.jpa.properties.hibernate.order_inserts=true
+spring.jpa.properties.hibernate.order_updates=true
+</code></pre>
+            </div>
+
+            <p>
+              Batching alone isn't enough for a genuinely large bulk update, though — updating
+              10,000 rows by loading each entity, mutating it, and letting Hibernate's dirty
+              checking issue individual <code>UPDATE</code> statements is still slow at scale. A
+              bulk <strong>modifying query</strong> issues a single <code>UPDATE ... WHERE</code>
+              statement directly against the database, bypassing the persistence context entirely:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">a bulk update with @Modifying</div>
+              <pre><code>interface TaskRepository extends JpaRepository&lt;Task, Long&gt; {
+
+    @Modifying
+    @Query("UPDATE Task t SET t.status = 'ARCHIVED' WHERE t.updatedAt &lt; :cutoff")
+    int archiveStaleTasks(@Param("cutoff") Instant cutoff);
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>@Modifying</code> is required to tell Spring Data this <code>@Query</code>
+              changes data rather than reading it — without it, Spring Data assumes a
+              <code>SELECT</code> and the call fails. The tradeoff worth understanding: this update
+              bypasses Hibernate's first-level cache entirely, so any already-loaded
+              <code>Task</code> entities in the current persistence context won't reflect the
+              change unless you explicitly clear or refresh them.
+            </p>
+
+            <p>
+              Some queries — a recursive CTE, a database-specific full-text search, a query tuned
+              around a particular index — genuinely can't be expressed in JPQL. A
+              <strong>native query</strong> escapes to real SQL when that's the honest answer,
+              rather than fighting JPQL to approximate it:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">a native query</div>
+              <pre><code>@Query(value = """
+    SELECT * FROM task
+    WHERE to_tsvector('english', title) @@ plainto_tsquery('english', :term)
+    """, nativeQuery = true)
+List&lt;Task&gt; searchByFullText(@Param("term") String term);
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Native queries trade portability for capability — know which one you're choosing</strong>
+                <p>The full-text search above is Postgres-specific syntax; it won't run unmodified against MySQL or another database. Reach for a native query when you genuinely need something JPQL can't express and you're not planning to change databases — for anything that JPQL or a Specification can express, prefer them, since they stay portable across the JPA providers and databases this course has used.</p>
+              </div>
+            </div>
           </section>
 
-          <section id="project">
-            <h2>6. The Capstone Project</h2>
+          <section id="exercise">
+            <h2>4. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
-                Capstone
+                Hands-on
               </span>
-              <h3>Design, build, test, secure and deploy a complete Spring Boot service</h3>
-              <p>
-                Pick a real, well-scoped backend problem — a booking system, an inventory/order
-                service, a small SaaS billing service — and take it fully through Sections 1–5:
-                planned, architected, implemented, tested and observable, and deployed.
-              </p>
+              <h3>Build a dynamic search endpoint and eliminate a real N+1</h3>
+              <p>Apply Specifications, projections, entity graphs, and a bulk update to the task service from earlier weeks.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Write the project scope and API surface (Section 1) before writing any code: core domain model, key endpoints, and success criteria.</li>
-                <li>Justify your architecture in writing (Section 2): whether you split services or kept one, sync vs. async for any inter-service calls, and what you chose to cache.</li>
-                <li>Implement incrementally through Section 3's layers — persistence, REST, security, messaging if applicable, caching — validating each before adding the next.</li>
-                <li>Complete the full testing, observability and performance pass from Section 4, including Testcontainers integration tests and real health checks and metrics.</li>
-                <li>Deploy it for real — containerized, ideally to Kubernetes or a managed platform — with a live, reachable endpoint and a portfolio write-up (Section 5).</li>
+                <li>Build a <code>GET /api/tasks/search</code> endpoint accepting optional <code>status</code>, <code>category</code>, and <code>createdAfter</code> query parameters, composed at runtime with JPA Specifications — confirm it works correctly with zero, one, and all three filters supplied.</li>
+                <li>Add a DTO projection interface for a lightweight task list view, and confirm with SQL logging that the generated query only selects the needed columns.</li>
+                <li>Reproduce a real N+1: iterate a list of tasks and access a lazy association on each one, and count the queries logged. Then add an <code>@EntityGraph</code> and confirm the query count drops to one.</li>
+                <li>Write a bulk <code>@Modifying</code> query that archives all tasks older than a given cutoff in a single statement, and confirm via SQL logging that it issues one <code>UPDATE</code>, not N.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
-                  <strong>What makes a strong backend capstone</strong>
-                  <p>Not scope or technique count — a small service that's fully working, well-tested, and clearly explained reads as far more credible to anyone reviewing it (an employer, a collaborator, future-you) than an ambitious service that uses every pattern from the course but is only half-finished and untested.</p>
+                  <strong>Hint</strong>
+                  <p>Hibernate's <code>hibernate.generate_statistics=true</code> plus a debug log level on <code>org.hibernate.stat</code> prints a query count summary at the end of each session — a fast, precise way to confirm "one query" rather than counting log lines by eye.</p>
                 </div>
               </div>
             </div>
           </section>
 
-          <section id="checklist">
-            <h2>7. Final Checklist</h2>
-            <p>Before calling the capstone — and the course — done, confirm each of these honestly:</p>
+          <section id="quiz">
+            <h2>5. Knowledge Check</h2>
+            <p>Three quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>Was the scope and API surface written down before any code was written?</h4>
+                    <h4>Why does a Specification returning <code>null</code> for an unsupplied filter work correctly, rather than breaking the query?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>If the domain model and endpoint list were written after the service already existed, they describe what got built rather than what was planned — the same discipline behind writing a test's expectations before, not after, checking what the code currently does. A capstone with a scope document written first has a real definition of "done" to be judged against.</p>
+                    <p>Spring Data JPA's <code>Specification.where()</code> and <code>.and()</code> are written to detect a <code>null</code> predicate and simply omit it from the composed query, rather than treating it as a condition to evaluate. That's what lets a single Specification method be reused across requests where the corresponding filter may or may not have been supplied, without conditional logic scattered through the calling code.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>Can every major architectural choice — services split or not, sync vs. async, what's cached — be justified, rather than just having used every technique from the course?</h4>
+                    <h4>Why does <code>@EntityGraph</code> eliminate N+1 queries where simply marking an association <code>FetchType.EAGER</code> would not solve the problem as well?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Every service split, message broker, and cache layer is added complexity and failure surface to maintain. A capstone that can justify each choice crisply — one service because the domain didn't need more, a cache only on the read-heavy catalog lookup, nothing async because nothing needed to be — reads as far stronger engineering judgment than one that reached for everything the course covered regardless of fit.</p>
+                    <p><code>@EntityGraph</code> is scoped to one specific repository method, so only the calls that actually need the association eagerly fetched pay for the extra join. A blanket <code>FetchType.EAGER</code> on the entity itself forces every single load of that entity, everywhere in the application, to always fetch the association — even for the many places that never touch it — which trades one performance problem for a different, harder-to-see one.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>Does the full test suite pass, including Testcontainers integration tests against a real database?</h4>
+                    <h4>Why can a bulk <code>@Modifying</code> update leave an already-loaded entity in the persistence context showing stale data?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Unit and slice tests alone can pass against mocks while the real integration between your entities, queries, and an actual database is still broken. Testcontainers tests are the ones that prove the service works against something close to what it'll run against in production — without them, "the tests pass" is a weaker claim than it sounds like.</p>
-                  </div>
-                </div>
-              </details>
-
-              <details class="week-item quiz-item">
-                <summary>
-                  <span class="week-item__badge">✓</span>
-                  <div class="week-item__heading">
-                    <h4>Is the service actually deployed and reachable, with a write-up someone could evaluate without reading the source?</h4>
-                  </div>
-                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
-                </summary>
-                <div class="week-item__body week-item__body--single">
-                  <div class="week-item__col">
-                    <p>A service that only runs on your own machine, with your own local database and config, isn't actually finished — deployment (Section 5) isn't optional polish tacked on at the end; it's the proof the service is real. Paired with a write-up covering the architecture, the tradeoffs, and what you'd change, a live endpoint is the actual deliverable a reader will judge the whole project by.</p>
+                    <p>A <code>@Modifying</code> query executes a direct SQL statement against the database, bypassing Hibernate's persistence context and first-level cache entirely. Any entity instance that was already loaded into that context before the bulk update ran keeps its in-memory field values as they were at load time — the database has changed, but the cached Java object hasn't been told, unless it's explicitly refreshed or the context is cleared.</p>
                   </div>
                 </div>
               </details>
             </div>
-
-            <p style="margin-top:24px;">
-              That's the full 15-week Java &amp; Spring Boot path — from a first
-              <code>@RestController</code> in Week 1 to a tested, secured, observable, deployed
-              production service. Congratulations on reaching the capstone.
-            </p>
           </section>
 
         </article>
@@ -440,15 +502,16 @@ public record BookingView(Long id, Long resourceId, Instant start, Instant end, 
             <span class="lesson-pager__label">← Back to</span>
             <span class="lesson-pager__title">Week 14: Reactive Programming with WebFlux</span>
           </a>
-          <a href="../spring-boot/index.html#timeline" class="lesson-pager__link lesson-pager__link--next">
-            <span class="lesson-pager__label">Finished!</span>
-            <span class="lesson-pager__title">Back to Full Syllabus →</span>
+          <a href="week-16.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 16: API Design at Scale — Versioning, Pagination &amp; OpenAPI →</span>
           </a>
         </div>
       </div>
     </div>
   </section>
 </main>
+
 
 <footer class="footer">
   <div class="container footer__inner">
@@ -468,6 +531,7 @@ public record BookingView(Long id, Long resourceId, Instant start, Instant end, 
       <a href="../system-design/index.html">System Design</a>
       <a href="../node-express/index.html">Node.js &amp; Express</a>
       <a href="../servicenow/index.html">ServiceNow</a>
+      <a href="../aptitude/index.html">Numerical Aptitude</a>
       <a href="#top">Back to top</a>
     </nav>
     <small>© 2026 CodeVerse Creatives. All rights reserved.</small>

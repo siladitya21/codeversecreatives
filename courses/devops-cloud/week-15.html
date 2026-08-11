@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Week 15: Capstone — Ship a Full CI/CD → Cloud Pipeline — CodeVerse Creatives</title>
-<meta name="description" content="The DevOps & Cloud capstone: provision AWS infrastructure with Terraform, build a GitHub Actions pipeline that tests, scans and pushes an image to ECR, and deploy it to Kubernetes with observability and security wired in." />
+<title>Week 15: Advanced Kubernetes — StatefulSets, Jobs &amp; Operators — CodeVerse Creatives</title>
+<meta name="description" content="Week 15 of the DevOps &amp; Cloud curriculum: StatefulSets and stable network identity, Jobs and CronJobs for run-to-completion workloads, and the Operator pattern with Custom Resource Definitions." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -77,21 +77,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Spring Boot</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud" aria-current="page">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">DevOps &amp; Cloud</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../python/index.html" class="nav-course-card c-python">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Python</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
@@ -105,14 +105,14 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">System Design</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Node.js &amp; Express</span>
-              <span class="nav-course-card__meta">15 Weeks</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -120,6 +120,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">ServiceNow</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
         </div>
@@ -145,46 +152,46 @@
       <div class="lesson-crumb">
         <a href="../devops-cloud/index.html">DevOps &amp; Cloud Syllabus</a>
         <span>/</span>
-        <a href="../devops-cloud/index.html#timeline">Module 12 · Capstone</a>
+        <a href="../devops-cloud/index.html#timeline">Module 12 · Advanced Kubernetes</a>
         <span>/</span>
         <span aria-current="page">Week 15</span>
       </div>
 
-      <h1>Week 15: Capstone — Ship a Full CI/CD → Cloud Pipeline</h1>
+      <h1>Week 15: Advanced Kubernetes — StatefulSets, Jobs &amp; Operators</h1>
       <p class="lesson-header__lede">
-        This is the final week — no new tools, just everything from Weeks 1–14 wired together
-        into one working system. You'll provision real AWS infrastructure with Terraform, build a
-        GitHub Actions pipeline that tests, scans and pushes a container image, deploy it to a
-        Kubernetes cluster running on that infrastructure, and layer on the observability and
-        security practices from the last two modules — a complete path from <code>git push</code>
-        to a running service in the cloud, and a portfolio-ready project you can walk an
-        interviewer through end to end.
+        Weeks 11–12 covered the Kubernetes almost every tutorial stops at: Deployments running
+        stateless Pods behind a Service. Real clusters run more than that. This week adds the
+        three workload shapes that come up next — <strong>StatefulSets</strong> for anything that
+        needs a stable identity and its own storage, <strong>Jobs</strong> and
+        <strong>CronJobs</strong> for work that runs once or on a schedule instead of forever, and
+        the <strong>Operator pattern</strong>, which is how a huge share of production clusters
+        actually manage complex stateful systems like databases and message queues. This is also
+        the start of a more advanced stretch of the course — the next several modules assume the
+        Kubernetes fundamentals from Weeks 11–14 and build features production teams layer on top.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 12 of 12</span>
-        <span class="chip">Week 15 of 15</span>
-        <span class="chip">~10–15 Hours</span>
-        <span class="chip">Capstone Project</span>
+        <span class="chip chip--accent">Module 12 of 22</span>
+        <span class="chip">Week 15 of 26</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
       </div>
 
       <div class="obj-recap reveal">
-        <h2>By the end of this capstone, you'll be able to</h2>
+        <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Provision a VPC, compute and a container registry on AWS entirely through versioned Terraform</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a GitHub Actions pipeline that tests, scans, builds and deploys a containerized app to Kubernetes on every push</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain and defend every architectural decision in the pipeline, from state locking to rollout strategy</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deploy a StatefulSet with stable network identity and per-Pod persistent storage</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Run one-off and scheduled work with Jobs and CronJobs</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain what an Operator is, and why it exists on top of a CRD</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#planning"><span>1</span> Project Planning &amp; Architecture</a>
-        <a href="#infrastructure"><span>2</span> Provisioning Infrastructure with Terraform</a>
-        <a href="#pipeline"><span>3</span> The CI/CD Pipeline</a>
-        <a href="#deploy"><span>4</span> Deploying to Kubernetes</a>
-        <a href="#hardening"><span>5</span> Observability &amp; Security Pass</a>
-        <a href="#project"><span>6</span> The Capstone Project</a>
-        <a href="#checklist"><span>7</span> Final Checklist</a>
+        <a href="#statefulsets"><span>1</span> StatefulSets</a>
+        <a href="#jobs-cronjobs"><span>2</span> Jobs &amp; CronJobs</a>
+        <a href="#operators"><span>3</span> The Operator Pattern</a>
+        <a href="#exercise"><span>4</span> Exercise</a>
+        <a href="#quiz"><span>5</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -195,471 +202,283 @@
       <div class="lesson-layout">
         <article class="lesson-article">
 
-          <section id="planning">
-            <h2>1. Project Planning &amp; Architecture</h2>
+          <section id="statefulsets">
+            <h2>1. StatefulSets</h2>
             <p>
-              Before touching Terraform or YAML, write down what you're actually deploying and
-              where. Reuse a small containerized app you already have from earlier in this course
-              — a health-check API, a small CRUD service, anything with a <code>Dockerfile</code>
-              and a <code>/healthz</code> endpoint is enough. The architecture doesn't need to be
-              ambitious to be a strong capstone; it needs to be complete and correctly reasoned:
-            </p>
-            <ul>
-              <li><strong>Compute target</strong> — a single-node <a href="https://k3s.io" rel="noopener"><code>k3s</code></a> cluster running on one EC2 instance is the realistic choice for a free-tier capstone: it's genuinely Kubernetes (the same manifests, the same <code>kubectl</code>), without the ongoing cost of a managed EKS control plane. Note in your write-up that a production system would likely use EKS instead, and why (managed control plane, multi-AZ node groups) — understanding the tradeoff matters more than which one you provision here.</li>
-              <li><strong>Registry</strong> — a private AWS ECR repository, matching Week 5.</li>
-              <li><strong>Networking</strong> — one VPC with a public subnet for the instance, matching Week 8, with a security group open only on the ports the pipeline and cluster actually need (22 for SSH during setup, 6443 for the Kubernetes API, 80/443 for the app).</li>
-            </ul>
-            <p>
-              Sketch the full path a change takes before writing any code: a push to <code>main</code>
-              triggers CI, which tests and scans the app, builds and pushes an image to ECR, then
-              tells the cluster to roll out that new image. Write that sequence down as a short
-              numbered list — it becomes both your pipeline's job order in Section 3 and the
-              architecture diagram in your final write-up.
-            </p>
-          </section>
-
-          <section id="infrastructure">
-            <h2>2. Provisioning Infrastructure with Terraform</h2>
-            <p>
-              Everything below is real infrastructure, provisioned the Week 9–10 way: written as
-              HCL, planned before it's applied, and backed by remote state from the start so a
-              second contributor (or future you, from a different machine) can safely run
-              <code>terraform plan</code> against the same state.
+              A Deployment's Pods are interchangeable — any replica can be killed and replaced by
+              an identical one with a random new name and, if you're not using a PersistentVolume,
+              no memory of what came before. That's exactly the right model for a stateless API.
+              It's the wrong model for something like a Postgres primary or a Kafka broker, where
+              "which specific instance is this" and "which specific disk does it own" both matter.
+              A <strong>StatefulSet</strong> exists for that case: each Pod gets a stable,
+              predictable name (<code>web-0</code>, <code>web-1</code>, <code>web-2</code>, not a
+              random suffix), Pods are created and scaled in strict order, and each Pod's storage
+              follows it through restarts and rescheduling instead of being reassigned.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">backend.tf — remote state, provisioned once by hand</div>
-              <pre><code>terraform {
-  backend "s3" {
-    bucket         = "codeverse-capstone-tfstate"
-    key            = "capstone/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
-  }
-}
-</code></pre>
-            </div>
-
-            <div class="code-block">
-              <div class="code-block__label">main.tf — VPC, EC2 instance &amp; ECR repository</div>
-              <pre><code>provider "aws" {
-  region = "us-east-1"
-}
-
-resource "aws_vpc" "capstone" {
-  cidr_block           = "10.0.0.0/16"
-  enable_dns_hostnames = true
-  tags = { Name = "capstone-vpc" }
-}
-
-resource "aws_subnet" "public" {
-  vpc_id                  = aws_vpc.capstone.id
-  cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = true
-  tags = { Name = "capstone-public" }
-}
-
-resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.capstone.id
-}
-
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.capstone.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw.id
-  }
-}
-
-resource "aws_route_table_association" "public" {
-  subnet_id      = aws_subnet.public.id
-  route_table_id = aws_route_table.public.id
-}
-
-resource "aws_security_group" "cluster" {
-  name   = "capstone-cluster-sg"
-  vpc_id = aws_vpc.capstone.id
-
-  ingress { from_port = 22   to_port = 22   protocol = "tcp" cidr_blocks = [var.admin_cidr] }
-  ingress { from_port = 6443 to_port = 6443 protocol = "tcp" cidr_blocks = [var.admin_cidr] }
-  ingress { from_port = 80   to_port = 80   protocol = "tcp" cidr_blocks = ["0.0.0.0/0"] }
-  ingress { from_port = 443  to_port = 443  protocol = "tcp" cidr_blocks = ["0.0.0.0/0"] }
-  egress  { from_port = 0    to_port = 0    protocol = "-1"  cidr_blocks = ["0.0.0.0/0"] }
-}
-
-resource "aws_instance" "k3s_node" {
-  ami                    = "ami-0c101f26f147fa7fd" # Ubuntu 22.04 LTS, us-east-1
-  instance_type          = "t3.small"
-  subnet_id              = aws_subnet.public.id
-  vpc_security_group_ids = [aws_security_group.cluster.id]
-  key_name                    = var.key_pair_name
-  associate_public_ip_address = true
-
-  user_data = file("${path.module}/install-k3s.sh")
-
-  tags = { Name = "capstone-k3s-node" }
-}
-
-resource "aws_ecr_repository" "app" {
-  name                 = "capstone-app"
-  image_tag_mutability = "IMMUTABLE"
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-}
-
-output "node_public_ip" {
-  value = aws_instance.k3s_node.public_ip
-}
-</code></pre>
-            </div>
-
-            <p>
-              <code>image_tag_mutability = "IMMUTABLE"</code> matters more than it looks: it
-              rejects pushing a second image under a tag that already exists in the repository,
-              which forecloses an entire class of "which image is actually running?" incidents —
-              every tag in this repo, once pushed, unambiguously refers to one exact image forever.
-              <code>scan_on_push</code> wires Week 5's image scanning directly into the registry
-              itself, not just into CI, so nothing that reaches ECR skips a scan regardless of how
-              it got there.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">terminal — the plan/apply loop from Week 9</div>
-              <pre><code>terraform init
-terraform plan -out=tfplan
-terraform apply tfplan
-
-# get the node's IP for the next section
-terraform output node_public_ip
-</code></pre>
-            </div>
-
-            <div class="callout callout--tip">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
-              <div>
-                <strong>Never skip the remote backend, even for a capstone</strong>
-                <p>It's tempting to leave state local for a "just for me" project — but wiring up S3 + DynamoDB locking from the start, per Week 10, is what proves you can build infrastructure a team could actually collaborate on, not just infrastructure that happens to work on one laptop. It's also the difference that matters most if your laptop dies mid-capstone and you need to pick the project back up from a different machine.</p>
-              </div>
-            </div>
-          </section>
-
-          <section id="pipeline">
-            <h2>3. The CI/CD Pipeline</h2>
-            <p>
-              With infrastructure in place, the pipeline is where Weeks 3 through 7 converge: test
-              and scan the app, build and push an image, then trigger a deploy — each stage gated
-              on the previous one succeeding, exactly like Week 7's environments-and-approvals
-              model.
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">.github/workflows/deploy.yml</div>
-              <pre><code>name: Build, Scan &amp; Deploy
-
-on:
-  push:
-    branches: [main]
-
-env:
-  ECR_REPOSITORY: capstone-app
-  AWS_REGION: us-east-1
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: ./run-tests.sh   # your app's own test suite from earlier weeks
-
-  build-scan-push:
-    needs: test
-    runs-on: ubuntu-latest
-    outputs:
-      image: ${{ steps.image.outputs.image }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
-      - uses: aws-actions/amazon-ecr-login@v2
-        id: ecr-login
-
-      - name: Build image
-        run: docker build -t ${{ steps.ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }} .
-
-      - name: Scan image
-        uses: aquasecurity/trivy-action@0.24.0
-        with:
-          image-ref: ${{ steps.ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-          severity: CRITICAL,HIGH
-          exit-code: 1   # fail the job -- a critical CVE never reaches "push"
-
-      - name: Push image
-        run: docker push ${{ steps.ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
-      - id: image
-        run: echo "image=${{ steps.ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}" &gt;&gt; "$GITHUB_OUTPUT"
-
-  deploy:
-    needs: build-scan-push
-    runs-on: ubuntu-latest
-    environment: production   # requires a reviewer approval -- Week 7
-    steps:
-      - uses: actions/checkout@v4
-      - name: Configure kubeconfig
-        run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG_B64 }}" | base64 -d &gt; ~/.kube/config
-      - name: Roll out new image
-        run: |
-          kubectl set image deployment/capstone-app \
-            app=${{ needs.build-scan-push.outputs.image }} \
-            --record
-          kubectl rollout status deployment/capstone-app --timeout=120s
-</code></pre>
-            </div>
-
-            <p>
-              Two things here are worth calling out explicitly, both of them carrying a lesson
-              forward from earlier weeks. First, <code>role-to-assume</code> instead of a long-lived
-              AWS access key pair: the runner assumes a narrowly-scoped IAM role for the duration of
-              the job via OIDC federation and gets no standing credentials at all — the least-privilege
-              principle from Week 8 and Week 14, applied to the pipeline's own AWS access, not just
-              the application's. Second, <code>exit-code: 1</code> on the Trivy scan step means a
-              critical vulnerability doesn't produce a warning buried in a log — it fails the job and
-              the image never gets pushed, which is the difference between a scan that's a real gate
-              and one that's decoration.
-            </p>
-
-            <p>
-              <code>kubectl rollout status</code> after the image update is what makes this
-              pipeline trustworthy: the job doesn't report success the instant it issues the
-              command, it waits and confirms the new pods actually became ready. A deploy that
-              silently ships a crash-looping pod and reports green is worse than one that fails
-              loudly — the whole point of this step is to make sure that can't happen.
-            </p>
-          </section>
-
-          <section id="deploy">
-            <h2>4. Deploying to Kubernetes</h2>
-            <p>
-              The manifests being rolled out are the same shapes from Weeks 11–12 — a
-              <code>Deployment</code> for the app's pods, a <code>Service</code> to route traffic
-              to them, and an <code>Ingress</code> to expose it, applied once by hand to bootstrap
-              the cluster before the pipeline in Section 3 takes over updating the image:
-            </p>
-
-            <div class="code-block">
-              <div class="code-block__label">k8s/deployment.yaml</div>
-              <pre><code>apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: capstone-app
-spec:
-  replicas: 2
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-      maxSurge: 1
-  selector:
-    matchLabels: { app: capstone-app }
-  template:
-    metadata:
-      labels: { app: capstone-app }
-    spec:
-      containers:
-        - name: app
-          image: PLACEHOLDER   # set by `kubectl set image` in the pipeline
-          ports:
-            - containerPort: 8000
-          readinessProbe:
-            httpGet: { path: /healthz, port: 8000 }
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe:
-            httpGet: { path: /healthz, port: 8000 }
-            initialDelaySeconds: 15
-            periodSeconds: 20
-          resources:
-            requests: { cpu: "100m", memory: "128Mi" }
-            limits:   { cpu: "500m", memory: "256Mi" }
----
-apiVersion: v1
+              <div class="code-block__label">statefulset.yaml — a 3-node Postgres-style StatefulSet</div>
+              <pre><code>apiVersion: v1
 kind: Service
 metadata:
-  name: capstone-app
+  name: pg
 spec:
-  selector: { app: capstone-app }
+  clusterIP: None        # headless — required for StatefulSet DNS
+  selector: { app: pg }
   ports:
-    - port: 80
-      targetPort: 8000
-</code></pre>
-            </div>
-
-            <p>
-              <code>replicas: 2</code> combined with <code>maxUnavailable: 0</code> is what makes
-              the rollout in Section 3 a genuinely zero-downtime deploy: Kubernetes must bring up a
-              new, ready pod (<code>maxSurge: 1</code>) before it's allowed to remove an old one,
-              so there is never a moment with fewer than two healthy pods serving traffic. That
-              guarantee only holds because a <code>readinessProbe</code> is defined — without one,
-              Kubernetes considers a pod "ready" the instant its container process starts, which
-              for most apps is well before it can actually serve a request correctly.
-            </p>
-
-            <p>
-              Resource <code>requests</code> and <code>limits</code> aren't optional polish on a
-              single-node cluster either: without a <code>request</code>, the scheduler has no
-              information to reason about whether a pod fits on the node at all, and without a
-              <code>limit</code>, one misbehaving pod can starve every other pod on the same
-              node — a much bigger deal on a one-node capstone cluster than it would be on a large
-              multi-node production cluster with room to spread the damage.
-            </p>
-          </section>
-
-          <section id="hardening">
-            <h2>5. Observability &amp; Security Pass</h2>
-            <p>
-              A pipeline that deploys correctly but leaves you blind once the app is running only
-              solves half the problem Weeks 13–14 exist to close. Apply both in full, not as an
-              afterthought:
-            </p>
-            <ul>
-              <li><strong>Metrics &amp; dashboards</strong> — deploy the <code>kube-prometheus-stack</code> Helm chart (Week 12's Helm skill, Week 13's Prometheus/Grafana skill) to scrape both cluster-level metrics and your app's own <code>/metrics</code> endpoint, and build one Grafana dashboard covering request rate, error rate, and pod restarts.</li>
-              <li><strong>Logging</strong> — confirm your app logs structured JSON to stdout (Week 13), which <code>kubectl logs</code> and any log-forwarding sidecar can consume without extra parsing.</li>
-              <li><strong>Secrets</strong> — every credential the pipeline or the cluster uses (the <code>KUBECONFIG_B64</code> secret, any app-level API key) lives in GitHub Encrypted Secrets or a Kubernetes <code>Secret</code>, never committed to the repo — verify this with <code>git log -p -- '*.env' '*.pem'</code> turning up nothing.</li>
-              <li><strong>Network policy</strong> — add a default-deny <code>NetworkPolicy</code> and one explicit allow rule for the app's actual traffic pattern, so a compromised pod can't freely reach every other pod on the cluster by default.</li>
-            </ul>
-            <div class="code-block">
-              <div class="code-block__label">k8s/network-policy.yaml</div>
-              <pre><code>apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: default-deny
-spec:
-  podSelector: {}
-  policyTypes: [Ingress]
+    - port: 5432
 ---
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
-  name: allow-app-ingress
+  name: pg
 spec:
-  podSelector:
-    matchLabels: { app: capstone-app }
-  policyTypes: [Ingress]
-  ingress:
-    - from: []
-      ports:
-        - protocol: TCP
-          port: 8000
+  serviceName: pg          # must match the headless Service above
+  replicas: 3
+  selector:
+    matchLabels: { app: pg }
+  template:
+    metadata:
+      labels: { app: pg }
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:      # one PVC PER POD, not shared
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests: { storage: 10Gi }
 </code></pre>
             </div>
+
+            <p>
+              Two things here don't exist on a Deployment. First, the headless Service
+              (<code>clusterIP: None</code>) doesn't load-balance at all — instead it gives each
+              Pod its own stable DNS name, <code>pg-0.pg</code>, <code>pg-1.pg</code>,
+              <code>pg-2.pg</code>, so other services can address a <em>specific</em> replica (the
+              primary, say) instead of "whichever Pod the Service happens to route to." Second,
+              <code>volumeClaimTemplates</code> provisions a distinct PersistentVolumeClaim per
+              Pod — <code>data-pg-0</code>, <code>data-pg-1</code>, <code>data-pg-2</code> — and if
+              <code>pg-1</code> is deleted and rescheduled, Kubernetes reattaches the same
+              <code>data-pg-1</code> volume to the new Pod rather than provisioning a fresh empty
+              one.
+            </p>
+
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>This section is what separates a demo from a capstone</strong>
-                <p>Getting a container running in Kubernetes is a demo. Getting it there through a tested, scanned, gated pipeline, with dashboards a reviewer can actually look at and a network policy that isn't wide open, is the difference a hiring manager is actually screening for.</p>
+                <strong>A StatefulSet doesn't make your app clustered — it just gives clustering a stable foundation</strong>
+                <p>Deploying three Postgres Pods in a StatefulSet does not give you Postgres replication; each Pod is still an independent, empty database unless you configure replication yourself (or, more realistically, use an Operator — Section 3 — that does it for you). What the StatefulSet actually buys you is the stable identity and storage that any real clustering setup depends on to know who's who and where its data lives.</p>
               </div>
             </div>
           </section>
 
-          <section id="project">
-            <h2>6. The Capstone Project</h2>
+          <section id="jobs-cronjobs">
+            <h2>2. Jobs &amp; CronJobs</h2>
+            <p>
+              A Deployment assumes its Pod should run forever and restarts it if it exits — exactly
+              wrong for a database migration, a report generator, or a one-off data backfill, all
+              of which are supposed to finish. A <strong>Job</strong> runs a Pod (or several) to
+              completion and stops; a <strong>CronJob</strong> creates a new Job on a schedule.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">job.yaml — a one-off database migration</div>
+              <pre><code>apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+spec:
+  backoffLimit: 3          # retry up to 3 times on failure
+  activeDeadlineSeconds: 300
+  template:
+    spec:
+      restartPolicy: Never   # Jobs cannot use "Always"
+      containers:
+        - name: migrate
+          image: web-app:latest
+          command: ["./manage.py", "migrate"]
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">cronjob.yaml — a nightly backup</div>
+              <pre><code>apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nightly-backup
+spec:
+  schedule: "0 2 * * *"          # 02:00 UTC every day
+  concurrencyPolicy: Forbid       # skip a run if the previous one is still going
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: backup
+              image: web-app-backup-tool:latest
+              command: ["./backup.sh"]
+</code></pre>
+            </div>
+
+            <p>
+              <code>concurrencyPolicy: Forbid</code> matters more than it looks: without it, a
+              backup job that runs long past its next scheduled trigger will simply stack a second
+              one on top, and now two processes are racing against the same backup target. Also
+              worth internalizing — a Job's <code>restartPolicy</code> can only be
+              <code>Never</code> or <code>OnFailure</code>, never <code>Always</code>; a Pod that's
+              supposed to finish can't also be a Pod Kubernetes keeps resurrecting forever.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Set <code>activeDeadlineSeconds</code> on anything you'd rather fail than hang</strong>
+                <p>Without a deadline, a stuck migration or a backup script waiting on a dead connection can run — and consume its Pod's resource allocation — indefinitely. A deadline forces the Job to fail loudly and predictably, which is almost always better than a silent hang someone discovers a day later.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="operators">
+            <h2>3. The Operator Pattern</h2>
+            <p>
+              A human running Postgres by hand doesn't just start the process — they also handle
+              failover when the primary dies, take backups on a schedule, and safely apply minor
+              version upgrades. Codifying that operational knowledge into software that runs
+              <em>inside</em> the cluster and watches over a specific kind of workload is the
+              <strong>Operator pattern</strong>. An Operator is built from two pieces: a
+              <strong>Custom Resource Definition (CRD)</strong>, which extends the Kubernetes API
+              with a new object type, and a <strong>controller</strong>, which watches objects of
+              that type and continuously reconciles real cluster state toward what they declare.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">postgres-cluster.yaml — using a Postgres Operator's CRD</div>
+              <pre><code>apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: orders-db
+spec:
+  instances: 3
+  storage:
+    size: 20Gi
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://acme-backups/orders-db
+      s3Credentials:
+        accessKeyId: { name: backup-creds, key: ACCESS_KEY_ID }
+        secretAccessKey: { name: backup-creds, key: SECRET_ACCESS_KEY }
+    retentionPolicy: "30d"
+</code></pre>
+            </div>
+
+            <p>
+              That's the entire spec — no StatefulSet, no manually wired-up replication, no backup
+              CronJob. The CloudNativePG (or Zalando, or Crunchy) operator installed in the cluster
+              sees this <code>Cluster</code> object, and its controller does the rest: provisions
+              the underlying StatefulSet and PersistentVolumeClaims, configures streaming
+              replication between the three instances, promotes a replica automatically if the
+              primary fails, and runs the scheduled backups to S3 — continuously reconciling
+              reality against this ~15-line declaration, the same reconciliation loop idea behind
+              every built-in Kubernetes controller, just aimed at a domain (Postgres operations)
+              Kubernetes itself knows nothing about.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Prefer a mature, widely-used Operator over hand-rolling the same logic</strong>
+                <p>Writing your own StatefulSet-plus-replication-plus-failover setup for Postgres is redoing work that CloudNativePG, Zalando's Postgres Operator, or Crunchy Data have already solved, tested against real failure scenarios, and maintained for years. Reach for a well-established Operator from the CNCF landscape before building the equivalent logic yourself — the value of the Operator pattern is exactly this: someone else has already encoded the operational expertise.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="exercise">
+            <h2>4. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
-                Capstone
+                Hands-on
               </span>
-              <h3>Provision, pipeline and ship a real service to the cloud</h3>
-              <p>
-                Take Sections 1–5 fully through to a live, reachable deployment — infrastructure
-                as code, a gated pipeline, and a hardened, observable cluster.
-              </p>
+              <h3>Run a stateful workload, a scheduled Job, and a real Operator</h3>
+              <p>Apply all three workload shapes from this week on your local <code>kind</code>/<code>minikube</code> cluster.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Write and apply the Terraform from Section 2 with a remote S3 + DynamoDB-locked backend, provisioning a VPC, a compute target running Kubernetes, and an ECR repository with scan-on-push enabled.</li>
-                <li>Bootstrap the cluster with your app's <code>Deployment</code>, <code>Service</code> and <code>Ingress</code>, confirming readiness and liveness probes are both correctly configured against a real endpoint.</li>
-                <li>Build the GitHub Actions pipeline from Section 3: a test job, a build-scan-push job that fails on a critical vulnerability, and a deploy job gated behind a <code>production</code> environment approval, using short-lived OIDC-assumed AWS credentials rather than a long-lived access key.</li>
-                <li>Deploy the observability stack from Section 5 and take a screenshot of a working Grafana dashboard showing live traffic from at least one real deploy.</li>
-                <li>Apply the default-deny <code>NetworkPolicy</code>, confirm secrets are nowhere in git history, and push one real code change through the full pipeline end to end — from commit to a verified zero-downtime rollout.</li>
-                <li>Write a short README/architecture doc: a diagram of the pipeline and infrastructure, the tradeoffs you made (k3s vs. EKS, single node vs. multi-node), and what you'd change with more time or budget.</li>
+                <li>Deploy a 3-replica StatefulSet running a simple database image with a headless Service, confirm each Pod resolves at its own stable DNS name (<code>pod-0.svc</code>, etc.), then delete one Pod and confirm the replacement reattaches the same PVC rather than starting empty.</li>
+                <li>Write a Job that runs a short script once, confirm it completes and doesn't restart, then write a CronJob that runs the same script every 2 minutes with <code>concurrencyPolicy: Forbid</code> and watch it fire twice.</li>
+                <li>Install a real Operator via Helm (CloudNativePG is a good, free choice) and provision a small Postgres cluster through its CRD; confirm the Operator created the underlying StatefulSet and Pods on your behalf.</li>
+                <li>Kill the Operator-managed primary Pod and confirm the Operator promotes a replica automatically, without you running any manual failover command.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
-                  <strong>Tear it down when you're done</strong>
-                  <p><code>terraform destroy</code> the moment you've captured your screenshots and write-up — an EC2 instance and its associated resources cost real money every hour, and leaving a capstone running indefinitely is the single most common way this project turns into an unpleasant AWS bill.</p>
+                  <strong>Hint</strong>
+                  <p><code>kubectl get pvc</code> before and after deleting a StatefulSet Pod is the fastest way to see the reattachment behavior directly — the PVC name and its bound volume stay identical across the Pod's replacement.</p>
                 </div>
               </div>
             </div>
           </section>
 
-          <section id="checklist">
-            <h2>7. Final Checklist</h2>
-            <p>Before calling the capstone — and the course — done, confirm each of these honestly:</p>
+          <section id="quiz">
+            <h2>5. Knowledge Check</h2>
+            <p>Three quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>Does every piece of infrastructure exist because Terraform created it, with zero manual console clicks?</h4>
+                    <h4>Why does a StatefulSet need a headless Service instead of a normal one?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A resource created by hand in the AWS console isn't tracked in state, can't be reproduced by <code>terraform apply</code> on a fresh account, and will silently drift out of sync the moment someone edits it outside Terraform. The entire value of Infrastructure as Code depends on <code>terraform plan</code> against a clean checkout producing zero unexpected changes — that's the actual test, not just "the infrastructure works right now."</p>
+                    <p>A normal Service load-balances across all matching Pods behind one virtual IP, which is exactly what a StatefulSet's callers usually don't want — they need to address a specific replica by name. A headless Service (<code>clusterIP: None</code>) skips load balancing and instead gives DNS records to each individual Pod, which is what makes stable per-Pod addressing like <code>pg-0.pg</code> possible.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>Does the pipeline fail loudly and stop before deploying if a test fails or a critical vulnerability is found?</h4>
+                    <h4>Why can't a Job's <code>restartPolicy</code> be <code>Always</code>?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A pipeline where <code>deploy</code> can run even after <code>test</code> or the security scan fails isn't actually gating anything — it's cosmetic. The <code>needs:</code> dependency chain and the scanner's non-zero exit code have to be the only path forward; verify this by deliberately breaking a test or referencing an image with a known CVE and confirming the deploy job never starts.</p>
+                    <p>A Job's entire purpose is to run to completion — success is defined as the container eventually exiting 0. <code>restartPolicy: Always</code> means Kubernetes treats any exit, including a successful one, as something to restart from, which would make a Job that's supposed to finish run forever instead. Jobs are restricted to <code>Never</code> or <code>OnFailure</code> so a successful exit is allowed to actually mean "done."</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">✓</span>
+                  <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>Did a real rollout complete with zero downtime, verified rather than assumed?</h4>
+                    <h4>What does an Operator's controller actually do that a plain StatefulSet manifest can't?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Reading the manifest and confirming <code>maxUnavailable: 0</code> is set is not the same as proving it works — run a small load-generating loop against the service during a real deploy and confirm no requests failed, the same discipline as an integration test proving behavior rather than a code review merely asserting it.</p>
-                  </div>
-                </div>
-              </details>
-
-              <details class="week-item quiz-item">
-                <summary>
-                  <span class="week-item__badge">✓</span>
-                  <div class="week-item__heading">
-                    <h4>Can every architectural choice — k3s vs. EKS, single node, the specific IAM role scope — be defended in the write-up, not just listed?</h4>
-                  </div>
-                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
-                </summary>
-                <div class="week-item__body week-item__body--single">
-                  <div class="week-item__col">
-                    <p>Anyone can list "Terraform, GitHub Actions, Kubernetes" as technologies used. A capstone that can explain specifically why k3s on one node was the right call for this project's scope and budget — and what would actually change moving to EKS with real production traffic — demonstrates the judgment a reviewer is screening for, which the tool list alone never does.</p>
+                    <p>A StatefulSet manifest only describes Pod identity and storage — it has no idea what Postgres replication is or how to fail over. An Operator's controller continuously watches a domain-specific object (like a <code>Cluster</code> CRD) and actively runs the operational logic — configuring replication, promoting a replica on failure, running scheduled backups — that a static manifest has no way to express on its own.</p>
                   </div>
                 </div>
               </details>
@@ -673,9 +492,9 @@ spec:
             <span class="lesson-pager__label">← Back to</span>
             <span class="lesson-pager__title">Week 14: Security &amp; DevSecOps</span>
           </a>
-          <a href="../devops-cloud/index.html#timeline" class="lesson-pager__link lesson-pager__link--next">
-            <span class="lesson-pager__label">Finished!</span>
-            <span class="lesson-pager__title">Back to Full Syllabus →</span>
+          <a href="week-16.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 16: Service Mesh: Istio &amp; Linkerd Fundamentals →</span>
           </a>
         </div>
       </div>
@@ -701,6 +520,7 @@ spec:
       <a href="../system-design/index.html">System Design</a>
       <a href="../node-express/index.html">Node.js &amp; Express</a>
       <a href="../servicenow/index.html">ServiceNow</a>
+      <a href="../aptitude/index.html">Numerical Aptitude</a>
       <a href="#top">Back to top</a>
     </nav>
     <small>© 2026 CodeVerse Creatives. All rights reserved.</small>

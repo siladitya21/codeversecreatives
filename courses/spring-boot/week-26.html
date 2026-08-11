@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Week 26: Capstone, Part 2 — Test, Observe, Deploy &amp; Ship — CodeVerse Creatives</title>
+<meta name="description" content="Week 26 of the Java &amp; Spring Boot capstone: a full testing and observability pass, deployment through a real gated pipeline with a progressive rollout, and the final capstone write-up." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body data-course="spring-boot">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown data-active="true">
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../spring-boot/index.html" class="nav-course-card c-spring-boot" aria-current="page">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../python/index.html" class="nav-course-card c-python">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
+            </span>
+          </a>
+          <a href="../system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../node-express/index.html" class="nav-course-card c-node-express">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2a2 2 0 0 0 4 0h6a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2h-6a2 2 0 0 0-4 0H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">ServiceNow</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../spring-boot/index.html">Spring Boot Syllabus</a>
+        <span>/</span>
+        <a href="../spring-boot/index.html#timeline">Module 22 · Capstone</a>
+        <span>/</span>
+        <span aria-current="page">Week 26</span>
+      </div>
+
+      <h1>Week 26: Capstone, Part 2 — Test, Observe, Deploy &amp; Ship</h1>
+      <p class="lesson-header__lede">
+        Week 25 ended with a working, scoped implementation. This final week applies the full
+        testing and observability pass, ships it through a real gated pipeline with a progressive
+        rollout, and closes with the project write-up and checklist that turn a working service
+        into a capstone you can defend to an interviewer end to end — the last stop in the 26-week
+        course.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Module 22 of 22</span>
+        <span class="chip">Week 26 of 26</span>
+        <span class="chip">~8–10 Hours</span>
+        <span class="chip">Capstone Project</span>
+      </div>
+
+      <div class="obj-recap reveal">
+        <h2>By the end of this capstone, you'll be able to</h2>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Apply a full testing, observability, and performance pass to a production-shaped service</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Ship it through a real gated pipeline with a progressive deployment strategy</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Defend every architectural decision across both capstone weeks in a portfolio write-up</li>
+        </ul>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#quality-pass"><span>1</span> Testing, Observability &amp; Performance Pass</a>
+        <a href="#deployment"><span>2</span> Deployment &amp; Progressive Rollout</a>
+        <a href="#project"><span>3</span> The Capstone Project</a>
+        <a href="#checklist"><span>4</span> Final Checklist</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="quality-pass">
+            <h2>1. Testing, Observability &amp; Performance Pass</h2>
+            <p>
+              Apply Weeks 8, 12, 22, and 23 in full, not as an afterthought bolted on at the end:
+            </p>
+            <ul>
+              <li><strong>A full Week 8-style test suite</strong> — unit tests for anything with real logic, <code>@WebMvcTest</code>/<code>@DataJpaTest</code> slice tests for controllers and repositories in isolation, and Testcontainers integration tests that exercise the full stack against a real database (and a real broker, if Week 25's architecture added one).</li>
+              <li><strong>Contract tests (Week 22)</strong> — if the capstone involves more than one service, a Pact contract test between them, verified on both the consumer and provider side.</li>
+              <li><strong>A mutation testing pass (Week 22)</strong> — run PIT against your core business logic and fix at least one gap a surviving mutant reveals, rather than trusting line coverage alone.</li>
+              <li><strong>Week 12 observability</strong> — Spring Boot Actuator health checks wired to real dependency checks (not just "the app is up"), meaningful custom metrics beyond the defaults, structured JSON logs, and distributed tracing if the architecture genuinely has more than one service to trace across.</li>
+              <li><strong>A performance sanity check (Week 23)</strong> — connection pool sizing that's been deliberately set, an N+1 check (Weeks 5 and 15) on every collection-returning endpoint, and a look at whether virtual threads are worth enabling given the service's actual I/O profile.</li>
+            </ul>
+            <p>
+              None of this is optional polish. A service with no Testcontainers coverage hasn't
+              actually proven it talks to a real database correctly, a service with a surviving
+              mutant in its core logic has a test suite that looks thorough but isn't, and a service
+              with no health checks or metrics can't prove it's healthy in production even if it
+              happens to be — this pass exists to close exactly those gaps.
+            </p>
+          </section>
+
+          <section id="deployment">
+            <h2>2. Deployment &amp; Progressive Rollout</h2>
+            <p>
+              A correct service nobody else can reach is far less useful as a portfolio piece than
+              a modest one that's actually live, shipped the way Week 24 taught. Containerize and
+              deploy it through a real gated pipeline:
+            </p>
+            <ul>
+              <li><strong>A multi-stage pipeline (Week 24)</strong> — separate test, build-and-scan, and deploy stages, each gating the next, verified by deliberately breaking a test and a security scan and confirming the deploy stage never runs.</li>
+              <li><strong>A progressive rollout (Week 24)</strong> — at minimum a canary with a small initial replica count and version-tagged metrics to watch before scaling it up; blue-green is an equally valid choice if you can justify why an instant-cutover model fits your capstone better.</li>
+              <li><strong>A real deployment target</strong> — Kubernetes if the architecture warrants it, or a simpler managed platform if it doesn't; either is fine as long as it's a genuine, reachable deployment, not just "it runs on my machine."</li>
+            </ul>
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>This section is what separates a demo from a capstone</strong>
+                <p>Getting a container running is a demo. Getting it there through a tested, mutation-checked, security-scanned, gated pipeline, with a progressive rollout a reviewer can watch happen and dashboards showing the canary's real metrics, is the difference a hiring manager is actually screening for.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="project">
+            <h2>3. The Capstone Project</h2>
+            <div class="lesson-exercise">
+              <span class="lesson-exercise__badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
+                Capstone
+              </span>
+              <h3>Test, observe, deploy and defend a complete Spring Boot service</h3>
+              <p>
+                Take Week 25's implementation fully through Sections 1–2 above: tested and
+                observable, shipped through a real gated, progressive pipeline, and defended in
+                writing.
+              </p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Complete the full testing pass from Section 1: unit, slice, and Testcontainers integration tests; a contract test if more than one service is involved; and at least one mutation-testing gap found and fixed.</li>
+                <li>Wire up Actuator health checks against real dependencies, custom metrics, and structured logging; take a screenshot of a working dashboard showing real traffic.</li>
+                <li>Build the multi-stage gated pipeline from Week 24, verify each gate fails correctly when deliberately broken, and deploy through it with a progressive rollout (canary or blue-green).</li>
+                <li>Confirm a live, reachable endpoint, and run one real load test or fault-injection check (Weeks 22–23) against it, capturing the result.</li>
+                <li>Write a README/architecture doc covering: a diagram of the service (and any other services it talks to), every architectural tradeoff from Week 25 and why it was made — including which advanced modules were deliberately left out — and what you'd change with more time or budget.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>What makes a strong backend capstone</strong>
+                  <p>Not scope or technique count — a small service that's fully working, well-tested, and clearly explained reads as far more credible to anyone reviewing it (an employer, a collaborator, future-you) than an ambitious service that uses every pattern from the course but is only half-finished and untested.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="checklist">
+            <h2>4. Final Checklist</h2>
+            <p>Before calling the capstone — and the course — done, confirm each of these honestly:</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Was the scope and API surface written down before any code was written?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>If the domain model and endpoint list were written after the service already existed, they describe what got built rather than what was planned — the same discipline behind writing a test's expectations before, not after, checking what the code currently does. A capstone with a scope document written first has a real definition of "done" to be judged against.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Can every architectural choice — including which advanced modules from Weeks 15–24 were deliberately left out — be justified, rather than just having used every technique from the course?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Every service split, saga, message broker, and cache layer is added complexity and failure surface to maintain. A capstone that can justify each choice crisply — including why GraphQL, Spring Batch, or a full Authorization Server weren't needed here — reads as far stronger engineering judgment than one that reached for everything the course covered regardless of fit.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Does the full test suite pass, including Testcontainers integration tests, and does it survive mutation testing rather than just achieving high line coverage?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Unit and slice tests alone can pass against mocks while the real integration between your entities, queries, and an actual database is still broken, and high coverage can hide assertions too weak to notice a real bug. Testcontainers tests plus at least one mutation-testing gap found and fixed are what prove the suite works against something close to production and actually catches bugs, not just executes code.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Does the pipeline fail loudly and stop before deploying if a test fails or a critical vulnerability is found — and did the rollout actually happen progressively, not all at once?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A pipeline where <code>deploy</code> can run even after a test or the scan fails isn't actually gating anything — verify this by deliberately breaking each one. A rollout that flips 100% of traffic to a new version in one step, even if a canary Deployment technically exists in the manifests, hasn't actually exercised the progressive delivery behavior the capstone is supposed to demonstrate — the ramp-up needs to have genuinely happened, watched, and documented.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading">
+                    <h4>Is the service actually deployed and reachable, with a write-up someone could evaluate without reading the source?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A service that only runs on your own machine, with your own local database and config, isn't actually finished — deployment isn't optional polish tacked on at the end; it's the proof the service is real. Paired with a write-up covering the architecture, the tradeoffs, and what you'd change, a live endpoint is the actual deliverable a reader will judge the whole project by.</p>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div class="callout callout--tip" style="margin-top:32px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>That's the course</strong>
+                <p>From a first <code>@RestController</code> in Week 1 to a tested, mutation-checked, security-scanned, progressively-deployed production service — with the architectural judgment to know which advanced techniques your project actually needed and which it didn't — every module in between exists somewhere in what you just shipped. Congratulations on reaching the capstone.</p>
+              </div>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="week-25.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Week 25: Capstone, Part 1 — Plan, Architect &amp; Implement</span>
+          </a>
+          <a href="../spring-boot/index.html#timeline" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Finished!</span>
+            <span class="lesson-pager__title">Back to Full Syllabus →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../../index.html">Home</a>
+      <a href="../angular/index.html">Angular</a>
+      <a href="../react/index.html">React</a>
+      <a href="../llm-ml/index.html">LLM &amp; ML</a>
+      <a href="../spring-boot/index.html">Spring Boot</a>
+      <a href="../devops-cloud/index.html">DevOps &amp; Cloud</a>
+      <a href="../python/index.html">Python</a>
+      <a href="../dsa-cpp/index.html">DSA in C++</a>
+      <a href="../system-design/index.html">System Design</a>
+      <a href="../node-express/index.html">Node.js &amp; Express</a>
+      <a href="../servicenow/index.html">ServiceNow</a>
+      <a href="../aptitude/index.html">Numerical Aptitude</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
