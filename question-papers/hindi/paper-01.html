@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ICSE Class 10 Hindi — Mock Paper 1 — CodeVerse Creatives</title>
+<meta name="description" content="ICSE Class 10 Hindi Mock Paper 1: निबंध, पत्र-लेखन, अपठित गद्यांश और व्याकरण (संधि, समास, मुहावरे, विलोम, पर्यायवाची, वाक्य शुद्धि) — पूर्ण उत्तर-कुंजी सहित।" />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+<style>
+  :lang(hi), .hi { font-family: "Noto Sans Devanagari", "Inter", sans-serif; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown>
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../../courses/angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/spring-boot/index.html" class="nav-course-card c-spring-boot">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/python/index.html" class="nav-course-card c-python">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/node-express/index.html" class="nav-course-card c-node-express">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/servicenow/index.html" class="nav-course-card c-servicenow">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2a2 2 0 0 0 4 0h6a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2h-6a2 2 0 0 0-4 0H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">ServiceNow</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">21 Weeks</span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <a href="../index.html" aria-current="page">Question Papers</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../index.html">Question Papers</a>
+        <span>/</span>
+        <a href="index.html">Hindi</a>
+        <span>/</span>
+        <span aria-current="page">Paper 1</span>
+      </div>
+
+      <h1>Hindi — Mock Paper 1</h1>
+      <p class="lesson-header__lede">
+        सभी चार खंड अनिवार्य हैं — निबंध, पत्र-लेखन, अपठित गद्यांश और व्याकरण। पूरा प्रश्नपत्र
+        निर्धारित समय में हल करने के बाद ही उत्तर-कुंजी देखें।
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Maximum Marks: 80</span>
+        <span class="chip">Time Allowed: 2½ Hours</span>
+        <span class="chip">All 4 Questions Compulsory</span>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#instructions"><span>1</span> General Instructions</a>
+        <a href="#q1"><span>2</span> निबंध</a>
+        <a href="#q2"><span>3</span> पत्र-लेखन</a>
+        <a href="#q3"><span>4</span> अपठित गद्यांश</a>
+        <a href="#q4"><span>5</span> व्याकरण</a>
+        <a href="#answer-key"><span>6</span> उत्तर-कुंजी</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article hi">
+
+          <section id="instructions">
+            <h2>1. General Instructions</h2>
+            <ul>
+              <li>Answers to this paper must be written on separate answer sheets.</li>
+              <li>You will not be allowed to write during the first 15 minutes — this time is to be spent reading the question paper.</li>
+              <li>All four questions are compulsory.</li>
+              <li>The intended marks for each question or part are given in brackets [ ].</li>
+            </ul>
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>यह मूल अभ्यास प्रश्नपत्र है, CISCE का वास्तविक प्रश्नपत्र नहीं</strong>
+                <p>यह प्रश्नपत्र वास्तविक परीक्षा के ढाँचे के अनुरूप तैयार किया गया है, परंतु यह CISCE द्वारा जारी नहीं किया गया है और न ही इससे संबद्ध है।</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="q1">
+            <h2>2. निबंध (Essay) — 15 अंक</h2>
+            <p>निम्नलिखित में से किसी <strong>एक</strong> विषय पर लगभग 300 शब्दों में निबंध लिखिए:</p>
+            <ol type="i">
+              <li>मेरा प्रिय त्योहार</li>
+              <li>विज्ञान का चमत्कार</li>
+              <li>समय का सदुपयोग</li>
+              <li>यदि मैं प्रधानाचार्य होता</li>
+            </ol>
+          </section>
+
+          <section id="q2">
+            <h2>3. पत्र-लेखन (Letter Writing) — 10 अंक</h2>
+            <p>निम्नलिखित में से किसी <strong>एक</strong> पर पत्र लिखिए:</p>
+            <ol type="a">
+              <li><strong>औपचारिक पत्र:</strong> अपने विद्यालय के प्रधानाचार्य को पुस्तकालय में पुस्तकों की संख्या बढ़ाने का अनुरोध करते हुए एक पत्र लिखिए।</li>
+              <li><strong>अनौपचारिक पत्र:</strong> अपने मित्र को परीक्षा में सफलता प्राप्त करने पर बधाई देते हुए एक पत्र लिखिए।</li>
+            </ol>
+          </section>
+
+          <section id="q3">
+            <h2>4. अपठित गद्यांश (Unseen Passage) — 15 अंक</h2>
+            <p>निम्नलिखित गद्यांश को ध्यानपूर्वक पढ़कर नीचे दिए गए प्रश्नों के उत्तर दीजिए:</p>
+            <div class="code-block">
+              <div class="code-block__label">गद्यांश</div>
+              <pre><code>वृक्ष हमारे जीवन के अभिन्न अंग हैं। वे न केवल हमें शुद्ध वायु प्रदान
+करते हैं, बल्कि वर्षा लाने में भी सहायक होते हैं। आजकल बढ़ती हुई
+जनसंख्या और औद्योगिकीकरण के कारण वनों की कटाई निरंतर हो रही है,
+जिसके परिणामस्वरूप पर्यावरण असंतुलित हो रहा है। यदि हम वृक्षों की
+रक्षा नहीं करेंगे, तो आने वाली पीढ़ियों को स्वच्छ वायु और जल के लिए
+तरसना पड़ेगा। इसलिए प्रत्येक व्यक्ति का यह कर्तव्य है कि वह अधिक से
+अधिक वृक्ष लगाए और उनकी देखभाल करे। सरकार भी वृक्षारोपण को बढ़ावा
+देने के लिए विभिन्न योजनाएँ चला रही है, परंतु जब तक जनसाधारण इसमें
+सक्रिय भागीदारी नहीं निभाएगा, तब तक यह अभियान सफल नहीं हो सकता।</code></pre>
+            </div>
+            <ol type="i">
+              <li>गद्यांश के अनुसार वृक्ष हमें क्या-क्या प्रदान करते हैं? [3]</li>
+              <li>वनों की कटाई किन कारणों से हो रही है? [3]</li>
+              <li>यदि हम वृक्षों की रक्षा नहीं करेंगे तो क्या परिणाम होगा? [3]</li>
+              <li>गद्यांश के लिए एक उपयुक्त शीर्षक दीजिए। [2]</li>
+              <li>गद्यांश में से कोई एक संज्ञा शब्द छाँटकर लिखिए। [2]</li>
+              <li>"स्वच्छ" शब्द का विलोम शब्द लिखिए। [2]</li>
+            </ol>
+          </section>
+
+          <section id="q4">
+            <h2>5. व्याकरण (Grammar) — 40 अंक</h2>
+
+            <h3>(क) संधि-विच्छेद कीजिए (किन्हीं पाँच) [5]</h3>
+            <p>विद्यालय, सूर्योदय, महोत्सव, हिमालय, रामायण, विद्यार्थी</p>
+
+            <h3>(ख) समास का नाम लिखिए (किन्हीं पाँच) [5]</h3>
+            <p>राजपुत्र, यथाशक्ति, दशानन, नीलकमल, माता-पिता, चतुर्भुज</p>
+
+            <h3>(ग) मुहावरों का अर्थ लिखकर वाक्य में प्रयोग कीजिए (किन्हीं पाँच) [10]</h3>
+            <p>आँखें खुलना, नौ दो ग्यारह होना, दाँतों तले उँगली दबाना, आग बबूला होना, कान भरना, अंगूठा दिखाना</p>
+
+            <h3>(घ) विलोम शब्द लिखिए (किन्हीं पाँच) [5]</h3>
+            <p>आरंभ, उजाला, जीवन, प्रसन्न, सुगंध, विजय</p>
+
+            <h3>(ङ) पर्यायवाची शब्द लिखिए (किन्हीं पाँच) [5]</h3>
+            <p>सूर्य, जल, पर्वत, आकाश, वृक्ष, रात</p>
+
+            <h3>(च) एक शब्द दीजिए (किन्हीं पाँच) [5]</h3>
+            <ol type="1">
+              <li>जिसे जीता न जा सके</li>
+              <li>जो पहले कभी न हुआ हो</li>
+              <li>जो देखा न जा सके</li>
+              <li>जिसे क्षमा न किया जा सके</li>
+              <li>जो सबके लिए हितकारी हो</li>
+              <li>जिसकी कोई उपमा न हो</li>
+            </ol>
+
+            <h3>(छ) निम्नलिखित वाक्यों को शुद्ध करके लिखिए (किन्हीं पाँच) [5]</h3>
+            <ol type="1">
+              <li>लड़की खेलता है।</li>
+              <li>वह घर को गया।</li>
+              <li>मुझे एक पुस्तकें चाहिए।</li>
+              <li>राम और श्याम स्कूल जाता है।</li>
+              <li>वह प्रतिदिन रोज व्यायाम करता है।</li>
+              <li>बच्चे स्कूल जाता है।</li>
+            </ol>
+          </section>
+
+          <section id="answer-key">
+            <h2>6. उत्तर-कुंजी (Answer Key)</h2>
+            <p>पूरा प्रश्नपत्र समय सीमा में हल करने के बाद ही यह भाग खोलें।</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>निबंध और पत्र-लेखन — मूल्यांकन आधार</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      निबंध और पत्र व्यक्तिपरक (subjective) उत्तर हैं, इसलिए इनकी कोई एक "सही"
+                      प्रतिलिपि नहीं दी जा सकती। मूल्यांकन इन आधारों पर करें: <strong>विषय-वस्तु</strong>
+                      (क्या उत्तर विषय पर केंद्रित है और विचार स्पष्ट रूप से विकसित हैं),
+                      <strong>प्रस्तुतीकरण</strong> (आरंभ, मध्य और अंत का स्पष्ट क्रम; पत्र के लिए
+                      सही प्रारूप — औपचारिक पत्र में संबोधन एवं समापन उचित हों), और
+                      <strong>भाषा</strong> (व्याकरणिक शुद्धता, उपयुक्त शब्द-चयन)।
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>अपठित गद्यांश — पूर्ण उत्तर</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      (i) वृक्ष हमें शुद्ध वायु प्रदान करते हैं और वर्षा लाने में सहायक होते हैं।
+                    </p>
+                    <p>(ii) बढ़ती हुई जनसंख्या और औद्योगिकीकरण के कारण।</p>
+                    <p>
+                      (iii) आने वाली पीढ़ियों को स्वच्छ वायु और जल के लिए तरसना पड़ेगा।
+                    </p>
+                    <p>
+                      (iv) उपयुक्त शीर्षक — "वृक्षों का महत्व" अथवा "पर्यावरण संरक्षण" (कोई भी
+                      विषय-अनुकूल शीर्षक स्वीकार्य)।
+                    </p>
+                    <p>
+                      (v) कोई एक सही संज्ञा शब्द, जैसे — "वृक्ष", "जनसंख्या" या "पर्यावरण"।
+                    </p>
+                    <p>(vi) "स्वच्छ" का विलोम — "अस्वच्छ" (अथवा "गंदा")।</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>(क) संधि-विच्छेद</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      विद्यालय = विद्या + आलय। सूर्योदय = सूर्य + उदय। महोत्सव = महा + उत्सव।
+                      हिमालय = हिम + आलय। रामायण = राम + अयन। विद्यार्थी = विद्या + अर्थी।
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>(ख) समास</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      राजपुत्र — तत्पुरुष समास। यथाशक्ति — अव्ययीभाव समास। दशानन — बहुव्रीहि समास।
+                      नीलकमल — कर्मधारय समास। माता-पिता — द्वन्द्व समास। चतुर्भुज — बहुव्रीहि समास।
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>(ग) मुहावरे</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      <strong>आँखें खुलना</strong> — सच्चाई का पता चलना। वाक्य: चोर के पकड़े जाने पर
+                      सबकी आँखें खुल गईं।
+                    </p>
+                    <p>
+                      <strong>नौ दो ग्यारह होना</strong> — भाग जाना। वाक्य: पुलिस को देखकर चोर नौ
+                      दो ग्यारह हो गया।
+                    </p>
+                    <p>
+                      <strong>दाँतों तले उँगली दबाना</strong> — आश्चर्यचकित होना। वाक्य: उसका
+                      प्रदर्शन देखकर सभी दाँतों तले उँगली दबा गए।
+                    </p>
+                    <p>
+                      <strong>आग बबूला होना</strong> — बहुत क्रोधित होना। वाक्य: यह सुनकर वह आग
+                      बबूला हो गया।
+                    </p>
+                    <p>
+                      <strong>कान भरना</strong> — चुगली करना। वाक्य: किसी ने उसके कान भर दिए हैं।
+                    </p>
+                    <p>
+                      <strong>अंगूठा दिखाना</strong> — मना कर देना/धोखा देना। वाक्य: सहायता माँगने
+                      पर उसने अंगूठा दिखा दिया।
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>(घ) विलोम, (ङ) पर्यायवाची</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      <strong>विलोम:</strong> आरंभ × अंत। उजाला × अंधेरा। जीवन × मृत्यु। प्रसन्न ×
+                      दुखी। सुगंध × दुर्गंध। विजय × पराजय।
+                    </p>
+                    <p>
+                      <strong>पर्यायवाची:</strong> सूर्य — रवि, भास्कर, दिनकर। जल — पानी, नीर,
+                      वारि। पर्वत — पहाड़, गिरि, शैल। आकाश — गगन, नभ, अंबर। वृक्ष — पेड़, तरु,
+                      पादप। रात — रात्रि, निशा, रजनी।
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>(च) एक शब्द, (छ) वाक्य शुद्धि</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      <strong>एक शब्द:</strong> जिसे जीता न जा सके — अजेय। जो पहले कभी न हुआ हो —
+                      अभूतपूर्व। जो देखा न जा सके — अदृश्य। जिसे क्षमा न किया जा सके — अक्षम्य। जो
+                      सबके लिए हितकारी हो — सर्वहितकारी। जिसकी कोई उपमा न हो — अनुपम।
+                    </p>
+                    <p>
+                      <strong>वाक्य शुद्धि:</strong> लड़की खेलती है। वह घर गया। मुझे एक पुस्तक
+                      चाहिए। राम और श्याम स्कूल जाते हैं। वह प्रतिदिन व्यायाम करता है। बच्चे स्कूल
+                      जाते हैं।
+                    </p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="index.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Hindi Papers</span>
+          </a>
+          <a href="../index.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Or</span>
+            <span class="lesson-pager__title">Choose Another Subject →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../../index.html">Home</a>
+      <a href="../../courses/angular/index.html">Angular</a>
+      <a href="../../courses/react/index.html">React</a>
+      <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+      <a href="../../courses/spring-boot/index.html">Spring Boot</a>
+      <a href="../../courses/devops-cloud/index.html">DevOps &amp; Cloud</a>
+      <a href="../../courses/python/index.html">Python</a>
+      <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
+      <a href="../../courses/system-design/index.html">System Design</a>
+      <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
+      <a href="../../courses/servicenow/index.html">ServiceNow</a>
+      <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
+      <a href="../index.html">Question Papers</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>

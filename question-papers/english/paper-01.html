@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ICSE Class 10 English Language — Mock Paper 1 — CodeVerse Creatives</title>
+<meta name="description" content="ICSE Class 10 English Language Mock Paper 1: composition, formal email, an original unseen comprehension passage, and a summary/note-making task, with a full marking guide and model answers." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown>
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../../courses/angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/spring-boot/index.html" class="nav-course-card c-spring-boot">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/python/index.html" class="nav-course-card c-python">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/node-express/index.html" class="nav-course-card c-node-express">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/servicenow/index.html" class="nav-course-card c-servicenow">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2a2 2 0 0 0 4 0h6a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2h-6a2 2 0 0 0-4 0H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">ServiceNow</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">21 Weeks</span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <a href="../index.html" aria-current="page">Question Papers</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../index.html">Question Papers</a>
+        <span>/</span>
+        <a href="index.html">English Language</a>
+        <span>/</span>
+        <span aria-current="page">Paper 1</span>
+      </div>
+
+      <h1>English Language — Mock Paper 1</h1>
+      <p class="lesson-header__lede">
+        Section A tests writing; Section B tests reading. Attempt the whole paper — composition
+        included — before opening the marking guide, since writing under time pressure is a
+        skill in itself.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Maximum Marks: 80</span>
+        <span class="chip">Time Allowed: 2 Hours</span>
+        <span class="chip">Section A: 35 (Writing)</span>
+        <span class="chip">Section B: 45 (Reading)</span>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#instructions"><span>1</span> General Instructions</a>
+        <a href="#section-a"><span>2</span> Section A — Writing</a>
+        <a href="#section-b"><span>3</span> Section B — Reading</a>
+        <a href="#answer-key"><span>4</span> Marking Guide</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="instructions">
+            <h2>1. General Instructions</h2>
+            <ul>
+              <li>Answers to this paper must be written on separate answer sheets.</li>
+              <li>You will not be allowed to write during the first 15 minutes — this time is to be spent reading the question paper and planning your composition.</li>
+              <li>Attempt <strong>all four</strong> questions.</li>
+              <li>The intended marks for each question are given in brackets [ ].</li>
+              <li>You are reminded of the need for good English and clear presentation throughout.</li>
+            </ul>
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Writing questions are marked by a guide, not a single "correct" answer</strong>
+                <p>The Composition and Email carry no fixed sample answer — instead, Section 4 gives you the criteria an examiner actually checks (content, organisation, language) so you can self-assess honestly. The Comprehension and Summary, by contrast, do have specific correct answers, since they're based on this paper's own passages.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="section-a">
+            <h2>2. Section A — Writing (35 Marks)</h2>
+
+            <h3>Question 1 [25] — Composition</h3>
+            <p>Write a composition of about 500 words on <strong>any one</strong> of the following:</p>
+            <ol type="a">
+              <li><strong>Descriptive:</strong> "A Journey I Will Never Forget."</li>
+              <li><strong>Narrative:</strong> Write a story that begins with the line: "The letter had been sitting unopened on the table for three days."</li>
+              <li><strong>Argumentative:</strong> "Social media does more harm than good." Do you agree? Give reasons for your view.</li>
+              <li><strong>Reflective:</strong> "The most valuable lesson I learned outside the classroom."</li>
+            </ol>
+
+            <h3>Question 2 [10] — Formal Email</h3>
+            <p>Write a formal email on <strong>either</strong> of the following, in about 150 words:</p>
+            <ol type="a">
+              <li>Write to the Principal of your school requesting permission to organize an inter-house debate competition. Mention your reason, a proposed date, and the benefits you expect it to bring.</li>
+              <li>Write to the Editor of a local newspaper about the problem of garbage disposal in your locality, suggesting at least two practical solutions.</li>
+            </ol>
+          </section>
+
+          <section id="section-b">
+            <h2>3. Section B — Reading (45 Marks)</h2>
+
+            <h3>Question 3 [25] — Comprehension</h3>
+            <p>Read the passage below carefully and answer the questions that follow, in your own words as far as possible.</p>
+            <div class="code-block">
+              <div class="code-block__label">unseen passage</div>
+              <pre><code>For decades, people believed that talent was something you were born
+with -- you either had "a gift" for music, mathematics or sport, or
+you did not. Recent research into skill acquisition tells a more
+encouraging story. Anders Ericsson, a psychologist who studied
+violinists, chess players and surgeons for over thirty years, found
+that the single biggest difference between experts and amateurs was
+not natural ability but the amount of deliberate practice each had
+accumulated.
+
+Deliberate practice is not the same as simply repeating a task for
+years. A taxi driver who has driven the same city for two decades
+does not necessarily become a better driver in that time, because
+ordinary driving does not push him beyond what he already finds
+comfortable. Deliberate practice, by contrast, deliberately targets
+weaknesses. It requires a learner to attempt something slightly
+beyond their current ability, receive immediate feedback on what
+went wrong, and try again with that feedback in mind. A young
+violinist who plays the same piece from beginning to end every day
+improves far more slowly than one who isolates the four bars she
+keeps stumbling over and repeats only those, adjusting her fingering
+each time until the mistake disappears.
+
+This idea matters far beyond music and chess. It suggests that the
+students who eventually outperform their classmates in mathematics
+or a second language are rarely the ones who started with some
+innate advantage; they are usually the ones who practiced in this
+focused, uncomfortable way for the longest time, and who treated
+every mistake as information rather than as proof of a fixed
+limitation.
+
+None of this means effort alone guarantees mastery -- a good coach,
+a well-structured curriculum and honest feedback all matter
+enormously. But it does mean that the old, comforting excuse of
+"I'm just not a maths person" rests on much shakier ground than it
+once appeared to. The gap between a novice and an expert, more often
+than not, is simply a gap in the number of hours spent practicing
+the right way.</code></pre>
+            </div>
+            <ol type="a">
+              <li>According to the passage, what did Anders Ericsson study, and for how long? [2]</li>
+              <li>What, according to Ericsson's research, is the biggest difference between experts and amateurs? [2]</li>
+              <li>Why does the taxi driver's decades of driving NOT count as deliberate practice? [4]</li>
+              <li>Explain, in your own words, what deliberate practice requires of a learner. [4]</li>
+              <li>What does the example of the young violinist illustrate? [3]</li>
+              <li>According to the passage, what usually explains why some students outperform their classmates? [2]</li>
+              <li>Does the author claim that effort alone guarantees mastery? Support your answer with a phrase from the passage. [4]</li>
+              <li>Find a word from the passage (paragraph 1) that means the same as "natural ability." [1]</li>
+              <li>Find a word from the passage (last paragraph) that means "unchanging." [1]</li>
+              <li>Suggest a suitable title for this passage, other than one used above. [2]</li>
+            </ol>
+
+            <h3>Question 4 [20] — Summary &amp; Note-Making</h3>
+            <p>Read the passage below, then write a summary of it in <strong>not more than 80 words</strong>. Suggest a suitable title.</p>
+            <div class="code-block">
+              <div class="code-block__label">unseen passage</div>
+              <pre><code>Handwriting, once considered an essential mark of a good education,
+is quietly disappearing from daily life. Twenty years ago, a
+student's notebook was full of pages written entirely by hand;
+today, notes are typed into phones, tablets and laptops, often
+before the ink of a physical pen has had the chance to dry on
+anything at all. Teachers in several countries have noticed that
+many students can no longer write a full page legibly without their
+hand cramping, simply because they rarely practice the skill outside
+of examination halls.
+
+Researchers who study the connection between handwriting and memory
+suggest that something important may be lost in this shift. Writing
+by hand is slower than typing, and that very slowness appears to
+help the brain process and retain information more deeply. When a
+student types a lecture verbatim, she is often transcribing without
+truly listening; when she writes by hand, the effort of choosing
+what to include forces her to summarize and understand the material
+as she goes.
+
+This does not mean typing has no advantages -- it is faster, easier
+to edit, and essential for the kind of professional communication
+most students will do as adults. But educators increasingly argue
+for a balance: encouraging handwritten notes during lectures, for
+instance, while allowing typed work for longer essays and
+assignments, so that students keep both skills rather than losing
+one entirely to the convenience of the other.</code></pre>
+            </div>
+          </section>
+
+          <section id="answer-key">
+            <h2>4. Marking Guide</h2>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 1 — Composition: what an examiner checks</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      <strong>Content &amp; development (10):</strong> Does the composition stay
+                      on topic, with ideas developed rather than merely listed? <strong>
+                      Organisation (6):</strong> Is there a clear beginning, middle and end, with
+                      logical paragraph breaks? <strong>Language &amp; style (6):</strong> Is
+                      vocabulary varied and appropriate, with sentence structures that aren't all
+                      the same length and shape? <strong>Grammatical accuracy (3):</strong> Are
+                      tense, agreement and punctuation mostly correct? A composition significantly
+                      under or over 500 words typically loses marks under content/organisation for
+                      being under-developed or unfocused, respectively.
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 2 — Formal Email: what an examiner checks</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      <strong>Format (2):</strong> Subject line, appropriate salutation (e.g. "Dear
+                      Sir/Madam" or "Respected Principal"), and a formal complimentary close (e.g.
+                      "Yours sincerely"). <strong>Content (5):</strong> For (a), the request,
+                      reason, proposed date and expected benefits should all be present; for (b),
+                      the problem and at least two distinct, practical solutions. <strong>
+                      Language &amp; tone (3):</strong> Formal register throughout — no
+                      contractions, no casual phrasing, concise sentences within the word limit.
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 3 — Comprehension (full answers)</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      (a) He studied violinists, chess players and surgeons, over a period of more
+                      than thirty years.
+                    </p>
+                    <p>
+                      (b) Not natural ability or talent, but the amount of deliberate practice each
+                      person had accumulated.
+                    </p>
+                    <p>
+                      (c) Because ordinary, repeated driving does not push him beyond what he
+                      already finds comfortable — it lacks the deliberate targeting of weaknesses
+                      that true deliberate practice requires.
+                    </p>
+                    <p>
+                      (d) It requires attempting something slightly beyond one's current ability,
+                      receiving immediate feedback on what went wrong, and trying again while
+                      incorporating that feedback.
+                    </p>
+                    <p>
+                      (e) It illustrates that isolating and repeatedly correcting a specific
+                      weakness (the four difficult bars) produces faster improvement than
+                      repeating an entire piece unchanged from start to finish.
+                    </p>
+                    <p>
+                      (f) The amount of time spent in focused, deliberate practice, and a
+                      willingness to treat mistakes as useful information rather than as proof of
+                      a fixed limitation — not any innate advantage.
+                    </p>
+                    <p>
+                      (g) No. Supporting phrase: "a good coach, a well-structured curriculum and
+                      honest feedback all matter enormously."
+                    </p>
+                    <p>(h) <strong>Talent.</strong></p>
+                    <p>(i) <strong>Fixed.</strong></p>
+                    <p>
+                      (j) Any suitable title reflecting the passage's central idea, e.g. "The Myth
+                      of Natural Talent" or "What Really Separates Experts from Amateurs."
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 4 — Summary (model answer)</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      <strong>Model summary (78 words):</strong> "Handwriting is declining as
+                      digital devices replace notebooks, leaving many students unable to write
+                      legibly for long. Research suggests handwriting's slowness helps the brain
+                      process and retain information better than typing, which often becomes mere
+                      transcription. However, typing remains faster and essential for professional
+                      communication. Educators therefore recommend balancing both skills — using
+                      handwriting for lecture notes and typing for longer written work — so
+                      students retain the cognitive benefits of writing by hand without losing
+                      typing's practical advantages."
+                    </p>
+                    <p>
+                      <strong>Suitable title:</strong> "The Decline of Handwriting" or "Handwriting
+                      vs. Typing in the Digital Age."
+                    </p>
+                    <p>
+                      <strong>Marking breakdown:</strong> Content/key points covered (12) — decline
+                      of handwriting, the memory/retention research finding, typing's advantages,
+                      the recommended balance; Language &amp; expression (4) — summary is in the
+                      student's own words, not copied phrases strung together; Title (2); staying
+                      within the word limit (2).
+                    </p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="index.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">English Language Papers</span>
+          </a>
+          <a href="../index.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Or</span>
+            <span class="lesson-pager__title">Choose Another Subject →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../../index.html">Home</a>
+      <a href="../../courses/angular/index.html">Angular</a>
+      <a href="../../courses/react/index.html">React</a>
+      <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+      <a href="../../courses/spring-boot/index.html">Spring Boot</a>
+      <a href="../../courses/devops-cloud/index.html">DevOps &amp; Cloud</a>
+      <a href="../../courses/python/index.html">Python</a>
+      <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
+      <a href="../../courses/system-design/index.html">System Design</a>
+      <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
+      <a href="../../courses/servicenow/index.html">ServiceNow</a>
+      <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
+      <a href="../index.html">Question Papers</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>

@@ -191,7 +191,16 @@ body[data-course="aptitude"],
   --accent-deep-2: #4c56c9;
 }
 
-/* Light theme: the same eleven hues, darkened to hold contrast on white. */
+body[data-course="php"],
+.c-php {
+  --accent: #e38eeb;
+  --accent-2: #eea3f5;
+  --accent-soft: rgba(238, 163, 245, 0.14);
+  --accent-deep: #8c3894;
+  --accent-deep-2: #a43dae;
+}
+
+/* Light theme: the same twelve hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
 :root[data-theme="light"] .c-angular {
@@ -268,6 +277,13 @@ body[data-course="aptitude"],
   --accent: #4048b0;
   --accent-2: #525bc7;
   --accent-soft: rgba(64, 72, 176, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="php"],
+:root[data-theme="light"] .c-php {
+  --accent: #913e98;
+  --accent-2: #b342bd;
+  --accent-soft: rgba(179, 66, 189, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */
@@ -1676,6 +1692,13 @@ code, .mono {
 }
 
 .lesson-pager__link.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Generic disabled state, reused outside .lesson-pager__link (e.g. "coming
+   soon" cards for question papers not published yet). */
+.is-disabled {
   opacity: 0.5;
   pointer-events: none;
 }

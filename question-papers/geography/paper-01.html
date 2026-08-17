@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ICSE Class 10 Geography — Mock Paper 1 — CodeVerse Creatives</title>
+<meta name="description" content="ICSE Class 10 Geography Mock Paper 1: map-reading skills, the Indian monsoon, soils and soil conservation, minerals and industries, and waste management — with a full answer key." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown>
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../../courses/angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/spring-boot/index.html" class="nav-course-card c-spring-boot">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/python/index.html" class="nav-course-card c-python">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/node-express/index.html" class="nav-course-card c-node-express">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/servicenow/index.html" class="nav-course-card c-servicenow">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2a2 2 0 0 0 4 0h6a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2h-6a2 2 0 0 0-4 0H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">ServiceNow</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">21 Weeks</span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <a href="../index.html" aria-current="page">Question Papers</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../index.html">Question Papers</a>
+        <span>/</span>
+        <a href="index.html">Geography</a>
+        <span>/</span>
+        <span aria-current="page">Paper 1</span>
+      </div>
+
+      <h1>Geography — Mock Paper 1</h1>
+      <p class="lesson-header__lede">
+        Part I is compulsory. In Part II, answer <strong>any three</strong> of the four
+        questions offered.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Maximum Marks: 80</span>
+        <span class="chip">Time Allowed: 2 Hours</span>
+        <span class="chip">Part I: Compulsory (20)</span>
+        <span class="chip">Part II: Any 3 of 4 (60)</span>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#instructions"><span>1</span> General Instructions</a>
+        <a href="#part-1"><span>2</span> Part I — Map Skills</a>
+        <a href="#part-2"><span>3</span> Part II — Physical &amp; Economic Geography</a>
+        <a href="#answer-key"><span>4</span> Answer Key</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="instructions">
+            <h2>1. General Instructions</h2>
+            <ul>
+              <li>Answers to this paper must be written on separate answer sheets.</li>
+              <li>You will not be allowed to write during the first 15 minutes — this time is to be spent reading the question paper.</li>
+              <li><strong>Part I is compulsory.</strong> From Part II, attempt <strong>any three</strong> of the four questions.</li>
+              <li>The intended marks for questions or parts of questions are given in brackets [ ].</li>
+            </ul>
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Map skills, tested without a printed map extract</strong>
+                <p>The real exam's Part I is based on a printed Survey of India topographical sheet extract. This mock tests the same underlying map-reading skills — grid references, scale, contours and bearings — in text form, since a real map extract can't be reproduced here. It is an original practice paper, not sourced from or affiliated with CISCE.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="part-1">
+            <h2>2. Part I — Map Skills (Compulsory) — 20 Marks</h2>
+            <h3>Question 1 [20]</h3>
+            <ol type="a">
+              <li>A location on a topographical sheet has a four-figure grid reference of 3254. Explain what the easting and northing values in this reference tell you, and briefly explain how a six-figure grid reference would locate a point more precisely within that square. [5]</li>
+              <li>On a topographical map with a Representative Fraction (R.F.) of 1:50,000, two points measure 6 cm apart. Find the actual ground distance between them, in kilometres. [5]</li>
+              <li>Define the term "contour line." What do closely spaced contour lines indicate about the slope of the land, compared to widely spaced ones? [5]</li>
+              <li>If the bearing of point B from point A is 060°, find the bearing of point A from point B (the back bearing). Show your working. [5]</li>
+            </ol>
+          </section>
+
+          <section id="part-2">
+            <h2>3. Part II — Physical &amp; Economic Geography (Answer any three) — 60 Marks</h2>
+
+            <h3>Question 2 [20] — Climate of India</h3>
+            <ol type="a">
+              <li>Name the four main seasons recognized in India. [4]</li>
+              <li>Explain the mechanism of the South-West Monsoon and why it is so important for Indian agriculture. [8]</li>
+              <li>What is meant by "the burst of the monsoon"? [4]</li>
+              <li>Name one region in India that receives significant rainfall mainly from the retreating (North-East) monsoon. [4]</li>
+            </ol>
+
+            <h3>Question 3 [20] — Soils of India</h3>
+            <ol type="a">
+              <li>Name any four major types of soil found in India. [4]</li>
+              <li>Describe two characteristics of alluvial soil. [6]</li>
+              <li>What is soil erosion? State any two methods of soil conservation. [10]</li>
+            </ol>
+
+            <h3>Question 4 [20] — Minerals &amp; Industries</h3>
+            <ol type="a">
+              <li>Name two types of iron ore found in India, and state one distinguishing property of each. [6]</li>
+              <li>Explain why the iron and steel industry is described as a "basic" or "key" industry. [6]</li>
+              <li>Name two states well known for the cotton textile industry, and give one locational reason for its concentration there. [8]</li>
+            </ol>
+
+            <h3>Question 5 [20] — Waste Generation &amp; Management</h3>
+            <ol type="a">
+              <li>What is meant by "biodegradable waste"? Give two examples. [6]</li>
+              <li>State any two ill-effects of improper disposal of solid waste on human health or the environment. [6]</li>
+              <li>Explain the "3 Rs" of waste management — Reduce, Reuse, Recycle — giving one example of each. [8]</li>
+            </ol>
+          </section>
+
+          <section id="answer-key">
+            <h2>4. Answer Key</h2>
+            <p>Attempt the full paper under a real timer before expanding these.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Part I — Question 1 (Map Skills)</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      (a) The reference 3254 splits into easting 32 (read along the top/bottom of
+                      the map, left to right) and northing 54 (read along the sides, bottom to
+                      top) — together they identify one grid square. A six-figure reference adds
+                      one estimated digit to each (e.g., 325 545), dividing that square into
+                      tenths to pinpoint a location within it far more precisely.
+                    </p>
+                    <p>
+                      (b) 1:50,000 means 1 cm on the map = 50,000 cm on the ground. 6 cm × 50,000 =
+                      300,000 cm = <strong>3 km</strong>.
+                    </p>
+                    <p>
+                      (c) A contour line joins points of equal height above sea level. Closely
+                      spaced contours indicate a <strong>steep slope</strong> (height changes
+                      quickly over a short horizontal distance); widely spaced contours indicate a
+                      <strong>gentle slope</strong>.
+                    </p>
+                    <p>
+                      (d) Back bearing = forward bearing ± 180°. 060° + 180° =
+                      <strong>240°</strong>.
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 2 — Climate of India</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      (a) The cold weather season (winter), the hot weather season (summer), the
+                      season of the advancing South-West Monsoon (rainy season), and the season of
+                      the retreating monsoon (autumn).
+                    </p>
+                    <p>
+                      (b) Differential heating of land and sea creates a low-pressure area over the
+                      Indian subcontinent by early summer; moisture-laden winds are drawn in from
+                      the Arabian Sea and Bay of Bengal from around June onward, bringing roughly
+                      75–80% of India's annual rainfall. This is critical because a large share of
+                      Indian agriculture — especially kharif crops like rice and cotton — remains
+                      rain-fed and depends directly on monsoon timing and intensity.
+                    </p>
+                    <p>
+                      (c) The sudden, often dramatic onset of monsoon rains — typically arriving
+                      with strong winds, thunder and lightning — marking the sharp beginning of the
+                      rainy season, usually first reaching Kerala in early June.
+                    </p>
+                    <p>(d) Coastal Tamil Nadu.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 3 — Soils of India</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      (a) Alluvial soil, black (regur) soil, red soil, laterite soil (also
+                      accepted: desert soil, mountain/forest soil).
+                    </p>
+                    <p>
+                      (b) Alluvial soil is formed by silt deposited by rivers; it is highly fertile
+                      and rich in potash, though often deficient in nitrogen and phosphorus. It is
+                      found extensively across the Northern Plains (the Indo-Gangetic plain).
+                    </p>
+                    <p>
+                      (c) Soil erosion is the wearing away and removal of the fertile top layer of
+                      soil, mainly by the action of water and wind (or human activity). Any two
+                      conservation methods: afforestation (tree roots bind soil and reduce runoff);
+                      contour ploughing or terracing on slopes to slow water flow; building check
+                      dams; crop rotation.
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 4 — Minerals &amp; Industries</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      (a) <strong>Haematite</strong> — the most abundant and commercially important
+                      iron ore in India, with a high iron content (roughly 60–70%). <strong>
+                      Magnetite</strong> — has an even higher iron content but is less widely
+                      distributed and historically harder to work with.
+                    </p>
+                    <p>
+                      (b) Iron and steel are essential raw materials for almost every other
+                      industry — machinery, construction, transport, defence and more — so the
+                      iron and steel industry forms the foundation other industries are built on,
+                      earning it the label "basic" or "key" industry.
+                    </p>
+                    <p>
+                      (c) Maharashtra and Gujarat (historically centred on Mumbai and Ahmedabad).
+                      Locational reasons: proximity to cotton-growing black (regur) soil regions,
+                      a humid coastal climate suitable for spinning, port access for importing
+                      machinery and exporting finished goods, and an established labour and
+                      capital market in these regions.
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 5 — Waste Generation &amp; Management</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      (a) Biodegradable waste is waste that can be broken down naturally by
+                      microorganisms into harmless substances. Examples: vegetable/fruit peels,
+                      paper, cow dung.
+                    </p>
+                    <p>
+                      (b) Any two: improper disposal spreads disease by attracting flies,
+                      mosquitoes and rodents to open garbage; leachate from waste contaminates
+                      groundwater and soil; burning waste causes air pollution; accumulated waste
+                      blocks drains, contributing to flooding.
+                    </p>
+                    <p>
+                      (c) <strong>Reduce</strong> — minimizing waste generated at the source, e.g.
+                      using a cloth bag instead of a plastic bag. <strong>Reuse</strong> — using an
+                      item again rather than discarding it, e.g. reusing a glass jar for storage.
+                      <strong>Recycle</strong> — processing used material into a new product, e.g.
+                      recycling waste paper into new paper, or plastic bottles into fibre.
+                    </p>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="index.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Geography Papers</span>
+          </a>
+          <a href="../index.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Or</span>
+            <span class="lesson-pager__title">Choose Another Subject →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../../index.html">Home</a>
+      <a href="../../courses/angular/index.html">Angular</a>
+      <a href="../../courses/react/index.html">React</a>
+      <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+      <a href="../../courses/spring-boot/index.html">Spring Boot</a>
+      <a href="../../courses/devops-cloud/index.html">DevOps &amp; Cloud</a>
+      <a href="../../courses/python/index.html">Python</a>
+      <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
+      <a href="../../courses/system-design/index.html">System Design</a>
+      <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
+      <a href="../../courses/servicenow/index.html">ServiceNow</a>
+      <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
+      <a href="../index.html">Question Papers</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>

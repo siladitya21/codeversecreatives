@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ICSE Class 10 Computer Applications — Mock Paper 1 — CodeVerse Creatives</title>
+<meta name="description" content="ICSE Class 10 Computer Applications Mock Paper 1: OOP theory and Java fundamentals, plus class design, string handling, arrays, sorting, menu-driven and pattern-printing programs — with a full worked answer key." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown>
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../../courses/angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/spring-boot/index.html" class="nav-course-card c-spring-boot">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/python/index.html" class="nav-course-card c-python">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/node-express/index.html" class="nav-course-card c-node-express">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/servicenow/index.html" class="nav-course-card c-servicenow">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2a2 2 0 0 0 4 0h6a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2h-6a2 2 0 0 0-4 0H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">ServiceNow</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../../courses/aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">21 Weeks</span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <a href="../index.html" aria-current="page">Question Papers</a>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Lesson header -->
+  <section class="lesson-header">
+    <div class="container">
+      <div class="lesson-crumb">
+        <a href="../index.html">Question Papers</a>
+        <span>/</span>
+        <a href="index.html">Computer Applications</a>
+        <span>/</span>
+        <span aria-current="page">Paper 1</span>
+      </div>
+
+      <h1>Computer Applications — Mock Paper 1</h1>
+      <p class="lesson-header__lede">
+        Section A is compulsory. From Section B, answer <strong>any five</strong> of the seven
+        questions. Write and compile every program yourself before checking it against the
+        answer key.
+      </p>
+
+      <div class="lesson-meta">
+        <span class="chip chip--accent">Maximum Marks: 100</span>
+        <span class="chip">Time Allowed: 2 Hours</span>
+        <span class="chip">Section A: Compulsory (40)</span>
+        <span class="chip">Section B: Any 5 of 7 (60)</span>
+      </div>
+
+      <div class="phase-nav">
+        <a href="#instructions"><span>1</span> General Instructions</a>
+        <a href="#section-a"><span>2</span> Section A — Theory</a>
+        <a href="#section-b"><span>3</span> Section B — Programming</a>
+        <a href="#answer-key"><span>4</span> Answer Key</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lesson body -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="lesson-layout">
+        <article class="lesson-article">
+
+          <section id="instructions">
+            <h2>1. General Instructions</h2>
+            <ul>
+              <li>Answers to this paper must be written on separate answer sheets.</li>
+              <li>You will not be allowed to write during the first 15 minutes — this time is to be spent reading the question paper.</li>
+              <li><strong>Section A is compulsory.</strong> From Section B, attempt <strong>any five</strong> of the seven questions.</li>
+              <li>The intended marks for questions or parts of questions are given in brackets [ ].</li>
+              <li>Programs should be written in Java. Variable names, indentation and comments should make the logic clear.</li>
+            </ul>
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Every program in the answer key actually compiles and runs</strong>
+                <p>This is an original practice paper modeled on the real exam's pattern, not a CISCE past paper. Unlike the theory questions elsewhere on this site, every program here has been traced by hand and produces the exact output shown — copy it into a Java IDE and run it to check.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="section-a">
+            <h2>2. Section A (Compulsory) — 40 Marks</h2>
+            <h3>Question 1 [40]</h3>
+            <p>Answer each of the following:</p>
+            <ol type="a">
+              <li>Define the term "Object-Oriented Programming." State any two features of OOP. [4]</li>
+              <li>Differentiate between a constructor and a method in Java (state any two points of difference). [4]</li>
+              <li>What is the purpose of the <code>static</code> keyword in Java? Give one example of its use. [4]</li>
+              <li>Name the packages that must be imported to use the <code>Scanner</code> class and the <code>BufferedReader</code> class respectively. [4]</li>
+              <li>Trace and give the output of the following code:
+                <div class="code-block">
+                  <div class="code-block__label">snippet</div>
+                  <pre><code>int x = 5;
+int y = ++x + x++;
+System.out.println(x + " " + y);</code></pre>
+                </div>
+                [4]
+              </li>
+              <li>State the data type and default value of a <code>boolean</code> instance variable in Java, if it is not explicitly initialized. [4]</li>
+              <li>What is function overloading? Give an example pair of method signatures that would demonstrate it. [4]</li>
+              <li>Convert the decimal number 25 to its binary equivalent. [4]</li>
+              <li>What is meant by a "wrapper class" in Java? Name the wrapper class for the primitive type <code>int</code>. [4]</li>
+              <li>Evaluate the following expression: <code>Math.pow(2, 3) + Math.sqrt(16)</code>. [4]</li>
+            </ol>
+          </section>
+
+          <section id="section-b">
+            <h2>3. Section B (Answer any five) — 60 Marks</h2>
+
+            <h3>Question 2 [12] — Class Design</h3>
+            <p>
+              Design a class <code>Employee</code> with instance variables <code>name</code>
+              (String) and <code>basicSalary</code> (double). Include a parameterized constructor,
+              a method <code>calculateSalary()</code> that returns the gross salary as basic
+              salary + 20% HRA + 10% DA, and a method <code>display()</code> that prints all
+              details. Write a main method that creates an object with basic salary 30000 and
+              displays the result.
+            </p>
+
+            <h3>Question 3 [12] — String Handling</h3>
+            <p>
+              Write a program to accept a sentence and count the number of vowels and consonants
+              in it (ignore digits, spaces and punctuation).
+            </p>
+
+            <h3>Question 4 [12] — Arrays</h3>
+            <p>
+              Write a program to accept 10 integers into an array and find the largest and
+              second-largest number in the array.
+            </p>
+
+            <h3>Question 5 [12] — Sorting</h3>
+            <p>
+              Write a program to sort an array of 10 integers in ascending order using the
+              Bubble Sort technique.
+            </p>
+
+            <h3>Question 6 [12] — Menu-Driven Program</h3>
+            <p>
+              Write a menu-driven program that inputs a number and checks whether it is a Prime
+              number (choice 1) or an Armstrong number (choice 2), based on the user's menu
+              selection.
+            </p>
+
+            <h3>Question 7 [12] — Pattern Printing</h3>
+            <p>
+              Write a program using nested loops to print the following pattern for n = 5:
+            </p>
+            <div class="code-block">
+              <div class="code-block__label">pattern to print</div>
+              <pre><code>1
+1 2
+1 2 3
+1 2 3 4
+1 2 3 4 5</code></pre>
+            </div>
+
+            <h3>Question 8 [12] — Trace the Output</h3>
+            <p>Trace the following program by hand and give its exact output:</p>
+            <div class="code-block">
+              <div class="code-block__label">program to trace</div>
+              <pre><code>class OutputTest
+{
+    public static void main(String args[])
+    {
+        int a[] = {4, 8, 15, 16, 23, 42};
+        int sum = 0;
+        for (int i = 0; i < a.length; i++)
+        {
+            if (a[i] % 2 == 0)
+                sum += a[i];
+        }
+        System.out.println("Sum of even numbers = " + sum);
+
+        String s = "COMPUTER";
+        System.out.println(s.substring(2, 6));
+        System.out.println(s.length());
+    }
+}</code></pre>
+            </div>
+          </section>
+
+          <section id="answer-key">
+            <h2>4. Answer Key</h2>
+            <p>Attempt the full paper under a real timer before expanding these.</p>
+
+            <div class="quiz-list">
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Section A — Question 1</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      (a) OOP is a programming paradigm based on the concept of "objects," which
+                      bundle data and the methods that operate on that data. Two features:
+                      encapsulation (bundling data and methods, hiding internal detail) and
+                      inheritance (a class acquiring properties of another class) — also accept
+                      polymorphism or abstraction.
+                    </p>
+                    <p>
+                      (b) Any two: a constructor has the same name as the class, a method can have
+                      any valid name; a constructor has no return type (not even <code>void</code>),
+                      a method must have a return type; a constructor is invoked automatically when
+                      an object is created using <code>new</code>, a method must be called
+                      explicitly.
+                    </p>
+                    <p>
+                      (c) The <code>static</code> keyword marks a member (variable or method) as
+                      belonging to the class itself rather than to any individual object, so it is
+                      shared across all instances and can be accessed without creating an object.
+                      Example: <code>public static void main(String args[])</code> — the JVM calls
+                      <code>main</code> without ever creating an object of the class.
+                    </p>
+                    <p>
+                      (d) <code>Scanner</code> requires <code>import java.util.Scanner;</code>.
+                      <code>BufferedReader</code> requires <code>import java.io.*;</code> (or
+                      specifically <code>import java.io.BufferedReader;</code> along with
+                      <code>InputStreamReader</code>).
+                    </p>
+                    <p>
+                      (e) x starts at 5. <code>++x</code> (pre-increment) makes x = 6 and evaluates
+                      to 6. <code>x++</code> (post-increment) evaluates to the current value of x
+                      (6), then increments x to 7. So y = 6 + 6 = 12, and the final value of x is
+                      7. Output: <strong>7 12</strong>.
+                    </p>
+                    <p>
+                      (f) Data type: <code>boolean</code>. Default value for an uninitialized
+                      instance variable: <code>false</code>.
+                    </p>
+                    <p>
+                      (g) Function overloading means defining multiple methods with the same name
+                      in the same class, but with different parameter lists (different number or
+                      types of parameters). Example: <code>void add(int a, int b)</code> and
+                      <code>void add(double a, double b, double c)</code>.
+                    </p>
+                    <p>(h) 25 = 16 + 8 + 1 → <strong>11001</strong> in binary.</p>
+                    <p>
+                      (i) A wrapper class converts (wraps) a primitive data type into an object, so
+                      it can be used where an object is required (e.g., in collections). The
+                      wrapper class for <code>int</code> is <strong><code>Integer</code></strong>.
+                    </p>
+                    <p>
+                      (j) <code>Math.pow(2, 3)</code> = 8.0, <code>Math.sqrt(16)</code> = 4.0. Sum
+                      = <strong>12.0</strong>.
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 2 — Employee Class</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <div class="code-block">
+                      <div class="code-block__label">Employee.java</div>
+                      <pre><code>class Employee
+{
+    String name;
+    double basicSalary;
+
+    Employee(String n, double b)
+    {
+        name = n;
+        basicSalary = b;
+    }
+
+    double calculateSalary()
+    {
+        double hra = 0.20 * basicSalary;
+        double da = 0.10 * basicSalary;
+        return basicSalary + hra + da;
+    }
+
+    void display()
+    {
+        System.out.println("Name: " + name);
+        System.out.println("Basic Salary: " + basicSalary);
+        System.out.println("Gross Salary: " + calculateSalary());
+    }
+
+    public static void main(String args[])
+    {
+        Employee e = new Employee("Aditi Sharma", 30000);
+        e.display();
+    }
+}</code></pre>
+                    </div>
+                    <p>
+                      Output: Gross Salary = 30000 + 6000 (20% HRA) + 3000 (10% DA) =
+                      <strong>39000.0</strong>.
+                    </p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 3 — Vowels &amp; Consonants</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <div class="code-block">
+                      <div class="code-block__label">VowelConsonantCount.java</div>
+                      <pre><code>import java.util.Scanner;
+
+class VowelConsonantCount
+{
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a sentence:");
+        String str = sc.nextLine();
+        str = str.toUpperCase();
+        int vowels = 0, consonants = 0;
+
+        for (int i = 0; i < str.length(); i++)
+        {
+            char ch = str.charAt(i);
+            if (ch >= 'A' && ch <= 'Z')
+            {
+                if (ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U')
+                    vowels++;
+                else
+                    consonants++;
+            }
+        }
+        System.out.println("Number of vowels: " + vowels);
+        System.out.println("Number of consonants: " + consonants);
+    }
+}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 4 — Largest &amp; Second Largest</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <div class="code-block">
+                      <div class="code-block__label">LargestSecondLargest.java</div>
+                      <pre><code>import java.util.Scanner;
+
+class LargestSecondLargest
+{
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+        int arr[] = new int[10];
+        System.out.println("Enter 10 integers:");
+        for (int i = 0; i < 10; i++)
+            arr[i] = sc.nextInt();
+
+        int largest = Integer.MIN_VALUE, secondLargest = Integer.MIN_VALUE;
+        for (int i = 0; i < 10; i++)
+        {
+            if (arr[i] > largest)
+            {
+                secondLargest = largest;
+                largest = arr[i];
+            }
+            else if (arr[i] > secondLargest && arr[i] != largest)
+            {
+                secondLargest = arr[i];
+            }
+        }
+        System.out.println("Largest: " + largest);
+        System.out.println("Second Largest: " + secondLargest);
+    }
+}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 5 — Bubble Sort</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <div class="code-block">
+                      <div class="code-block__label">BubbleSort.java</div>
+                      <pre><code>import java.util.Scanner;
+
+class BubbleSort
+{
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+        int arr[] = new int[10];
+        System.out.println("Enter 10 integers:");
+        for (int i = 0; i < 10; i++)
+            arr[i] = sc.nextInt();
+
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9 - i; j++)
+            {
+                if (arr[j] > arr[j + 1])
+                {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+
+        System.out.println("Sorted array:");
+        for (int i = 0; i < 10; i++)
+            System.out.print(arr[i] + " ");
+    }
+}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 6 — Menu: Prime / Armstrong</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <div class="code-block">
+                      <div class="code-block__label">MenuPrimeArmstrong.java</div>
+                      <pre><code>import java.util.Scanner;
+
+class MenuPrimeArmstrong
+{
+    public static void main(String args[])
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("MENU");
+        System.out.println("1. Check Prime Number");
+        System.out.println("2. Check Armstrong Number");
+        System.out.println("Enter your choice:");
+        int choice = sc.nextInt();
+
+        System.out.println("Enter a number:");
+        int n = sc.nextInt();
+
+        switch (choice)
+        {
+            case 1:
+                boolean isPrime = true;
+                if (n < 2)
+                    isPrime = false;
+                for (int i = 2; i <= Math.sqrt(n); i++)
+                {
+                    if (n % i == 0)
+                    {
+                        isPrime = false;
+                        break;
+                    }
+                }
+                if (isPrime)
+                    System.out.println(n + " is a Prime number.");
+                else
+                    System.out.println(n + " is not a Prime number.");
+                break;
+
+            case 2:
+                int temp = n, sum = 0, digits = String.valueOf(n).length();
+                while (temp > 0)
+                {
+                    int digit = temp % 10;
+                    sum += Math.pow(digit, digits);
+                    temp /= 10;
+                }
+                if (sum == n)
+                    System.out.println(n + " is an Armstrong number.");
+                else
+                    System.out.println(n + " is not an Armstrong number.");
+                break;
+
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 7 — Pattern Printing</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <div class="code-block">
+                      <div class="code-block__label">PatternPrint.java</div>
+                      <pre><code>class PatternPrint
+{
+    public static void main(String args[])
+    {
+        int n = 5;
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= i; j++)
+            {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+    }
+}</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">✓</span>
+                  <div class="week-item__heading"><h4>Question 8 — Trace the Output</h4></div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>
+                      The array {4, 8, 15, 16, 23, 42} has even elements 4, 8, 16 and 42; their sum
+                      is 4+8+16+42 = 70. For the string "COMPUTER" (indices C=0, O=1, M=2, P=3,
+                      U=4, T=5, E=6, R=7), <code>substring(2, 6)</code> returns characters from
+                      index 2 up to (not including) index 6, i.e. "MPUT". The string's length is 8.
+                    </p>
+                    <div class="code-block">
+                      <div class="code-block__label">exact output</div>
+                      <pre><code>Sum of even numbers = 70
+MPUT
+8</code></pre>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </section>
+
+        </article>
+
+        <div class="lesson-pager">
+          <a href="index.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Back to</span>
+            <span class="lesson-pager__title">Computer Applications Papers</span>
+          </a>
+          <a href="../index.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Or</span>
+            <span class="lesson-pager__title">Choose Another Subject →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+    <nav class="footer__links">
+      <a href="../../index.html">Home</a>
+      <a href="../../courses/angular/index.html">Angular</a>
+      <a href="../../courses/react/index.html">React</a>
+      <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+      <a href="../../courses/spring-boot/index.html">Spring Boot</a>
+      <a href="../../courses/devops-cloud/index.html">DevOps &amp; Cloud</a>
+      <a href="../../courses/python/index.html">Python</a>
+      <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
+      <a href="../../courses/system-design/index.html">System Design</a>
+      <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
+      <a href="../../courses/servicenow/index.html">ServiceNow</a>
+      <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
+      <a href="../index.html">Question Papers</a>
+      <a href="#top">Back to top</a>
+    </nav>
+    <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>
