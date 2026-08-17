@@ -65,6 +65,14 @@
     });
   }
 
+  /* Footer "Back to top" */
+  document.querySelectorAll("[data-back-to-top]").forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+
   /* Reveal-on-scroll for generic sections and timeline items */
   var revealTargets = document.querySelectorAll(".reveal, .timeline-item");
   if ("IntersectionObserver" in window && revealTargets.length) {

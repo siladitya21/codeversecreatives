@@ -227,7 +227,16 @@ body[data-course="cybersecurity"],
   --accent-deep-2: #c81f2f;
 }
 
-/* Light theme: the same fifteen hues, darkened to hold contrast on white. */
+body[data-course="javascript-typescript"],
+.c-javascript-typescript {
+  --accent: #f0c92e;
+  --accent-2: #ffdb4d;
+  --accent-soft: rgba(255, 219, 77, 0.14);
+  --accent-deep: #8a6d00;
+  --accent-deep-2: #a17e00;
+}
+
+/* Light theme: the same sixteen hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
 :root[data-theme="light"] .c-angular {
@@ -332,6 +341,13 @@ body[data-course="cybersecurity"],
   --accent: #c81f2f;
   --accent-2: #e02f3f;
   --accent-soft: rgba(200, 31, 47, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="javascript-typescript"],
+:root[data-theme="light"] .c-javascript-typescript {
+  --accent: #7a6100;
+  --accent-2: #937400;
+  --accent-soft: rgba(122, 97, 0, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */
@@ -1745,7 +1761,7 @@ code, .mono {
 }
 
 /* Generic disabled state, reused outside .lesson-pager__link (e.g. "coming
-   soon" cards for question papers not published yet). */
+   soon" cards for weeks not published yet). */
 .is-disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -1769,34 +1785,101 @@ code, .mono {
 
 /* ---------- Footer ---------- */
 .footer {
+  position: relative;
+  margin-top: 64px;
+  padding-bottom: 32px;
   border-top: 1px solid var(--border-soft);
-  padding: 40px 0;
-  margin-top: 40px;
 }
 
-.footer__inner {
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), transparent 75%);
+}
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.4fr 1.8fr 1fr;
+  gap: 40px;
+  padding: 48px 0 40px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.footer__brand {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.footer__links {
-  display: flex;
-  gap: 22px;
+.footer__brand .brand { font-size: 1.05rem; }
+
+.footer__tagline {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 30ch;
 }
 
-.footer__links a {
+.footer__heading {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 18px;
+}
+
+.footer__course-grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 10px 28px;
+}
+
+.footer__course-grid a,
+.footer__nav a {
   font-size: 0.88rem;
   color: var(--text-muted);
+  transition: color 0.15s ease, transform 0.15s ease;
 }
 
-.footer__links a:hover { color: var(--text); }
+.footer__course-grid a:hover,
+.footer__nav a:hover {
+  color: var(--accent-2);
+  transform: translateX(2px);
+}
 
-.footer small {
+.footer__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.footer__nav [data-back-to-top] { color: var(--text-faint); }
+.footer__nav [data-back-to-top]:hover { color: var(--accent-2); }
+
+.footer__bottom { padding-top: 24px; }
+
+.footer__bottom small {
+  display: block;
   color: var(--text-faint);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.footer__bottom small a {
+  color: var(--text-faint);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 2px;
+}
+
+.footer__bottom small a:hover {
+  color: var(--text-muted);
+  text-decoration-color: var(--text-faint);
 }
 
 /* ---------- Responsive ---------- */
@@ -1809,6 +1892,9 @@ code, .mono {
   .week-item__heading p { white-space: normal; }
   .lesson-pager { flex-direction: column; }
   .lesson-pager__link--next { text-align: left; align-items: flex-start; }
+
+  .footer__top { grid-template-columns: 1fr 1fr; }
+  .footer__brand { grid-column: 1 / -1; }
 
   .nav-toggle { display: inline-flex; }
 
@@ -1894,4 +1980,8 @@ code, .mono {
   .navbar__inner { height: 64px; }
   .hero { padding: 44px 0 40px; }
   .cta-banner { padding: 34px 22px; }
+
+  .footer__top { grid-template-columns: 1fr; gap: 32px; }
+  .footer__brand { grid-column: auto; }
+  .footer__bottom { text-align: left; }
 }
