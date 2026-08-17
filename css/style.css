@@ -200,7 +200,34 @@ body[data-course="php"],
   --accent-deep-2: #a43dae;
 }
 
-/* Light theme: the same twelve hues, darkened to hold contrast on white. */
+body[data-course="github"],
+.c-github {
+  --accent: #3ecfa0;
+  --accent-2: #5be0b3;
+  --accent-soft: rgba(91, 224, 179, 0.14);
+  --accent-deep: #0e7d5a;
+  --accent-deep-2: #178f68;
+}
+
+body[data-course="react-native"],
+.c-react-native {
+  --accent: #ee8ead;
+  --accent-2: #f5a3be;
+  --accent-soft: rgba(245, 163, 190, 0.14);
+  --accent-deep: #943857;
+  --accent-deep-2: #ae3d62;
+}
+
+body[data-course="cybersecurity"],
+.c-cybersecurity {
+  --accent: #ff4d5e;
+  --accent-2: #ff7285;
+  --accent-soft: rgba(255, 114, 133, 0.14);
+  --accent-deep: #b3101f;
+  --accent-deep-2: #c81f2f;
+}
+
+/* Light theme: the same fifteen hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
 :root[data-theme="light"] .c-angular {
@@ -284,6 +311,27 @@ body[data-course="php"],
   --accent: #913e98;
   --accent-2: #b342bd;
   --accent-soft: rgba(179, 66, 189, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="github"],
+:root[data-theme="light"] .c-github {
+  --accent: #0f8a63;
+  --accent-2: #14a374;
+  --accent-soft: rgba(15, 138, 99, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="react-native"],
+:root[data-theme="light"] .c-react-native {
+  --accent: #983e5c;
+  --accent-2: #bd426b;
+  --accent-soft: rgba(189, 66, 107, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="cybersecurity"],
+:root[data-theme="light"] .c-cybersecurity {
+  --accent: #c81f2f;
+  --accent-2: #e02f3f;
+  --accent-soft: rgba(200, 31, 47, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */

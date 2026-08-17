@@ -189,7 +189,16 @@
       "Bash(xargs -0 perl -pi -e 's{\\(</a>\\)\\(<a href=\"#top\">Back to top</a>\\)}{$1<a href=\"../../question-papers/index.html\">Question Papers</a>$2}g;')",
       "Bash(xargs -0 '-I{}' sh -c 'c=$\\(grep -o \"Question Papers\" \"{}\" | wc -l\\); if [ \"$c\" != \"2\" ]; then echo \"{}: $c\"; fi')",
       "Bash(awk 'NR==137{print NR\": [\"$0\"]\"} NR==138{print NR\": [\"$0\"]\"} NR==139{print NR\": [\"$0\"]\"} NR==140{print NR\": [\"$0\"]\"} NR==141{print NR\": [\"$0\"]\"}' courses/php/week-03.html)",
-      "Bash(xargs -0 '-I{}' sh -c 'c=$\\(grep -o \"Question Papers\" \"{}\" | wc -l\\); n=$\\(grep -c \"nav-links\" \"{}\"\\); if [ \"$n\" != \"0\" ] && [ \"$c\" -lt 2 ]; then echo \"{}: $c\"; fi')"
+      "Bash(xargs -0 '-I{}' sh -c 'c=$\\(grep -o \"Question Papers\" \"{}\" | wc -l\\); n=$\\(grep -c \"nav-links\" \"{}\"\\); if [ \"$n\" != \"0\" ] && [ \"$c\" -lt 2 ]; then echo \"{}: $c\"; fi')",
+      "Bash(dir courses *)",
+      "Bash(grep -n \"href=\\\\\"\\\\.\\\\./\\\\.\\\\./\" question-papers/bengali/index.html)",
+      "Bash(mkdir -p courses/github)",
+      "Bash(REPO_ROOT=\"e:/Projects/codeversecreatives\" node \"C:/Users/SILAD_~1/AppData/Local/Temp/claude/e--Projects-codeversecreatives/6b379311-df9a-454b-be7d-71333556f838/scratchpad/wire-github-nav.js\")",
+      "Bash(node \"C:/Users/SILAD_~1/AppData/Local/Temp/claude/e--Projects-codeversecreatives/6b379311-df9a-454b-be7d-71333556f838/scratchpad/add-php-to-question-papers.js\")",
+      "Bash(awk '{print $1}')"
+    ],
+    "additionalDirectories": [
+      "E:\\Projects\\codeversecreatives\\courses"
     ]
   }
 }
