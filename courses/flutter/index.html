@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem("cvc-theme");
+      var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (err) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flutter Syllabus — CodeVerse Creatives</title>
+<meta name="description" content="A 20-week Flutter syllabus from zero — Dart fundamentals, widgets & layout, navigation, state management, networking, native device APIs and app store publishing. New course: 2 weeks live now, more publishing weekly." />
+<link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
+<link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="../../assets/favicons/favicon-16x16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="../../assets/favicons/apple-touch-icon.png" />
+<link rel="manifest" href="../../assets/favicons/site.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../../css/style.css" />
+</head>
+<body data-course="flutter">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:var(--accent)" />
+      <stop offset="100%" style="stop-color:var(--accent-2)" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="navbar" data-navbar>
+  <div class="container navbar__inner">
+    <a href="../../index.html" class="brand">
+      <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+      CodeVerse Creatives
+    </a>
+
+    <nav class="nav-links" data-nav-links>
+      <a href="../../index.html">Home</a>
+      <div class="nav-dropdown" data-nav-dropdown data-active="true">
+        <button type="button" class="nav-dropdown__trigger" data-nav-dropdown-trigger aria-haspopup="true" aria-expanded="false">
+          Courses
+          <svg class="nav-dropdown__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="nav-dropdown__panel" data-nav-dropdown-panel>
+          <a href="../angular/index.html" class="nav-course-card c-angular">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Angular</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../cybersecurity/index.html" class="nav-course-card c-cybersecurity">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Cybersecurity Basics</span>
+              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+            </span>
+          </a>
+          <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DevOps &amp; Cloud</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../dsa-cpp/index.html" class="nav-course-card c-dsa-cpp">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="13" r="2.5"/><circle cx="5" cy="20" r="2.5"/><circle cx="19" cy="20" r="2.5"/><path d="M6.8 7.8 10.2 11.2M17.2 7.8 13.8 11.2M10.2 14.8 6.8 18.2M13.8 14.8 17.2 18.2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">DSA in C++</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
+            </span>
+          </a>
+          <a href="../github/index.html" class="nav-course-card c-github">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Git &amp; GitHub</span>
+              <span class="nav-course-card__meta">5 Weeks</span>
+            </span>
+          </a>
+          <a href="../javascript-typescript/index.html" class="nav-course-card c-javascript-typescript">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
+              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+            </span>
+          </a>
+          <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../node-express/index.html" class="nav-course-card c-node-express">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 21 6.5 21 15.5 12 20 3 15.5 3 6.5 12 2"/><path d="M9 9.5c1.5-1 3.5-1 5 0M8 13c2 1.5 6 1.5 8 0"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Node.js &amp; Express</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../aptitude/index.html" class="nav-course-card c-aptitude">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="12" y2="12"/><line x1="16" y1="12" x2="16" y2="12"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="12" y1="16" x2="12" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><line x1="8" y1="20" x2="8" y2="20"/><line x1="12" y1="20" x2="12" y2="20"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Numerical Aptitude</span>
+              <span class="nav-course-card__meta">21 Weeks</span>
+            </span>
+          </a>
+          <a href="../php/index.html" class="nav-course-card c-php">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c0-4.5 3.4-8 8-8s8 3.5 8 8v1a2 2 0 0 1-2 2h-1"/><path d="M18 16v3a2 2 0 0 1-2 2"/><path d="M6 18v3M10 19v3M14 19v3"/><circle cx="7.5" cy="12" r=".6" fill="currentColor"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">PHP</span>
+              <span class="nav-course-card__meta">32 Weeks</span>
+            </span>
+          </a>
+          <a href="../python/index.html" class="nav-course-card c-python">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c-2 0-4 .5-4 2v3h4v1H6c-1.5 0-3 1-3 4s1.5 4 3 4h2v-2.5c0-1.5 1-2.5 2.5-2.5h4c1 0 2-1 2-2V4c0-1.5-2-2-4.5-2Z"/><path d="M12 22c2 0 4-.5 4-2v-3h-4v-1h6c1.5 0 3-1 3-4s-1.5-4-3-4h-2v2.5c0 1.5-1 2.5-2.5 2.5h-4c-1 0-2 1-2 2v4c0 1.5 2 2 4.5 2Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Python</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../react/index.html" class="nav-course-card c-react">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.5"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../react-native/index.html" class="nav-course-card c-react-native">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">React Native</span>
+              <span class="nav-course-card__meta">2 of 22 Weeks</span>
+            </span>
+          </a>
+          <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2a2 2 0 0 0 4 0h6a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2h-6a2 2 0 0 0-4 0H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V8Z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">ServiceNow</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../spring-boot/index.html" class="nav-course-card c-spring-boot">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="6" rx="1"/><rect x="2" y="15" width="20" height="6" rx="1"/><path d="M6 6h.01M6 18h.01"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Spring Boot</span>
+              <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../system-design/index.html" class="nav-course-card c-system-design">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">System Design</span>
+              <span class="nav-course-card__meta">28 Weeks</span>
+            </span>
+          </a>
+          <a href="../mongodb/index.html" class="nav-course-card c-mongodb">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">MongoDB</span>
+              <span class="nav-course-card__meta">2 of 10 Weeks</span>
+            </span>
+          </a>
+          <a href="../data-analytics/index.html" class="nav-course-card c-data-analytics">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
+              <span class="nav-course-card__meta">2 of 12 Weeks</span>
+            </span>
+          </a>
+          <a href="../golang/index.html" class="nav-course-card c-golang">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Go</span>
+              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+            </span>
+          </a>
+          <a href="../flutter/index.html" class="nav-course-card c-flutter" aria-current="page">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Flutter</span>
+              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+            </span>
+          </a>
+          <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/><path d="m9 14 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Coding Practice</span>
+              <span class="nav-course-card__meta">120 Problems</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="navbar__actions">
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="nav-toggle" data-nav-toggle aria-label="Toggle navigation menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="hero__eyebrow">Flutter Course · New</span>
+      <h1>Ship <span>One Codebase</span> to iOS, Android &amp; Web</h1>
+      <p class="hero__lede">
+        A from-zero mobile path built around Dart and Flutter — widgets and layout, navigation,
+        state management, networking, native device APIs and platform channels, testing and
+        app store publishing, ending with a capstone app you actually ship to real devices.
+        This course is brand new: the full 20-week plan is below, with <strong>Weeks 1–2 live
+        now</strong> and new weeks publishing regularly.
+      </p>
+
+      <div class="hero__meta">
+        <span class="chip chip--accent">20-Week Plan</span>
+        <span class="chip">2 Weeks Live</span>
+        <span class="chip">No Prior Mobile Experience Needed</span>
+        <span class="chip">Flutter 3.x &amp; Dart 3</span>
+      </div>
+
+      <div class="hero__actions">
+        <a href="#timeline" class="btn btn--primary">View Full Roadmap</a>
+        <a href="../../index.html" class="btn btn--ghost">See All Courses</a>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat-card">
+          <div class="stat-card__value">20</div>
+          <div class="stat-card__label">Weeks planned</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">2</div>
+          <div class="stat-card__label">Weeks live now</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">8</div>
+          <div class="stat-card__label">Phases</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__value">1</div>
+          <div class="stat-card__label">Capstone app, shipped</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prerequisites & stack -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-head__eyebrow">Before You Start</span>
+        <h2>Prerequisites &amp; tooling</h2>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card reveal">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 9h16M9 21V9"/></svg>
+          </div>
+          <h3>What you should already know</h3>
+          <ul>
+            <li>Basic programming fundamentals — variables, loops, functions, simple object-oriented concepts, in any language</li>
+            <li>Comfortable with the command line, and basic Git (this site's <a href="../github/index.html">Git &amp; GitHub course</a> covers everything needed)</li>
+            <li>No prior Dart, Flutter, or mobile development experience required — Dart is taught from scratch starting Week 1</li>
+            <li>A machine with 8GB+ RAM; a Mac is only required later for building/testing on iOS specifically</li>
+          </ul>
+        </div>
+
+        <div class="info-card reveal">
+          <div class="info-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Stack you'll work with</h3>
+          <p style="margin-bottom:0;">One codebase, one language, compiled to genuinely native output on every target platform.</p>
+          <div class="stack-row">
+            <span class="chip">Flutter 3.x</span>
+            <span class="chip">Dart 3</span>
+            <span class="chip">Material 3</span>
+            <span class="chip">go_router</span>
+            <span class="chip">Riverpod</span>
+            <span class="chip">Firebase</span>
+            <span class="chip">flutter_test</span>
+            <span class="chip">Codemagic / GitHub Actions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section" id="timeline">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-head__eyebrow">Syllabus</span>
+        <h2>The full 20-week roadmap</h2>
+        <p>Eight phases, from your first Flutter app through state management and native device APIs, to a published app on the store. Weeks 1–2 are live now — the rest of the roadmap is shown below and publishes on a rolling basis.</p>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-marker">01</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 1</span>
+            <h3>Dart Fundamentals &amp; Your First Flutter App</h3>
+            <p>Learn the language Flutter is built on, then get a real app running on a device or simulator.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dart syntax, null safety, functions &amp; classes</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Installing the Flutter SDK &amp; <code>flutter doctor</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>flutter create</code>, project structure &amp; hot reload</li>
+            </ul>
+            <a href="week-01.html" class="course-card__cta" style="grid-column:1 / -1;">Start this lesson<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">02</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 2</span>
+            <h3>Widgets, Layout &amp; Styling</h3>
+            <p>Learn the primitives every Flutter screen is built from — everything is a widget.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>StatelessWidget vs. StatefulWidget &amp; the widget tree</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>Row</code>, <code>Column</code>, <code>Stack</code>, <code>Container</code> &amp; constraint-based layout</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Styling with <code>ThemeData</code> &amp; why there's no CSS</li>
+            </ul>
+            <a href="week-02.html" class="course-card__cta" style="grid-column:1 / -1;">Start Week 2<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">03</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 3 · COMING SOON</span>
+            <h3>Material Design, Theming &amp; Responsive Layouts</h3>
+            <p>Turn a plain screen into a properly styled, adaptive app.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Material 3 components: <code>Scaffold</code>, <code>AppBar</code>, <code>Card</code>, <code>ListTile</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Light/dark theming with <code>ColorScheme.fromSeed</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>MediaQuery</code>, <code>LayoutBuilder</code> &amp; adaptive layouts for tablets/web</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">04</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 4 · COMING SOON</span>
+            <h3>Navigation Basics — Navigator &amp; Named Routes</h3>
+            <p>Move between screens the way a real app does.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>Navigator.push</code>/<code>pop</code> &amp; passing data between screens</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Named routes &amp; a centralized route table</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Bottom navigation bars &amp; tab-based layouts</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">05</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 5 · COMING SOON</span>
+            <h3>go_router, Nested Navigation &amp; Deep Linking</h3>
+            <p>Compose complex, URL-driven navigation the way production apps need.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Declarative routing with <code>go_router</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Nested navigators &amp; shell routes for tab flows</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deep links &amp; auth-gated redirects</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">06</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEK 6 · COMING SOON</span>
+            <h3>State Management I — setState, InheritedWidget &amp; ValueNotifier</h3>
+            <p>Understand what Flutter's state management libraries are actually built on top of.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>setState</code> &amp; why it doesn't scale past a single widget</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>InheritedWidget</code> &amp; how data flows down the widget tree</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>ValueNotifier</code> &amp; <code>ChangeNotifier</code> as the building blocks underneath</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">07</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 7–8 · COMING SOON</span>
+            <h3>Provider &amp; Riverpod for App-Wide State</h3>
+            <p>Reach for a real state management library once an app outgrows one screen.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Provider: exposing &amp; consuming app-wide state</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Riverpod providers, notifiers &amp; compile-time safety</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>When to reach for Bloc instead, and why</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">08</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 9–10 · COMING SOON</span>
+            <h3>Networking &amp; Data</h3>
+            <p>Fetch, cache and persist data on-device.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>REST calls with <code>http</code>/<code>dio</code> &amp; JSON (de)serialization</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Local persistence with <code>sqflite</code> &amp; <code>Hive</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Loading/error states &amp; offline-first patterns</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">09</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 11–13 · COMING SOON</span>
+            <h3>Device &amp; Platform APIs</h3>
+            <p>Camera, location, permissions and platform channels.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Camera, photo library &amp; the file system</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Location, sensors &amp; requesting permissions properly</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Platform channels — calling native Kotlin/Swift from Dart</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">10</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 14–15 · COMING SOON</span>
+            <h3>Animations &amp; Advanced UI</h3>
+            <p>Make an app feel polished, not just functional.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Implicit animations: <code>AnimatedContainer</code>, <code>AnimatedOpacity</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explicit animations with <code>AnimationController</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Custom painting with <code>CustomPainter</code> &amp; slivers for complex scroll effects</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-marker">11</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 16–18 · COMING SOON</span>
+            <h3>Testing &amp; Performance</h3>
+            <p>Build a real safety net, then make the app fast under real conditions.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Unit &amp; widget tests with <code>flutter_test</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>End-to-end testing with <code>integration_test</code></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><code>ListView.builder</code> virtualization, rebuild profiling &amp; DevTools</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-item is-capstone">
+          <div class="timeline-marker">12</div>
+          <div class="timeline-card">
+            <span class="timeline-badge">WEEKS 19–20 · COMING SOON</span>
+            <h3>Publishing &amp; Capstone: Ship a Real App</h3>
+            <p>Build, sign and submit a complete app to the App Store and Google Play.</p>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>App signing, build flavors &amp; CI/CD with Codemagic/GitHub Actions</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>App Store Connect &amp; Google Play Console submission</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Capstone: a fully tested, published app you built yourself</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta-banner reveal">
+        <h2>Ready to build for mobile?</h2>
+        <p>Start with Week 1 — no prior Dart, Flutter, or mobile experience needed, just the programming fundamentals covered above. New weeks publish regularly as the full 20-week roadmap comes online.</p>
+        <div class="cta-banner__actions">
+          <a href="week-01.html" class="btn btn--primary">Start Week 1</a>
+          <a href="../../index.html" class="btn btn--ghost">See All Courses</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="../../index.html" class="brand">
+          <svg class="brand__mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><rect width="100" height="100" rx="22" fill="url(#brandGrad)"/><path d="M 46 28 L 22 50 L 46 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M 54 28 L 78 50 L 54 72" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="50" r="6.5" fill="#fff"/></svg>
+          CodeVerse Creatives
+        </a>
+        <p class="footer__tagline">Free, project-based curricula for developers who'd rather ship than scroll — from first commit to deployed capstone.</p>
+      </div>
+
+      <div class="footer__group">
+        <span class="footer__heading">Courses</span>
+        <div class="footer__course-grid">
+          <a href="../../courses/angular/index.html">Angular</a>
+          <a href="../../courses/cybersecurity/index.html">Cybersecurity Basics</a>
+          <a href="../../courses/devops-cloud/index.html">DevOps &amp; Cloud</a>
+          <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
+          <a href="../../courses/github/index.html">Git &amp; GitHub</a>
+          <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
+          <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
+          <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
+          <a href="../../courses/php/index.html">PHP</a>
+          <a href="../../courses/python/index.html">Python</a>
+          <a href="../../courses/react/index.html">React</a>
+          <a href="../../courses/react-native/index.html">React Native</a>
+          <a href="../../courses/servicenow/index.html">ServiceNow</a>
+          <a href="../../courses/spring-boot/index.html">Spring Boot</a>
+          <a href="../../courses/system-design/index.html">System Design</a>
+          <a href="../../courses/mongodb/index.html">MongoDB</a>
+          <a href="../../courses/data-analytics/index.html">Excel, SQL &amp; Power BI</a>
+          <a href="../../courses/golang/index.html">Go</a>
+          <a href="../../courses/flutter/index.html">Flutter</a>
+          <a href="../../courses/coding-practice/index.html">Coding Practice</a>
+        </div>
+      </div>
+
+      <div class="footer__group">
+        <span class="footer__heading">Explore</span>
+        <nav class="footer__nav">
+          <a href="../../index.html">Home</a>
+          <a href="#" data-back-to-top>↑ Back to top</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <small>© 2026 CodeVerse Creatives. All rights reserved.</small>
+    </div>
+  </div>
+</footer>
+
+<script src="../../js/main.js"></script>
+</body>
+</html>

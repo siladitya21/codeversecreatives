@@ -236,7 +236,52 @@ body[data-course="javascript-typescript"],
   --accent-deep-2: #a17e00;
 }
 
-/* Light theme: the same sixteen hues, darkened to hold contrast on white. */
+body[data-course="data-analytics"],
+.c-data-analytics {
+  --accent: #f0b429;
+  --accent-2: #ffcb52;
+  --accent-soft: rgba(255, 203, 82, 0.14);
+  --accent-deep: #8a5a00;
+  --accent-deep-2: #a36c00;
+}
+
+body[data-course="flutter"],
+.c-flutter {
+  --accent: #29b6f6;
+  --accent-2: #4fc3f7;
+  --accent-soft: rgba(79, 195, 247, 0.14);
+  --accent-deep: #01579b;
+  --accent-deep-2: #0277bd;
+}
+
+body[data-course="golang"],
+.c-golang {
+  --accent: #e0805e;
+  --accent-2: #ee9878;
+  --accent-soft: rgba(238, 152, 120, 0.14);
+  --accent-deep: #9c3d1f;
+  --accent-deep-2: #b34a29;
+}
+
+body[data-course="mongodb"],
+.c-mongodb {
+  --accent: #13aa52;
+  --accent-2: #2ecc71;
+  --accent-soft: rgba(46, 204, 113, 0.14);
+  --accent-deep: #0a6b34;
+  --accent-deep-2: #0d7d3d;
+}
+
+body[data-course="coding-practice"],
+.c-coding-practice {
+  --accent: #d16be0;
+  --accent-2: #e281ee;
+  --accent-soft: rgba(226, 129, 238, 0.14);
+  --accent-deep: #8a2a99;
+  --accent-deep-2: #9e33ae;
+}
+
+/* Light theme: the same twenty hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
 :root[data-theme="light"] .c-angular {
@@ -348,6 +393,41 @@ body[data-course="javascript-typescript"],
   --accent: #7a6100;
   --accent-2: #937400;
   --accent-soft: rgba(122, 97, 0, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="data-analytics"],
+:root[data-theme="light"] .c-data-analytics {
+  --accent: #96650a;
+  --accent-2: #b37b00;
+  --accent-soft: rgba(150, 101, 10, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="flutter"],
+:root[data-theme="light"] .c-flutter {
+  --accent: #0277bd;
+  --accent-2: #0288d1;
+  --accent-soft: rgba(2, 119, 189, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="golang"],
+:root[data-theme="light"] .c-golang {
+  --accent: #a83f1f;
+  --accent-2: #c24a26;
+  --accent-soft: rgba(168, 63, 31, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="mongodb"],
+:root[data-theme="light"] .c-mongodb {
+  --accent: #0a7a3d;
+  --accent-2: #0f8f47;
+  --accent-soft: rgba(10, 122, 61, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="coding-practice"],
+:root[data-theme="light"] .c-coding-practice {
+  --accent: #9c2fac;
+  --accent-2: #b23eb5;
+  --accent-soft: rgba(156, 47, 172, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */
@@ -571,6 +651,7 @@ code, .mono {
   left: 50%;
   transform: translate(-50%, -8px);
   width: min(560px, 86vw);
+  max-height: min(70vh, calc(100vh - 140px));
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 6px;
@@ -580,9 +661,30 @@ code, .mono {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   opacity: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   pointer-events: none;
   transition: opacity 0.18s ease, transform 0.18s ease;
   z-index: 110;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.nav-dropdown__panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+.nav-dropdown__panel::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.nav-dropdown__panel::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 8px;
+}
+
+.nav-dropdown__panel::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
 }
 
 .nav-dropdown[data-open="true"] .nav-dropdown__panel {
@@ -1244,6 +1346,18 @@ code, .mono {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+}
+
+/* Stacked variant: used wherever a column can hold long, unbroken content
+   (code blocks) that would otherwise force a 1fr grid track wider than its
+   share and push the other column off-screen. Stacking removes that risk
+   entirely instead of relying on min-width:0 + inner overflow-x. */
+.week-item__body.week-item__body--stacked {
+  display: block;
+}
+
+.week-item__body--stacked .week-item__col + .week-item__col {
+  margin-top: 20px;
 }
 
 .week-item__col h5 {
@@ -1950,7 +2064,8 @@ code, .mono {
   }
 
   .nav-dropdown[data-open="true"] .nav-dropdown__panel {
-    max-height: 600px;
+    max-height: min(600px, calc(100vh - 160px));
+    overflow-y: auto;
     padding-bottom: 8px;
     transform: none;
   }
