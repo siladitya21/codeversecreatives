@@ -543,6 +543,49 @@ export class SearchBox {
                   <p>To render "max stars, some filled," an <code>@for</code> loop over an array built with <code>Array.from({ length: this.max() })</code> works well — you'll get proper practice with the new control-flow syntax a couple weeks early.</p>
                 </div>
               </div>
+
+              <h3>Part 2: Template refs, lifecycle hooks &amp; a shared empty-state template</h3>
+              <p>Part 1 never touched Sections 4, 5 or 6. This part adds three small features to the parent page that exercise all three.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Template reference variable (Section 4):</strong> add a plain <code>&lt;input #filterBox&gt;</code> and a button next to it that logs <code>filterBox.value</code> to the console when clicked — no <code>FormControl</code>, just the reference variable reading the element directly.</li>
+                <li><strong>Lifecycle hooks vs. <code>effect()</code> (Section 6):</strong> give <code>RatingStars</code> an <code>ngOnDestroy()</code> that logs <code>"RatingStars destroyed"</code>, and add an <code>effect()</code> in its constructor that logs every time <code>value</code> changes — from a click <em>and</em> from the parent setting it programmatically. Wrap one instance in an <code>@if</code> block toggled by a button, so you can watch <code>ngOnDestroy</code> fire when it's removed.</li>
+                <li><strong>Shared <code>ng-template</code> (Section 5):</strong> the parent has two empty signal-backed lists, <code>favorites</code> and <code>recentlyViewed</code>. Define <em>one</em> <code>&lt;ng-template #emptyState&gt;</code> with a "Nothing here yet." message, then reference it from both lists' <code>@empty</code> blocks via <code>&lt;ng-container [ngTemplateOutlet]="emptyState"&gt;&lt;/ng-container&gt;</code> — proving one template can back two spots without duplicating markup or adding an extra wrapper element.</li>
+              </ol>
+
+              <div class="code-block">
+                <div class="code-block__label">parent.html — shape to fill in</div>
+                <pre><code>&lt;input #filterBox type="text" /&gt;
+&lt;button (click)="logFilter(filterBox.value)"&gt;Log filter&lt;/button&gt;
+
+&lt;ng-template #emptyState&gt;
+  &lt;p&gt;Nothing here yet.&lt;/p&gt;
+&lt;/ng-template&gt;
+
+&lt;h3&gt;Favorites&lt;/h3&gt;
+@for (item of favorites(); track item.id) {
+  &lt;p&gt;{{ item.name }}&lt;/p&gt;
+} @empty {
+  &lt;ng-container [ngTemplateOutlet]="emptyState"&gt;&lt;/ng-container&gt;
+}
+
+&lt;h3&gt;Recently viewed&lt;/h3&gt;
+@for (item of recentlyViewed(); track item.id) {
+  &lt;p&gt;{{ item.name }}&lt;/p&gt;
+} @empty {
+  &lt;ng-container [ngTemplateOutlet]="emptyState"&gt;&lt;/ng-container&gt;
+}
+</code></pre>
+              </div>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>ngTemplateOutlet</code> needs <code>NgTemplateOutlet</code> in the parent's <code>imports</code> array — the exact "not imported, doesn't render" mistake from Section 2's callout applies here too.</p>
+                </div>
+              </div>
             </div>
           </section>
 

@@ -475,6 +475,13 @@ model_b = LogisticRegression(max_iter=1000)
                 <li>Compare the fixed <code>model_a</code>, <code>model_b</code> and the baseline on the validation set — only evaluate on the test set once, at the very end, for your single final chosen model.</li>
               </ol>
 
+              <h3>Part 2: Diagnose the other model, and name the problem type</h3>
+              <p>Step 3 only ever practiced Section 4's diagnostic on <code>model_a</code>'s shape (overfitting). Apply the same read to <code>model_b</code>, which is likely to look quite different.</p>
+              <ol>
+                <li>Plot a learning curve for <code>model_b</code> the same way you did for <code>model_a</code>. State whether its shape reads as overfitting, underfitting, or neither, and point to specifically what in the two curves (their gap, and how high they plateau) tells you that.</li>
+                <li>In one sentence each: which of Section 1's three learning types does this task belong to, and is it classification or regression? Note why that answer determines which family of metrics (Week 6) would even make sense to report for it.</li>
+              </ol>
+
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>

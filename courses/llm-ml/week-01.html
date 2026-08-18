@@ -578,12 +578,39 @@ scores = [
 </code></pre>
               </div>
 
+              <h3>Part A: NumPy warm-up — axis &amp; broadcasting</h3>
+              <p>Before reaching for Pandas, do the column stats by hand in raw NumPy — this is the part of the week that's easy to skip and the easiest to get quietly wrong later.</p>
+              <ol>
+                <li>Stack <code>hours_studied</code> and <code>score</code> into a single NumPy array of shape <code>(5, 2)</code> — one row per student, columns in that order. Use <code>np.nan</code> for both missing values (Alan's hours, Edsger's score).</li>
+                <li>Compute the column-wise mean with <code>np.nanmean(data, axis=0)</code> (NaN-aware, so the missing values don't corrupt the result) — this gives you a shape-<code>(2,)</code> array: <code>[mean_hours, mean_score]</code>. Before moving on, say out loud which axis "disappeared" and why that's the right one for a <em>per-column</em> mean.</li>
+                <li>Use broadcasting to center the data in one line: <code>centered = data - np.nanmean(data, axis=0)</code>. Confirm the result's shape is still <code>(5, 2)</code> even though you subtracted a <code>(2,)</code> array.</li>
+              </ol>
+
+              <div class="code-block">
+                <div class="code-block__label">numpy_warmup.py — shape to fill in</div>
+                <pre><code>import numpy as np
+
+data = np.array([
+    [5, 92],
+    [4, 88],
+    [np.nan, 76],
+    [6, 95],
+    [3, np.nan],
+])  # shape (5, 2): columns are [hours_studied, score]
+
+col_means = np.nanmean(data, axis=0)   # [mean_hours, mean_score]
+col_stds = np.nanstd(data, axis=0)     # [std_hours, std_score]
+centered = data - col_means            # broadcasting: (5, 2) - (2,)
+</code></pre>
+              </div>
+
+              <h3>Part B: Pandas cleanup, merge &amp; visualization</h3>
               <p><strong>Requirements:</strong></p>
               <ol>
                 <li>Load both lists into two separate DataFrames.</li>
                 <li>Merge them on <code>student_id</code> using <code>how='left'</code> so every student is kept, then inspect which rows now have missing values with <code>.isna()</code>.</li>
                 <li>Fill missing <code>hours_studied</code> values with the column's mean; decide — and comment in your notebook — whether the row with a missing <code>score</code> should be dropped or filled, and why.</li>
-                <li>Add a <code>score_normalized</code> column: <code>(score - mean) / std</code>, using Pandas' <code>.mean()</code> and <code>.std()</code>.</li>
+                <li>Add a <code>score_normalized</code> column using the <code>col_means</code>/<code>col_stds</code> you already computed with NumPy in Part A, rather than calling Pandas' <code>.mean()</code>/<code>.std()</code> again — you should get the same numbers back, which is the point: Pandas' column stats <em>are</em> NumPy under the hood.</li>
                 <li>Plot a histogram of <code>hours_studied</code> and a scatter plot of <code>hours_studied</code> vs. <code>score</code>. Does the scatter plot suggest a relationship?</li>
               </ol>
 
@@ -591,7 +618,7 @@ scores = [
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>Merge first, then check for missing values — merging can <em>introduce</em> new <code>NaN</code>s (from the unmatched student) even though neither original table looked incomplete on its own.</p>
+                  <p>Merge first, then check for missing values — merging can <em>introduce</em> new <code>NaN</code>s (from the unmatched student) even though neither original table looked incomplete on its own. And in Part A, reach for <code>np.nanmean</code>/<code>np.nanstd</code> rather than <code>np.mean</code>/<code>np.std</code> — the plain versions propagate <code>NaN</code> into the whole result instead of skipping it.</p>
                 </div>
               </div>
             </div>

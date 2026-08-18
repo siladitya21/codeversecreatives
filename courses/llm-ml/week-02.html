@@ -567,6 +567,28 @@ query = np.array([0, 0, 2, 2, 0, 0])       # a search for "python code"
 </code></pre>
               </div>
 
+              <h3>Part A: Vectors, the transpose &amp; z-scores</h3>
+              <p>Before ranking anything, get comfortable with <code>docs</code> as one matrix rather than five separate vectors — Section 1's transpose and Section 4's z-score both need that shape.</p>
+              <ol>
+                <li>Stack all five document vectors, in <code>d1</code>–<code>d5</code> order, into one <code>doc_matrix</code> of shape <code>(5, 6)</code> (one row per document, one column per vocabulary word).</li>
+                <li>Compute <code>doc_matrix.T</code> and confirm its shape is <code>(6, 5)</code>. Print the row at index <code>2</code> ("python") — it's now that single word's count across all five documents. Say in one sentence what the transpose swapped: which axis meant "document" before, and what it means now.</li>
+                <li>Compute each document's total word count with <code>doc_matrix.sum(axis=1)</code>, then compute its z-score — <code>(length - mean) / std</code>, using Section 4's formula directly in NumPy, not a library function. Which document is the most unusually long or short relative to the other four?</li>
+              </ol>
+
+              <div class="code-block">
+                <div class="code-block__label">doc_matrix.py — shape to fill in</div>
+                <pre><code>doc_matrix = np.vstack([docs["d1"], docs["d2"], docs["d3"], docs["d4"], docs["d5"]])
+# doc_matrix.shape == (5, 6)
+
+word_by_doc = doc_matrix.T          # shape (6, 5)
+python_counts = word_by_doc[2]       # "python" column across every document
+
+lengths = doc_matrix.sum(axis=1)     # shape (5,) -- total words per document
+z_scores = (lengths - lengths.mean()) / lengths.std()
+</code></pre>
+              </div>
+
+              <h3>Part B: Ranking, softmax &amp; Bayes</h3>
               <p><strong>Requirements:</strong></p>
               <ol>
                 <li>Implement <code>cosine_similarity(a, b)</code> yourself (don't import it from a library) using <code>@</code> and <code>np.linalg.norm</code>.</li>
@@ -580,7 +602,7 @@ query = np.array([0, 0, 2, 2, 0, 0])       # a search for "python code"
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>Stack the five document vectors into one <code>(5, 6)</code> matrix and compute all five dot products with <code>query</code> in a single matrix-vector multiplication, instead of looping — good practice for the vectorized thinking from Week 1.</p>
+                  <p>Reuse the <code>doc_matrix</code> from Part A: instead of looping over <code>docs</code>, compute all five dot products with <code>query</code> in a single matrix-vector multiplication — <code>doc_matrix @ query</code> — then divide by each row's norm to get all five cosine similarities at once.</p>
                 </div>
               </div>
             </div>

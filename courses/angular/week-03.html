@@ -487,6 +487,41 @@ export const appConfig: ApplicationConfig = {
                   <p>If a component's template isn't rendering, check the parent's <code>imports</code> array first — the single most common standalone-component mistake is using a selector in a template without importing the component that owns it.</p>
                 </div>
               </div>
+
+              <h3>Part 2: A real provider, and a hand migration from NgModule</h3>
+              <p>Part 1 only used an empty <code>providers</code> array and never touched Section 6. This part exercises both for real.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Create a small injectable <code>GreetingService</code> with one method, <code>getGreeting(): string</code>. Register it in <code>appConfig.providers</code> (not <code>providedIn: 'root'</code> — the point is to see it land in the array from Section 3), then inject it into <code>StatCardComponent</code> with <code>inject()</code> and render its greeting.</li>
+                <li>Below is a small legacy NgModule. By hand — no schematic — convert it to its standalone equivalent, following the four mappings from Section 6 one at a time: drop <code>declarations</code>, give each piece its own <code>imports</code>, move <code>providers</code> into <code>ApplicationConfig</code>, and replace the bootstrap call.</li>
+                <li>Confirm the migrated version renders identically to the original before you delete the NgModule file.</li>
+              </ol>
+
+              <div class="code-block">
+                <div class="code-block__label">legacy-badge.module.ts — convert this by hand</div>
+                <pre><code>import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BadgeComponent } from './badge.component';
+import { BadgeService } from './badge.service';
+
+@NgModule({
+  declarations: [BadgeComponent],
+  imports: [CommonModule],
+  providers: [BadgeService],
+  exports: [BadgeComponent],
+})
+export class LegacyBadgeModule {}
+</code></pre>
+              </div>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>CommonModule</code> disappears entirely in the standalone version — its directives (<code>*ngIf</code>, <code>*ngFor</code>, etc.) are either replaced by Angular's built-in control-flow syntax or, if you're using the older structural directives, imported individually where used.</p>
+                </div>
+              </div>
             </div>
           </section>
 

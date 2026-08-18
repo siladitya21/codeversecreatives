@@ -511,6 +511,24 @@ effect(() =&gt; {
                   <p>If the persistence effect fires immediately on load and overwrites the <code>localStorage</code> value you just read, you've got the read/write order backwards — initialize the signal <em>from</em> storage first, then set up the effect that writes back to it.</p>
                 </div>
               </div>
+
+              <h3>Part 2: <code>linkedSignal()</code>, custom equality &amp; <code>untracked()</code></h3>
+              <p>Part 1 never touched Sections 4 or 5. This part adds a category filter and a debug-logging toggle to the same cart.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong><code>linkedSignal()</code> (Section 4):</strong> add a <code>category</code> field to each cart item, a <code>categories</code> computed signal (distinct category names, derived from <code>items</code>), and a <code>selectedCategory</code> built with <code>linkedSignal(() =&gt; categories()[0])</code>. Remove every item in the currently selected category and confirm <code>selectedCategory</code> automatically resets to whatever category is now first — not left pointing at one that no longer exists.</li>
+                <li><strong><code>untracked()</code> (Section 5):</strong> add a <code>debugLogging</code> signal (boolean). Change your persistence effect to also log <code>"items changed"</code> to the console — but read <code>debugLogging</code> via <code>untracked()</code> inside it, so toggling <code>debugLogging</code> on its own never re-runs the effect, only an actual <code>items</code> change does.</li>
+                <li><strong>Custom equality (Section 5):</strong> give <code>selectedCategory</code> (or a new <code>signal()</code> of your choice) a custom <code>equal</code> function that treats two values as equal case-insensitively (<code>"Books"</code> and <code>"books"</code> count as no change). Prove it by setting it to a differently-cased version of its current value and showing no dependent re-runs.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>To prove step 2 actually works, add a <code>console.count()</code> or a manual counter inside the effect — toggle <code>debugLogging</code> a few times, then change <code>items</code> once, and confirm the count only went up on the <code>items</code> change.</p>
+                </div>
+              </div>
             </div>
           </section>
 

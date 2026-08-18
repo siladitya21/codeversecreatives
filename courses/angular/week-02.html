@@ -517,6 +517,25 @@ ng serve --configuration=production
                   <p>If the library import doesn't resolve, check <code>tsconfig.json</code>'s <code>paths</code> entry — <code>ng generate library</code> should add it automatically, but it's worth confirming you can read what it wrote.</p>
                 </div>
               </div>
+
+              <h3>Part 2: Environments, build output &amp; DevTools</h3>
+              <p>Part 1 covered scaffolding but never touched Sections 2, 3, 5 or 6. This part exercises all four against the <code>admin</code> app you already built.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>In <code>admin</code>'s <code>src/environments/environment.ts</code> and <code>environment.production.ts</code>, add a <code>featureLabel</code> string that's different in each file (e.g. <code>'DEV BUILD'</code> vs <code>'PRODUCTION'</code>). Render it in the root component's template.</li>
+                <li>Run <code>ng build admin --configuration=development</code> and <code>ng build admin --configuration=production</code> into two different output folders, then <code>grep</code>/search the built <code>main.js</code> in each for your two labels — confirm each build only contains its own string, proving <code>fileReplacements</code> swapped the file before bundling.</li>
+                <li>Open the production <code>dist/admin</code> folder and identify, from Section 3's anatomy list, which three source files (<code>index.html</code>, <code>main.ts</code>, <code>styles.css</code>) each output file traces back to.</li>
+                <li>With Angular DevTools installed, run <code>ng serve admin</code>, open the DevTools "Angular" panel in the browser, and find your shared <code>ui-kit</code> component in the live component tree.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Production builds hash and minify filenames, so <code>main.js</code> may be named <code>main-XXXXXXXX.js</code> — search by pattern (<code>main*.js</code>) rather than the exact filename.</p>
+                </div>
+              </div>
             </div>
           </section>
 

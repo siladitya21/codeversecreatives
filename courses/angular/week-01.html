@@ -580,6 +580,42 @@ function safeDivide(a, b) {
                   <p>If <code>pluck</code>'s generic constraint feels unfamiliar, start without it — type <code>key</code> as <code>string</code> — get everything else working, then come back and tighten it to <code>K extends keyof T</code> once the rest compiles.</p>
                 </div>
               </div>
+
+              <h3>Part 2: Wrap it in a logged, async-aware service class</h3>
+              <p>Part 1 only exercised the type-system half of this week. This part puts Section 2 (modules &amp; async/await) and Section 5 (classes &amp; decorators) to work on top of the same file.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li>Wrap your three typed functions as methods on a <code>StringUtilsService</code> class instead of standalone functions.</li>
+                <li>Copy the <code>@Log</code> decorator from Section 5 and apply it to <code>safeDivide</code>, so every call prints its arguments before running.</li>
+                <li>Add an async method with this signature: <code>loadAndTruncate(url: string, max: number): Promise&lt;string&gt;</code>. It should <code>await fetch(url)</code>, parse the JSON body, pull out a <code>text</code> field with destructuring, and return <code>this.truncate(text ?? '', max)</code> — so a missing field degrades to an empty string instead of throwing.</li>
+                <li>Write two call sites for <code>loadAndTruncate</code>: one using <code>async/await</code> inside a <code>try/catch</code>, and one using <code>.then()/.catch()</code> — matching the two styles shown in Section 2.</li>
+              </ol>
+
+              <div class="code-block">
+                <div class="code-block__label">string-utils.service.ts — signature to fill in</div>
+                <pre><code>class StringUtilsService {
+  truncate(str: string, max: number): string { /* from Part 1 */ }
+
+  pluck&lt;T, K extends keyof T&gt;(list: T[], key: K): T[K][] { /* from Part 1 */ }
+
+  @Log
+  safeDivide(a: number, b: number): Result&lt;number&gt; { /* from Part 1 */ }
+
+  async loadAndTruncate(url: string, max: number): Promise&lt;string&gt; {
+    // await fetch(url), destructure `text`, fall back with ??, then truncate
+  }
+}
+</code></pre>
+              </div>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>No real API to hit? Stub it: write a tiny local <code>fetch</code> replacement that returns <code>Promise.resolve({ json: async () =&gt; ({ text: 'a long string…' }) })</code>. The point is the <code>async/await</code> and destructuring shape, not the network call.</p>
+                </div>
+              </div>
             </div>
           </section>
 

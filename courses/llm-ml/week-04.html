@@ -513,6 +513,13 @@ df = pd.DataFrame({
                 <li>Fit the full pipeline on the training set only, then transform the test set, and confirm the transformed test set's mean isn't exactly 0 (proving it reused the training set's statistics rather than its own).</li>
               </ol>
 
+              <h3>Part 2: Confirm it's actually an outlier before you transform it</h3>
+              <p>Step 4 log-transformed <code>income</code> on faith. Use Section 3's IQR method first to check that decision.</p>
+              <ol>
+                <li>Run the IQR outlier check from Section 3 on the full <code>income</code> column (before splitting): compute <code>q1</code>/<code>q3</code>, the IQR, and the lower/upper bounds, then confirm the <code>250000</code> row is flagged.</li>
+                <li>Compute a second version of the feature by <em>capping</em> (winsorizing) the flagged value at the upper bound instead of log-transforming it. Compare the two resulting distributions' standard deviations, and note in one sentence a situation where you'd prefer capping over a log-transform (hint: does either preserve income in its original dollar units?).</li>
+              </ol>
+
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>

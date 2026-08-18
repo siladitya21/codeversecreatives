@@ -524,10 +524,24 @@ rng = np.random.default_rng(seed=7)
 # 1 = converted, 0 = did not convert
 control = rng.binomial(1, 0.11, size=1200)      # existing checkout page
 treatment = rng.binomial(1, 0.135, size=1200)   # redesigned checkout page
+
+# Order value ($) for converting users only, each with one extreme outlier
+order_value_control = np.append(rng.normal(48, 6, size=control.sum() - 1), 400)
+order_value_treatment = np.append(rng.normal(51, 6, size=treatment.sum() - 1), 20)
+
+# Whether each user also opened a promo email that week -- sent independently of the test
+opened_promo_email = rng.binomial(1, 0.20, size=1200)
 </code></pre>
               </div>
 
-              <p><strong>Requirements:</strong></p>
+              <h3>Part A: Describe the data before you test it</h3>
+              <p>Section 1 warned that the mean can mislead on skewed data, and both order-value arrays above have exactly one planted outlier. Confirm that for yourself before running any test.</p>
+              <ol>
+                <li>Compute the mean <em>and</em> median of <code>order_value_control</code> and <code>order_value_treatment</code>. Which statistic moves more because of the single outlier, and why?</li>
+                <li><code>control</code> and <code>treatment</code> are Binomial samples by construction. Compute each array's sample variance with <code>.var()</code>, then compute the theoretical Binomial variance per trial, <code>p * (1 - p)</code>, using each group's own observed conversion rate as <code>p</code>. Confirm the two numbers are close — this is Section 2's <code>variance = mean</code>-style identity, just for a Bernoulli variable instead of Poisson.</li>
+              </ol>
+
+              <p><strong>Part B — Requirements:</strong></p>
               <ol>
                 <li>Compute the conversion rate (mean) for each group, and the raw percentage-point lift.</li>
                 <li>Run an independent two-sample t-test (<code>scipy.stats.ttest_ind</code>) comparing <code>control</code> and <code>treatment</code>, and report the p-value.</li>
@@ -535,6 +549,9 @@ treatment = rng.binomial(1, 0.135, size=1200)   # redesigned checkout page
                 <li>Decide, in writing: is this result statistically significant at <code>p &lt; 0.05</code>? Does the lift look practically meaningful regardless of significance? Justify both answers using the numbers you computed.</li>
                 <li>Explain in one paragraph why running this test for only one day, rather than two weeks, would make your conclusion less trustworthy — tie your answer back to the Central Limit Theorem from Section 3.</li>
               </ol>
+
+              <h3>Part C: Correlation isn't causation — check yourself</h3>
+              <p><code>opened_promo_email</code> was generated completely independently of which checkout page a user saw. Compute the correlation coefficient (<code>np.corrcoef</code>) between <code>opened_promo_email</code> and the binary conversion outcome across all 2,400 users combined. You'll likely find a small nonzero correlation purely by chance. In one paragraph, explain why treating that as "opening the email caused conversion" would repeat Section 6's ice-cream-and-drowning mistake — and how a p-value from Part B, applied to this correlation, would tell you it's not statistically distinguishable from noise.</p>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
