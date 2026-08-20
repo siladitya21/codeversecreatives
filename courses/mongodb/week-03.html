@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Week 18: Security in System Design — CodeVerse Creatives</title>
-<meta name="description" content="Week 18 of the System Design curriculum: authentication vs. authorization at scale, encryption in transit and at rest, secrets management, and designing for DDoS resilience." />
+<title>Week 3: Schema Design &amp; Data Modeling Patterns — CodeVerse Creatives</title>
+<meta name="description" content="Week 3 of the MongoDB curriculum: embedding vs. referencing, the one-to-few/one-to-many/one-to-squillions patterns, hybrid denormalization, and schema validation with $jsonSchema." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -27,7 +27,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../../css/style.css" />
 </head>
-<body data-course="system-design">
+<body data-course="mongodb">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -66,6 +66,34 @@
               <span class="nav-course-card__meta">1 of 16 Weeks</span>
             </span>
           </a>
+          <a href="../data-analytics/index.html" class="nav-course-card c-data-analytics">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
+              <span class="nav-course-card__meta">2 of 12 Weeks</span>
+            </span>
+          </a>
+          <a href="../flutter/index.html" class="nav-course-card c-flutter">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Flutter</span>
+              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+            </span>
+          </a>
+          <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/><path d="m9 14 2 2 4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Coding Practice</span>
+              <span class="nav-course-card__meta">120 Problems</span>
+            </span>
+          </a>
+          <a href="../golang/index.html" class="nav-course-card c-golang">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Go</span>
+              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+            </span>
+          </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a5 5 0 1 1 .87-9.92A6 6 0 0 1 21 11a4 4 0 0 1-.5 8Z"/></svg></span>
             <span class="nav-course-card__text">
@@ -91,7 +119,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -99,6 +127,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">LLM &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../mongodb/index.html" class="nav-course-card c-mongodb" aria-current="page">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">MongoDB</span>
+              <span class="nav-course-card__meta">4 of 10 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
@@ -157,46 +192,11 @@
               <span class="nav-course-card__meta">26 Weeks</span>
             </span>
           </a>
-          <a href="../system-design/index.html" class="nav-course-card c-system-design" aria-current="page">
+          <a href="../system-design/index.html" class="nav-course-card c-system-design">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">System Design</span>
               <span class="nav-course-card__meta">28 Weeks</span>
-            </span>
-          </a>
-          <a href="../mongodb/index.html" class="nav-course-card c-mongodb">
-            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5"/><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3"/></svg></span>
-            <span class="nav-course-card__text">
-              <span class="nav-course-card__title">MongoDB</span>
-              <span class="nav-course-card__meta">4 of 10 Weeks</span>
-            </span>
-          </a>
-          <a href="../data-analytics/index.html" class="nav-course-card c-data-analytics">
-            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
-            <span class="nav-course-card__text">
-              <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">2 of 12 Weeks</span>
-            </span>
-          </a>
-          <a href="../golang/index.html" class="nav-course-card c-golang">
-            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
-            <span class="nav-course-card__text">
-              <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
-            </span>
-          </a>
-          <a href="../flutter/index.html" class="nav-course-card c-flutter">
-            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
-            <span class="nav-course-card__text">
-              <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
-            </span>
-          </a>
-          <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
-            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M9 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3"/><path d="m9 14 2 2 4-4"/></svg></span>
-            <span class="nav-course-card__text">
-              <span class="nav-course-card__title">Coding Practice</span>
-              <span class="nav-course-card__meta">120 Problems</span>
             </span>
           </a>
         </div>
@@ -220,46 +220,46 @@
   <section class="lesson-header">
     <div class="container">
       <div class="lesson-crumb">
-        <a href="../system-design/index.html">System Design Syllabus</a>
+        <a href="../mongodb/index.html">MongoDB Syllabus</a>
         <span>/</span>
-        <a href="../system-design/index.html#timeline">Module 15 · Security</a>
+        <a href="../mongodb/index.html#timeline">Module 3 · Schema Design</a>
         <span>/</span>
-        <span aria-current="page">Week 18</span>
+        <span aria-current="page">Week 3</span>
       </div>
 
-      <h1>Week 18: Security in System Design</h1>
+      <h1>Week 3: Schema Design &amp; Data Modeling Patterns</h1>
       <p class="lesson-header__lede">
-        Security in a system design interview isn't about naming encryption algorithms — it's
-        about deciding, deliberately, who can do what, where a secret can and can't safely live,
-        and what happens to the system under active abuse rather than just normal load. This week
-        covers authentication vs. authorization at scale, encryption in transit and at rest,
-        secrets management, and designing for a traffic pattern this course hasn't addressed yet:
-        traffic that's actively trying to hurt the system, not just use it.
+        MongoDB doesn't enforce a schema at the database level, which means the single most
+        consequential decision in any MongoDB application is entirely yours: for any given
+        relationship between two pieces of data, do you nest one inside the other, or keep
+        them separate and link them? This week gives you a repeatable way to answer that
+        question instead of guessing.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Module 15 of 24</span>
-        <span class="chip">Week 18 of 28</span>
-        <span class="chip">~3–4 Hours</span>
+        <span class="chip chip--accent">Module 3 of 10</span>
+        <span class="chip">Week 3 of 10</span>
+        <span class="chip">~3 Hours</span>
         <span class="chip">Hands-on Exercise Included</span>
       </div>
 
       <div class="obj-recap reveal">
         <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Distinguish authentication from authorization and design each at scale</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain where encryption in transit and at rest each apply, and why neither alone is sufficient</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Design a layered defense against a volumetric DDoS attack</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Choose between embedding and referencing for a given relationship, with reasons</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Recognize the one-to-few, one-to-many and one-to-squillions shapes and model each correctly</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Enforce a document shape with <code>$jsonSchema</code> validation</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#authn-authz"><span>1</span> Authentication vs. Authorization at Scale</a>
-        <a href="#encryption"><span>2</span> Encryption in Transit &amp; at Rest</a>
-        <a href="#secrets"><span>3</span> Secrets Management</a>
-        <a href="#ddos"><span>4</span> Deep Dive: Designing for DDoS Resilience</a>
-        <a href="#exercise"><span>5</span> Exercise</a>
-        <a href="#quiz"><span>6</span> Knowledge Check</a>
+        <a href="#embed-vs-reference"><span>1</span> Embedding vs. Referencing</a>
+        <a href="#one-to-few"><span>2</span> One-to-Few: Embed by Default</a>
+        <a href="#one-to-many"><span>3</span> One-to-Many &amp; One-to-Squillions</a>
+        <a href="#hybrid"><span>4</span> Hybrid: Denormalized Copies</a>
+        <a href="#validation"><span>5</span> Schema Validation</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -270,179 +270,240 @@
       <div class="lesson-layout">
         <article class="lesson-article">
 
-          <section id="authn-authz">
-            <h2>1. Authentication vs. Authorization at Scale</h2>
+          <section id="embed-vs-reference">
+            <h2>1. Embedding vs. Referencing: The Core Tradeoff</h2>
             <p>
-              <strong>Authentication</strong> answers "who are you?"; <strong>authorization</strong>
-              answers "what are you allowed to do?" — conflating them is a common design mistake:
-              a system that only checks "is this a valid logged-in user?" without a separate check
-              for "is this specific user allowed to do this specific thing to this specific
-              resource?" will happily let a logged-in user edit someone else's data.
+              Every relationship between two pieces of data in a MongoDB schema resolves to
+              one of two choices. <strong>Embedding</strong> nests related data directly
+              inside the parent document. <strong>Referencing</strong> keeps it in a separate
+              collection and stores just an <code>_id</code> to link the two — the same idea
+              as a foreign key, but MongoDB never enforces or auto-joins it for you.
             </p>
+
             <div class="code-block">
-              <div class="code-block__label">the request path -- both checks, in order</div>
-              <pre><code>Request: DELETE /orders/8821, from user_id 4821
-
-1. AuthN: is this request's token valid, and whose is it?
-   --&gt; yes, it belongs to user 4821
-
-2. AuthZ: does user 4821 have permission to delete order 8821?
-   --&gt; check: is 4821 the owner of order 8821, or an admin?
-   --&gt; if neither: reject with 403, even though AuthN succeeded
+              <div class="code-block__label">embedding — one document, one read</div>
+              <pre><code>{
+  "_id": ObjectId("..."),
+  "title": "Getting Started with Aggregation",
+  "author": "Priya Nair",
+  "comments": [
+    { "user": "dev_ana", "text": "This finally clicked for me!", "postedAt": ISODate("2026-01-04") },
+    { "user": "kmiller", "text": "Great walkthrough.", "postedAt": ISODate("2026-01-05") }
+  ]
+}
 </code></pre>
             </div>
+
+            <div class="code-block">
+              <div class="code-block__label">referencing — two collections, two reads (or one $lookup)</div>
+              <pre><code>// posts collection
+{ "_id": ObjectId("post1"), "title": "Getting Started with Aggregation", "author": "Priya Nair" }
+
+// comments collection
+{ "_id": ObjectId("c1"), "postId": ObjectId("post1"), "user": "dev_ana", "text": "This finally clicked for me!" }
+{ "_id": ObjectId("c2"), "postId": ObjectId("post1"), "user": "kmiller", "text": "Great walkthrough." }
+</code></pre>
+            </div>
+
             <p>
-              At scale, authentication is usually centralized in one identity provider (issuing
-              tokens that every service can verify independently, often JWTs — Week 21 of the
-              React course covers the client side of this), while authorization is typically
-              pushed as close to the resource as possible — the Order Service itself decides
-              whether a given user can act on a given order, rather than a central gatekeeper
-              trying to know every service's permission rules. This mirrors Week 15's bounded
-              context principle: each service owns the authorization logic for the data it owns.
+              Embedding wins on <strong>read performance</strong> — one query returns
+              everything, no join required — and keeps genuinely related data physically
+              together. Referencing wins when the related data is large, grows without bound,
+              needs to be queried or updated independently of its "parent," or is shared
+              across many parents at once. The question to ask for every relationship in your
+              schema: <em>"Do I usually need this data together, or separately?"</em>
             </p>
+
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>"They were logged in" is never a complete security answer</strong>
-                <p>In an interview, describing a system as secure because "requests are authenticated" leaves the more important question unanswered: authenticated to do <em>what</em>? Naming the specific authorization check — ownership, role, resource-level permission — that runs on the sensitive action itself is what actually demonstrates the distinction is understood.</p>
+                <strong>Model for your actual read patterns, not the "purest" shape</strong>
+                <p>Relational design starts from the data's structure and normalizes to avoid duplication. MongoDB schema design starts from <em>how your application will query the data</em> — the "correct" shape is whichever one makes your most frequent queries fast and simple, even if that means some duplication.</p>
               </div>
             </div>
           </section>
 
-          <section id="encryption">
-            <h2>2. Encryption in Transit &amp; at Rest</h2>
+          <section id="one-to-few">
+            <h2>2. One-to-Few: Embed by Default</h2>
             <p>
-              These protect against two different threats, and a system needs both — one doesn't
-              substitute for the other.
+              When one document owns a small, bounded number of related items that always
+              belong to it and rarely need to be queried on their own — a user's few
+              addresses, a product's handful of variants — embedding is almost always the
+              right default. It's simple, it's fast to read, and there's no risk of an
+              unbounded array.
             </p>
-            <ul>
-              <li><strong>Encryption in transit</strong> (TLS) protects data while it's moving across a network — between a client and the API gateway, and increasingly between services themselves (Week 16's service mesh often provides this automatically via mutual TLS). It defends against an attacker intercepting traffic on the wire.</li>
-              <li><strong>Encryption at rest</strong> protects data while it's stored — on disk, in a database, in a backup. It defends against a completely different threat: someone gaining access to the underlying storage (a stolen disk, a misconfigured backup bucket, a compromised database snapshot) without ever touching the network.</li>
-            </ul>
+
+            <div class="code-block">
+              <div class="code-block__label">a user with a small, bounded set of addresses</div>
+              <pre><code>db.users.insertOne({
+  name: "Meera Iyer",
+  email: "meera@example.com",
+  addresses: [
+    { label: "Home", city: "Pune", zip: "411001" },
+    { label: "Work", city: "Pune", zip: "411057" }
+  ]
+})
+
+// Reading the whole thing back needs exactly one query
+db.users.findOne({ email: "meera@example.com" })
+</code></pre>
+            </div>
+
             <p>
-              A system with TLS everywhere but an unencrypted database is fully protected against
-              network eavesdropping and fully exposed the moment that database's storage is
-              accessed directly — the two controls address non-overlapping attack surfaces, which
-              is exactly why "we use HTTPS" is an incomplete answer to "is this data protected."
+              The word "few" is doing real work here — a handful of addresses is fine
+              embedded; thousands of order-history entries embedded in a user document is not
+              (Section 3 covers exactly why).
             </p>
           </section>
 
-          <section id="secrets">
-            <h2>3. Secrets Management</h2>
+          <section id="one-to-many">
+            <h2>3. One-to-Many &amp; One-to-Squillions: When to Reference</h2>
             <p>
-              Database passwords, API keys, and encryption keys themselves are a special category
-              of data: if they leak, they compromise everything they protect. Two rules cover most
-              of what a design needs to get right here.
+              As the "many" side grows past a small, bounded count, embedding starts causing
+              real problems: MongoDB has a hard <strong>16MB document size limit</strong>, an
+              array that grows forever makes the parent document progressively slower to read
+              and rewrite, and you lose the ability to query or paginate the related items on
+              their own.
             </p>
-            <div class="code-block">
-              <div class="code-block__label">secrets -- wrong vs. right</div>
-              <pre><code>WRONG:
-  DATABASE_PASSWORD = "hunter2"   // hardcoded in source code
-  -- now in git history forever, visible to anyone with repo
-     access, and rotating it means a code change + redeploy
 
-RIGHT:
-  DATABASE_PASSWORD = secretsManager.get("prod/db/password")
-  -- fetched at runtime from a dedicated secrets store (e.g.
-     Vault, AWS Secrets Manager), never committed to source
-     control, rotatable without a code change or redeploy
+            <div class="code-block">
+              <div class="code-block__label">one-to-many: a blog's comments, referenced</div>
+              <pre><code>// A popular post could have thousands of comments -- reference, don't embed
+db.comments.insertOne({
+  postId: ObjectId("post1"),
+  user: "dev_ana",
+  text: "This finally clicked for me!",
+  postedAt: new Date()
+})
+
+// Index the foreign-key-style field, then query comments independently
+db.comments.createIndex({ postId: 1 })
+db.comments.find({ postId: ObjectId("post1") }).sort({ postedAt: -1 }).limit(20)
 </code></pre>
             </div>
+
             <p>
-              The second rule is <strong>least privilege</strong>: a service should be able to
-              fetch only the specific secrets it actually needs, not every secret in the system.
-              If the Notification Service is compromised, it should never have had access to the
-              Payment Service's database credentials in the first place — least privilege limits
-              the blast radius of any single service being breached, rather than relying on every
-              service being perfectly secure all the time.
+              <strong>One-to-squillions</strong> — a relationship that could genuinely reach
+              millions of related items, like every sensor reading a single IoT device has
+              ever produced — always references, and usually needs the "many" side's own
+              index strategy from Week 2 to stay queryable at that scale. A useful rule of
+              thumb: if you can't put a realistic upper bound on how large the "many" side
+              could grow, don't embed it.
             </p>
+
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>Rotatability is the real test of a secrets design</strong>
-                <p>A useful question to ask about any secrets design: "if this credential leaked right now, how long would it take to fully rotate it, and what breaks while that's happening?" A design where rotation means editing source code and redeploying every service is a much weaker design than one where rotation is a single API call to a secrets store that every service re-reads automatically.</p>
+                <strong>The 16MB limit is a hard ceiling, not a guideline</strong>
+                <p>An insert or update that would push a document past 16MB fails outright — there's no soft warning first. An ever-growing embedded array (comments, log entries, order history) is the single most common way an application accidentally runs into this limit in production.</p>
               </div>
             </div>
           </section>
 
-          <section id="ddos">
-            <h2>4. Deep Dive: Designing for DDoS Resilience</h2>
+          <section id="hybrid">
+            <h2>4. Hybrid Patterns: Embedding a Denormalized Copy</h2>
             <p>
-              Every system this course has designed assumes traffic is trying to <em>use</em> the
-              system. A <strong>distributed denial-of-service (DDoS)</strong> attack is traffic
-              trying to overwhelm it — often by simple volume, from many sources at once, making
-              it impossible to block with a single IP-based rule.
+              Real schemas frequently do both at once — reference for the source of truth, but
+              embed a small, denormalized copy of the fields you actually display together, so
+              your most common read still needs only one query.
             </p>
+
             <div class="code-block">
-              <div class="code-block__label">layered DDoS defense</div>
-              <pre><code>[Attacker traffic, many sources]
-        |
-        v
-[CDN / Edge Network]  -- absorbs and filters volumetric traffic
-        |                 far from your own infrastructure (Week 2);
-        |                 many attacks never reach past this layer
-        v
-[Rate Limiter / WAF]  -- Week 11's algorithms, now defending
-        |                 against abuse instead of just fair use;
-        |                 blocks patterns that look automated
-        v
-[API Gateway]          -- authenticated, legitimate traffic only
-        |                 reaches this point
-        v
-[Your Services]
+              <div class="code-block__label">a hybrid: full author record referenced, display fields embedded</div>
+              <pre><code>// authors collection -- the source of truth
+{ "_id": ObjectId("a1"), "name": "Priya Nair", "bio": "...", "email": "priya@example.com", "postCount": 42 }
+
+// posts collection -- embeds just enough of the author to render a post list
+// without a $lookup for every single listing page
+{
+  "_id": ObjectId("post1"),
+  "title": "Getting Started with Aggregation",
+  "author": { "_id": ObjectId("a1"), "name": "Priya Nair" }
+}
 </code></pre>
             </div>
+
             <p>
-              The core idea worth stating explicitly: <strong>absorb and filter as far from your
-              own infrastructure as possible</strong>. A CDN or edge network (Week 2) has vastly
-              more capacity than any single system's own servers, so pushing the first line of
-              defense there means most volumetric traffic never reaches infrastructure that could
-              actually be overwhelmed. Week 11's rate limiter, originally designed for fair usage
-              among legitimate clients, is repurposed here as an abuse filter — the same
-              algorithms (token bucket, sliding window), applied against a different kind of
-              traffic pattern.
+              The cost of this pattern is explicit: if an author changes their display name,
+              every post document embedding the old copy is now stale until you update it.
+              That's a deliberate tradeoff, not an accident — you're trading a small amount of
+              write-time complexity (updating denormalized copies when the source changes) for
+              read-time simplicity on your most common query. Choose it when reads vastly
+              outnumber writes to the duplicated field, which is true for most display data.
             </p>
+          </section>
+
+          <section id="validation">
+            <h2>5. Enforcing Structure with $jsonSchema Validation</h2>
             <p>
-              A second, less obvious risk: a system that gracefully degrades under a DDoS by
-              serving cached or simplified responses is far more resilient than one that fails
-              completely — Week 6-7's caching strategies double as a DDoS mitigation, since a
-              flood of read requests hitting a cache never reaches the database at all, while a
-              flood hitting an uncached endpoint can take the database down even at moderate
-              request volume.
+              "Schemaless" doesn't mean you can't enforce structure — <code>$jsonSchema</code>
+              validation lets a collection reject documents that don't match a shape you
+              define, giving you database-level guardrails on top of application-level
+              discipline.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">mongosh</div>
+              <pre><code>db.createCollection("products", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["name", "price", "category"],
+      properties: {
+        name: { bsonType: "string", description: "must be a string and is required" },
+        price: { bsonType: "number", minimum: 0, description: "must be a non-negative number" },
+        category: { enum: ["Electronics", "Office", "Home"], description: "must be one of the allowed categories" }
+      }
+    }
+  }
+})
+
+// This insert is rejected -- price is negative and category isn't in the enum
+db.products.insertOne({ name: "Broken Widget", price: -5, category: "Toys" })
+</code></pre>
+            </div>
+
+            <p>
+              Validation runs on every insert and update by default, and you can add it to an
+              existing collection with <code>collMod</code> rather than only at creation time.
+              This is the same instinct as strict typing in application code — catching a
+              malformed document at write time is far cheaper than discovering it while
+              reading corrupted data back weeks later.
             </p>
           </section>
 
           <section id="exercise">
-            <h2>5. Hands-on Exercise</h2>
+            <h2>6. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Secure the ride-booking system from Week 15</h3>
-              <p>Week 15's decomposed ride-booking system (Order, Inventory, Shipping-equivalent services) currently has no explicit security design.</p>
+              <h3>Model a blog with the right pattern for each relationship</h3>
+              <p>Design and build a small blog schema, deliberately using a different pattern for each of its three relationships.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Design the authentication flow: where tokens are issued, and how a downstream service (say, the Trip Service) verifies a request's token without calling back to the identity provider on every single request.</li>
-                <li>Design one concrete authorization check for "a rider can view their own trip history, but not another rider's" — name which service owns that check and what it actually verifies.</li>
-                <li>Identify one piece of data in this system that needs encryption at rest specifically (not just in transit), and justify why.</li>
-                <li>Propose a secrets management approach for the Trip Service's database credentials, applying the least-privilege principle from Section 3.</li>
-                <li>Sketch a layered DDoS defense (Section 4) for the public trip-request endpoint, naming what each layer filters out before it reaches your services.</li>
+                <li>Create an <code>authors</code> collection. Each author should embed a small, bounded <code>socialLinks</code> array (one-to-few) directly on the document.</li>
+                <li>Create a <code>posts</code> collection where each post embeds a denormalized <code>{ _id, name }</code> copy of its author (the hybrid pattern), not the full author record.</li>
+                <li>Create a separate <code>comments</code> collection referencing posts by <code>postId</code> (one-to-many/squillions) — insert at least 15 comments across 2–3 posts.</li>
+                <li>Index <code>comments.postId</code>, and write a query returning the 5 most recent comments for one post.</li>
+                <li>Add <code>$jsonSchema</code> validation to <code>posts</code> requiring <code>title</code> (string) and <code>author._id</code> (present), and confirm an insert missing <code>title</code> is rejected.</li>
+                <li>Write two or three sentences justifying why you chose embedding for the author's social links but referencing for comments — tie the answer back to Section 1's "together or separately" question.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>For requirement 1: a signed token (like a JWT) that a service can verify using only a shared public key avoids calling back to the identity provider per-request — the token itself carries enough information to be checked locally, which matters a lot once dozens of services are each handling many requests per second.</p>
+                  <p>If your validator rejects every insert, including ones you expect to succeed, double-check <code>required</code> lists exact field names and that nested fields (like <code>author._id</code>) need <code>properties</code> nesting to validate, not a flat dotted-path string.</p>
                 </div>
               </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>6. Knowledge Check</h2>
+            <h2>7. Knowledge Check</h2>
             <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
@@ -450,13 +511,13 @@ RIGHT:
                 <summary>
                   <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>A system correctly verifies every request comes from a logged-in user, but any logged-in user can edit any other user's order. What's missing?</h4>
+                    <h4>What's the single question this lesson recommends asking to decide between embedding and referencing?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Authorization. The system has authentication (confirming who the user is) but no authorization check verifying that specific user has permission to act on that specific resource — the two are different checks, and a valid identity alone doesn't imply permission to do anything to anything.</p>
+                    <p>"Do I usually need this data together, or separately?" — model for your application's actual read patterns rather than starting from the data's abstract structure the way relational normalization does.</p>
                   </div>
                 </div>
               </details>
@@ -465,13 +526,13 @@ RIGHT:
                 <summary>
                   <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>Why is "we use HTTPS everywhere" an incomplete answer to whether user data is fully protected?</h4>
+                    <h4>Why is embedding a blog post's comments directly into the post document a risky choice for a popular blog?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>HTTPS/TLS only protects data in transit, defending against network interception. It does nothing to protect data at rest — a stolen disk, a misconfigured backup, or direct access to an unencrypted database bypasses TLS entirely, since that data was never moving across a network in that scenario. Both protections are needed because they defend against different attack surfaces.</p>
+                    <p>Comments on a popular post could grow into the thousands with no natural upper bound — an unbounded embedded array risks hitting MongoDB's hard 16MB document size limit, and makes the parent post document progressively slower to read and rewrite as it grows. This is a one-to-squillions relationship, which should be referenced, not embedded.</p>
                   </div>
                 </div>
               </details>
@@ -480,13 +541,13 @@ RIGHT:
                 <summary>
                   <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>Why does the least-privilege principle matter for secrets management specifically, beyond just "don't hardcode secrets in source code"?</h4>
+                    <h4>In the hybrid pattern, what's the real cost of embedding a denormalized copy of an author's name on every post?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Least privilege limits the blast radius of a single service being compromised — if a low-risk service like Notifications never had access to Payment's database credentials, compromising Notifications doesn't expose Payment's data. Without it, every service effectively has access to every secret, so any one service's compromise becomes a compromise of the entire system.</p>
+                    <p>If the author's name changes, every post document holding the old embedded copy becomes stale until it's explicitly updated — the denormalized copy isn't automatically kept in sync. This is a deliberate tradeoff: extra write-time work to keep copies current, in exchange for not needing a <code>$lookup</code> on every read of a post list.</p>
                   </div>
                 </div>
               </details>
@@ -495,13 +556,13 @@ RIGHT:
                 <summary>
                   <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>Why does a layered DDoS defense push filtering as far from your own infrastructure as possible (CDN/edge first, rate limiter second)?</h4>
+                    <h4>Does <code>$jsonSchema</code> validation run only when a collection is first created?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>A CDN or edge network has vastly more capacity than any single system's own servers, so absorbing and filtering volumetric traffic there means most of an attack never reaches infrastructure that could actually be overwhelmed. Filtering only at your own API gateway means the attack traffic has already consumed your own network capacity before any defense runs.</p>
+                    <p>No — once set, a validator runs on every insert and update against that collection, rejecting documents that don't match. It can also be added to an already-existing collection later using <code>collMod</code>, rather than only being available at collection-creation time.</p>
                   </div>
                 </div>
               </details>
@@ -511,13 +572,13 @@ RIGHT:
         </article>
 
         <div class="lesson-pager">
-          <a href="week-17.html" class="lesson-pager__link lesson-pager__link--prev">
-            <span class="lesson-pager__label">← Back to</span>
-            <span class="lesson-pager__title">Week 17: Observability — Logging, Metrics &amp; Distributed Tracing</span>
+          <a href="week-02.html" class="lesson-pager__link lesson-pager__link--prev">
+            <span class="lesson-pager__label">← Previous</span>
+            <span class="lesson-pager__title">Week 2: Querying, Indexing &amp; Aggregation</span>
           </a>
-          <a href="week-19.html" class="lesson-pager__link lesson-pager__link--next">
-            <span class="lesson-pager__label">Up next</span>
-            <span class="lesson-pager__title">Week 19: Search Systems &amp; Full-Text Search →</span>
+          <a href="week-04.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Next</span>
+            <span class="lesson-pager__title">Week 4: Mongoose &amp; the Node.js Driver</span>
           </a>
         </div>
       </div>
@@ -541,11 +602,16 @@ RIGHT:
         <div class="footer__course-grid">
           <a href="../../courses/angular/index.html">Angular</a>
           <a href="../../courses/cybersecurity/index.html">Cybersecurity Basics</a>
+          <a href="../../courses/data-analytics/index.html">Excel, SQL &amp; Power BI</a>
+          <a href="../../courses/flutter/index.html">Flutter</a>
+          <a href="../../courses/coding-practice/index.html">Coding Practice</a>
+          <a href="../../courses/golang/index.html">Go</a>
           <a href="../../courses/devops-cloud/index.html">DevOps &amp; Cloud</a>
           <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
           <a href="../../courses/github/index.html">Git &amp; GitHub</a>
-      <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
+          <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
           <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/mongodb/index.html">MongoDB</a>
           <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
           <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
           <a href="../../courses/php/index.html">PHP</a>
@@ -555,11 +621,6 @@ RIGHT:
           <a href="../../courses/servicenow/index.html">ServiceNow</a>
           <a href="../../courses/spring-boot/index.html">Spring Boot</a>
           <a href="../../courses/system-design/index.html">System Design</a>
-          <a href="../../courses/mongodb/index.html">MongoDB</a>
-          <a href="../../courses/data-analytics/index.html">Excel, SQL &amp; Power BI</a>
-          <a href="../../courses/golang/index.html">Go</a>
-          <a href="../../courses/flutter/index.html">Flutter</a>
-          <a href="../../courses/coding-practice/index.html">Coding Practice</a>
         </div>
       </div>
 
