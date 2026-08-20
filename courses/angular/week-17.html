@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -524,6 +524,24 @@ describe('CartStore', () =&gt; {
                 <div>
                   <strong>Hint</strong>
                   <p>Before starting, write one sentence for why this state deserves a Signal Store rather than three separate plain services — if you can't articulate a real reason beyond "the lesson said to," that's worth sitting with, since Section 3's guidance applies to your own projects just as much as this exercise.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: The plain-service alternative, entity state, and DevTools</h3>
+              <p>Part 1 jumped straight to a Signal Store without ever building Section 1's plain alternative to compare against, and never touched Sections 4 or 5.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Plain service comparison (Sections 1 &amp; 3):</strong> implement just the <code>notifications</code> slice a second time as a plain <code>@Injectable</code> signal-based service (Section 1's <code>CartState</code> shape) — <code>.asReadonly()</code>, an <code>addNotification</code> method, and an <code>unreadCount</code> computed. Write one paragraph comparing it directly to the equivalent slice of your <code>AppStore</code>: how much code did each need, and was the Signal Store actually worth it here?</li>
+                <li><strong>Entity state (Section 4):</strong> convert <code>AppStore</code>'s <code>notifications</code> from a plain array to entity-shaped state — <code>entities: Record&lt;string, Notification&gt;</code> plus an <code>ids: string[]</code> — and rewrite <code>markAsRead(id)</code> as a single-key <code>patchState</code> write instead of an array <code>.map()</code>.</li>
+                <li><strong>DevTools (Section 5):</strong> wire up Redux DevTools (or your NgRx version's devtools integration) in a dev-only config, then click through adding a notification and marking it read in the running app. Confirm each <code>patchState</code> call shows up as its own entry in the timeline, and try time-traveling back one step.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Once <code>notifications</code> is entity-shaped, your <code>unreadNotificationCount</code> computed needs to iterate <code>ids.map(id => entities[id])</code> rather than the old plain array — a small but easy-to-miss update everywhere the old shape was assumed.</p>
                 </div>
               </div>
             </div>

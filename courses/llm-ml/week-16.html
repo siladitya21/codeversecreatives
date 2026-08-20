@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -440,6 +440,22 @@ X = layer_norm(X + feed_forward(X))                     # 3. feed-forward
                 <div>
                   <strong>Hint</strong>
                   <p>Implementing this in PyTorch (rather than pure NumPy) will let autograd handle the backward pass through every block automatically — a good moment to lean on Week 12's framework skills now that the architecture itself is the point, not re-deriving backpropagation by hand again.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Add an encoder and cross-attention — the half of Section 4 the decoder-only build skipped</h3>
+              <p>The exercise deliberately scoped to decoder-only, so cross-attention and the encoder stack from Section 4 never got built. This part adds them.</p>
+              <ol>
+                <li>Build a minimal 1–2 block <strong>encoder</strong> stack — unmasked self-attention, no causal mask — over a short "condition" sequence (e.g. a category label like <code>"animal"</code> or <code>"place"</code>, tokenized).</li>
+                <li>Insert a cross-attention sublayer into your decoder block, between self-attention and feed-forward, exactly matching Section 4's order: <code>causal self-attention → cross-attention (Q from decoder, K/V from encoder output) → feed-forward</code>, each with its own residual + layer norm.</li>
+                <li>Train this tiny encoder-decoder pair on a toy conditional task — e.g. the encoder sees a category word, the decoder learns to generate a short phrase associated with it in your training data. Confirm the model actually <em>uses</em> the encoder: change the category input at generation time and confirm the generated text changes accordingly.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If changing the category input doesn't change the output at all, the model likely learned to ignore the encoder entirely (a real, common training failure) — check that your training data actually has a consistent category→phrase relationship for it to learn in the first place.</p>
                 </div>
               </div>
             </div>

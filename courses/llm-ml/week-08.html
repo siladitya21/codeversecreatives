@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -401,6 +401,8 @@ report = classification_report(y_test, search.predict(X_test))
                 <li>Build a leakage-free preprocessing pipeline and a baseline model.</li>
                 <li>Train and tune at least one real model against a metric you justify in writing.</li>
                 <li>Evaluate once on a held-out test set, and produce a one-page write-up: framing, approach, results vs. baseline, one plot, and limitations.</li>
+                <li><strong>Model-family justification (Section 2):</strong> before tuning, write two or three sentences walking through Section 2's checklist against your specific dataset (data shape, interpretability needs, dimensionality) and explain why it points to the model family you picked — not just that you picked one.</li>
+                <li><strong>Failure-mode check (Section 5):</strong> whichever symptom your project actually shows — a suspiciously perfect score, a model barely beating the baseline, or a validation/test gap — pick it and walk through Section 5's field guide entry for it explicitly in your write-up, even if the honest conclusion is "I checked, and it's not this."</li>
               </ol>
 
               <div class="callout callout--tip">

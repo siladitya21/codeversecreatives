@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -480,6 +480,22 @@ X, y = make_moons(n_samples=800, noise=0.25, random_state=42)
                 <div>
                   <strong>Hint</strong>
                   <p><code>make_moons</code> produces two interleaving crescent shapes — a linear model or a naively-tuned Naive Bayes should visibly struggle here, which is exactly the point: this dataset is chosen to make the RBF kernel's non-linear boundary matter.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Watch the kernel trick actually matter, and rank the interpretability tradeoffs</h3>
+              <p>Section 1 asserted that a linear boundary can't separate the moons and the kernel trick fixes that — step 2 above never actually checked. Section 5's interpretability spectrum was never applied to your own five results either.</p>
+              <ol>
+                <li>Fit an <code>SVC(kernel="linear")</code> on the same scaled data and compare its validation accuracy to your <code>kernel="rbf"</code> result from step 2. Confirm the linear kernel visibly underperforms, and explain in one sentence why the moons' shape specifically defeats a straight-line boundary.</li>
+                <li>Using <code>GridSearchCV</code> (Week 6), tune <code>gamma</code> for the RBF kernel across <code>[0.1, 1, 10]</code>. Report which value won on the validation metric, and describe in one sentence how you'd expect the decision boundary to look different at the smallest vs. largest <code>gamma</code> tried, per Section 1's description of what <code>gamma</code> controls.</li>
+                <li>Using Section 5's interpretability spectrum, rank all five candidates from your exercise (SVM, Naive Bayes, random forest, stacking, voting) from most to least interpretable, and note whether your best-scoring approach is also your least interpretable one.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>A larger <code>gamma</code> means each point's influence reaches a shorter distance, which lets the boundary bend tightly around individual points — great for fitting training data closely, but the same overfitting risk from Week 5's high-variance side of the tradeoff.</p>
                 </div>
               </div>
             </div>

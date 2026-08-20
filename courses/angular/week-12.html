@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -542,6 +542,21 @@ export class ContactForm {
                 <div>
                   <strong>Hint</strong>
                   <p>To mark every control in a step touched at once (rather than one at a time), call <code>.markAllAsTouched()</code> on that step's <code>FormGroup</code> when the user clicks "Next" while it's still invalid.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Display the error that lives in the wrong place</h3>
+              <p>Part 1 added <code>passwordsMatch</code> but never rendered its message — and Section 6's <code>dirty</code> flag never got used, only <code>touched</code>.</p>
+              <ol>
+                <li>Render the cross-field mismatch message by reading <code>form.controls.step2.errors?.['passwordsMismatch']</code> off the <em>group</em> — not either individual control — gated so it only shows once both <code>password</code> and <code>confirmPassword</code> are touched.</li>
+                <li>Add a "Reset step" button per step that calls <code>.reset()</code> on that step's group, and disable it unless the group is <code>dirty</code> — proving you're distinguishing "the user touched this" from "the user actually changed something."</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>This is exactly the mistake Section 4 calls out — looking for the mismatch error on <code>confirmPassword.errors</code> instead of <code>form.errors</code> (or your nested group's <code>.errors</code>) is the single most common place people get stuck on this pattern.</p>
                 </div>
               </div>
             </div>

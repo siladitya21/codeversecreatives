@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -589,6 +589,24 @@ export class TypeaheadSearch {
                 <div>
                   <strong>Hint</strong>
                   <p>If stale results ever do show up, double-check you're using <code>switchMap</code> and not <code>mergeMap</code> — this is the single most common cause of a "flickers back to old results" bug in a search box.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: <code>combineLatest</code>, <code>forkJoin</code>, and <code>exhaustMap</code></h3>
+              <p>Part 1 only ever used <code>switchMap</code> — Section 2's other three flattening operators and all of Section 3's combining operators went untouched.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong><code>combineLatest</code> (Section 3):</strong> add a category filter alongside the search term, as its own <code>Subject</code>/signal-backed stream. Combine both with <code>combineLatest([searchTerm$, category$])</code> before feeding into the same <code>switchMap</code>, so changing either one triggers a fresh search using both current values.</li>
+                <li><strong><code>forkJoin</code> (Section 3):</strong> add a "view details" action that, when clicked, fires two parallel requests (e.g. item details and related items) with <code>forkJoin</code>, rendering nothing until both resolve together.</li>
+                <li><strong><code>exhaustMap</code> (Section 2):</strong> add a "Save search" button wired through <code>exhaustMap</code> instead of <code>switchMap</code>, and confirm — by clicking rapidly several times — that a click while a save is still in flight is silently ignored rather than firing a second request.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>combineLatest</code> won't emit at all until every source stream has emitted at least once — seed <code>category$</code> with a <code>BehaviorSubject</code> or an initial value so the combined stream fires immediately, not just after the user manually picks a category.</p>
                 </div>
               </div>
             </div>

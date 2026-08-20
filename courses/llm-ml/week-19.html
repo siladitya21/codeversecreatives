@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -425,6 +425,21 @@ for epoch in range(3):   # fine-tuning typically needs far fewer epochs than pre
                 <div>
                   <strong>Hint</strong>
                   <p>If you don't have access to a GPU, look for a very small model (well under a billion parameters) and a short training run — the point of this exercise is observing the fine-tuning workflow and its effects firsthand, not producing a production-quality model.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Actually freeze some layers, and measure what "cost" means</h3>
+              <p>Section 1's freeze-vs-fine-tune contrast and Section 5's compute cost were only described above — this part builds and measures both.</p>
+              <ol>
+                <li>Repeat Part 1's fine-tuning run, but this time freeze every transformer block except the last two (<code>param.requires_grad = False</code> for everything else), matching Week 13's CNN-style partial freezing instead of full fine-tuning. Compare its training loss curve and its outputs on your five task-specific prompts to Part 1's fully fine-tuned version.</li>
+                <li>For both the full fine-tune and the frozen-layers version, print <code>sum(p.numel() for p in model.parameters() if p.requires_grad)</code> — the actual count of trainable parameters — and compare it to the model's total parameter count. Connect the size of that gap directly to Section 5's memory-cost argument: which version needs to store optimizer state for more parameters, and by roughly what factor?</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Don't expect the frozen-layers version to match the full fine-tune's quality on your narrow task — that gap is itself the point, and it's exactly the tradeoff Week 20's LoRA is designed to improve on.</p>
                 </div>
               </div>
             </div>

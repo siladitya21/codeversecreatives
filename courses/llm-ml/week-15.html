@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -463,6 +463,21 @@ def masked_attention(Q, K, V, mask):
                 <div>
                   <strong>Hint</strong>
                   <p>For step 4, the easiest way to guarantee identical weights across both implementations is to explicitly copy the same NumPy arrays into PyTorch tensors, rather than relying on both frameworks' random initializations to somehow match.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Cross-attention — different sequence lengths on each side</h3>
+              <p>Every step above was self-attention. Section 4's other half, cross-attention, was described but never implemented.</p>
+              <ol>
+                <li>Create two separate token sequences: a 6-token "encoder" sequence and a 4-token "decoder" sequence, each with their own embeddings. Compute <code>Q</code> from the decoder sequence but <code>K</code>/<code>V</code> from the encoder sequence, and run your existing <code>attention()</code> function unmodified. Confirm the output has shape <code>(4, d_model)</code> — matching the <em>query's</em> sequence length, not the key/value sequence's.</li>
+                <li>Try applying your Section 4 causal mask (built for a single, equal-length sequence) to this cross-attention scores matrix, and explain in one paragraph why a causal mask — "don't look ahead in the sequence" — doesn't make conceptual sense here, where the two sequences aren't even the same length or the same sequence.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Your <code>attention()</code> function shouldn't need any changes at all for this — that's the point. Self- vs. cross-attention is entirely about <em>where Q, K and V come from</em>, not a different formula.</p>
                 </div>
               </div>
             </div>

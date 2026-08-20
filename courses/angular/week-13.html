@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -575,6 +575,24 @@ describe('SignupForm validation', () =&gt; {
                 <div>
                   <strong>Hint</strong>
                   <p>If the parent form's value never updates when you add a tag, double-check you're actually calling the stored <code>onChange</code> callback after updating the internal signal — updating the signal alone only changes what <em>your</em> component sees, not what the parent form knows about.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Template-driven, schema-driven, and accessible</h3>
+              <p>Part 1 never used <code>ngModel</code>, never rendered a form from a schema, and never added a real accessibility pass. This part covers Sections 1, 3 and 5.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Template-driven form (Section 1):</strong> drop your <code>TagInput</code> from Part 1 into a small <code>[(ngModel)]</code>-based template-driven form instead of a reactive one, and confirm it works identically — proof that a properly-implemented <code>ControlValueAccessor</code> doesn't care which form style is using it.</li>
+                <li><strong>Schema-driven form (Section 3):</strong> write a small <code>FieldSchema[]</code> and a component that renders a <code>FormGroup</code> from it with <code>@for</code>, same shape as Section 3's example — at least 3 fields, one of them required.</li>
+                <li><strong>Accessibility (Section 5):</strong> go back to <code>TagInput</code> and add a real <code>&lt;label&gt;</code> (associated via <code>for</code>/<code>id</code>), <code>aria-describedby</code> pointing at an error message, <code>aria-invalid</code> reflecting the "at least one tag" validator's state, and wrap the whole control in a <code>&lt;fieldset&gt;</code>/<code>&lt;legend&gt;</code>.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>A native <code>&lt;label for="id"&gt;</code> only associates with one focusable element — if <code>TagInput</code>'s actual input lives inside a custom component, make sure the <code>id</code> ends up on the real <code>&lt;input&gt;</code> in its template, not on the component's host tag.</p>
                 </div>
               </div>
             </div>

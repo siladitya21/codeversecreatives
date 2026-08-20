@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -580,6 +580,24 @@ export class ProductList {
                 <div>
                   <strong>Hint</strong>
                   <p>The "signal → debounced observable → signal again" round-trip in Step 3 feels redundant the first time you write it — that's expected. It's the honest answer to "how do I debounce a signal," since debouncing is fundamentally a time-based operation RxJS already solves well.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: A derived signal off the resource, and both named pitfalls on purpose</h3>
+              <p>Part 1 never added Section 4's "signal out" derived-state layer, and never actually reproduced Section 6's two named bugs — only avoided them by luck of following the pattern correctly.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Derived signal (Section 4):</strong> add a <code>resultCount = computed(() =&gt; results.value()?.length ?? 0)</code>-style signal off your rxResource, matching the <code>hasOrders</code> pattern — render it next to the results list.</li>
+                <li><strong>Stale closure, reproduced (Section 6):</strong> write a small <code>effect()</code> that captures <code>const term = this.searchTerm();</code> <em>outside</em> the effect and logs <code>term</code> inside it. Confirm it only ever logs the value from the moment the component was created, no matter how much you type. Then fix it by reading <code>this.searchTerm()</code> directly inside the effect.</li>
+                <li><strong>Double-subscribe, reproduced (Section 6):</strong> take the raw <code>HttpClient</code> Observable your <code>rxResource</code> loader uses, and manually <code>.subscribe()</code> to it once <em>outside</em> the resource, purely to log the result. Using your network tab, confirm the request now fires twice per search instead of once, then remove the manual subscription.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Seeing a bug fire on purpose, with a clear before/after, tends to stick far better than reading about it — resist the urge to skip straight to "I already know not to do this."</p>
                 </div>
               </div>
             </div>

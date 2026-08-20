@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -415,6 +415,21 @@
                 <div>
                   <strong>Hint</strong>
                   <p>If a closed model's card doesn't publish an exact parameter count, that's normal and worth noting as a limitation itself — not every card provides the same level of transparency, and that gap is part of what you're evaluating.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: The missing design axis, and a toy scaling curve</h3>
+              <p>The exercise above skipped Section 2's architecture axis entirely, and Section 1's scaling laws never got touched beyond the quiz.</p>
+              <ol>
+                <li><strong>Model families (Section 2):</strong> for the same three models, additionally record whether each is dense or mixture-of-experts (if disclosed), and one detail of its post-training recipe (instruction-tuned, RLHF, DPO — whatever the card discloses). Note which model gave you the least information here, and whether that itself changes your recommendation from Part 1.</li>
+                <li><strong>Toy scaling law (Section 1):</strong> using <code>loss(N) = N ** -0.076</code> (a plausible published-style exponent), compute and plot loss for three model sizes spanning several orders of magnitude (e.g. 1B, 10B, 100B parameters). Do the same for <code>loss(D) = D ** -0.095</code> across three training-data sizes. Write one sentence connecting your plotted curve's shape to Section 1's "diminishing returns from scale alone" point — where does the curve visibly start flattening?</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Plot on a log-log scale (<code>plt.xscale('log')</code>, <code>plt.yscale('log')</code>) — that's the standard way scaling-law curves are actually presented, since it turns the power-law relationship into a straight line and makes the diminishing-returns shape easier to reason about across such a wide range of sizes.</p>
                 </div>
               </div>
             </div>

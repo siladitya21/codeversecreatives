@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -599,6 +599,24 @@ describe('NotificationService', () =&gt; {
                 <div>
                   <strong>Hint</strong>
                   <p>If injecting <code>NOTIFICATION_TRANSPORT</code> gives you a single instance instead of an array, double-check every provider registered against that token includes <code>multi: true</code> — forgetting it on even one provider changes the injected shape.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Component-scoped state, <code>@Optional()</code>/<code>@Self()</code>, and a functional guard</h3>
+              <p>Part 1 never provided a service at component level, never used <code>@Optional()</code>/<code>@Self()</code>, and never wrote a function-based consumer. This part covers Sections 1, 2 and 4.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Component-scoped provider (Section 1):</strong> build <code>TabStateService</code> (holds a <code>selectedIndex</code> signal) and provide it in a <code>TabGroup</code> component's own <code>providers</code> array — one fresh instance per <code>&lt;app-tab-group&gt;</code>. Render two independent instances on the same page and prove selecting a tab in one doesn't affect the other.</li>
+                <li><strong><code>@Optional()</code> / <code>@Self()</code> (Section 4):</strong> in a child of <code>TabGroup</code>, inject <code>TabStateService</code> with <code>@Self()</code> (it must resolve from <code>TabGroup</code>'s own injector, not walk further up), and inject a made-up <code>AnalyticsService</code> — deliberately provided nowhere — with <code>@Optional()</code>. Confirm the app doesn't crash, and log whether <code>AnalyticsService</code> came back as <code>null</code>.</li>
+                <li><strong><code>inject()</code> in a functional guard (Section 2):</strong> write a <code>CanActivateFn</code> that calls <code>inject(NotificationService)</code> and invokes <code>notify('Leaving unsaved changes')</code> before returning <code>true</code> — a plain function, no class, no constructor, proving <code>inject()</code> is the only option here.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>You don't need real routing wired up to prove step 3 works — calling the guard function directly inside <code>runInInjectionContext()</code> (from a test, or a small script) is enough to confirm <code>inject()</code> resolves the service correctly.</p>
                 </div>
               </div>
             </div>

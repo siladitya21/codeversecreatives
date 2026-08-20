@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -504,6 +504,36 @@ X, y = make_classification(
                 <div>
                   <strong>Hint</strong>
                   <p><code>scoring="recall"</code>, <code>"precision"</code> or <code>"f1"</code> can all be passed directly to <code>GridSearchCV</code>'s <code>scoring</code> parameter — you don't need to write a custom scorer for this exercise.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: The regression side — Section 3 never showed up above</h3>
+              <p>Everything so far was classification. Regression metrics get their own quick workout, on a dataset with one planted outlier.</p>
+
+              <div class="code-block">
+                <div class="code-block__label">starter code — regression</div>
+                <pre><code>from sklearn.datasets import make_regression
+from sklearn.linear_model import LinearRegression
+from sklearn.dummy import DummyRegressor
+from sklearn.model_selection import cross_val_score, KFold
+import numpy as np
+
+X_reg, y_reg = make_regression(n_samples=200, n_features=8, noise=10, random_state=42)
+y_reg[0] += 500   # one deliberately extreme target value
+</code></pre>
+              </div>
+
+              <ol>
+                <li>Fit a <code>DummyRegressor(strategy="mean")</code> baseline and a <code>LinearRegression</code> model. Report MAE, MSE, RMSE and R² for both, using an 80/20 train/test split.</li>
+                <li>Compare how much MAE moved between the baseline and the real model versus how much RMSE moved. Explain in one sentence why the planted outlier at index 0 makes RMSE swing more than MAE — tying back to Section 3's "squares the error first" point.</li>
+                <li>Run 5-fold cross-validation (plain <code>KFold</code>, not stratified — that's a classification-only concept from Section 4) on the linear model with <code>scoring="neg_mean_absolute_error"</code>, and report the mean and standard deviation, same shape as Section 4's classification example.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>scikit-learn's cross-validation scorers are "higher is better" by convention, so error metrics are negated — <code>"neg_mean_absolute_error"</code> returns negative MAE values; flip the sign back before reporting a human-readable number.</p>
                 </div>
               </div>
             </div>

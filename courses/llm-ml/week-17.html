@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -464,6 +464,22 @@ trainer = BpeTrainer(vocab_size=1000, special_tokens=["[UNK]"])
                 <div>
                   <strong>Hint</strong>
                   <p>A larger vocabulary generally produces fewer tokens per sentence (shorter sequences, cheaper attention) but a much larger embedding table (more parameters) — there's no free lunch, just a tradeoff to reason about explicitly.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Build one training example of each objective, and a context-window budget</h3>
+              <p>Sections 2 and 4 never got hands-on treatment — only the tokenizer from Section 1 did.</p>
+              <ol>
+                <li><strong>Causal LM example (Section 2):</strong> tokenize one sentence from your corpus with your trained tokenizer. Build the <code>(input_ids, target_ids)</code> pair used for causal LM training — <code>target_ids</code> is <code>input_ids</code> shifted left by one position. Print both token-id sequences aligned, and confirm for token position <code>i</code> that <code>target_ids[i]</code> really is <code>input_ids[i+1]</code>.</li>
+                <li><strong>Masked LM contrast (Section 2):</strong> using the same sentence, pick one token to replace with a <code>[MASK]</code> placeholder. In a comment, note exactly which tokens would be visible as context to predict the masked one — and confirm it includes tokens on <em>both</em> sides, unlike your causal example, which only ever has tokens before the target.</li>
+                <li><strong>Context-window budget (Section 4):</strong> concatenate several sentences from your corpus into one longer "document," and use your tokenizer to count its exact token length. Pick a hypothetical <code>context_window</code> size and a made-up "conversation history" token count, then reproduce Section 4's subtraction arithmetic to compute how many tokens remain available for a response — and report what happens to that number if the document is too long to fit at all.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Use <code>tokenizer.encode(text).ids</code> to get the actual token-id list your trained BPE tokenizer produces — the exact token count will differ from a naive word count, which is itself worth noting for the budget calculation.</p>
                 </div>
               </div>
             </div>

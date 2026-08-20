@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -514,6 +514,24 @@ export const appConfig: ApplicationConfig = {
                 <div>
                   <strong>Hint</strong>
                   <p>If the guard redirect loop never stops (login redirects back to a protected route, which redirects back to login), check that <code>/login</code> itself isn't accidentally covered by the guard too — it should be one of the few routes explicitly left unprotected.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: <code>CanDeactivate</code>, <code>loadChildren</code>, and a second <code>@defer</code> trigger</h3>
+              <p>Part 1 covered every technical section, but only via <code>canActivate</code>, <code>loadComponent</code>, and one <code>@defer</code> trigger. This part rounds out the variants Section 1, 3 and 5 also mention.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong><code>CanDeactivate</code> (Section 1):</strong> on Week 10's "Create task" form, add a <code>canDeactivate</code> guard that checks a <code>hasUnsavedChanges</code> signal and, if true, shows a <code>confirm()</code> dialog before allowing navigation away.</li>
+                <li><strong><code>loadChildren</code> (Section 3):</strong> add a small <code>settings</code> feature area with its own nested routes (e.g. <code>settings/profile</code>, <code>settings/billing</code>), and lazy-load the <em>whole</em> feature with <code>loadChildren</code> — not <code>loadComponent</code> per route.</li>
+                <li><strong>Another <code>@defer</code> trigger (Section 5):</strong> add a second deferred block using <code>on interaction</code> instead of <code>on viewport</code> — e.g. a comments section that only loads once the user clicks a "Show comments" placeholder button.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>on interaction</code> needs something to interact <em>with</em> — Angular uses the <code>@placeholder</code> block itself as the trigger element by default, so make sure your placeholder actually contains a clickable element.</p>
                 </div>
               </div>
             </div>

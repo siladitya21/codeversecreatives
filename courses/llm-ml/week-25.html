@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -443,6 +443,21 @@ config = {
                 <div>
                   <strong>Hint</strong>
                   <p>Always re-run your Week 24 eval suite after any cost optimization — a change that cuts cost by shrinking context or switching models can just as easily cut quality, and the only way to know is to measure it, not assume it.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Version your config for real, and actually roll back a regression</h3>
+              <p>Section 5's versioning/rollback pattern was only ever described above — nothing was actually versioned or rolled back, and latency was logged as one number rather than split into its two components.</p>
+              <ol>
+                <li><strong>Split latency (Section 2):</strong> log time-to-first-token and total generation time as two separate numbers per request, not one combined latency figure. Confirm that your long-RAG-context requests show up as high TTFT specifically, while long-response requests show up as high total generation time — the two costs Section 2 describes as distinct.</li>
+                <li><strong>Version, detect, roll back (Section 5):</strong> wrap your prompt/model choice in a versioned <code>config</code> object per Section 5's pattern. Ship a deliberately worse "v2" (an overly-shortened prompt is a reliable way to regress quality), run your Week 24 eval suite against it, confirm the score actually dropped, and then roll back to "v1" using the <code>rollback_target</code> field — the full detect-then-revert loop, not just the config shape.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Keep both config versions' full definitions around (not just the diff) — a rollback should be a one-line pointer change to a known-good config, not a reconstruction of what the old prompt used to say.</p>
                 </div>
               </div>
             </div>

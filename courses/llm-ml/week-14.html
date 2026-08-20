@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -437,6 +437,21 @@ context = weights @ encoder_outputs     # a weighted average -- attend more to r
                 <div>
                   <strong>Hint</strong>
                   <p>On a small corpus and short training run, the difference between the plain and attention-augmented LSTM may be subtle — the point of this exercise is seeing attention work mechanically end to end, not necessarily beating the LSTM by a wide margin.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: See the vanishing gradient and the bottleneck, not just read about them</h3>
+              <p>Sections 1 and 3 were only ever prose above — no plain RNN was trained, and no real encoder/decoder was built. This part makes both concrete.</p>
+              <ol>
+                <li>Swap <code>nn.LSTM</code> for a plain <code>nn.RNN</code> in your next-character model (same hidden size, same everything else), and retrain twice: once with your original character window, once with a window 4–5x longer. Compare training loss curves across all four runs (RNN/LSTM × short/long window). The RNN should degrade noticeably more than the LSTM as the window grows — that gap <em>is</em> Section 1's vanishing-gradient problem, made visible.</li>
+                <li>Build a minimal seq2seq pair — an encoder LSTM and a separate decoder LSTM (Section 3's sketch) — trained on a toy task like reversing a short string of characters. Train it on short strings (length 4–5) until it works, then evaluate it on strings 3–4x longer without retraining. Report where accuracy starts breaking down, and connect that breakdown explicitly to the fixed-size hidden state bottleneck.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>For the reversal task, a vocabulary of just 10–20 characters and single-digit string lengths trains fast and still clearly shows the pattern — you don't need real language data to observe the bottleneck breaking down.</p>
                 </div>
               </div>
             </div>

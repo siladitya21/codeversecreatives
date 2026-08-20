@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -532,6 +532,24 @@ export class CreateProject {
                 <div>
                   <strong>Hint</strong>
                   <p>If the child routes never render, double-check <code>ProjectDetail</code>'s own template actually has a <code>&lt;router-outlet /&gt;</code> in it — the app's top-level outlet only ever renders the top-level match.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Query params, programmatic navigation &amp; route data</h3>
+              <p>Part 1 never read a query param, never called <code>Router.navigate()</code> from code, and never used a route's <code>data</code>. This part adds all three.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Query params (Section 2):</strong> add a sort control to <code>DashboardOverview</code> that writes <code>?sort=name</code> or <code>?sort=recent</code> to the URL (via <code>[queryParams]</code> on a <code>routerLink</code>), and read it back with <code>ActivatedRoute.queryParamMap</code> converted to a signal via <code>toSignal()</code>, defaulting to <code>'recent'</code> when absent.</li>
+                <li><strong>Programmatic navigation (Section 4):</strong> add a "Create task" form inside <code>ProjectOverview</code>. On submit, inject <code>Router</code> directly and call <code>this.router.navigate(['tasks', newTaskId], { relativeTo: this.route })</code> — no <code>routerLink</code> involved, since this navigation only happens after an async save completes.</li>
+                <li><strong>Route data (Section 5):</strong> add <code>data: { requiresRole: 'member' }</code> to the <code>projects/:projectId</code> route, and in <code>ProjectDetail</code>, read it back via <code>ActivatedRoute.snapshot.data</code> (or the reactive <code>route.data</code> stream) and render a small "Members only" badge when it's present.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>relativeTo: this.route</code> is what lets <code>navigate(['tasks', newTaskId])</code> resolve against <code>ProjectOverview</code>'s own position in the tree — without it, <code>Router.navigate()</code> treats the array as an absolute path from the app root.</p>
                 </div>
               </div>
             </div>

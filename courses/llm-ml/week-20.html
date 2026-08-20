@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -451,6 +451,21 @@ model = get_peft_model(model, lora_config)   # wraps attention's Q/V projections
                 <div>
                   <strong>Hint</strong>
                   <p>The Hugging Face <code>peft</code> library's <code>get_peft_model</code> can report trainable-parameter counts directly (<code>model.print_trainable_parameters()</code>) — use it to get the exact percentage rather than estimating by hand.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Add quantization, and build a toy DPO loop by hand</h3>
+              <p>Part 1 used LoRA without quantization (Section 2 never got exercised), and RLHF/DPO (Section 4) was only ever described in prose.</p>
+              <ol>
+                <li><strong>QLoRA (Section 2):</strong> rebuild your LoRA setup with <code>BitsAndBytesConfig(load_in_4bit=True)</code> so the frozen base model is actually quantized, matching Section 2's <code>qlora_setup.py</code>. Compare peak memory usage against your unquantized LoRA run from Part 1.</li>
+                <li><strong>Toy DPO (Section 4):</strong> write 5–10 tiny synthetic preference pairs — <code>(prompt, preferred_response, rejected_response)</code> — for your task. Implement DPO's loss by hand: compute log-probabilities of the preferred and rejected responses under your model (and under a frozen copy as the reference model), combine them into the DPO loss, and run a handful of gradient steps. Confirm the loss decreases and that the preferred response's relative log-probability increases compared to the rejected one.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Keep the reference model frozen (<code>requires_grad=False</code>, no optimizer step) — DPO's loss specifically compares how much your <em>trainable</em> model has shifted its preference relative to that fixed reference point, not an absolute probability.</p>
                 </div>
               </div>
             </div>

@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -456,6 +456,23 @@ export * from './lib/rating-stars/rating-stars';
                 <div>
                   <strong>Hint</strong>
                   <p>Step 4 is deliberately meant to be frustrating — that friction is the actual lesson. If it feels like more trouble than it's worth for a two-app toy project, that's exactly the signal Section 5 describes for when <em>not</em> to reach for this pattern in a real, smaller-scale app.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Version the library for real, and fill out the reference architecture</h3>
+              <p>Part 1 never published or versioned <code>ui-kit</code> (Section 4), and only built two of Section 6's three <code>libs/</code> — no <code>shared-types</code> or shared <code>auth</code>.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Real versioning (Section 4):</strong> publish <code>ui-kit</code> to a local package registry (Verdaccio, or even a simple <code>npm pack</code> + local file install), starting at <code>1.0.0</code>. Make a breaking change to <code>Button</code>'s API, publish it as <code>2.0.0</code>, and update only <code>shell</code> to consume the new major version — leave <code>projects</code> pinned to <code>1.x</code>. Confirm both apps still build and run correctly on their own pinned versions.</li>
+                <li><strong>Complete the reference architecture (Section 6):</strong> add a <code>shared-types</code> library holding interfaces used by both apps, and move your Week 23 auth logic into its own <code>auth</code> library consumed by both <code>shell</code> and <code>projects</code> instead of being duplicated or living in only one app.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Two apps deliberately running two different major versions of the same library, both working correctly, is the actual point of step 1 — it's the concrete payoff of independent deploy cadences that Section 5 argues micro-frontends exist to enable.</p>
                 </div>
               </div>
             </div>

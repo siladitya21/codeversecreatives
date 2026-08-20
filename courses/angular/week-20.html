@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -515,6 +515,24 @@ npx esbuild-visualizer --metadata dist/my-app/stats.json --filename bundle-repor
                 <div>
                   <strong>Hint</strong>
                   <p>Resist optimizing anything the profiler didn't actually flag — the whole point of this exercise is measuring before you act. An unmeasured "optimization" can just as easily make things worse or fix a problem that was never actually significant.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Go zoneless, optimize your images, and actually catch a leak</h3>
+              <p>This week's own objectives list "find and fix a memory leak using the browser's own tools" — Part 1 never did that, and never touched Sections 1 or 4 either.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Zoneless (Section 1):</strong> switch your dashboard to <code>provideZonelessChangeDetection()</code> and remove Zone.js. Fix whatever breaks — likely a component reading a plain mutable value or an Observable outside <code>toSignal()</code>/<code>async</code> that no longer triggers a check without Zone.js's polling.</li>
+                <li><strong>Image optimization (Section 4):</strong> find (or add) at least one image in your dashboard, switch it to <code>NgOptimizedImage</code> with explicit <code>width</code>/<code>height</code>, and set <code>[priority]</code> correctly on whichever one is your actual LCP candidate.</li>
+                <li><strong>Memory leak, caught and fixed (Section 6):</strong> deliberately introduce a leak in one component — a manual <code>window.addEventListener</code> with no matching removal, or a <code>.subscribe()</code> with no <code>takeUntilDestroyed()</code>. Using Chrome's Memory panel, take a baseline heap snapshot, navigate to and away from the component several times, take a second snapshot, and confirm instances of the component's class are still present. Fix the leak, and confirm — with a third snapshot — that instances no longer accumulate.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Filter the heap snapshot by your component's exact class name (not a generic term like "Component") — the snapshot view can otherwise bury a handful of leaked instances among thousands of unrelated objects.</p>
                 </div>
               </div>
             </div>

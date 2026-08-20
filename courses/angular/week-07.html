@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -519,6 +519,24 @@ export class Button {
                 <div>
                   <strong>Hint</strong>
                   <p>If projected content isn't landing in the right slot, double-check the attribute selector matches exactly — <code>select="[modal-header]"</code> only matches elements carrying that exact attribute, not a class or a tag name.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: <code>:host</code> styling, Shadow DOM, and a responsive breakpoint</h3>
+              <p>Part 1 skipped Sections 1, 2 and 5 entirely. This part styles the modal's own host and makes it responsive.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong><code>:host</code> / <code>:host-context</code> (Section 1):</strong> in <code>modal.css</code>, style <code>:host</code> as a fixed, centered overlay; add a <code>:host(.is-open)</code> rule to actually show it (paired with the host class from Part 1); and add a <code>:host-context(.theme-dark)</code> rule that swaps the modal's background for a dark one when a <code>theme-dark</code> class exists anywhere up the ancestor tree.</li>
+                <li><strong>Encapsulation (Section 2):</strong> switch <code>Modal</code> to <code>ViewEncapsulation.ShadowDom</code> and note what breaks — specifically, any color coming from a global CSS class instead of a custom property. Fix it by converting the broken colors to <code>var(--...)</code> custom properties, which do cross the shadow boundary.</li>
+                <li><strong><code>BreakpointObserver</code> (Section 5):</strong> inject <code>BreakpointObserver</code>, convert <code>observe(Breakpoints.Handset)</code> to a signal with <code>toSignal()</code>, and use it to render the modal full-screen on a handset-sized viewport instead of the centered dialog from step 1.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Under <code>ShadowDom</code>, <code>:host-context()</code> still works — it's specifically class-based global stylesheets (not ancestor-context selectors, and not custom properties) that stop crossing the boundary.</p>
                 </div>
               </div>
             </div>

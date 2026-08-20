@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -490,6 +490,32 @@ b2 = np.zeros((1, 1))
                 <div>
                   <strong>Hint</strong>
                   <p>If the loss plateaus without reaching a low value, try re-initializing the random weights — with such a tiny network, a small number of epochs can occasionally get stuck depending on the random starting point, which is itself a useful thing to observe firsthand.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Swap the output layer for softmax and 3 classes</h3>
+              <p>The XOR network only ever used sigmoid + binary cross-entropy — Section 2's <code>softmax</code> never got used in this week's backprop. Extend the same network to a genuinely multi-class problem.</p>
+
+              <div class="code-block">
+                <div class="code-block__label">starter data — 3 classes</div>
+                <pre><code>from sklearn.datasets import make_blobs
+
+X3, y3 = make_blobs(n_samples=300, centers=3, cluster_std=1.2, random_state=42)
+Y3 = np.eye(3)[y3]   # one-hot encode: shape (300, 3)
+</code></pre>
+              </div>
+
+              <ol>
+                <li>Replace the output layer's <code>sigmoid</code> with the <code>softmax</code> from Section 2, and replace <code>binary_cross_entropy</code> with categorical cross-entropy: <code>-np.mean(np.sum(Y3 * np.log(np.clip(probs, 1e-12, 1)), axis=1))</code>.</li>
+                <li>Derive (or just verify numerically) that the output-layer gradient simplifies to <code>dz2 = probs - Y3</code>, the exact same clean form as <code>y_pred - y_true</code> was for sigmoid + binary cross-entropy — same underlying reason, generalized to more than two classes.</li>
+                <li>Train for 2,000 epochs, plot the loss curve, and report final classification accuracy on the 3-class data.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Your <code>W2</code>/<code>b2</code> shapes need to change to match 3 output units instead of 1 (e.g. <code>W2</code> becomes <code>(4, 3)</code>) — everything else in the backward pass (<code>dW2 = a1.T @ dz2 / len(X)</code>, etc.) stays identical in form.</p>
                 </div>
               </div>
             </div>

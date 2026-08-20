@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -467,6 +467,21 @@ X, y = make_classification(
                 <div>
                   <strong>Hint</strong>
                   <p>Remember <code>model.eval()</code> before computing validation loss each epoch, and <code>model.train()</code> before the next training step — forgetting this with dropout in the model will make your validation loss look artificially noisy or wrong.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Try the other optimizers, and add batch norm + a schedule</h3>
+              <p>Everything above trained with plain Adam. Section 2's SGD/momentum comparison and Section 4's batch norm/LR schedule never got exercised.</p>
+              <ol>
+                <li>Retrain your <em>unregularized</em> baseline three ways, same architecture and epochs, changing only the optimizer: plain <code>SGD(lr=0.01)</code>, <code>SGD(lr=0.01, momentum=0.9)</code>, and your original <code>Adam</code>. Plot all three training-loss curves on one chart and describe which converges fastest and which is noisiest.</li>
+                <li>Add <code>BatchNorm1d</code> after each hidden linear layer of your regularized model, plus a <code>StepLR</code> schedule (halving the learning rate every 10 epochs), and retrain. Compare this training curve's smoothness and final validation loss to your Part 1 regularized run without batch norm or a schedule.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>BatchNorm1d</code> computes statistics over the batch dimension, so it needs a batch size greater than 1 — if you're feeding the whole training set through in one step, make sure that's still true, or switch to mini-batches for this part.</p>
                 </div>
               </div>
             </div>

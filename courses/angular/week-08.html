@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -524,6 +524,24 @@ export class DeleteButton {
                 <div>
                   <strong>Hint</strong>
                   <p>If <code>appClickOutside</code> fires immediately when the modal opens (because the triggering click hasn't finished bubbling yet), that's a real timing bug worth chasing — not something to work around by disabling the directive on open.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: A structural directive, drag-and-drop, and an announcement</h3>
+              <p>Part 1 never touched Sections 2, 4 or 5. This part adds a reorderable task list that exercises all three.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Structural directive (Section 2):</strong> build <code>*appUnless</code> from Section 2 yourself, using <code>TemplateRef</code>/<code>ViewContainerRef</code> — then extend it to accept an optional <code>else</code> template, mirroring <code>*ngIf="...; else tpl"</code>'s syntax (<code>*appUnless="condition; else tpl"</code>).</li>
+                <li><strong>CDK DragDrop (Section 4):</strong> build a small reorderable task list with <code>cdkDropList</code>/<code>cdkDrag</code> and <code>moveItemInArray</code>, same shape as Section 4's example, backed by a signal.</li>
+                <li><strong>CDK <code>LiveAnnouncer</code> (Section 5):</strong> add a delete button per task. On delete, call <code>LiveAnnouncer.announce()</code> with a message naming the deleted task, and on reorder, announce the new position (e.g. <code>"Moved to position 2 of 5"</code>) — both are changes with no natural focus movement to announce them otherwise.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>For the <code>else</code> template, accept a second input (e.g. <code>appUnlessElse</code>) typed as <code>TemplateRef&lt;unknown&gt; | null</code>, and call <code>createEmbeddedView</code> on whichever template applies inside the same <code>effect()</code> — don't maintain the two branches as separate effects.</p>
                 </div>
               </div>
             </div>

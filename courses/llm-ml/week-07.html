@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -504,6 +504,34 @@ X, _ = make_blobs(
                 <div>
                   <strong>Hint</strong>
                   <p><code>make_blobs</code> was generated with 4 true centers — your elbow and silhouette curves should both point toward <code>k=4</code> if your scaling and clustering code are correct. If they don't, check that you scaled <em>before</em> clustering.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Does PCA actually help a supervised model here?</h3>
+              <p>Section 5 was never exercised above — everything so far had no labels at all. This part builds the exact <code>Pipeline</code> from Section 5 and checks whether PCA is pulling its weight.</p>
+
+              <div class="code-block">
+                <div class="code-block__label">starter code — labeled, high-dimensional dataset</div>
+                <pre><code>from sklearn.datasets import make_classification
+
+X_lab, y_lab = make_classification(
+    n_samples=400, n_features=40, n_informative=6, n_redundant=25,
+    random_state=42,
+)
+</code></pre>
+              </div>
+
+              <ol>
+                <li>Build two pipelines with Week 6's <code>cross_val_score</code> (5-fold, scoring <code>"f1"</code>): one <code>StandardScaler → LogisticRegression</code>, and one <code>StandardScaler → PCA(n_components=0.95) → LogisticRegression</code>.</li>
+                <li>Report how many components the PCA pipeline needed to retain 95% of the variance (<code>pca.n_components_</code> after fitting), out of the original 40 features.</li>
+                <li>Compare the two pipelines' mean cross-validated F1 scores. In one paragraph, explain the result in terms of Section 5's reasoning — with 25 redundant (correlated) features in the mix, would you expect PCA to help, hurt, or barely matter here, and why?</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Pass the whole <code>Pipeline</code> object into <code>cross_val_score</code>, not a pre-fitted one — that's what makes PCA refit correctly within each fold instead of leaking information across folds, exactly as Section 5 describes.</p>
                 </div>
               </div>
             </div>

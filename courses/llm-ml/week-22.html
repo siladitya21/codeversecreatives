@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -466,6 +466,21 @@ Does the answer above rely ONLY on information present in the context? Reply YES
                 <div>
                   <strong>Hint</strong>
                   <p>If the model answers an "unanswerable" question anyway, check your retrieved chunks first — a weak query embedding can retrieve <em>something</em> even when nothing relevant exists, and the model may then (incorrectly) try to answer from that irrelevant context rather than declining.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Measure the recall/precision tradeoff, don't just read about it</h3>
+              <p>Section 4's recall/precision tension was described but never actually measured against your own pipeline above.</p>
+              <ol>
+                <li>Rebuild your vector store twice more with a noticeably smaller and a noticeably larger chunk size than Part 1's, and re-run your 5 answerable questions against each. Report whether accuracy changed, and connect any difference to Section 2's chunking tradeoff.</li>
+                <li>Holding chunk size fixed at whichever setting worked best, vary <code>n_results</code> across a small (1) and a large (8+) value. Inspect the retrieved chunks at the large setting for irrelevant ones, and check whether any answer actually got worse from the added noise — a concrete instance of Section 4's precision cost, rather than a hypothetical one.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>With only 5–10 source documents, don't expect a dramatic effect at every setting — the point is observing the direction of the tradeoff on real output, not proving it's always catastrophic.</p>
                 </div>
               </div>
             </div>

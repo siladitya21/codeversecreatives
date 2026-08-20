@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -515,6 +515,21 @@ ng build --localize   # builds one output per configured locale
                 <div>
                   <strong>Hint</strong>
                   <p>If you get stuck navigating your own app by keyboard, that's the exercise working as intended — it's a genuinely common experience for developers auditing their own work for the first time.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: A real Angular animation, wired to respect reduced motion</h3>
+              <p>Part 1 handled reduced motion for whatever CSS transitions already existed in the app, but never actually used Section 1's <code>@angular/animations</code> API — the two sections were never combined in one place.</p>
+              <ol>
+                <li>Add a real <code>trigger()</code>/<code>transition()</code>/<code>animate()</code> enter/leave animation (Section 1's shape) to a component whose visibility is driven by Angular state — the toast notifications from Week 9, or the <code>Modal</code> from Week 7 both work.</li>
+                <li>Make that same animation respect <code>prefers-reduced-motion</code> (Section 2) — check the media query and either skip the <code>trigger</code> definition entirely or swap in a near-instant duration when the user has the preference set, so the two techniques work together on the one animation that actually needs the programmatic API.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Chrome DevTools has a "Rendering" panel with an "Emulate CSS media feature prefers-reduced-motion" setting — use it to test both branches without changing your actual OS-level accessibility settings.</p>
                 </div>
               </div>
             </div>

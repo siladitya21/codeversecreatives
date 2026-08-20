@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -468,6 +468,21 @@ X, y = make_classification(
                 <div>
                   <strong>Hint</strong>
                   <p>If gradient boosting's validation score is worse than the random forest's, check <code>learning_rate</code> and <code>n_estimators</code> together first — an unusually high learning rate with too few trees is the most common boosting tuning mistake.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Look at one raw tree, and check whether a linear model was ever in the running</h3>
+              <p>Steps 1–5 only ever used trees as ensemble members. This part looks at a single split (Section 1) and adds the comparison Section 5 recommends but the exercise never required.</p>
+              <ol>
+                <li>Fit an un-tuned <code>DecisionTreeClassifier(max_depth=3, random_state=42)</code> on the same training data and visualize it with <code>plot_tree</code>. Identify the feature and threshold of the very first (root) split, and state in one sentence what "impurity" that split is reducing.</li>
+                <li>Fit a <code>LogisticRegression(max_iter=1000)</code> on the same data and compare its validation score to your two tuned tree ensembles from step 3. Using Section 5's four bullet points, argue in one paragraph why the winner makes sense for <em>this specific dataset</em> — 25 features, 8 informative, clusters per class — rather than just reporting which number was higher.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>n_clusters_per_class=3</code> in the starter data means each class is scattered across multiple separate regions of feature space — a shape a single straight decision boundary (logistic regression) struggles with far more than a tree ensemble does.</p>
                 </div>
               </div>
             </div>

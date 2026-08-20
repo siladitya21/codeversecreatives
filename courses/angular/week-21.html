@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -505,6 +505,21 @@ export const appConfig: ApplicationConfig = {
                 <div>
                   <strong>Hint</strong>
                   <p>If a hard refresh on an inner route (like <code>/projects/42</code>) 404s while navigating there from the home page works fine, the issue is almost always server-side routing configuration — the server needs to know to run your Angular app's router for that path too, not just serve a literal file.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Measure the Core Web Vitals half of Section 6</h3>
+              <p>Part 1's monitoring step only ever set up error tracking — the Core Web Vitals half of Section 6 was never actually measured.</p>
+              <ol>
+                <li>Run Lighthouse (or PageSpeed Insights) against your live deployed URL and record the actual LCP, CLS, and INP scores — not lab guesses, the real reported numbers.</li>
+                <li>Identify your weakest of the three, connect it to a specific technique from Week 20 or this week that should improve it (<code>NgOptimizedImage</code>'s <code>priority</code> for LCP, explicit image dimensions for CLS, incremental hydration or a smaller initial bundle for INP), apply that one fix, and re-run Lighthouse to confirm the number actually moved.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Run Lighthouse two or three times and look at the range, not a single run — network variance alone can shift these numbers enough to make a one-off measurement misleading.</p>
                 </div>
               </div>
             </div>

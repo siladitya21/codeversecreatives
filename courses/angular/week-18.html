@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -528,6 +528,24 @@ it('debounces rapid emissions into one', () =&gt; {
                 <div>
                   <strong>Hint</strong>
                   <p>If you're unsure whether a test is meaningful, ask: "if I introduced a real bug here, would this test actually fail?" If the answer is no, the test isn't testing what you think it is.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Component tests, a marble test, and a snapshot you'll delete</h3>
+              <p>Part 1 tested a store, not a component — Section 3's <code>setInput()</code>/output-testing pattern, Section 5's marble testing, and Section 6's snapshot-vs-behavioral contrast were never exercised.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Component testing (Section 3):</strong> write tests for a real component — <code>RatingStars</code> (Week 4) or <code>TagInput</code> (Week 13) both work well — using <code>fixture.componentRef.setInput()</code> to set at least two different inputs, and asserting on an emitted output after simulating a click.</li>
+                <li><strong>Marble testing (Section 5):</strong> using <code>TestScheduler</code>, write a marble test for the <code>debounceTime(300)</code> search-term stream from Week 15/16, confirming several rapid emissions within the debounce window collapse into exactly one output.</li>
+                <li><strong>Snapshot, then delete it (Section 6):</strong> write one deliberately brittle <code>toMatchSnapshot()</code> test of your component's rendered HTML. Run it, then make a purely cosmetic markup change (rename a CSS class, add a wrapping <code>&lt;span&gt;</code>) and watch it fail. Delete the snapshot test, and in a comment explain why your Part 1-style behavioral assertions wouldn't have failed for the same harmless change.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>For the marble test's virtual clock to actually take effect on <code>debounceTime</code>, you need to pass the <code>scheduler</code> as its second argument — <code>debounceTime(300, scheduler)</code> — otherwise it runs on the real clock and your marble assertions won't line up.</p>
                 </div>
               </div>
             </div>

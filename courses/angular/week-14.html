@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -553,6 +553,23 @@ private baseUrl = `${this.config.baseUrl}/${this.config.version}/products`;
                 <div>
                   <strong>Hint</strong>
                   <p>Interceptor order matters — register <code>mockApiInterceptor</code> before <code>authInterceptor</code> and <code>errorHandlingInterceptor</code> in the array, so mocked requests still short-circuit before the others run, and check whether your mock should also simulate the error-handling interceptor's behavior for the failure case to look realistic.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: File upload progress, and a versioned base URL</h3>
+              <p>Part 1 never touched Section 4 at all, and only used half of Section 6's <code>API_CONFIG</code> (base URL, no version).</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>File upload with progress (Section 4):</strong> add an <code>uploadImage(file: File)</code> method to <code>ProductsService</code> using <code>FormData</code> with <code>{ reportProgress: true, observe: 'events' }</code>, filtered to <code>UploadProgress</code>/<code>Response</code> events. Build a small file-input component with a progress bar bound to the percent stream, and mock the endpoint in <code>mockApiInterceptor</code> so it's demoable without a real backend.</li>
+                <li><strong>Versioned config (Section 6):</strong> extend <code>API_CONFIG</code> to include a <code>version</code> field (e.g. <code>'v1'</code>), and update every <code>ProductsService</code> URL to include it. Confirm — via the mock interceptor's matching logic — that a version bump alone (no code changes elsewhere) changes which URL your service actually requests.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If your progress bar jumps straight to 100% with no intermediate values, double-check both <code>reportProgress</code> and <code>observe: 'events'</code> are set — missing either one collapses the stream down to just the final response.</p>
                 </div>
               </div>
             </div>

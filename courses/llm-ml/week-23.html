@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -465,6 +465,21 @@ else:
                 <div>
                   <strong>Hint</strong>
                   <p>Deliberately test what happens when you set the step limit very low (e.g. 2, when the task needs 3+ steps) — confirming your agent stops gracefully and logs a warning rather than crashing is exactly the kind of guard-rail behavior worth verifying, not just implementing.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Split into two agents, and add memory across runs</h3>
+              <p>Section 4 never got exercised above — everything so far was one agent with no persistent memory between runs.</p>
+              <ol>
+                <li><strong>Multi-agent (Section 4):</strong> split your single agent into two specialized ones — a "researcher" agent that only has the lookup tool, and a "calculator" agent that only has the arithmetic tool — coordinated by a simple orchestrator that decides which agent handles each step and passes results between them. Re-run the same two-tool task and confirm it still completes correctly, now via two narrower agents instead of one with both tools.</li>
+                <li><strong>Persistent memory (Section 4):</strong> after a run completes, store a short embedded summary of what the agent did (reusing Week 22's embedding techniques) instead of relying on the full message history. On a fresh run, retrieve any relevant past summaries before starting, and confirm the agent can reference something it "remembers" from an earlier session rather than starting with zero context every time.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Keep the orchestrator itself simple — a plain function deciding "researcher's turn" vs. "calculator's turn" based on the task state is enough to demonstrate the pattern; you don't need a third LLM call just to route between two others.</p>
                 </div>
               </div>
             </div>

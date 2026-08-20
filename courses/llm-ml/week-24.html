@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml" aria-current="page">
@@ -433,6 +433,21 @@ score = call_llm(judge_prompt)
                 <div>
                   <strong>Hint</strong>
                   <p>If your LLM-as-judge or groundedness check disagrees with your own manual read of an answer, trust your own read and investigate the judge prompt — an unvalidated judge is a metric you haven't earned the right to trust yet.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Actually build the LLM-as-judge, and validate it against yourself</h3>
+              <p>Section 4 was referenced in the hint above but never implemented as its own requirement.</p>
+              <ol>
+                <li>Write an LLM-as-judge function (Section 4) that rates each of your 15 eval answers 1–5 for helpfulness and accuracy given the original question, and run it across the full eval set.</li>
+                <li>Manually score the same 15 answers yourself, blind to the judge's scores, using the same 1–5 rubric. Compare your scores to the judge's: report how often they agree within 1 point, and look closely at any case that disagrees by 2+ points — is the judge or your own read the one that's actually wrong?</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Score your own answers before looking at the judge's output, not after — scoring second, with the judge's number already visible, makes it far too easy to unconsciously anchor on its rating instead of forming an independent judgment.</p>
                 </div>
               </div>
             </div>

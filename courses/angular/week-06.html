@@ -91,7 +91,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5a2 2 0 0 0 2 2h1"/><path d="M16 3h1a2 2 0 0 1 2 2v5a2 2 0 0 0 2 2 2 2 0 0 0-2 2v5a2 2 0 0 1-2 2h-1"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">JavaScript &amp; TypeScript</span>
-              <span class="nav-course-card__meta">2 of 14 Weeks</span>
+              <span class="nav-course-card__meta">8 of 14 Weeks</span>
             </span>
           </a>
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
@@ -513,6 +513,39 @@
                 <div>
                   <strong>Hint</strong>
                   <p>Chain your computed signals: <code>filtered</code> reads the raw list and <code>filterText</code>; <code>sorted</code> reads <code>filtered</code> and <code>sortKey</code>. Keeping each computed focused on one transformation makes the whole pipeline easier to reason about than one giant computed doing everything at once.</p>
+                </div>
+              </div>
+
+              <h3>Part 2: Loading/error state with <code>@if</code>...<code>as</code>, and a hand migration</h3>
+              <p>Part 1 never actually required a plain <code>@if</code>, an <code>as</code>-binding, or Section 6's migration. This part adds both.</p>
+
+              <p><strong>Requirements:</strong></p>
+              <ol>
+                <li><strong>Full loading/error/success pattern (Sections 1 &amp; 5):</strong> add <code>isLoading</code> and <code>error</code> signals, simulate an async fetch of the employee list on init (a <code>setTimeout</code> is fine), and wrap the whole table in <code>@if (isLoading()) { ... } @else if (error()) { ... } @else { ... }</code> — the exact pattern from Section 5, built with signals instead of a resource.</li>
+                <li><strong><code>as</code>-binding:</strong> add a "select a row" feature — clicking a row sets a <code>selectedEmployeeId</code> signal. In a details panel, use <code>@if (selectedEmployee(); as emp)</code> (where <code>selectedEmployee</code> is a computed lookup) to read it once and render several of its fields without recomputing the lookup for each one.</li>
+                <li><strong>Hand migration (Section 6):</strong> below is a small legacy snippet. Convert it to the new control-flow syntax by hand — no schematic — matching it feature-for-feature, including the <code>#guestTpl</code> fallback.</li>
+              </ol>
+
+              <div class="code-block">
+                <div class="code-block__label">legacy-toolbar.html — convert this by hand</div>
+                <pre><code>&lt;div *ngIf="selectedEmployee; else noSelectionTpl"&gt;
+  Editing {{ selectedEmployee.name }}
+&lt;/div&gt;
+&lt;ng-template #noSelectionTpl&gt;
+  &lt;div&gt;Select a row to edit&lt;/div&gt;
+&lt;/ng-template&gt;
+
+&lt;span *ngFor="let dept of departments; trackBy: trackByName; let last = last"&gt;
+  {{ dept }}{{ last ? '' : ', ' }}
+&lt;/span&gt;
+</code></pre>
+              </div>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p><code>let last = last</code> maps to <code>@for</code>'s built-in <code>$last</code> context variable from Section 2 — no separate <code>trackByName</code> function needed once you're tracking by the department name directly.</p>
                 </div>
               </div>
             </div>
