@@ -84,7 +84,9 @@
       golang: "go backend concurrency microservices",
       flutter: "mobile dart cross-platform ios android app",
       mongodb: "database nosql document db",
-      "coding-practice": "leetcode problems practice interview dsa"
+      "coding-practice": "leetcode problems practice interview dsa",
+      "sql-postgresql": "database relational rdbms postgres mysql queries joins schema backend",
+      "docker-kubernetes": "containers containerization orchestration devops helm kubectl docker compose infrastructure cicd gitops argocd"
     };
 
     var courseIndex = Array.prototype.map

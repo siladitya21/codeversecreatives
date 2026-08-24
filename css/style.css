@@ -281,7 +281,25 @@ body[data-course="coding-practice"],
   --accent-deep-2: #9e33ae;
 }
 
-/* Light theme: the same twenty hues, darkened to hold contrast on white. */
+body[data-course="docker-kubernetes"],
+.c-docker-kubernetes {
+  --accent: #4d9fff;
+  --accent-2: #6fb4ff;
+  --accent-soft: rgba(109, 180, 255, 0.14);
+  --accent-deep: #1d4ed8;
+  --accent-deep-2: #2657e0;
+}
+
+body[data-course="sql-postgresql"],
+.c-sql-postgresql {
+  --accent: #4a90d9;
+  --accent-2: #6fa8e0;
+  --accent-soft: rgba(111, 168, 224, 0.14);
+  --accent-deep: #1d4e7a;
+  --accent-deep-2: #245c8f;
+}
+
+/* Light theme: the same twenty-one hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
 :root[data-theme="light"] .c-angular {
@@ -428,6 +446,20 @@ body[data-course="coding-practice"],
   --accent: #9c2fac;
   --accent-2: #b23eb5;
   --accent-soft: rgba(156, 47, 172, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="docker-kubernetes"],
+:root[data-theme="light"] .c-docker-kubernetes {
+  --accent: #1d4ed8;
+  --accent-2: #2f5fd9;
+  --accent-soft: rgba(29, 78, 216, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="sql-postgresql"],
+:root[data-theme="light"] .c-sql-postgresql {
+  --accent: #1d5c96;
+  --accent-2: #2470b3;
+  --accent-soft: rgba(29, 92, 150, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */
