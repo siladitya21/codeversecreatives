@@ -15,7 +15,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Week 21: Next.js — Middleware, Metadata &amp; Caching — CodeVerse Creatives</title>
-<meta name="description" content="Week 21 of the React curriculum: gating requests with middleware.ts, generateMetadata and SEO/Open Graph tags, the four Next.js caching layers, and Incremental Static Regeneration (ISR) with time-based and on-demand revalidation." />
+<meta name="description" content="Week 21 of the React curriculum: gating requests with proxy.ts, generateMetadata and SEO/Open Graph tags, Next.js 16's Cache Components model with the 'use cache' directive, and time-based and on-demand cache invalidation." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -246,17 +259,17 @@
       <div class="obj-recap reveal">
         <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Gate and redirect requests with <code>middleware.ts</code></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Gate and redirect requests with <code>proxy.ts</code></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Generate correct, per-page SEO and Open Graph metadata</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain Next.js's caching layers and set up time-based and on-demand ISR</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Explain Next.js 16's Cache Components model and set up time-based and on-demand cache lifetimes</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#middleware"><span>1</span> Middleware</a>
+        <a href="#middleware"><span>1</span> proxy.ts (formerly Middleware)</a>
         <a href="#metadata"><span>2</span> Metadata &amp; SEO</a>
-        <a href="#caching-model"><span>3</span> The Caching Model</a>
-        <a href="#isr"><span>4</span> Incremental Static Regeneration</a>
+        <a href="#caching-model"><span>3</span> Cache Components &amp; "use cache"</a>
+        <a href="#isr"><span>4</span> Cache Lifetimes &amp; On-Demand Invalidation</a>
         <a href="#putting-together"><span>5</span> Putting It Together</a>
         <a href="#exercise"><span>6</span> Exercise</a>
         <a href="#quiz"><span>7</span> Knowledge Check</a>
@@ -271,20 +284,20 @@
         <article class="lesson-article">
 
           <section id="middleware">
-            <h2>1. Middleware</h2>
+            <h2>1. <code>proxy.ts</code> (formerly Middleware)</h2>
             <p>
-              A single <code>middleware.ts</code> at the project root runs <strong>before</strong>
+              A single <code>proxy.ts</code> at the project root runs <strong>before</strong>
               a request reaches any route — Server Component, Route Handler, or Server Action
               alike. It can inspect the request, redirect, rewrite the URL, or attach headers,
-              closest in spirit to Week 23's protected-route checks, except it runs on the server,
+              closest in spirit to Week 7's protected-route checks, except it runs on the server,
               before any page code executes at all.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">middleware.ts</div>
+              <div class="code-block__label">proxy.ts</div>
               <pre><code>import { NextRequest, NextResponse } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const sessionCookie = request.cookies.get('session');
 
   if (!sessionCookie &amp;&amp; request.nextUrl.pathname.startsWith('/dashboard')) {
@@ -295,23 +308,31 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*'], // only run middleware for these paths
+  matcher: ['/dashboard/:path*'], // only run the proxy for these paths
 };
 </code></pre>
             </div>
 
             <p>
-              The <code>matcher</code> config is important for performance — without it, the
-              middleware would run on <em>every</em> request, including static assets. Scoping it
-              to just the paths that need the check (here, anything under <code>/dashboard</code>)
-              keeps everything else fast.
+              The <code>matcher</code> config is important for performance — without it, this would
+              run on <em>every</em> request, including static assets. Scoping it to just the paths
+              that need the check (here, anything under <code>/dashboard</code>) keeps everything
+              else fast.
             </p>
 
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>Middleware is a fast, coarse check — not your only auth layer</strong>
-                <p>Middleware runs in a lightweight Edge runtime with real constraints (no full Node.js APIs, no direct database connections). Use it for cheap checks — is a session cookie present at all — and still verify the session properly (Week 23) in the actual Server Component or Server Action, which has full Node.js available to it.</p>
+                <strong>Renamed in Next.js 16 — and it now runs on Node.js by default</strong>
+                <p><code>middleware.ts</code> was renamed to <code>proxy.ts</code> (the exported function from <code>middleware</code> to <code>proxy</code>) in Next.js 16 — a Next codemod handles the rename mechanically in an existing project. The bigger practical change: <code>proxy.ts</code> runs on the full <strong>Node.js runtime</strong> by default, not the restricted Edge runtime middleware used — real Node APIs and easier debugging are available directly here now. <code>middleware.ts</code> still exists specifically for the cases that genuinely need the lighter, globally-distributed Edge runtime.</p>
+              </div>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong><code>proxy.ts</code> is still a fast, coarse check — not your only auth layer</strong>
+                <p>Even with full Node.js available, keep this file to cheap, fast checks — is a session cookie present at all. Still verify the session properly (Week 25) in the actual Server Component or Server Action that serves the page, where you have direct database access to confirm the session is genuinely valid, not just present.</p>
               </div>
             </div>
           </section>
@@ -333,9 +354,10 @@ export const config = {
 export async function generateMetadata({
   params,
 }: {
-  params: { productId: string };
+  params: Promise&lt;{ productId: string }&gt;;
 }): Promise&lt;Metadata&gt; {
-  const product = await getProduct(params.productId); // reuses the same fetch, deduplicated
+  const { productId } = await params;
+  const product = await getProduct(productId); // reuses the same fetch, deduplicated
 
   return {
     title: `${product.name} — Acme Store`,
@@ -347,7 +369,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
+export default async function ProductDetailPage({ params }: { params: Promise&lt;{ productId: string }&gt; }) {
   // ...
 }
 </code></pre>
@@ -383,64 +405,99 @@ export default async function ProductDetailPage({ params }: { params: { productI
               the difference between a five-minute fix and an afternoon of confusion:
             </p>
 
-            <ul>
-              <li><strong>Request memoization</strong> — identical <code>fetch</code> calls within one render pass are deduplicated (Section 2's example). Cleared automatically after the request finishes.</li>
-              <li><strong>Data Cache</strong> — the result of a <code>fetch</code> persisted across requests and deployments, controlled per-call by <code>cache: 'force-cache'</code> (default) or <code>cache: 'no-store'</code>, and invalidated by Week 20's <code>revalidatePath</code>/<code>revalidateTag</code>.</li>
-              <li><strong>Full Route Cache</strong> — the rendered HTML/RSC output for statically-rendered routes, generated at build time and reused across requests until revalidated.</li>
-              <li><strong>Router Cache</strong> — a client-side, in-memory cache of visited route segments in the browser, making back/forward navigation between already-visited pages feel instant.</li>
-            </ul>
-
-            <div class="code-block">
-              <div class="code-block__label">Controlling the Data Cache per fetch</div>
-              <pre><code>// Cached indefinitely, until explicitly revalidated (the default)
-await fetch('https://api.example.com/products', { cache: 'force-cache' });
-
-// Never cached -- always fetched fresh, closest to Week 19's "SSR" behavior
-await fetch('https://api.example.com/live-price', { cache: 'no-store' });
-
-// Cached, but automatically revalidated at most every 60 seconds -- see Section 4
-await fetch('https://api.example.com/products', { next: { revalidate: 60 } });
-</code></pre>
-            </div>
-          </section>
-
-          <section id="isr">
-            <h2>4. Incremental Static Regeneration</h2>
             <p>
-              <strong>ISR</strong> is the middle ground between Week 19's SSG (fast, but stale
-              until the next deploy) and SSR (always fresh, but slower per request): a page is
-              served from the static cache, but Next.js automatically regenerates it in the
-              background after a configured interval — visitors keep getting fast, cached
-              responses, and the content self-refreshes without a full redeploy.
+              Older Next.js versions defaulted to caching <code>fetch</code> results and static
+              page output automatically, and asked you to opt <em>out</em> per call
+              (<code>cache: 'no-store'</code>) when you needed fresh data. Next.js 16's
+              <strong>Cache Components</strong> model — enabled with <code>cacheComponents: true</code>
+              in <code>next.config.ts</code>, and the direction all new App Router projects should
+              take — inverts that: <strong>everything is dynamic and uncached by default</strong>.
+              Nothing is cached across requests unless a specific piece of code explicitly opts in.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">app/products/[productId]/page.tsx — time-based ISR</div>
-              <pre><code>export const revalidate = 3600; // regenerate this route at most once per hour
+              <div class="code-block__label">app/products/queries.ts — opting a function into caching</div>
+              <pre><code>import { cacheLife, cacheTag } from 'next/cache';
 
-export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
-  const product = await getProduct(params.productId);
+export async function getProducts() {
+  'use cache'; // this function's return value is now cacheable
+
+  cacheLife('hours');   // how long the cache stays fresh before a background refresh
+  cacheTag('products'); // a label Week 20's updateTag/revalidateTag can target
+
+  const res = await fetch('https://api.example.com/products');
+  return res.json();
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>"use cache"</code> works the same way <code>"use client"</code> (Week 18) and
+              <code>"use server"</code> (Week 20) do — a directive marking a function (or an entire
+              file, or a component) as belonging to a different execution model. Here, it means
+              "cache whatever this function returns." <code>cacheLife(...)</code> sets how long that
+              cached result stays fresh before Next.js refreshes it in the background;
+              <code>cacheTag(...)</code> gives it a name Week 20's <code>updateTag</code>/
+              <code>revalidateTag</code> can invalidate on demand. Without any of this, calling
+              <code>getProducts</code> from a Server Component just re-fetches on every single
+              request — genuinely dynamic, exactly like everything else by default now.
+            </p>
+
+            <p>
+              One caching layer still exists outside this model entirely: the
+              <strong>Router Cache</strong>, a client-side, in-memory cache of visited route
+              segments in the browser, making back/forward navigation between already-visited
+              pages feel instant. It's unrelated to server-side data caching — it's about not
+              re-rendering a page the browser already has, purely on the client.
+            </p>
+          </section>
+
+          <section id="isr">
+            <h2>4. Cache Lifetimes &amp; On-Demand Invalidation</h2>
+            <p>
+              <code>cacheLife</code>'s named profiles (<code>'seconds'</code>,
+              <code>'minutes'</code>, <code>'hours'</code>, <code>'days'</code>,
+              <code>'weeks'</code>, <code>'max'</code>) control how long a <code>"use cache"</code>
+              function's result stays fresh before Next.js regenerates it — the same idea the older
+              Incremental Static Regeneration model expressed with a single
+              <code>revalidate</code> number, now expressed per cached function instead of per route.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/[productId]/page.tsx — time-based freshness</div>
+              <pre><code>async function getProduct(productId: string) {
+  'use cache';
+  cacheLife('hours'); // regenerate this cached result at most once per hour
+  cacheTag('products', `product-${productId}`);
+
+  const res = await fetch(`https://api.example.com/products/${productId}`);
+  return res.json();
+}
+
+export default async function ProductDetailPage({ params }: { params: Promise&lt;{ productId: string }&gt; }) {
+  const { productId } = await params;
+  const product = await getProduct(productId);
   return &lt;h1&gt;{product.name}&lt;/h1&gt;;
 }
 </code></pre>
             </div>
 
             <p>
-              The first request after an hour has passed still gets the (now-stale) cached page
-              instantly — Next.js regenerates it <em>behind the scenes</em> and swaps the cache
-              for the next visitor, rather than making that one unlucky request wait. For updates
-              that need to appear the moment they happen — publishing a blog post right now,
-              not "sometime in the next hour" — Week 20's <code>revalidatePath</code>/
-              <code>revalidateTag</code> called from inside a Server Action is <strong>on-demand
-              ISR</strong>: the same regenerate-and-cache behavior, triggered immediately by your
-              own code instead of a timer.
+              The first request after an hour has passed still gets the (now-stale) cached result
+              instantly — Next.js regenerates it <em>behind the scenes</em> and swaps the cache in
+              for the next reader, rather than making that one unlucky request wait. For updates
+              that need to appear the moment they happen — publishing a price change right now, not
+              "sometime in the next hour" — Week 20's <code>updateTag</code>/<code>revalidateTag</code>
+              called from inside a Server Action is the <strong>on-demand</strong> counterpart: the
+              same regenerate-and-cache behavior, triggered immediately by your own code instead of
+              a timer.
             </p>
 
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>Time-based and on-demand ISR aren't an either/or choice</strong>
-                <p>A product page can set <code>revalidate = 3600</code> as a safety-net baseline (nothing is ever more than an hour stale) while an admin's "Save" button also calls <code>revalidatePath</code> for that exact product — instant freshness on an explicit write, with a time-based fallback catching anything that changed outside the app's own mutation paths.</p>
+                <strong>Time-based and on-demand freshness aren't an either/or choice</strong>
+                <p>A product page can set <code>cacheLife('hours')</code> as a safety-net baseline (nothing is ever more than an hour stale) while an admin's "Save" button also calls <code>updateTag('products')</code> for that exact product — instant freshness on an explicit write, with the time-based profile catching anything that changed outside the app's own mutation paths.</p>
               </div>
             </div>
           </section>
@@ -448,36 +505,45 @@ export default async function ProductDetailPage({ params }: { params: { productI
           <section id="putting-together">
             <h2>5. Putting It Together</h2>
             <p>
-              A realistic route touches all three of this week's topics at once: middleware gates
-              access, <code>generateMetadata</code> makes it shareable, and a sensible cache
+              A realistic route touches all three of this week's topics at once: <code>proxy.ts</code>
+              gates access, <code>generateMetadata</code> makes it shareable, and a sensible cache
               strategy keeps it fast without serving stale data indefinitely.
             </p>
 
             <div class="code-block">
               <div class="code-block__label">app/dashboard/reports/[reportId]/page.tsx</div>
-              <pre><code>// middleware.ts already confirmed a session cookie exists for anything under /dashboard
+              <pre><code>// proxy.ts already confirmed a session cookie exists for anything under /dashboard
 
-export const revalidate = 300; // background-refresh at most every 5 minutes
+async function getReport(reportId: string) {
+  'use cache';
+  cacheLife('minutes'); // background-refresh at most every few minutes
+  cacheTag('reports', `report-${reportId}`);
 
-export async function generateMetadata({ params }: { params: { reportId: string } }) {
-  const report = await getReport(params.reportId);
+  return db.report.findUnique({ where: { id: reportId } });
+}
+
+export async function generateMetadata({ params }: { params: Promise&lt;{ reportId: string }&gt; }) {
+  const { reportId } = await params;
+  const report = await getReport(reportId); // deduplicated against the call below
   return { title: `${report.title} — Reports` };
 }
 
-export default async function ReportPage({ params }: { params: { reportId: string } }) {
-  const report = await getReport(params.reportId); // deduplicated against the call above
+export default async function ReportPage({ params }: { params: Promise&lt;{ reportId: string }&gt; }) {
+  const { reportId } = await params;
+  const report = await getReport(reportId);
   return &lt;ReportView report={report} /&gt;;
 }
 </code></pre>
             </div>
 
             <p>
-              Each layer solves a genuinely different problem: middleware answers "should this
-              request even proceed," metadata answers "how does this page describe itself to
-              everything outside the browser tab," and the cache strategy answers "how fresh does
-              this specific content need to be." Treating them as one combined decision, rather
-              than reaching for the strictest option (no caching, full re-auth every request)
-              everywhere, is what keeps a real Next.js app both correct and fast.
+              Each layer solves a genuinely different problem: <code>proxy.ts</code> answers "should
+              this request even proceed," metadata answers "how does this page describe itself to
+              everything outside the browser tab," and <code>"use cache"</code> plus its
+              <code>cacheLife</code> answers "how fresh does this specific content need to be."
+              Treating them as one combined decision, rather than reaching for the strictest option
+              (no caching, full re-auth every request) everywhere, is what keeps a real Next.js app
+              both correct and fast.
             </p>
           </section>
 
@@ -489,22 +555,22 @@ export default async function ReportPage({ params }: { params: { reportId: strin
                 Hands-on
               </span>
               <h3>Gate, describe and cache the product catalog properly</h3>
-              <p>Apply all three topics to the catalog you've been building since Week 18.</p>
+              <p>Apply all three topics to the catalog you've been building since Week 18 — using Next.js 16's <code>proxy.ts</code> and Cache Components model throughout.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Add a <code>middleware.ts</code> that redirects any request to <code>/admin/*</code> to <code>/login</code> when a (simulated) session cookie is missing, scoped with a <code>matcher</code> so it doesn't run on every request.</li>
+                <li>Add a <code>proxy.ts</code> that redirects any request to <code>/admin/*</code> to <code>/login</code> when a (simulated) session cookie is missing, scoped with a <code>matcher</code> so it doesn't run on every request.</li>
                 <li>Add <code>generateMetadata</code> to the product detail page from Week 18, setting a per-product <code>title</code> and an <code>openGraph.images</code> entry, and confirm in your browser's view-source that the correct <code>&lt;title&gt;</code> and Open Graph tags render per product.</li>
-                <li>Set <code>export const revalidate = 120</code> on the products list page, and add a comment explaining, in your own words, what happens to a request that arrives 3 minutes after the last regeneration.</li>
-                <li>In the "Add Product" Server Action from Week 20, call <code>revalidatePath</code> for both the products list <em>and</em> the specific new product's detail route, and explain in a comment why both are needed rather than just one.</li>
-                <li>Identify, in a short written note, which of Section 3's four caching layers is responsible if a deleted product still appears in the list immediately after deletion, versus if it still appears after a hard page refresh.</li>
+                <li>Enable <code>cacheComponents: true</code> in <code>next.config.ts</code>, wrap your products-list data function in <code>"use cache"</code> with <code>cacheLife('minutes')</code> and <code>cacheTag('products')</code>, and add a comment explaining, in your own words, what happens to a request that arrives a few minutes after the last regeneration.</li>
+                <li>In the "Add Product" Server Action from Week 20, call <code>updateTag('products')</code> and, separately, <code>updateTag(`product-${newProductId}`)</code> for the specific new product's own cache tag — explain in a comment why both are needed rather than just one.</li>
+                <li>Identify, in a short written note, why a deleted product might still briefly appear in the list if you forgot the <code>updateTag</code> call, versus why it would still appear after a hard refresh even <em>with</em> the call — the second case is the client-side Router Cache, not the server cache at all.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>"Still stale immediately after the mutation" almost always points to the Data Cache or Full Route Cache (a missing revalidation); "still stale only after a hard refresh, but fine on client-side navigation" points to the Router Cache instead — they fail differently, which is the fastest way to tell them apart.</p>
+                  <p>"Still stale immediately after the mutation" almost always points to a missing or mistagged <code>"use cache"</code>/<code>updateTag</code> pairing on the server; "still stale only after a hard refresh, but fine on client-side navigation" points to the Router Cache instead — they fail differently, which is the fastest way to tell them apart.</p>
                 </div>
               </div>
             </div>
@@ -519,13 +585,13 @@ export default async function ReportPage({ params }: { params: { reportId: strin
                 <summary>
                   <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>Why is scoping <code>middleware.ts</code> with a <code>matcher</code> important, rather than letting it run unconditionally?</h4>
+                    <h4>Why is scoping <code>proxy.ts</code> with a <code>matcher</code> important, rather than letting it run unconditionally?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Without a <code>matcher</code>, the middleware runs on every single request, including static assets and routes that never needed the check — a real, if often small, performance cost paid on traffic that gets nothing out of it. Scoping it to only the paths that actually need the logic keeps everything else at full speed.</p>
+                    <p>Without a <code>matcher</code>, this code runs on every single request, including static assets and routes that never needed the check — a real, if often small, performance cost paid on traffic that gets nothing out of it. Scoping it to only the paths that actually need the logic keeps everything else at full speed.</p>
                   </div>
                 </div>
               </details>
@@ -549,13 +615,13 @@ export default async function ReportPage({ params }: { params: { reportId: strin
                 <summary>
                   <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>A page has <code>export const revalidate = 3600</code>. A visitor requests it 61 minutes after the last regeneration. What do they see, and what happens next?</h4>
+                    <h4>A cached function has <code>cacheLife('hours')</code>. A visitor requests the page 61 minutes after the last regeneration. What do they see, and what happens next?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>They still receive the existing cached (now-stale) page immediately, with no added wait. Next.js regenerates the page in the background after serving that response, and swaps in the fresh version for the <em>next</em> visitor — the one unlucky-timing request never blocks on regeneration itself.</p>
+                    <p>They still receive the existing cached (now-stale) result immediately, with no added wait. Next.js regenerates it in the background after serving that response, and swaps in the fresh version for the <em>next</em> reader — the one unlucky-timing request never blocks on regeneration itself.</p>
                   </div>
                 </div>
               </details>
@@ -564,13 +630,13 @@ export default async function ReportPage({ params }: { params: { reportId: strin
                 <summary>
                   <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>What's the practical difference between time-based ISR (<code>revalidate = 3600</code>) and on-demand ISR (<code>revalidatePath</code> called from a Server Action)?</h4>
+                    <h4>What's the practical difference between a time-based <code>cacheLife('hours')</code> profile and calling <code>updateTag</code> from a Server Action?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Both regenerate and re-cache a route, but time-based ISR triggers on a timer regardless of whether anything actually changed, while on-demand ISR triggers immediately, exactly when your own code knows a write happened — useful together, since the timer acts as a safety net for changes outside the app's own mutation paths, and the on-demand call gives instant freshness for changes the app itself made.</p>
+                    <p>Both refresh a cached result, but <code>cacheLife</code> triggers on a timer regardless of whether anything actually changed, while <code>updateTag</code> triggers immediately, exactly when your own code knows a write happened — useful together, since the timer acts as a safety net for changes outside the app's own mutation paths, and <code>updateTag</code> gives instant freshness for changes the app itself made.</p>
                   </div>
                 </div>
               </details>

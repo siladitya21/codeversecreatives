@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -541,9 +554,9 @@ function RequireAuth() {
                 Hands-on
               </span>
               <h3>Add a loader, an action, and a protected route to last week's catalog</h3>
-              <p>Extend Week 6's product catalog with this week's router-native data layer.</p>
+              <p>Extend Week 6's product catalog with this week's router-native data layer — then add non-navigating writes with <code>useFetcher</code>.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — Loaders, actions, and auth:</strong></p>
               <ol>
                 <li>Replace the <code>useParams</code>-based lookup on the product detail page with a real <code>loader</code> that "fetches" the product (simulate with a <code>Promise</code> + <code>setTimeout</code> over your in-memory array), throwing a 404 <code>Response</code> when the ID doesn't match.</li>
                 <li>Add an <code>errorElement</code> for the detail route that distinguishes a 404 from a generic failure using <code>isRouteErrorResponse</code>.</li>
@@ -557,6 +570,23 @@ function RequireAuth() {
                 <div>
                   <strong>Hint</strong>
                   <p>To simulate a network delay for your loader without a real backend: <code>await new Promise(resolve =&gt; setTimeout(resolve, 500));</code> before returning the data — this is what makes the progress bar from step 3 actually visible.</p>
+                </div>
+              </div>
+
+              <p><strong>Part 2 — Non-navigating writes with <code>useFetcher</code>:</strong></p>
+              <p><code>&lt;Form&gt;</code> and <code>action</code> from Part 1 always navigate. Not every write should — favoriting an item from a list shouldn't reload the whole page's data or show the top-of-page progress bar for an unrelated route.</p>
+              <ol>
+                <li>Add a favorite (★) toggle button to each product card in the list, backed by a new <code>action</code> on a <code>/products/:productId/favorite</code> route that flips a <code>favorited</code> boolean on that product in your in-memory array.</li>
+                <li>Wire the button using <code>useFetcher()</code> and <code>fetcher.Form</code> instead of the top-level <code>&lt;Form&gt;</code> — submitting it should <em>not</em> trigger <code>AppLayout</code>'s progress bar or change the URL.</li>
+                <li>Use <code>fetcher.state</code> to show a small inline spinner on just the button being toggled while its submission is in flight, leaving every other card untouched.</li>
+                <li>Prove the isolation: start a favorite toggle on one product, then immediately navigate to a different product's detail page before the fetcher resolves — confirm the app doesn't error, and the favorite still applies correctly once the fetcher settles.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Each card needs its <em>own</em> fetcher — call <code>useFetcher()</code> once per <code>ProductCard</code>, not once at the list level shared across all cards, or every card's spinner will light up together whenever any one of them is submitting.</p>
                 </div>
               </div>
             </div>

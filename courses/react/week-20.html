@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -258,8 +271,9 @@
         <a href="#calling-actions"><span>3</span> Calling Actions from Client Components</a>
         <a href="#form-status"><span>4</span> useActionState &amp; useFormStatus</a>
         <a href="#revalidating"><span>5</span> Revalidating After a Mutation</a>
-        <a href="#exercise"><span>6</span> Exercise</a>
-        <a href="#quiz"><span>7</span> Knowledge Check</a>
+        <a href="#optimistic-actions"><span>6</span> useOptimistic + Server Actions</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -307,9 +321,10 @@ export async function POST(request: NextRequest) {
               <div class="code-block__label">app/api/products/[productId]/route.ts</div>
               <pre><code>export async function GET(
   request: NextRequest,
-  { params }: { params: { productId: string } },
+  { params }: { params: Promise&lt;{ productId: string }&gt; },
 ) {
-  const product = await db.product.findUnique({ where: { id: params.productId } });
+  const { productId } = await params;
+  const product = await db.product.findUnique({ where: { id: productId } });
   if (!product) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
@@ -486,35 +501,54 @@ function SubmitButton() {
           <section id="revalidating">
             <h2>5. Revalidating After a Mutation</h2>
             <p>
-              Week 19 established that Server Component data can be cached. After a write, that
-              cache is now stale — <code>revalidatePath</code> and <code>revalidateTag</code> tell
-              Next.js to throw away the cached result for a given route (or a tagged fetch) so the
-              next request re-fetches fresh data.
+              Week 21 covers Next.js 16's Cache Components model in full — the
+              <code>"use cache"</code> directive and tagging cached data with
+              <code>cacheTag</code>. For now, the part that matters here: after
+              <code>addProduct</code> writes to the database, any cached rendering of the products
+              list is now stale, and something needs to tell Next.js to throw it away.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">Two ways to invalidate</div>
-              <pre><code>import { revalidatePath, revalidateTag } from 'next/cache';
+              <div class="code-block__label">app/products/queries.ts — a cached read, tagged</div>
+              <pre><code>import { cacheTag } from 'next/cache';
 
-// Invalidate every cached render of a specific route
-revalidatePath('/products');
+export async function getProducts() {
+  'use cache';
+  cacheTag('products'); // labels this cached result so it can be targeted later
 
-// Invalidate every fetch tagged with 'products', wherever it happens to run
-revalidateTag('products');
+  return db.product.findMany();
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/actions.ts — revalidating after the write</div>
+              <pre><code>'use server';
+
+import { updateTag } from 'next/cache';
+
+export async function addProduct(formData: FormData) {
+  const name = formData.get('name') as string;
+  const price = Number(formData.get('price'));
+
+  await db.product.create({ data: { name, price } });
+  updateTag('products'); // expires the 'products' cache immediately, in this same action
+}
 </code></pre>
             </div>
 
             <p>
-              <code>revalidateTag</code> pairs with a tag set on the original <code>fetch</code>:
+              <code>updateTag</code> is the revalidation call written specifically for Server
+              Actions: it expires the tagged cache entry immediately, so the very next read —
+              including anything this same action does afterward, like a redirect to the products
+              page — sees the fresh data, not a stale cached copy. Its sibling,
+              <code>revalidateTag</code>, marks an entry stale rather than expiring it outright: the
+              next visitor gets the still-cached page instantly while Next.js rebuilds it in the
+              background — the right choice from a Route Handler or a webhook, where nothing is
+              waiting to immediately read its own write the way a Server Action's caller is.
+              <code>revalidatePath('/products')</code> still exists too, for the simpler case of
+              invalidating everything cached for a specific route rather than a specific tag.
             </p>
-
-            <div class="code-block">
-              <div class="code-block__label">app/products/page.tsx</div>
-              <pre><code>const res = await fetch('https://api.example.com/products', {
-  next: { tags: ['products'] },
-});
-</code></pre>
-            </div>
 
             <p>
               This is the App Router's answer to Week 9's <code>queryClient.invalidateQueries</code>
@@ -527,42 +561,116 @@ revalidateTag('products');
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
                 <strong>Forgetting to revalidate is the most common Server Action bug</strong>
-                <p>A Server Action that writes to the database but never calls <code>revalidatePath</code>/<code>revalidateTag</code> will appear to silently "not work" — the write succeeded, but every page still shows the old cached data until the cache expires or a full reload happens to bypass it.</p>
+                <p>A Server Action that writes to the database but never calls <code>updateTag</code>/<code>revalidateTag</code>/<code>revalidatePath</code> will appear to silently "not work" — the write succeeded, but every page still shows the old cached data until the cache's lifetime expires or a full reload happens to bypass it.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="optimistic-actions">
+            <h2>6. <code>useOptimistic</code> + Server Actions</h2>
+            <p>
+              Week 9 introduced <code>useOptimistic</code> and promised its most natural home was
+              here: a Server Action call, unlike a TanStack Query mutation, has no client-side
+              cache of its own to optimistically update — <code>useOptimistic</code> is exactly the
+              tool built for pairing with it directly.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">FavoriteButton.tsx</div>
+              <pre><code>'use client';
+
+import { useOptimistic, useTransition } from 'react';
+import { toggleFavorite } from './actions';
+
+export function FavoriteButton({ productId, initialFavorited }: {
+  productId: string;
+  initialFavorited: boolean;
+}) {
+  const [isPending, startTransition] = useTransition();
+  const [optimisticFavorited, setOptimisticFavorited] = useOptimistic(initialFavorited);
+
+  function handleClick() {
+    startTransition(async () =&gt; {
+      setOptimisticFavorited(!optimisticFavorited); // flips instantly
+      await toggleFavorite(productId); // real Server Action call, in the background
+    });
+  }
+
+  return (
+    &lt;button onClick={handleClick} disabled={isPending}&gt;
+      {optimisticFavorited ? '★ Favorited' : '☆ Favorite'}
+    &lt;/button&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              The star flips the instant the button is clicked, before <code>toggleFavorite</code>
+              has even reached the server. <code>useOptimistic</code>'s update must run inside a
+              transition — <code>startTransition</code>, exactly like Section 3's
+              <code>DeleteButton</code> — so that if the action ultimately throws,
+              <code>optimisticFavorited</code> automatically reverts to
+              <code>initialFavorited</code> with no <code>onError</code> code of your own, the same
+              revert-on-settle behavior Week 9 covered for a purely client-side case.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong><code>initialFavorited</code> comes from the server, on every fresh load</strong>
+                <p>Because this is a Client Component rendered inside a Server Component's page, <code>initialFavorited</code> reflects whatever <code>updateTag</code>/<code>revalidatePath</code> (Section 5) already made sure is current, on the next full page load. <code>useOptimistic</code> only smooths over the brief window <em>during</em> one specific interaction — it isn't a substitute for revalidating the underlying cache correctly.</p>
               </div>
             </div>
           </section>
 
           <section id="exercise">
-            <h2>6. Hands-on Exercise</h2>
+            <h2>7. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Add full CRUD to Week 18's product catalog</h3>
-              <p>Give the read-only catalog from Week 18 the ability to create, update and delete.</p>
+              <h3>Add full CRUD to Week 18's product catalog, with an optimistic favorite toggle</h3>
+              <p>Give the read-only catalog from Week 18 the ability to create, update and delete — then make one interaction feel instant.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — CRUD:</strong></p>
               <ol>
                 <li>Add an <code>app/api/products/route.ts</code> Route Handler with <code>GET</code> and <code>POST</code>, and confirm it responds correctly with a tool like Postman or <code>curl</code> — independent of any page rendering it.</li>
                 <li>Add a <code>'use server'</code> actions file with <code>addProduct</code>, <code>updateProduct</code> and <code>deleteProduct</code>, and wire <code>addProduct</code> to a plain <code>&lt;form action={...}&gt;</code> on a new "Add Product" page.</li>
                 <li>Convert the add-product form to use <code>useActionState</code>, returning a validation error when the name is empty, and display it in the UI.</li>
                 <li>Add a <code>DeleteButton</code> Client Component (Section 3) to each product card, using <code>useTransition</code> for its pending state.</li>
-                <li>Call <code>revalidatePath('/products')</code> in all three actions, and confirm — by adding a product, then navigating back to <code>/products</code> without a hard refresh — that the new item appears immediately.</li>
+                <li>Tag your <code>getProducts</code> read with <code>"use cache"</code> + <code>cacheTag('products')</code> (Section 5), and call <code>updateTag('products')</code> in all three actions — confirm, by adding a product then navigating back to <code>/products</code> without a hard refresh, that the new item appears immediately.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>If a mutation "worked" in the database but the UI still shows stale data after navigating back, that's almost always a missing or misplaced <code>revalidatePath</code>/<code>revalidateTag</code> call — check Section 5 before suspecting the mutation itself.</p>
+                  <p>If a mutation "worked" in the database but the UI still shows stale data after navigating back, that's almost always a missing or misplaced <code>updateTag</code>/<code>revalidatePath</code> call — check Section 5 before suspecting the mutation itself.</p>
+                </div>
+              </div>
+
+              <p><strong>Part 2 — Optimistic favoriting:</strong></p>
+              <ol>
+                <li>Add a <code>favorited: boolean</code> field to your product data and a <code>toggleFavorite</code> Server Action that flips it.</li>
+                <li>Build the <code>FavoriteButton</code> from Section 6 and add it to every product card, passing each card's current <code>favorited</code> value as <code>initialFavorited</code>.</li>
+                <li>Add an artificial 800ms delay to <code>toggleFavorite</code> and confirm the star still flips instantly on click, well before the delay completes.</li>
+                <li>Make <code>toggleFavorite</code> throw for one specific product ID (to simulate a failure), click that product's favorite button, and confirm the star reverts back to its original state once the action rejects — with no manual rollback code in <code>FavoriteButton</code>.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If the optimistic star doesn't revert on failure, double-check the <code>setOptimisticFavorited</code> call and the <code>await toggleFavorite(...)</code> call are both inside the same <code>startTransition</code> callback — <code>useOptimistic</code> only knows to revert once the transition it was updated inside of finishes, success or failure.</p>
                 </div>
               </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>7. Knowledge Check</h2>
+            <h2>8. Knowledge Check</h2>
             <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">

@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -257,8 +270,9 @@
         <a href="#suspense-basics"><span>3</span> Suspense Basics</a>
         <a href="#suspense-query"><span>4</span> Suspense for Data Fetching</a>
         <a href="#combining"><span>5</span> Combining Both, Correctly</a>
-        <a href="#exercise"><span>6</span> Exercise</a>
-        <a href="#quiz"><span>7</span> Knowledge Check</a>
+        <a href="#activity"><span>6</span> The Activity Component</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -485,17 +499,74 @@ function ProfilePage({ userId }: { userId: number }) {
             </div>
           </section>
 
+          <section id="activity">
+            <h2>6. The <code>Activity</code> Component: Hiding UI Without Losing State</h2>
+            <p>
+              Everything so far assumes hiding something means unmounting it — a conditionally
+              rendered tab panel, a hidden route. Unmounting destroys the component's state and
+              effects entirely: a half-filled form clears, scroll position is lost, and a
+              <code>useSuspenseQuery</code> that already resolved once refetches from scratch the
+              next time it mounts. <code>Activity</code> (stable since React 19.2) lets a subtree
+              stay mounted — state and effects intact — while visually hidden and deprioritized,
+              so switching back to it is instant with nothing lost.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">Tabs.tsx — tab content survives being switched away from</div>
+              <pre><code>import { Activity, useState } from 'react';
+
+function Tabs() {
+  const [activeTab, setActiveTab] = useState('profile');
+
+  return (
+    &lt;&gt;
+      &lt;nav&gt;
+        &lt;button onClick={() =&gt; setActiveTab('profile')}&gt;Profile&lt;/button&gt;
+        &lt;button onClick={() =&gt; setActiveTab('settings')}&gt;Settings&lt;/button&gt;
+      &lt;/nav&gt;
+
+      &lt;Activity mode={activeTab === 'profile' ? 'visible' : 'hidden'}&gt;
+        &lt;ProfileForm /&gt; {/* stays mounted, state intact, even while hidden */}
+      &lt;/Activity&gt;
+      &lt;Activity mode={activeTab === 'settings' ? 'visible' : 'hidden'}&gt;
+        &lt;SettingsForm /&gt;
+      &lt;/Activity&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              Switch to Settings, half-fill out a field on the Profile tab first, then switch back:
+              with the old "conditionally render only the active tab" approach, that field would be
+              empty again. With <code>Activity</code>, it's exactly as you left it — the hidden tab
+              never unmounted, it just stopped being visible and had its effects deprioritized in
+              the background. A <code>Suspense</code> boundary inside a hidden <code>Activity</code>
+              behaves correctly too: its data stays cached, so flipping back to a tab that already
+              loaded doesn't re-trigger the loading fallback from Section 3.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>This isn't just <code>display: none</code></strong>
+                <p>A plain CSS toggle keeps the component mounted too, but its effects keep running at full priority even while invisible — a background tab's interval or subscription fires just as often as a visible one. <code>Activity</code> genuinely deprioritizes hidden content's rendering work, closer to how a browser tab you've switched away from behaves, while still being instantly available the moment it's shown again.</p>
+              </div>
+            </div>
+          </section>
+
           <section id="exercise">
-            <h2>6. Hands-on Exercise</h2>
+            <h2>7. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Convert a data-fetching page to Suspense, with correct error containment</h3>
-              <p>Take a page from an earlier week and rebuild its loading/error handling using this week's declarative approach.</p>
+              <h3>Convert a data-fetching page to Suspense, then keep a tab's state alive with Activity</h3>
+              <p>Take a page from an earlier week and rebuild its loading/error handling using this week's declarative approach, then use Activity to stop losing state on tab switches.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — Suspense and error containment:</strong></p>
               <ol>
                 <li>Take Week 8's product detail page (or rebuild a similar one) and convert its data fetching from <code>useQuery</code> to <code>useSuspenseQuery</code>.</li>
                 <li>Wrap it in an <code>ErrorBoundary</code> + <code>Suspense</code> pair, correctly nested per Section 5, with a skeleton fallback and a fallback component showing the error message plus a "Try again" button using <code>resetErrorBoundary</code>.</li>
@@ -510,11 +581,27 @@ function ProfilePage({ userId }: { userId: number }) {
                   <p><code>react-error-boundary</code>'s <code>ErrorBoundary</code> accepts an <code>onReset</code> prop — if your error was caused by a query that's now cached in a failed state, you may also need to call <code>queryClient.resetQueries()</code> there so "Try again" actually retries the fetch instead of immediately re-throwing the same cached error.</p>
                 </div>
               </div>
+
+              <p><strong>Part 2 — Tabs that don't forget:</strong></p>
+              <ol>
+                <li>Build a two-tab layout ("Details" / "Reviews") around your Part 1 page: the Details tab is the Suspense-wrapped product detail; add a Reviews tab with its own <code>useSuspenseQuery</code>-backed content and a plain text input for "your review" (state-only, no need to actually submit anywhere).</li>
+                <li>First implement tab switching the ordinary way — conditionally render only the active tab's content — and confirm that typing in the Reviews draft input, switching to Details, then back to Reviews, loses whatever you typed.</li>
+                <li>Replace the conditional rendering with two <code>Activity</code> wrappers (Section 6), one per tab, toggling <code>mode="visible"</code>/<code>"hidden"</code> based on the active tab instead of mounting/unmounting.</li>
+                <li>Repeat the same typing test — confirm the draft review now survives switching tabs and back, and that revisiting the Details tab doesn't replay its Suspense fallback a second time.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Both <code>Activity</code> blocks render on the very first paint now (one visible, one hidden) instead of only the active tab — if your fallback skeletons flash for both tabs at once on initial load, that's expected; it's the price of keeping both subtrees genuinely mounted from the start.</p>
+                </div>
+              </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>7. Knowledge Check</h2>
+            <h2>8. Knowledge Check</h2>
             <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">

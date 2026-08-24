@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -464,10 +477,10 @@ function VirtualProductList({ products }: { products: Product[] }) {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Virtualize Week 3's 20,000-row list, then add variable-height rows</h3>
-              <p>Prove virtualization works by comparing DOM node counts directly, then handle a realistic variable-content case.</p>
+              <h3>Virtualize Week 3's 20,000-row list, then add variable-height rows and infinite loading</h3>
+              <p>Prove virtualization works by comparing DOM node counts directly, then handle two realistic cases: variable-height content and data that loads incrementally.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — Fixed and variable heights:</strong></p>
               <ol>
                 <li>Take Week 3's 20,000-product array (or generate a fresh one) and render it without virtualization first. Using your browser's DevTools, count the actual <code>&lt;div&gt;</code> elements in the DOM.</li>
                 <li>Rebuild the same list with <code>useVirtualizer</code>, fixed-height rows, and confirm — again by counting DOM nodes — that only a few dozen rows exist at any moment, regardless of scroll position.</li>
@@ -480,6 +493,22 @@ function VirtualProductList({ products }: { products: Product[] }) {
                 <div>
                   <strong>Hint</strong>
                   <p>If rows appear to "jump" or overlap while scrolling quickly, check that every rendered row includes <code>data-index</code> and the <code>measureElement</code> ref — skipping either on the variable-height version is the most common cause of misaligned rows.</p>
+                </div>
+              </div>
+
+              <p><strong>Part 2 — Infinite loading and two-axis virtualization:</strong></p>
+              <ol>
+                <li>Rebuild the product list on top of Week 8's <code>useInfiniteQuery</code>, simulating a paginated backend (~40 items per page) instead of one 20,000-item array loaded upfront.</li>
+                <li>Inside your virtualizer's rendered range, check whether the last few visible virtual items are within, say, 5 rows of the end of the currently-loaded data — if so, call <code>fetchNextPage()</code> automatically, so new pages load as the user scrolls near the bottom with no manual "Load more" click.</li>
+                <li>Render a fixed-height loading row at the end of the list while <code>isFetchingNextPage</code> is true, sized to match a real row so the scrollbar doesn't visibly jump once real data replaces it.</li>
+                <li><strong>Stretch:</strong> build a wide table (30+ columns) and virtualize both axes at once — vertical rows as in Part 1, plus a second <code>useVirtualizer</code> call with <code>horizontal: true</code> for the columns — and confirm scrolling diagonally (both directions at once) keeps rendering only the visible cells in both dimensions.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Trigger <code>fetchNextPage()</code> from a <code>useEffect</code> watching the virtualizer's <code>getVirtualItems()</code> result, not from inside the render body — calling it directly during render risks firing it multiple times per commit before React settles, and effects are the right place for "in response to what's now visible, fetch more."</p>
                 </div>
               </div>
             </div>

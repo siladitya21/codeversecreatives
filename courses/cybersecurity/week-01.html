@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -464,10 +477,10 @@ Elevation of Priv: Can a regular user's session be reused to reach an admin-only
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Threat-model a simple web app</h3>
-              <p>Apply the CIA triad, STRIDE and a DFD to a system you already understand: a basic note-taking app with a browser client, a web server, and a database.</p>
+              <h3>Threat-model a simple web app, then extend it with auth and a third-party integration</h3>
+              <p>Apply the CIA triad, STRIDE and a DFD to a system you already understand: a basic note-taking app with a browser client, a web server, and a database — then grow it and see how the same process handles new complexity.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — The base system:</strong></p>
               <ol>
                 <li>Draw a data-flow diagram (pen and paper or any tool) with three components: Browser, Web Server, Database, and mark every trust boundary between them.</li>
                 <li>For each trust boundary, walk through all six STRIDE categories and write down at least one plausible threat — skip a category only if you can justify why it doesn't apply.</li>
@@ -481,6 +494,23 @@ Elevation of Priv: Can a regular user's session be reused to reach an admin-only
                 <div>
                   <strong>Hint</strong>
                   <p>Reuse the login-form STRIDE walkthrough above as a template — real threat models are built by applying the same checklist to a new diagram, not by inventing a new process each time.</p>
+                </div>
+              </div>
+
+              <p><strong>Part 2 — Add authentication and a third-party integration:</strong></p>
+              <p>Extend the same app with two realistic features: users must log in, and a "share note via email" button that calls a third-party email-sending API.</p>
+              <ol>
+                <li>Redraw the DFD with the new components, and identify exactly which <em>new</em> trust boundaries these two features introduce (browser ↔ auth check, server ↔ third-party email API) that Part 1's diagram didn't have.</li>
+                <li>Run STRIDE specifically against these two new boundaries only — don't redo Part 1's work, focus on what's genuinely new. You should surface different threats than Part 1 did, since an auth flow and a third-party integration fail in different ways than a plain CRUD backend.</li>
+                <li>For the third-party email API boundary specifically: what happens if that third party is compromised, or its response can't be fully trusted? What's the actual blast radius on your own system if you trust its response blindly?</li>
+                <li>Revisit your Part 1 top-3 risk list — does anything from this new set of threats now outrank your original top 3? Update the list if so, and explain the reordering in one sentence.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If you're stuck on the third-party boundary, think about it the same way you'd think about a Spoofing threat on the login form — "what if the thing on the other side isn't actually who/what I expect it to be, or lies to me?" A third-party API you trust unconditionally is exactly that same shape of risk, just at a different boundary.</p>
                 </div>
               </div>
             </div>
@@ -560,10 +590,10 @@ Elevation of Priv: Can a regular user's session be reused to reach an admin-only
             <span class="lesson-pager__label">← Back to</span>
             <span class="lesson-pager__title">Full Syllabus</span>
           </a>
-          <span class="lesson-pager__link lesson-pager__link--next is-disabled">
-            <span class="lesson-pager__label">Coming Soon</span>
-            <span class="lesson-pager__title">Week 2: Networking Fundamentals for Security</span>
-          </span>
+          <a href="week-02.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 2: Networking Fundamentals for Security →</span>
+          </a>
         </div>
       </div>
     </div>

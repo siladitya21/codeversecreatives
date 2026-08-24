@@ -52,6 +52,226 @@
     });
   }
 
+  /* Header course search */
+  var searchWrap = document.querySelector("[data-nav-search]");
+  var searchToggle = document.querySelector("[data-search-toggle]");
+  var searchPanel = document.querySelector("[data-search-panel]");
+  var searchInput = document.querySelector("[data-search-input]");
+  var searchResults = document.querySelector("[data-search-results]");
+
+  if (searchWrap && searchToggle && searchPanel && searchInput && searchResults) {
+    /* Extra searchable terms per course, keyed by the "c-<slug>" class already
+       present on each .nav-course-card — keeps this in sync with the nav
+       dropdown without duplicating course titles/URLs anywhere. */
+    var courseKeywords = {
+      angular: "frontend spa typescript signals standalone components rxjs ssr",
+      cybersecurity: "security threats networking cloud pentesting appsec infosec incident response",
+      "devops-cloud": "infrastructure docker aws kubernetes terraform cicd gitops sre",
+      "dsa-cpp": "data structures algorithms interview cpp stl leetcode placement",
+      github: "git version control collaboration pull requests actions",
+      "javascript-typescript": "js ts fundamentals es2023 typescript programming basics",
+      "spring-boot": "java backend rest api microservices spring",
+      "llm-ml": "ai machine learning deep learning genai nlp transformers data science",
+      "node-express": "backend nodejs express api javascript server",
+      aptitude: "quant math reasoning placement exam",
+      php: "backend cms laravel wordpress woocommerce",
+      python: "backend fastapi django scripting automation",
+      react: "frontend hooks nextjs javascript spa ui",
+      "react-native": "mobile app expo ios android javascript",
+      servicenow: "itsm platform now workflow admin",
+      "system-design": "hld lld interview architecture scalability distributed systems",
+      "data-analytics": "excel sql powerbi data analytics dashboards bi",
+      golang: "go backend concurrency microservices",
+      flutter: "mobile dart cross-platform ios android app",
+      mongodb: "database nosql document db",
+      "coding-practice": "leetcode problems practice interview dsa"
+    };
+
+    var courseIndex = Array.prototype.map
+      .call(document.querySelectorAll(".nav-course-card"), function (card) {
+        var slugMatch = card.className.match(/\bc-([\w-]+)\b/);
+        var slug = slugMatch ? slugMatch[1] : "";
+        var titleEl = card.querySelector(".nav-course-card__title");
+        var metaEl = card.querySelector(".nav-course-card__meta");
+        var iconEl = card.querySelector(".nav-course-card__icon");
+        return {
+          slug: slug,
+          title: titleEl ? titleEl.textContent.trim() : "",
+          meta: metaEl ? metaEl.textContent.trim() : "",
+          href: card.href,
+          iconHTML: iconEl ? iconEl.innerHTML : "",
+          keywords: (courseKeywords[slug] || "").toLowerCase()
+        };
+      })
+      .filter(function (course) {
+        return course.title && course.href;
+      });
+
+    var activeIndex = -1;
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, function (ch) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch];
+      });
+    }
+
+    function highlight(text, query) {
+      var safe = escapeHTML(text);
+      if (!query) return safe;
+      var idx = safe.toLowerCase().indexOf(query.toLowerCase());
+      if (idx === -1) return safe;
+      return (
+        safe.slice(0, idx) +
+        "<mark>" +
+        safe.slice(idx, idx + query.length) +
+        "</mark>" +
+        safe.slice(idx + query.length)
+      );
+    }
+
+    function openSearch() {
+      searchWrap.setAttribute("data-open", "true");
+      searchToggle.setAttribute("aria-expanded", "true");
+      searchInput.focus();
+    }
+
+    function closeSearch() {
+      searchWrap.setAttribute("data-open", "false");
+      searchToggle.setAttribute("aria-expanded", "false");
+    }
+
+    function isSearchOpen() {
+      return searchWrap.getAttribute("data-open") === "true";
+    }
+
+    function setActive(index) {
+      var items = searchResults.querySelectorAll(".search-result");
+      items.forEach(function (item) {
+        item.classList.remove("is-active");
+      });
+      if (index >= 0 && index < items.length) {
+        activeIndex = index;
+        items[index].classList.add("is-active");
+        items[index].scrollIntoView({ block: "nearest" });
+      } else {
+        activeIndex = -1;
+      }
+    }
+
+    function renderResults(query) {
+      var trimmed = query.trim().toLowerCase();
+      activeIndex = -1;
+
+      if (!trimmed) {
+        searchResults.innerHTML = "";
+        return;
+      }
+
+      var matches = courseIndex
+        .map(function (course) {
+          var title = course.title.toLowerCase();
+          var rank = -1;
+          if (title.indexOf(trimmed) === 0) rank = 0;
+          else if (title.indexOf(trimmed) !== -1) rank = 1;
+          else if (course.keywords.indexOf(trimmed) !== -1) rank = 2;
+          else if (course.meta.toLowerCase().indexOf(trimmed) !== -1) rank = 3;
+          return { course: course, rank: rank };
+        })
+        .filter(function (entry) {
+          return entry.rank !== -1;
+        })
+        .sort(function (a, b) {
+          return a.rank - b.rank;
+        })
+        .slice(0, 8)
+        .map(function (entry) {
+          return entry.course;
+        });
+
+      if (!matches.length) {
+        searchResults.innerHTML =
+          '<p class="search-panel__empty">No courses match &ldquo;' + escapeHTML(query.trim()) + "&rdquo;.</p>";
+        return;
+      }
+
+      searchResults.innerHTML = matches
+        .map(function (course) {
+          return (
+            '<a class="search-result c-' +
+            course.slug +
+            '" href="' +
+            course.href +
+            '">' +
+            '<span class="search-result__icon">' +
+            course.iconHTML +
+            "</span>" +
+            '<span class="search-result__text">' +
+            '<span class="search-result__title">' +
+            highlight(course.title, trimmed) +
+            "</span>" +
+            '<span class="search-result__meta">' +
+            escapeHTML(course.meta) +
+            "</span>" +
+            "</span>" +
+            "</a>"
+          );
+        })
+        .join("");
+    }
+
+    searchToggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (isSearchOpen()) {
+        closeSearch();
+      } else {
+        openSearch();
+      }
+    });
+
+    searchPanel.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+
+    searchInput.addEventListener("input", function () {
+      renderResults(searchInput.value);
+    });
+
+    searchInput.addEventListener("keydown", function (e) {
+      var items = searchResults.querySelectorAll(".search-result");
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        if (items.length) setActive((activeIndex + 1) % items.length);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (items.length) setActive((activeIndex - 1 + items.length) % items.length);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        var target = activeIndex >= 0 ? items[activeIndex] : items[0];
+        if (target) window.location.href = target.href;
+      }
+    });
+
+    document.addEventListener("click", function () {
+      closeSearch();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && isSearchOpen()) {
+        closeSearch();
+        searchToggle.focus();
+        return;
+      }
+      if (e.key === "/" && !isSearchOpen()) {
+        var activeTag = document.activeElement && document.activeElement.tagName;
+        var isTyping = activeTag === "INPUT" || activeTag === "TEXTAREA" || (document.activeElement && document.activeElement.isContentEditable);
+        if (!isTyping) {
+          e.preventDefault();
+          openSearch();
+        }
+      }
+    });
+  }
+
   /* Expand-all / collapse-all for curriculum week accordions */
   var expandAllBtn = document.querySelector("[data-expand-all]");
   if (expandAllBtn) {

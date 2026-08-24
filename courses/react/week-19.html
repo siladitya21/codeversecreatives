@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -340,8 +353,9 @@
               <div class="code-block__label">app/products/[productId]/page.tsx</div>
               <pre><code>import { Suspense } from 'react';
 
-export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
-  const product = await getProduct(params.productId); // fast -- awaited directly
+export default async function ProductDetailPage({ params }: { params: Promise&lt;{ productId: string }&gt; }) {
+  const { productId } = await params;
+  const product = await getProduct(productId); // fast -- awaited directly
 
   return (
     &lt;div&gt;
@@ -387,8 +401,9 @@ async function ProductReviews({ productId }: { productId: string }) {
   return posts; // Next.js pre-renders one static page per entry, at build time
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug);
+export default async function BlogPostPage({ params }: { params: Promise&lt;{ slug: string }&gt; }) {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   return &lt;article&gt;{post.content}&lt;/article&gt;;
 }
 </code></pre>
@@ -430,6 +445,14 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 <p>"Does this need to be different for every request, or could it be the same for everyone until the next deploy?" A yes to the second half of that question is a strong signal for SSG; a genuine need for per-user or always-current data points to SSR or client-side fetching instead.</p>
               </div>
             </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>The Next.js 16 framing: dynamic by default, cached on purpose</strong>
+                <p>Earlier Next.js versions defaulted to <em>static</em> rendering and asked you to opt into per-request behavior. Next.js 16's Cache Components model (Week 21) inverts that: everything is dynamic and uncached unless a specific function or file is explicitly marked <code>"use cache"</code>. <code>generateStaticParams</code> still tells Next.js which dynamic-segment values exist; whether the resulting pages are actually cached across requests now depends on whether their data-fetching code opts into <code>"use cache"</code> too — the two work together rather than one implying the other.</p>
+              </div>
+            </div>
           </section>
 
           <section id="exercise">
@@ -440,9 +463,9 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 Hands-on
               </span>
               <h3>Build a small blog: static posts, a streamed comments section</h3>
-              <p>Combine static generation, layouts, and streaming in one small but realistic app.</p>
+              <p>Combine static generation, layouts, and streaming in one small but realistic app — then fix a sequential-fetch waterfall and handle the not-found case properly.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — Static posts and streamed comments:</strong></p>
               <ol>
                 <li>Create an <code>app/blog/[slug]/page.tsx</code> with a hardcoded array of 5 blog posts (in a data file), using <code>generateStaticParams</code> so every post is statically generated at build time.</li>
                 <li>Add a <code>app/blog/layout.tsx</code> with a shared sidebar listing all post titles, and confirm — by adding a temporary <code>console.log</code> — that it doesn't re-run its data loading on every navigation between posts.</li>
@@ -456,6 +479,22 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 <div>
                   <strong>Hint</strong>
                   <p><code>next build</code>'s output prints a route table with symbols indicating each route's rendering strategy (static vs. dynamic) — check the CLI output directly rather than guessing from behavior alone.</p>
+                </div>
+              </div>
+
+              <p><strong>Part 2 — Fix a fetch waterfall, and handle "not found" properly:</strong></p>
+              <ol>
+                <li>Add a second slow piece to the post page — a "related posts" section (~1.5 second delay) — and, at first, fetch it the naive way: <code>await getPost(slug)</code> followed by a separate <code>await getRelatedPosts(slug)</code> written directly underneath it. Time the total page load and confirm it's roughly the <em>sum</em> of both delays.</li>
+                <li>Fix the waterfall: start both async calls (don't <code>await</code> either yet) before awaiting the first one you actually need synchronously, so the two requests run concurrently instead of one after another. Re-time the page and confirm the total is now roughly the <em>slower</em> of the two delays, not the sum.</li>
+                <li>Add an <code>app/blog/[slug]/not-found.tsx</code> and call Next.js's <code>notFound()</code> function from the page when a requested <code>slug</code> doesn't match any post in your data — confirm visiting a bogus slug renders your custom not-found UI with a real 404 status, not a generic error screen.</li>
+                <li>Wrap the whole <code>app/blog</code> segment in a route group — rename its folder-adjacent layout structure to use <code>app/(content)/blog/</code> — and confirm the URL is still <code>/blog/...</code>, unaffected by the group's name.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>To start two requests concurrently: <code>const postPromise = getPost(slug); const relatedPromise = getRelatedPosts(slug); const post = await postPromise; /* ...later... */ const related = await relatedPromise;</code> — calling the async functions without <code>await</code> starts both immediately; the <code>await</code>s just decide when you actually need each result.</p>
                 </div>
               </div>
             </div>

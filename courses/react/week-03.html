@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -257,8 +270,9 @@
         <a href="#usecallback"><span>3</span> useCallback</a>
         <a href="#useref"><span>4</span> useRef</a>
         <a href="#when-not"><span>5</span> When NOT to Memoize</a>
-        <a href="#exercise"><span>6</span> Exercise</a>
-        <a href="#quiz"><span>7</span> Knowledge Check</a>
+        <a href="#compiler"><span>6</span> The React Compiler</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -525,17 +539,72 @@ const doubled = count * 2;
             </p>
           </section>
 
+          <section id="compiler">
+            <h2>6. The React Compiler: When You Don't Need to Write This by Hand</h2>
+            <p>
+              Everything in Sections 2–3 is real and worth understanding deeply — but React now
+              ships an official, stable <strong>compiler</strong> that statically analyzes your
+              components and inserts memoization equivalent to what you just wrote by hand,
+              automatically. Enable it (a Babel or SWC plugin — Next.js turns it on with
+              <code>reactCompiler: true</code> in <code>next.config.ts</code>, covered in Week 22),
+              add its companion ESLint plugin, and code like this needs no manual memoization at all:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">ProductList.tsx — with the compiler enabled, no hooks needed</div>
+              <pre><code>function ProductList({ products, query }: { products: Product[]; query: string }) {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // No useMemo. The compiler sees that `filtered` only depends on
+  // `products` and `query`, and memoizes it for you at build time.
+  const filtered = products.filter(p =&gt;
+    p.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  // No useCallback, no React.memo needed on ProductCard either --
+  // the compiler memoizes this handler and ProductCard's props automatically.
+  const handleSelect = (id: number) =&gt; console.log('selected', id);
+
+  return (
+    &lt;div&gt;
+      &lt;button onClick={() =&gt; setIsDarkMode(!isDarkMode)}&gt;Toggle theme&lt;/button&gt;
+      {filtered.map(p =&gt; &lt;ProductCard key={p.id} product={p} onSelect={handleSelect} /&gt;)}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              The compiled output — not the source you write, the JavaScript that actually ships —
+              contains the equivalent of <code>useMemo</code>/<code>useCallback</code> calls the
+              compiler inserted itself, having proven your component follows the Rules of React
+              (no mutating props or state during render, no conditional hook calls, effects only
+              read what they declare). If a component breaks those rules, the compiler <strong>bails
+              out silently for that component</strong> and leaves it unmemoized — which is exactly
+              why Sections 1–5 still matter even in a compiler-enabled codebase.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>So should I stop writing <code>useMemo</code> and <code>useCallback</code>?</strong>
+                <p>In a codebase with the compiler enabled, mostly yes for the routine cases this week covered — let it handle them, and keep your components simpler to read. But you still need the mental model: to recognize when the compiler bailed out (its ESLint plugin flags this), to reason about <code>useRef</code> (the compiler doesn't infer "this should never trigger a render" — that's still an explicit choice you make), and because plenty of production code you'll work in doesn't have the compiler enabled yet.</p>
+              </div>
+            </div>
+          </section>
+
           <section id="exercise">
-            <h2>6. Hands-on Exercise</h2>
+            <h2>7. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Prove the memoization actually works, then find where it shouldn't</h3>
-              <p>Build a scenario where the performance problem is real and visible, fix it, and confirm the fix with your own eyes.</p>
+              <h3>Prove the memoization actually works, then let the compiler do it instead</h3>
+              <p>Build a scenario where the performance problem is real and visible, fix it by hand, then confirm the compiler produces the same result without the hooks.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — Manual memoization:</strong></p>
               <ol>
                 <li>Generate an array of 20,000 objects: <code>{'{ id, name, price }'}</code> with randomized data.</li>
                 <li>Build a <code>ProductList</code> like this week's example: an unrelated <code>isDarkMode</code> toggle plus a <code>query</code>-filtered list, rendered as 20,000 <code>ProductCard</code> children.</li>
@@ -551,11 +620,27 @@ const doubled = count * 2;
                   <p>If cards still re-render after adding <code>useCallback</code>, double-check you're passing the <em>filtered array from <code>useMemo</code></em> down, not re-deriving a new array somewhere else in the render — a fresh array reference breaks <code>React.memo</code> on the list just as easily as a fresh function does.</p>
                 </div>
               </div>
+
+              <p><strong>Part 2 — Let the compiler do it:</strong></p>
+              <ol>
+                <li>In a copy of the project, install <code>babel-plugin-react-compiler</code> and <code>eslint-plugin-react-compiler</code>, and wire the Babel plugin into your Vite config.</li>
+                <li>Strip out every <code>useMemo</code>, <code>useCallback</code>, and <code>React.memo</code> you added in Part 1 — back to the plain, unmemoized version from Section 1.</li>
+                <li>Rebuild and re-run your console.log checks from Part 1, step 3 — confirm the filter no longer re-runs on an unrelated theme toggle, and <code>ProductCard</code> no longer re-renders either, purely from the compiler, with zero hooks in your source.</li>
+                <li>Deliberately break a Rule of React in one component — e.g. mutate <code>products</code> directly during render instead of deriving a new array — and confirm via the ESLint plugin that the compiler reports it bailed out for that component.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>You won't see the inserted <code>useMemo</code>/<code>useCallback</code> calls in your source — they exist only in the compiled output. To actually observe them, check your bundler's dev output or the "Compiled" badge React DevTools' Components panel shows next to a compiler-optimized component.</p>
+                </div>
+              </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>7. Knowledge Check</h2>
+            <h2>8. Knowledge Check</h2>
             <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">

@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -258,8 +271,9 @@
         <a href="#deps"><span>3</span> Dependency Arrays</a>
         <a href="#cleanup"><span>4</span> Cleanup Functions</a>
         <a href="#pitfalls"><span>5</span> Stale Closures &amp; Loops</a>
-        <a href="#exercise"><span>6</span> Exercise</a>
-        <a href="#quiz"><span>7</span> Knowledge Check</a>
+        <a href="#effect-event"><span>6</span> useEffectEvent</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -563,8 +577,64 @@ useEffect(() =&gt; {
             </p>
           </section>
 
+          <section id="effect-event">
+            <h2>6. <code>useEffectEvent</code>: Reading Fresh State Without Restarting the Effect</h2>
+            <p>
+              Section 5's fix for the interval's stale closure was to add <code>count</code> to the
+              dependency array — correct, but it means the interval is torn down and recreated
+              every single time <code>count</code> changes, resetting its timing. Sometimes that's
+              fine. Sometimes you specifically need an effect that keeps running uninterrupted
+              (connect once, start a timer once) while the code inside it still reads the
+              <em>latest</em> props and state, not whatever they were when the effect first ran.
+              That's what <code>useEffectEvent</code> (stable since React 19.2) is for.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">Counter.tsx — interval that never restarts, but never goes stale either</div>
+              <pre><code>import { useEffect, useEffectEvent, useState } from 'react';
+
+function Counter({ label }: { label: string }) {
+  const [count, setCount] = useState(0);
+
+  const onTick = useEffectEvent(() =&gt; {
+    console.log(`${label}: ${count}`); // always reads the LATEST label and count
+  });
+
+  useEffect(() =&gt; {
+    const id = setInterval(() =&gt; {
+      onTick();
+    }, 1000);
+    return () =&gt; clearInterval(id);
+  }, []); // deliberately empty -- onTick is not "reactive," so it's not a dependency
+
+  return &lt;button onClick={() =&gt; setCount(c =&gt; c + 1)}&gt;{count}&lt;/button&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              A function created by <code>useEffectEvent</code> is called an <strong>Effect
+              Event</strong>. It can only be called from inside an effect (or another Effect Event),
+              it's deliberately excluded from dependency arrays — the hook's lint rule expects that
+              and won't ask you to add it — and inside its body, every prop and piece of state
+              always reflects the render that's currently visible on screen, not the render that
+              was active when the effect last ran. The interval in the example above is created
+              exactly once and never resets, yet <code>onTick</code> always logs the current
+              <code>count</code> and <code>label</code> — the stale-closure bug from Section 5 is
+              gone without paying the "restart the whole effect" cost.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>An Effect Event isn't an effect</strong>
+                <p>You can't call one during render, and it can't return a cleanup function — it's purely "code that runs in response to something the effect triggered, but reads fresh values." Think of the split as: the effect's dependency array answers "when should this whole thing re-synchronize?"; the Effect Event answers "what's the current value of things I only need to read, not react to?"</p>
+              </div>
+            </div>
+          </section>
+
           <section id="exercise">
-            <h2>6. Hands-on Exercise</h2>
+            <h2>7. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
@@ -604,11 +674,28 @@ useEffect(() =&gt; {
                   <p>Declare <code>let ignore = false;</code> at the top of the effect, set <code>ignore = true</code> in the cleanup function, and check <code>if (!ignore)</code> before calling <code>setUser</code> inside the <code>.then()</code>. You'll see this exact pattern generalized by a library in Week 8, so it's worth understanding by hand first.</p>
                 </div>
               </div>
+
+              <p><strong>Part 3 — Auto-save with <code>useEffectEvent</code>:</strong></p>
+              <p>Back in the Stopwatch from Part 1. Add background auto-save that must never reset its own cadence, even though it needs to read state that changes constantly — the exact scenario Section 6 covers.</p>
+              <ol>
+                <li>Add a <code>sessionLabel</code> text input, state-bound, above the stopwatch controls.</li>
+                <li>Add a second effect that starts a <code>setInterval</code> firing every 5 seconds, for the lifetime of the component — this effect's dependency array must stay empty; it should never tear down and recreate the interval.</li>
+                <li>Wrap the actual save logic in a <code>useEffectEvent</code>-created function — <code>localStorage.setItem('stopwatch-session', JSON.stringify({ sessionLabel, laps }))</code> — and call it from inside the interval callback.</li>
+                <li>Prove it works: type into the label field and record a couple of laps while watching the console/localStorage — the saved snapshot should always contain the latest <code>sessionLabel</code> and <code>laps</code>, and the 5-second save cadence should never visibly reset no matter how often you type or click Lap.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>If your instinct is to add <code>sessionLabel</code> and <code>laps</code> to the auto-save effect's dependency array "to be safe," resist it — that's precisely what would restart the 5-second timer on every keystroke. The whole point of wrapping the save logic in <code>useEffectEvent</code> is that it doesn't need to be a dependency to see current values.</p>
+                </div>
+              </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>7. Knowledge Check</h2>
+            <h2>8. Knowledge Check</h2>
             <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">

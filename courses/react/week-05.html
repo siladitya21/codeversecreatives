@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -258,8 +271,9 @@
         <a href="#react-hook-form"><span>3</span> React Hook Form</a>
         <a href="#zod"><span>4</span> Schema Validation with Zod</a>
         <a href="#a11y"><span>5</span> Accessible Error Messaging</a>
-        <a href="#exercise"><span>6</span> Exercise</a>
-        <a href="#quiz"><span>7</span> Knowledge Check</a>
+        <a href="#useid"><span>6</span> useId</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -554,22 +568,82 @@ function SignupForm() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
                 <strong>Always pair a <code>&lt;label&gt;</code> with its input</strong>
-                <p><code>htmlFor</code> matching the input's <code>id</code> is what makes clicking a label focus its input, and is the very first thing a screen reader announces on that field. This will come up again as a broader topic in Week 18's accessibility module.</p>
+                <p><code>htmlFor</code> matching the input's <code>id</code> is what makes clicking a label focus its input, and is the very first thing a screen reader announces on that field. This will come up again as a broader topic in Week 23's accessibility module.</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="useid">
+            <h2>6. <code>useId</code>: Unique IDs for Reusable Field Components</h2>
+            <p>
+              Section 5's <code>id="email"</code> works fine when a form appears exactly once on a
+              page. It quietly breaks the moment you extract a reusable <code>FormField</code>
+              component and render two of them — two hardcoded, identical <code>id</code>s mean the
+              browser silently uses only the first one for label association, and
+              <code>aria-describedby</code> starts pointing at the wrong field's error.
+              <code>useId()</code> generates a unique, stable ID per component instance so this
+              can't happen, no matter how many times the component is rendered.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">FormField.tsx — reusable, collision-proof</div>
+              <pre><code>import { useId } from 'react';
+
+interface FormFieldProps {
+  label: string;
+  error?: string;
+  inputProps: React.InputHTMLAttributes&lt;HTMLInputElement&gt;;
+}
+
+function FormField({ label, error, inputProps }: FormFieldProps) {
+  const id = useId();
+  const errorId = `${id}-error`;
+
+  return (
+    &lt;div&gt;
+      &lt;label htmlFor={id}&gt;{label}&lt;/label&gt;
+      &lt;input
+        id={id}
+        aria-invalid={error ? 'true' : 'false'}
+        aria-describedby={error ? errorId : undefined}
+        {...inputProps}
+      /&gt;
+      {error &amp;&amp; &lt;span id={errorId} role="alert"&gt;{error}&lt;/span&gt;}
+    &lt;/div&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              Render two <code>&lt;FormField&gt;</code>s on the same page and each gets its own
+              distinct <code>id</code> (React generates something like <code>:r0:</code> and
+              <code>:r1:</code>), automatically kept in sync between the <code>&lt;label&gt;</code>,
+              the input, and the error span within each instance. Reach for <code>useId</code>
+              specifically for this — never for a list's <code>key</code> (that should come from
+              your data, as in Week 1) and never as a general-purpose unique-value generator.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Why not just <code>Math.random()</code> or a module-level counter?</strong>
+                <p>Both produce a <em>different</em> value on the server than on the client during server-rendering (Week 18 onward) — the server generates one ID while pre-rendering the HTML, the client generates a different one while hydrating, and React throws a hydration-mismatch error because the two don't match. <code>useId</code> is specifically designed to produce the identical, deterministic value on both sides.</p>
               </div>
             </div>
           </section>
 
           <section id="exercise">
-            <h2>6. Hands-on Exercise</h2>
+            <h2>7. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
                 Hands-on
               </span>
-              <h3>Build an accessible signup form with cross-field validation</h3>
-              <p>Combine React Hook Form, Zod, and accessible error markup into one real form.</p>
+              <h3>Build an accessible signup form with cross-field validation, then make it reusable</h3>
+              <p>Combine React Hook Form, Zod, and accessible error markup into one real form — then prove the accessibility wiring survives being used twice on the same page.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — The form:</strong></p>
               <ol>
                 <li>Install <code>react-hook-form</code>, <code>zod</code> and <code>@hookform/resolvers</code> in a Vite React project.</li>
                 <li>Define a Zod schema with <code>name</code> (min 2 characters), <code>email</code> (valid email), <code>password</code> (min 8 characters), and <code>confirmPassword</code>.</li>
@@ -585,11 +659,28 @@ function SignupForm() {
                   <p>Zod's <code>.refine((data) =&gt; data.password === data.confirmPassword, { message: '...', path: ['confirmPassword'] })</code> is what attaches a whole-object validation error to one specific field's <code>errors</code> entry — without <code>path</code>, React Hook Form won't know which input to show it under.</p>
                 </div>
               </div>
+
+              <p><strong>Part 2 — Extract a reusable field, prove <code>useId</code> matters:</strong></p>
+              <ol>
+                <li>Extract the label/input/error markup for each field into the <code>FormField</code> component from Section 6, using <code>useId</code> internally rather than any hardcoded <code>id</code>.</li>
+                <li>Rewrite the signup form's four fields to use <code>&lt;FormField&gt;</code>, passing each field's <code>register(...)</code> result through as <code>inputProps</code>.</li>
+                <li>Render the entire <code>SignupForm</code> <em>twice</em> on the same page, stacked vertically, each with its own <code>useForm</code> instance.</li>
+                <li>Using your browser's DevTools, inspect the rendered HTML and confirm every <code>id</code>/<code>aria-describedby</code> pair is unique per instance, and that triggering an error in the second form's email field announces correctly without touching the first form's DOM nodes.</li>
+                <li><strong>Now break it on purpose:</strong> temporarily hardcode <code>id="email"</code> on both forms' email fields instead of using <code>useId</code>, and observe in DevTools that the browser now renders two elements sharing one <code>id</code> — confirm which one actually receives focus when you click the second form's label, and put the <code>useId</code> version back afterward.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>Call <code>useId()</code> once per <code>FormField</code> instance, not once per <code>SignupForm</code> — if you hoist a single ID up and try to derive per-field IDs from it with string concatenation like <code>`${id}-email`</code>, you'll need to pass that base ID down as a prop, which defeats the point of a self-contained reusable component. Let each <code>FormField</code> call the hook itself.</p>
+                </div>
+              </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>7. Knowledge Check</h2>
+            <h2>8. Knowledge Check</h2>
             <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">

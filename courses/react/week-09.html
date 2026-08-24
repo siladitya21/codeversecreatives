@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -257,8 +270,9 @@
         <a href="#optimistic"><span>3</span> Optimistic Updates</a>
         <a href="#loading-patterns"><span>4</span> Loading/Error UI Patterns</a>
         <a href="#cancellation"><span>5</span> Request Cancellation</a>
-        <a href="#exercise"><span>6</span> Exercise</a>
-        <a href="#quiz"><span>7</span> Knowledge Check</a>
+        <a href="#useoptimistic"><span>6</span> useOptimistic</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -483,8 +497,63 @@ function AddTodoForm() {
             </p>
           </section>
 
+          <section id="useoptimistic">
+            <h2>6. <code>useOptimistic</code>: React's Own Optimistic-Update Primitive</h2>
+            <p>
+              Section 3's optimistic pattern lives entirely inside TanStack Query's cache — you
+              manually snapshot the previous value in <code>onMutate</code> and manually restore it
+              in <code>onError</code>. That's the right tool when the optimistic value needs to
+              appear <em>everywhere</em> that query is read (a todo's checked state shown in both a
+              list and a detail view). When the optimistic value is local to one piece of UI — or
+              there's no TanStack cache involved at all, as with the Server Actions in Week 20 —
+              React 19's built-in <code>useOptimistic</code> does the same revert-on-settle
+              bookkeeping without the manual snapshot/rollback code.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">LikeButton.tsx</div>
+              <pre><code>import { useOptimistic, useState } from 'react';
+
+function LikeButton({ postId, initialLikes }: { postId: number; initialLikes: number }) {
+  const [likes, setLikes] = useState(initialLikes);
+  const [optimisticLikes, addOptimisticLike] = useOptimistic(
+    likes,
+    (current, amount: number) =&gt; current + amount,
+  );
+
+  async function handleLike() {
+    addOptimisticLike(1); // shows immediately
+    const updated = await likePost(postId); // real request, runs in the background
+    setLikes(updated.likes); // reconciles with the server's real count
+  }
+
+  return &lt;button onClick={handleLike}&gt;❤️ {optimisticLikes}&lt;/button&gt;;
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>useOptimistic(state, updateFn)</code> takes the real, confirmed state and an
+              updater, and returns a temporary "optimistic" value plus a function to set it.
+              Whenever the surrounding async work finishes — whether <code>likePost</code> above
+              resolves <em>or</em> throws — React automatically reverts <code>optimisticLikes</code>
+              back to whatever <code>likes</code> actually is, with no <code>onError</code> to write
+              by hand. The trade-off: this optimistic value is local to this component's state; it
+              doesn't update a shared cache the way <code>queryClient.setQueryData</code> does, so
+              a different component reading the same "real" like count elsewhere won't see it.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Which one do I reach for?</strong>
+                <p>TanStack's <code>onMutate</code>/<code>onError</code>/<code>onSettled</code> pattern (Section 3) when the optimistic value needs to be visible anywhere else that reads the same query. <code>useOptimistic</code> when it's genuinely local to one component, or when there's no query cache at all to update — its most common home is pairing with a Server Action's form submission, which you'll do directly in Week 20.</p>
+              </div>
+            </div>
+          </section>
+
           <section id="exercise">
-            <h2>6. Hands-on Exercise</h2>
+            <h2>7. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
@@ -508,11 +577,29 @@ function AddTodoForm() {
                   <p>To make your simulated fetch actually respect the <code>AbortSignal</code>, check <code>signal.aborted</code> inside the <code>setTimeout</code> callback (or listen for the signal's <code>abort</code> event) before resolving — a plain <code>setTimeout</code> with no signal handling will still "complete" even after the real <code>fetch</code> equivalent would have been cancelled.</p>
                 </div>
               </div>
+
+              <p><strong>Part 2 — Contrast with <code>useOptimistic</code>:</strong></p>
+              <p>You already made the checkbox toggle optimistic through TanStack Query's cache. Now make the "add todo" form optimistic a completely different way, so you feel the difference between the two approaches directly.</p>
+              <ol>
+                <li>In the add-todo form, wrap the todos array with <code>useOptimistic</code> instead of touching the query cache: <code>const [optimisticTodos, addOptimisticTodo] = useOptimistic(todos, (current, newTodo: Todo) =&gt; [...current, newTodo])</code>.</li>
+                <li>On submit, call <code>addOptimisticTodo</code> with a locally-constructed temporary todo (a fake negative <code>id</code> is fine) <em>before</em> calling <code>mutate</code>, so the new item appears in the list instantly, then let the existing <code>onSuccess</code> invalidation replace it with the real server-confirmed list.</li>
+                <li>Render <code>optimisticTodos</code> instead of the raw query data in the list.</li>
+                <li>Temporarily make <code>createTodo</code> fail every time and confirm the optimistically-added item disappears cleanly once the mutation rejects — with no <code>onError</code> rollback code of your own.</li>
+                <li>In a short code comment, note which of the two approaches (Section 3's manual TanStack rollback, or this <code>useOptimistic</code> version) needed less code for the same guarantee, and why the checkbox toggle still makes more sense to keep on the TanStack approach even after seeing this.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>The checkbox toggle should stay on the Section 3 pattern on purpose: the todo's <code>done</code> state might be read by other queries (a "completed count" elsewhere, a filtered view) that <code>useOptimistic</code>'s component-local state can't reach. The add-todo list, by contrast, is only ever rendered in this one place — a good sign <code>useOptimistic</code> is the simpler correct choice here.</p>
+                </div>
+              </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>7. Knowledge Check</h2>
+            <h2>8. Knowledge Check</h2>
             <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">

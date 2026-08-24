@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -294,6 +307,14 @@ cd my-app
 npm run dev
 </code></pre>
             </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Turbopack by default</strong>
+                <p>Since Next.js 16, <code>create-next-app</code> scaffolds a project using <strong>Turbopack</strong> — Vercel's Rust-based bundler — as the default for both <code>next dev</code> and <code>next build</code>, replacing webpack. You won't notice a syntax difference in anything this course covers; the practical effect is a dev server that starts and hot-reloads noticeably faster than Vite ever needed you to think about, and a production build pipeline covered in Week 22.</p>
+              </div>
+            </div>
           </section>
 
           <section id="project-setup">
@@ -329,14 +350,23 @@ npm run dev
 
             <div class="code-block">
               <div class="code-block__label">app/products/[productId]/page.tsx</div>
-              <pre><code>export default function ProductDetailPage({
+              <pre><code>export default async function ProductDetailPage({
   params,
 }: {
-  params: { productId: string };
+  params: Promise&lt;{ productId: string }&gt;;
 }) {
-  return &lt;h1&gt;Product #{params.productId}&lt;/h1&gt;;
+  const { productId } = await params;
+  return &lt;h1&gt;Product #{productId}&lt;/h1&gt;;
 }
 </code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong><code>params</code> is a <code>Promise</code>, not a plain object</strong>
+                <p>This trips up almost everyone coming from an older Next.js tutorial: <code>params</code> (and <code>searchParams</code>) must be <code>await</code>ed before you can read a segment off them. It's an async value on purpose — it lets Next.js start rendering a route's static shell before dynamic segment data is even resolved, part of the same streaming model the App Router uses everywhere. A page reading <code>params.productId</code> directly, without <code>await</code>, throws.</p>
+              </div>
             </div>
           </section>
 
@@ -385,6 +415,14 @@ export default async function ProductsPage() {
                 <p><code>useState</code>, <code>useEffect</code>, <code>useContext</code> — none of Weeks 2–13's hooks work in a Server Component, because it never runs in a browser at all and has no concept of "re-rendering in response to state." Any interactivity needs a Client Component (Section 4).</p>
               </div>
             </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Does <code>getProducts</code> run on every request?</strong>
+                <p>Yes, by default — the <code>fetch</code> above runs fresh every time this page is requested. Older Next.js tutorials assumed <code>fetch</code> was cached indefinitely unless told otherwise; that's no longer the default model. Week 21 covers Next.js 16's Cache Components and the <code>"use cache"</code> directive, which is how you now explicitly opt specific data into being cached and reused across requests.</p>
+              </div>
+            </div>
           </section>
 
           <section id="use-client">
@@ -418,8 +456,9 @@ export function AddToCartButton({ productId }: { productId: number }) {
               <div class="code-block__label">app/products/[productId]/page.tsx — mixing both</div>
               <pre><code>import { AddToCartButton } from '../AddToCartButton';
 
-export default async function ProductDetailPage({ params }: { params: { productId: string } }) {
-  const product = await getProduct(params.productId); // runs on the server
+export default async function ProductDetailPage({ params }: { params: Promise&lt;{ productId: string }&gt; }) {
+  const { productId } = await params;
+  const product = await getProduct(productId); // runs on the server
 
   return (
     &lt;div&gt;
@@ -468,12 +507,12 @@ export default async function ProductDetailPage({ params }: { params: { productI
                 Hands-on
               </span>
               <h3>Port Week 6's product catalog to the Next.js App Router</h3>
-              <p>Rebuild the same feature you already know, this time drawing the server/client line deliberately.</p>
+              <p>Rebuild the same feature you already know, this time drawing the server/client line deliberately — then push on that boundary until it breaks, and fix it correctly.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — The port:</strong></p>
               <ol>
                 <li>Scaffold a new Next.js app with <code>create-next-app</code> and set up <code>app/products/page.tsx</code> and <code>app/products/[productId]/page.tsx</code>, following Section 2's file-based routing.</li>
-                <li>Fetch your product data directly inside each <code>async</code> page component (simulate an API with a delay, as in earlier weeks) — no <code>useQuery</code>, no client-side fetch, for the base list and detail views.</li>
+                <li>Fetch your product data directly inside each <code>async</code> page component (simulate an API with a delay, as in earlier weeks) — no <code>useQuery</code>, no client-side fetch, for the base list and detail views. Remember: <code>params</code> is a <code>Promise</code> — <code>await</code> it before reading <code>productId</code>.</li>
                 <li>Extract exactly one interactive piece — a "favorite" toggle button on each product card — into its own <code>'use client'</code> component, and confirm (via a comment or a quick build-output check) that everything else on the page stays a Server Component.</li>
                 <li>Add a shared <code>app/layout.tsx</code> with a nav bar, confirming it wraps every route without needing to be repeated per page.</li>
                 <li>In your browser's DevTools, view the page source (not the rendered DOM, the actual HTML response) for the products list and confirm the product names are present in the raw HTML — proof the content was server-rendered, not just client-rendered after the fact.</li>
@@ -484,6 +523,22 @@ export default async function ProductDetailPage({ params }: { params: { productI
                 <div>
                   <strong>Hint</strong>
                   <p>"View Page Source" (not "Inspect Element") shows the actual HTML the server sent, before any client-side JavaScript runs — that's the honest test of whether something was truly server-rendered, since the rendered DOM in DevTools always looks complete either way.</p>
+                </div>
+              </div>
+
+              <p><strong>Part 2 — Break the boundary on purpose, then filter server-side:</strong></p>
+              <ol>
+                <li>In the products list page (a Server Component), define a plain function like <code>function handleFavorite(id: number) { console.log(id); }</code> and try passing it straight into your Client Component as an <code>onFavorite</code> prop, without wrapping it in an API route or Server Action. Read the actual error Next.js gives you at build or runtime — it's telling you a function can't cross the server→client serialization boundary as a prop.</li>
+                <li>Fix it correctly: move that logic entirely into the Client Component itself (or, if it genuinely needs to run on the server, pass data down and trigger a Server Action from inside the client component instead — a preview of Week 20).</li>
+                <li>Replace the category filter with a server-side one: read <code>searchParams</code> (also a <code>Promise</code> in Next.js 16) in <code>app/products/page.tsx</code>, and filter the fetched product list <em>before</em> it's ever sent to the client, instead of filtering an already-fetched array in a client component.</li>
+                <li>Confirm in your Network tab that clicking a category link performs a real navigation request that returns different HTML per category — not a client-side re-filter of data already in memory.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>The serialization-boundary error is one of the most common early Next.js mistakes, and it's a genuinely useful one to see once on purpose — you'll recognize it instantly in a real project instead of being confused by it under deadline pressure.</p>
                 </div>
               </div>
             </div>

@@ -63,7 +63,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Cybersecurity Basics</span>
-              <span class="nav-course-card__meta">1 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../devops-cloud/index.html" class="nav-course-card c-devops-cloud">
@@ -140,7 +140,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="10" y1="19" x2="14" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">React Native</span>
-              <span class="nav-course-card__meta">4 of 22 Weeks</span>
+              <span class="nav-course-card__meta">22 Weeks</span>
             </span>
           </a>
           <a href="../servicenow/index.html" class="nav-course-card c-servicenow">
@@ -175,21 +175,21 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Excel, SQL &amp; Power BI</span>
-              <span class="nav-course-card__meta">7 of 12 Weeks</span>
+              <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
           <a href="../golang/index.html" class="nav-course-card c-golang">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Go</span>
-              <span class="nav-course-card__meta">2 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
             </span>
           </a>
           <a href="../flutter/index.html" class="nav-course-card c-flutter">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 12l4 4L21 2h-8Z"/><path d="M13 22 7 16l4-4 4 4-4 4Z"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Flutter</span>
-              <span class="nav-course-card__meta">2 of 20 Weeks</span>
+              <span class="nav-course-card__meta">20 Weeks</span>
             </span>
           </a>
           <a href="../coding-practice/index.html" class="nav-course-card c-coding-practice">
@@ -204,6 +204,19 @@
     </nav>
 
     <div class="navbar__actions">
+      <div class="nav-search" data-nav-search>
+        <button type="button" class="search-toggle" data-search-toggle aria-label="Search courses" aria-expanded="false" title="Search courses (press /)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <div class="search-panel" data-search-panel>
+          <div class="search-panel__field">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <input type="search" class="search-panel__input" data-search-input placeholder="Search courses&hellip;" aria-label="Search courses" autocomplete="off" />
+            <kbd class="search-panel__kbd">Esc</kbd>
+          </div>
+          <div class="search-panel__results" data-search-results></div>
+        </div>
+      </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
         <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
@@ -699,9 +712,9 @@ async function transferFunds(to: string, amount: number) {
                 Hands-on
               </span>
               <h3>Build a real RequireAuth/RequireRole pair, an httpOnly login flow, and a sanitized comment</h3>
-              <p>Turn this week's three security concerns into working code inside one small app.</p>
+              <p>Turn this week's security concerns into working code inside one small app — including the two Part 1 doesn't reach: a real OAuth redirect flow and CSRF protection on a state-changing request.</p>
 
-              <p><strong>Requirements:</strong></p>
+              <p><strong>Part 1 — Auth, roles, and sanitization:</strong></p>
               <ol>
                 <li>Write a <code>RequireAuth</code> route wrapper (as in Week 7) plus a <code>RequireRole({'role'})</code> wrapper that accepts a role and redirects to <code>/forbidden</code> when the current user's role doesn't match — wire both into a route tree so <code>/admin</code> requires <em>both</em> being logged in and being an admin.</li>
                 <li>Write a <code>login()</code> function that POSTs credentials to <code>/api/login</code> with <code>credentials: 'include'</code> and never reads or stores a token in JS. If you don't have a real backend available, write the Express-style handler from Section 2 in a comment above your client code to show exactly what it would set.</li>
@@ -715,6 +728,22 @@ async function transferFunds(to: string, amount: number) {
                 <div>
                   <strong>Hint</strong>
                   <p>To confirm your token really isn't reachable from JS, open your browser's dev console on the running app and try <code>document.cookie</code> — an httpOnly cookie simply won't appear in that string, which is the whole point.</p>
+                </div>
+              </div>
+
+              <p><strong>Part 2 — OAuth redirect flow and CSRF protection:</strong></p>
+              <ol>
+                <li>Add a "Sign in with Google" button that redirects the browser to a (simulated) provider authorization URL, including a randomly-generated <code>state</code> parameter stored in <code>sessionStorage</code> before the redirect.</li>
+                <li>Write the callback route (<code>/auth/callback</code>) that reads the <code>code</code> and <code>state</code> query params, verifies <code>state</code> matches what was stored before redirecting (rejecting the login if it doesn't — this is the CSRF protection built into the OAuth flow itself), and simulates exchanging <code>code</code> for a session by calling your existing <code>/api/login</code>-style endpoint.</li>
+                <li>Add a CSRF token to one real state-changing request elsewhere in the app (e.g. the "Add Product" form from Week 20, or a comment-post action) following Section 5's double-submit-cookie or synchronizer-token pattern — read the token from a cookie or a hidden form field, and send it back in a header on the mutating request.</li>
+                <li>Prove the protection works: temporarily strip the CSRF token from the request and confirm your (simulated or real) backend handler rejects it; put the token back and confirm the request succeeds again.</li>
+              </ol>
+
+              <div class="callout callout--tip">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+                <div>
+                  <strong>Hint</strong>
+                  <p>The <code>state</code> parameter check in Part 2's callback route and the CSRF token check in Part 2's mutation are solving the same underlying problem two different ways — confirming a request genuinely originated from your own app's flow, not a malicious page tricking the browser into replaying a cookie-authenticated request. Noticing that similarity is worth more than memorizing either mechanism in isolation.</p>
                 </div>
               </div>
             </div>
