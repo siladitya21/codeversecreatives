@@ -299,6 +299,15 @@ body[data-course="sql-postgresql"],
   --accent-deep-2: #245c8f;
 }
 
+body[data-course="claude"],
+.c-claude {
+  --accent: #d97757;
+  --accent-2: #e2966f;
+  --accent-soft: rgba(217, 119, 87, 0.14);
+  --accent-deep: #b3552f;
+  --accent-deep-2: #c2633a;
+}
+
 /* Light theme: the same twenty-one hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
@@ -460,6 +469,13 @@ body[data-course="sql-postgresql"],
   --accent: #1d5c96;
   --accent-2: #2470b3;
   --accent-soft: rgba(29, 92, 150, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="claude"],
+:root[data-theme="light"] .c-claude {
+  --accent: #a8501f;
+  --accent-2: #bd6636;
+  --accent-soft: rgba(168, 80, 31, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */

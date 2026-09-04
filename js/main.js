@@ -86,7 +86,8 @@
       mongodb: "database nosql document db",
       "coding-practice": "leetcode problems practice interview dsa",
       "sql-postgresql": "database relational rdbms postgres mysql queries joins schema backend",
-      "docker-kubernetes": "containers containerization orchestration devops helm kubectl docker compose infrastructure cicd gitops argocd"
+      "docker-kubernetes": "containers containerization orchestration devops helm kubectl docker compose infrastructure cicd gitops argocd",
+      claude: "anthropic ai llm claude code cli agents prompt engineering mcp tool use api sdk assistant"
     };
 
     var courseIndex = Array.prototype.map
