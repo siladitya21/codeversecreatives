@@ -308,6 +308,15 @@ body[data-course="claude"],
   --accent-deep-2: #c2633a;
 }
 
+body[data-course="ugc-net-cse"],
+.c-ugc-net-cse {
+  --accent: #b33951;
+  --accent-2: #c96a80;
+  --accent-soft: rgba(179, 57, 81, 0.14);
+  --accent-deep: #8a2740;
+  --accent-deep-2: #9c3049;
+}
+
 /* Light theme: the same twenty-one hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
@@ -476,6 +485,13 @@ body[data-course="claude"],
   --accent: #a8501f;
   --accent-2: #bd6636;
   --accent-soft: rgba(168, 80, 31, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="ugc-net-cse"],
+:root[data-theme="light"] .c-ugc-net-cse {
+  --accent: #7c2740;
+  --accent-2: #8f3550;
+  --accent-soft: rgba(124, 39, 64, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */
