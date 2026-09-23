@@ -14,8 +14,8 @@
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Weeks 25–26: Capstone — Ship a Full Application — CodeVerse Creatives</title>
-<meta name="description" content="The Angular capstone: plan, architect, build, test, optimize, and deploy a complete Angular application from scratch, then package it as a portfolio-ready project." />
+<title>Week 25: Angular Material &amp; Enterprise Component Libraries — CodeVerse Creatives</title>
+<meta name="description" content="Week 25 of the Angular curriculum: installing and theming Angular Material with the M3 theming API, core components in a signals-first app, Material + Reactive Forms, and a sortable/paginated MatTable backed by real data." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -56,7 +56,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Angular</span>
-              <span class="nav-course-card__meta">26 Weeks</span>
+              <span class="nav-course-card__meta">33 Weeks</span>
             </span>
           </a>
           <a href="../cybersecurity/index.html" class="nav-course-card c-cybersecurity">
@@ -263,43 +263,43 @@
       <div class="lesson-crumb">
         <a href="../angular/index.html">Angular Syllabus</a>
         <span>/</span>
-        <a href="../angular/index.html#phase-7">Phase 7 · Capstone</a>
+        <a href="../angular/index.html#phase-7">Phase 7 · Specialized Enterprise Stack</a>
         <span>/</span>
-        <span aria-current="page">Weeks 25–26</span>
+        <span aria-current="page">Week 25</span>
       </div>
 
-      <h1>Weeks 25–26: Capstone — Ship a Full Application</h1>
+      <h1>Week 25: Angular Material &amp; Enterprise Component Libraries</h1>
       <p class="lesson-header__lede">
-        Twenty-four weeks of individual techniques converge here. No new APIs this time — the
-        capstone is entirely about combining what you already know into one complete, deployed,
-        tested application you planned and built yourself.
+        Phase 7 is about the stack real enterprise teams actually plug into Angular — starting with
+        Material, the component library that shows up in most job listings alongside "Angular CDK,"
+        even though the two are frequently confused for the same thing.
       </p>
 
       <div class="lesson-meta">
-        <span class="chip chip--accent">Phase 7 of 7</span>
-        <span class="chip">Weeks 25–26 of 26</span>
-        <span class="chip">Final Project</span>
-        <span class="chip">Portfolio-Ready Output</span>
+        <span class="chip chip--accent">Phase 7 of 8</span>
+        <span class="chip">Week 25 of 33</span>
+        <span class="chip">~3–4 Hours</span>
+        <span class="chip">Hands-on Exercise Included</span>
       </div>
 
       <div class="obj-recap reveal">
-        <h2>By the end of these two weeks, you'll be able to</h2>
+        <h2>By the end of this week, you'll be able to</h2>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Plan, build, test and ship a complete Angular application solo</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Make and justify real architecture decisions instead of following a tutorial</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Present the finished project the way a hiring manager actually evaluates one</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Install and theme Angular Material with the M3 theming API, including a dark-mode-aware custom palette</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Wire Material form controls into typed Reactive Forms (Week 12) correctly, including error states</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a sortable, paginated, filterable <code>MatTable</code> backed by a signal-driven data source</li>
         </ul>
       </div>
 
       <div class="phase-nav">
-        <a href="#planning"><span>1</span> Planning &amp; Scoping</a>
-        <a href="#architecture"><span>2</span> Architecture Decisions</a>
-        <a href="#implementation"><span>3</span> Implementation Checklist</a>
-        <a href="#quality-pass"><span>4</span> Performance &amp; A11y Pass</a>
-        <a href="#deployment"><span>5</span> SSR &amp; Deployment</a>
-        <a href="#portfolio"><span>6</span> Portfolio Write-Up</a>
-        <a href="#exercise"><span>7</span> The Capstone Brief</a>
-        <a href="#quiz"><span>8</span> Self-Assessment</a>
+        <a href="#install-theme"><span>1</span> Install &amp; Theme with M3</a>
+        <a href="#core-components"><span>2</span> Core Components, Signals-First</a>
+        <a href="#material-forms"><span>3</span> Material + Reactive Forms</a>
+        <a href="#mat-table"><span>4</span> MatTable, Sort &amp; Pagination</a>
+        <a href="#material-vs-cdk"><span>5</span> Material vs. Raw CDK</a>
+        <a href="#custom-theming"><span>6</span> Custom Theming for a Design System</a>
+        <a href="#exercise"><span>7</span> Exercise</a>
+        <a href="#quiz"><span>8</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -310,289 +310,377 @@
       <div class="lesson-layout">
         <article class="lesson-article">
 
-          <section id="planning">
-            <h2>1. Project Planning &amp; Scoping</h2>
+          <section id="install-theme">
+            <h2>1. Installing &amp; Theming with the M3 API</h2>
             <p>
-              The single biggest risk to a two-week solo project isn't a difficult bug — it's scope
-              that quietly grows past what two weeks can actually finish. Pick something small enough
-              to complete, but real enough to demonstrate range across the course.
+              <code>ng add @angular/material</code> installs the package, wires up Roboto and Material
+              Symbols, and adds a base theme — but the theming API you land in depends on which
+              Angular Material version the schematic picks. Current Material ships Google's Material
+              Design 3 (M3) theming system, built on Sass mixins rather than the old prebuilt CSS
+              files.
             </p>
 
-            <p><strong>A few project shapes that exercise most of the course well:</strong></p>
-            <ul>
-              <li><strong>A task/project tracker</strong> — nested routes (Week 10), drag-and-drop reordering (Week 8), filtering and sorting (Week 6), a Signal Store (Week 17) for shared board state.</li>
-              <li><strong>A recipe or content manager</strong> — reactive forms with dynamic ingredient lists (Week 12), image handling, search-as-you-type (Week 15), a public/private-content split exercising auth (Week 23).</li>
-              <li><strong>An expense or budget tracker</strong> — charts (a natural fit for a <code>@defer</code>-loaded heavy dependency, Week 11), computed derived totals (Week 5), CSV import via file upload (Week 14).</li>
-              <li><strong>An event RSVP / small booking app</strong> — public and authenticated views, forms with validation, email-style notifications, a genuinely useful SSR story (public event pages should load fast and be indexable, Week 21).</li>
-            </ul>
-
             <div class="code-block">
-              <div class="code-block__label">a one-page scope doc — write this FIRST</div>
-              <pre><code>## What it is (one sentence)
+              <div class="code-block__label">styles.scss</div>
+              <pre><code>@use '@angular/material' as mat;
 
-## Core user flows (3-5, no more)
-1.
-2.
-3.
-
-## Explicit non-goals
-(Things a "complete" version of this app would have, that THIS version deliberately won't)
-
-## Tech decisions made up front
-- State management approach:
-- Auth: real, mocked, or none?
-- Data source: real backend, mock API, or local-only?
+html {
+  color-scheme: light dark;
+  @include mat.theme((
+    color: mat.$violet-palette,
+    typography: Roboto,
+    density: 0,
+  ));
+}
 </code></pre>
             </div>
 
             <p>
-              The "explicit non-goals" section matters as much as the flows — deciding on day one what
-              you're <em>not</em> building is what keeps scope from expanding mid-project.
+              <code>mat.theme()</code> generates CSS custom properties for the full M3 token set —
+              surface colors, on-surface text colors, elevation — and, critically, respects
+              <code>color-scheme: light dark</code> to automatically switch tokens with the user's OS
+              preference. That's a different mechanism from this site's own <code>data-theme</code>
+              toggle (Week 7); when both exist in a real app, you'll want your own dark-mode toggle to
+              set <code>color-scheme</code> on the root element directly rather than relying on the OS
+              preference alone.
             </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Don't import per-component theme mixins anymore</strong>
+                <p>Older Material tutorials show a long list of <code>@include mat.button-theme(...)</code>-style calls per component. The M3 <code>mat.theme()</code> mixin themes every component that's present in your bundle automatically — you only reach for per-component overrides (<code>mat.button-overrides(...)</code>) when you need to deviate from the generated tokens for one component specifically.</p>
+              </div>
+            </div>
           </section>
 
-          <section id="architecture">
-            <h2>2. Architecture Decisions &amp; Tradeoffs</h2>
+          <section id="core-components">
+            <h2>2. Core Components in a Signals-First App</h2>
             <p>
-              Before writing a component, make the handful of decisions that are expensive to reverse
-              later — and write down <em>why</em>, in one sentence each. This is the single habit that
-              most separates a tutorial-follower from someone who can architect independently.
+              Material's components are standalone by default now, so importing them is exactly like
+              importing any other standalone dependency (Week 3) — no <code>MatModule</code> grab-bag
+              required.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">example decision record</div>
-              <pre><code>## State management
-Decision: Signal-based services (Week 9 pattern), not a Signal Store.
-Why: One user, one board, no genuinely cross-cutting shared state complex
-enough to justify Signal Store's extra structure (Week 17's guidance).
+              <div class="code-block__label">confirm-dialog.ts</div>
+              <pre><code>import { Component, inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
-## Auth
-Decision: Mocked auth service with a fake JWT, no real backend.
-Why: The capstone's goal is demonstrating the CLIENT-side auth pattern
-(Week 23) -- a real backend is out of scope and would eat time better
-spent elsewhere.
+@Component({
+  selector: 'app-confirm-dialog',
+  imports: [MatDialogModule, MatButtonModule],
+  template: `
+    &lt;h2 mat-dialog-title&gt;{{ data.title }}&lt;/h2&gt;
+    &lt;mat-dialog-content&gt;{{ data.message }}&lt;/mat-dialog-content&gt;
+    &lt;mat-dialog-actions align="end"&gt;
+      &lt;button mat-button (click)="ref.close(false)"&gt;Cancel&lt;/button&gt;
+      &lt;button mat-flat-button color="warn" (click)="ref.close(true)"&gt;Delete&lt;/button&gt;
+    &lt;/mat-dialog-actions&gt;
+  `,
+})
+export class ConfirmDialog {
+  ref = inject(MatDialogRef&lt;ConfirmDialog&gt;);
+  data = inject&lt;{ title: string; message: string }&gt;(MAT_DIALOG_DATA);
+}
+</code></pre>
+            </div>
 
-## Routing structure
-Decision: /boards -&gt; /boards/:boardId -&gt; /boards/:boardId/cards/:cardId
-Why: Mirrors the actual information hierarchy; each level needs its own
-URL for direct linking and browser back/forward to work correctly.
+            <div class="code-block">
+              <div class="code-block__label">opening it — task-list.ts</div>
+              <pre><code>import { MatDialog } from '@angular/material/dialog';
+
+private dialog = inject(MatDialog);
+
+confirmDelete(taskTitle: string) {
+  const ref = this.dialog.open(ConfirmDialog, {
+    data: { title: 'Delete task?', message: `Delete "${taskTitle}"? This can't be undone.` },
+  });
+
+  ref.afterClosed().subscribe((confirmed) =&gt; {
+    if (confirmed) this.deleteTask();
+  });
+}
 </code></pre>
             </div>
 
             <p>
-              Sketch your actual route tree on paper before writing a single <code>Routes</code> array
-              — the exercise of drawing it tends to surface structural questions (does this view
-              really need its own URL? should this be a modal instead?) far more cheaply than
-              discovering them mid-implementation.
+              <code>MatDialogRef.afterClosed()</code> is still an <code>Observable</code>, not a
+              signal — a reminder from Week 16 that plenty of Angular's own APIs haven't migrated to
+              signals, and reaching for <code>toSignal()</code> at the boundary is often cleaner than
+              subscribing manually everywhere.
             </p>
           </section>
 
-          <section id="implementation">
-            <h2>3. Full Implementation Checklist</h2>
+          <section id="material-forms">
+            <h2>3. Material + Reactive Forms, Correctly</h2>
             <p>
-              Not every technique from the course needs to appear — but a genuinely well-rounded
-              capstone touches most phases. Use this as a checklist while you build, not a script to
-              follow in order:
-            </p>
-            <ul>
-              <li><strong>Phase 1-2 (Foundations, Core Reactivity):</strong> standalone components throughout, signals for all local state, the new control-flow syntax exclusively (no <code>*ngIf</code>/<code>*ngFor</code>).</li>
-              <li><strong>Phase 3 (Application Architecture):</strong> a real routing structure with at least one guard and one resolver, at least one non-trivial reactive form with custom validation.</li>
-              <li><strong>Phase 4 (Data &amp; State):</strong> a typed HTTP data-access layer with at least one interceptor, and a deliberate state-management decision (Section 2) you can defend.</li>
-              <li><strong>Phase 5 (Quality &amp; Performance):</strong> a real test suite (unit tests for services/stores at minimum), at least one measured performance fix, SSR enabled and hydrating cleanly.</li>
-              <li><strong>Phase 6 (Advanced):</strong> at minimum, a genuine accessibility pass (Week 22) and a considered security posture (Week 23) — micro-frontends (Week 24) are almost certainly out of scope for a solo two-week project, and that's the correct call per that week's own guidance.</li>
-            </ul>
-          </section>
-
-          <section id="quality-pass">
-            <h2>4. Performance &amp; Accessibility Pass</h2>
-            <p>
-              Once the app is functionally complete, run the exact process from Weeks 20 and 22 — not
-              as an afterthought, but as a scheduled pass with its own time budget.
-            </p>
-            <ol>
-              <li>Record an Angular DevTools profile during your app's core flow; fix any component re-rendering more than it should.</li>
-              <li>Run a bundle analysis; confirm your lazy-loading boundaries actually produced separate chunks.</li>
-              <li>Run Lighthouse and <code>axe</code>; fix every accessibility issue, not just the critical ones.</li>
-              <li>Navigate the entire app by keyboard alone, start to finish.</li>
-              <li>Test with <code>prefers-reduced-motion</code> enabled.</li>
-            </ol>
-            <p>
-              Budget real time for this — a day is reasonable for a two-week project. Skipping it is
-              the most common way a technically-complete capstone still feels unfinished.
-            </p>
-          </section>
-
-          <section id="deployment">
-            <h2>5. SSR + Deployment</h2>
-            <p>
-              Apply Week 21's process in full: add SSR, fix every hydration mismatch, set real build
-              budgets, and deploy to a live, public URL on a host that supports Node.js SSR.
-            </p>
-            <p>
-              Before considering this done, do the checks that actually reveal SSR/routing
-              misconfiguration:
-            </p>
-            <ul>
-              <li>A hard refresh on a deep, nested route (not just the home page)</li>
-              <li>The 404 page, reached via a genuinely invalid URL</li>
-              <li>View-source on a key page — confirm real content is present, not an empty shell</li>
-            </ul>
-            <p>
-              A live URL is the deliverable that actually matters to anyone evaluating this project —
-              a capstone that only runs on <code>localhost</code> is, for portfolio purposes,
-              unfinished.
-            </p>
-          </section>
-
-          <section id="portfolio">
-            <h2>6. Portfolio Write-Up &amp; Demo</h2>
-            <p>
-              The code is only half of what gets evaluated — most reviewers read the README before
-              they read a single file of source.
+              <code>mat-form-field</code> and its controls implement <code>ControlValueAccessor</code>
+              (Week 13), so they drop directly into a typed <code>FormGroup</code> from Week 12 with no
+              special glue code — the part that trips people up is error display, which Material
+              doesn't do for you automatically.
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">README.md structure</div>
-              <pre><code>## [Project Name]
+              <div class="code-block__label">signup-form.html</div>
+              <pre><code>&lt;form [formGroup]="form" (ngSubmit)="submit()"&gt;
+  &lt;mat-form-field appearance="outline"&gt;
+    &lt;mat-label&gt;Email&lt;/mat-label&gt;
+    &lt;input matInput formControlName="email" type="email" /&gt;
+    @if (form.controls.email.invalid && form.controls.email.touched) {
+      &lt;mat-error&gt;
+        @if (form.controls.email.hasError('required')) { Email is required }
+        @else if (form.controls.email.hasError('email')) { Enter a valid email }
+      &lt;/mat-error&gt;
+    }
+  &lt;/mat-form-field&gt;
 
-One-paragraph description of what it is and who it's for.
+  &lt;mat-form-field appearance="outline"&gt;
+    &lt;mat-label&gt;Plan&lt;/mat-label&gt;
+    &lt;mat-select formControlName="plan"&gt;
+      @for (plan of plans; track plan.id) {
+        &lt;mat-option [value]="plan.id"&gt;{{ plan.name }}&lt;/mat-option&gt;
+      }
+    &lt;/mat-select&gt;
+  &lt;/mat-form-field&gt;
 
-[Screenshot or short GIF of the core flow]
-
-**Live demo:** [link]
-
-### Tech stack
-Angular 22, signals, [your state approach], [your backend/data approach]...
-
-### Architecture decisions
-Link to or summarize Section 2's decision record -- this is often
-the single most interesting part of the README to an experienced reviewer.
-
-### What I'd do differently with more time
-Honest, specific -- this signals self-awareness more than a project
-that claims to have no rough edges at all.
+  &lt;button mat-flat-button type="submit" [disabled]="form.invalid"&gt;Sign up&lt;/button&gt;
+&lt;/form&gt;
 </code></pre>
             </div>
 
             <p>
-              A 2-3 minute demo video or GIF walking through the core flow is worth the extra hour it
-              takes to make — it's the difference between someone actually seeing your work versus
-              deciding whether to clone and run it themselves, which most reviewers, realistically,
-              won't do.
+              <code>&lt;mat-error&gt;</code> only renders while the control is genuinely invalid — but
+              Material won't decide <em>when</em> to show it for you. The <code>&amp;&amp;
+              .touched</code> check above is doing the same job as the custom
+              <code>ErrorStateMatcher</code> pattern you'll see in Material's own docs; writing it
+              inline like this is simpler for most forms and only worth abstracting into a shared
+              matcher once several forms repeat the exact same show/hide rule.
+            </p>
+          </section>
+
+          <section id="mat-table">
+            <h2>4. MatTable, Sort &amp; Pagination — Signal-Driven</h2>
+            <p>
+              <code>MatTableDataSource</code> predates signals and expects a plain array or an
+              <code>Observable</code> — the clean way to drive it from signal state is a small
+              <code>effect()</code> that pushes new data in whenever your signal changes.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">user-table.ts</div>
+              <pre><code>import { Component, signal, effect, viewChild, AfterViewInit } from '@angular/core';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+
+@Component({
+  selector: 'app-user-table',
+  imports: [MatTableModule, MatSortModule, MatPaginatorModule],
+  templateUrl: './user-table.html',
+})
+export class UserTable implements AfterViewInit {
+  users = signal&lt;User[]&gt;([]);
+  displayedColumns = ['name', 'email', 'role', 'actions'];
+  dataSource = new MatTableDataSource&lt;User&gt;([]);
+
+  sort = viewChild.required(MatSort);
+  paginator = viewChild.required(MatPaginator);
+
+  constructor() {
+    effect(() =&gt; {
+      this.dataSource.data = this.users();
+    });
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort();
+    this.dataSource.paginator = this.paginator();
+  }
+
+  applyFilter(value: string) {
+    this.dataSource.filter = value.trim().toLowerCase();
+  }
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>viewChild.required()</code> (Week 4) replaces <code>@ViewChild</code> here, and the
+              wiring still has to happen in <code>ngAfterViewInit</code> because
+              <code>MatSort</code>/<code>MatPaginator</code> are view-queried, DOM-backed instances —
+              signals don't remove the need for that lifecycle hook, they just remove it from
+              everywhere else.
+            </p>
+          </section>
+
+          <section id="material-vs-cdk">
+            <h2>5. Material vs. Raw CDK — Which One Do You Reach For?</h2>
+            <p>
+              Week 8 covered the Angular CDK — unstyled, headless building blocks for overlays,
+              drag-and-drop and accessibility. Angular Material is built <em>on top of</em> that same
+              CDK, adding a full set of pre-styled, theme-aware components.
+            </p>
+            <ul>
+              <li><strong>Reach for Material</strong> when you want a complete, accessible, on-brand component fast — buttons, form fields, tables, dialogs, date pickers — and you're fine adopting Material's visual language (or theming it to match your design system, Section 6).</li>
+              <li><strong>Reach for raw CDK</strong> when your design system has entirely custom visuals and you only need the behavior — positioning, focus trapping, drag reordering — without Material's default look.</li>
+              <li><strong>Most real apps use both:</strong> Material for the bulk of standard UI, raw CDK for the one or two bespoke pieces that don't fit Material's component set.</li>
+            </ul>
+            <p>
+              This is exactly the "build vs. reach for a library" judgment from Week 8, one level up —
+              Material is itself "a library someone already built," and knowing when to accept its
+              opinions versus drop back down to the CDK is a real day-to-day decision on any team using
+              it.
+            </p>
+          </section>
+
+          <section id="custom-theming">
+            <h2>6. Custom Theming for a Design System</h2>
+            <p>
+              A real product rarely ships Material's default violet palette — you'll generate a custom
+              theme from your brand colors instead.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">styles.scss — custom palette</div>
+              <pre><code>@use '@angular/material' as mat;
+
+$brand-palette: mat.$violet-palette; // swap for a generated palette from
+                                      // Material's theme builder using your
+                                      // brand's primary color
+
+html {
+  color-scheme: light dark;
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: $brand-palette,
+      tertiary: mat.$orange-palette,
+    ),
+    typography: (
+      brand-family: 'Inter',
+      plain-family: 'Inter',
+    ),
+    density: -1,
+  ));
+}
+
+:root[data-theme='dark'] {
+  @include mat.theme((
+    color: (
+      theme-type: dark,
+      primary: $brand-palette,
+      tertiary: mat.$orange-palette,
+    ),
+  ));
+}
+</code></pre>
+            </div>
+
+            <p>
+              Scoping a second <code>mat.theme()</code> call under <code>:root[data-theme='dark']</code>
+              is exactly how you connect Material's tokens to this site's own manual theme toggle
+              (Week 7) instead of only the OS-level <code>color-scheme</code> preference — the same
+              pattern applies to any app with a user-facing light/dark switch.
             </p>
           </section>
 
           <section id="exercise">
-            <h2>7. The Capstone Brief</h2>
+            <h2>7. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
-                Capstone
+                Hands-on
               </span>
-              <h3>Plan, build, test, and ship a complete Angular application</h3>
-              <p>Your own idea, or one of Section 1's suggestions — built and shipped over the next two weeks.</p>
+              <h3>Build a Material admin table with an edit dialog</h3>
+              <p>A small admin screen that exercises Sections 2 through 4 together.</p>
 
-              <p><strong>Week 25 — Plan and build:</strong></p>
+              <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Write the one-page scope doc from Section 1. Get it down to 3-5 core user flows, no more.</li>
-                <li>Write the architecture decision record from Section 2 before writing implementation code.</li>
-                <li>Build the core application, working through Section 3's checklist as you go — routing and layout first, then the primary data flows, then supporting features.</li>
-                <li>Write tests alongside the code, not after — a service or store without a test the same day you write it is unlikely to get one later.</li>
-              </ol>
-
-              <p><strong>Week 26 — Polish and ship:</strong></p>
-              <ol>
-                <li>Complete Section 4's performance and accessibility pass, with real before/after evidence.</li>
-                <li>Complete Section 5's SSR and deployment process, ending in a live, public URL.</li>
-                <li>Write the Section 6 README and record a short demo.</li>
-                <li>Do a final pass through Section 3's checklist and honestly note what's missing — a capstone with a clear, deliberate "not included" list is stronger than one silently missing things nobody decided to cut.</li>
+                <li>A <code>MatTable</code> of at least 15 seed records (any domain — users, products, tasks), with sorting (<code>MatSort</code>) on at least two columns and pagination (<code>MatPaginator</code>) at 5 rows per page.</li>
+                <li>A text input above the table wired to <code>MatTableDataSource.filter</code> for live filtering as the user types.</li>
+                <li>An "Edit" button per row that opens a <code>MatDialog</code> containing a Reactive Form (Section 3) pre-filled with that row's data, with at least one required field and one field with a format validator.</li>
+                <li>Saving the dialog updates the underlying signal (not the <code>MatTableDataSource</code> directly) — the table should update via the <code>effect()</code> pattern from Section 4, confirming the data flow is signal-first.</li>
+                <li>Apply Section 6's custom theming: generate a palette from any brand color of your choosing and confirm it's respected in both light and dark mode.</li>
               </ol>
 
               <div class="callout callout--tip">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
-                  <strong>If you're behind at the start of Week 26</strong>
-                  <p>Cut scope, not quality. A smaller app that's genuinely tested, accessible, and deployed is a stronger portfolio piece — and a more honest demonstration of everything Phases 1 through 6 taught — than a larger one that's none of those things.</p>
+                  <strong>Hint</strong>
+                  <p>If the table doesn't visibly update after closing the edit dialog, check that you're calling <code>this.users.update(...)</code> (a new array) rather than mutating an element in place — the same immutability rule from Week 5's signals deep dive applies here, and <code>MatTableDataSource</code>'s change detection depends on it just as much as Angular's own template bindings do.</p>
                 </div>
               </div>
             </div>
           </section>
 
           <section id="quiz">
-            <h2>8. Self-Assessment</h2>
-            <p>Four honest questions to ask before calling the capstone done. Expand each for what a solid answer looks like.</p>
+            <h2>8. Knowledge Check</h2>
+            <p>Four quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">1</span>
+                  <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>Can you explain every architecture decision in one sentence, without saying "that's just how the tutorial did it"?</h4>
+                    <h4>What's the actual relationship between Angular Material and the Angular CDK?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>This is what Section 2's decision record is actually for. If you can't articulate why you chose a Signal Store over a plain service, or why a route is structured the way it is, that's worth revisiting before considering the project finished — an interviewer will ask exactly this.</p>
+                    <p>The CDK is the unstyled, headless foundation (overlay positioning, focus trapping, drag-and-drop, a11y utilities); Angular Material is a fully-styled, theme-aware component library built on top of it. They're not alternatives to each other — Material depends on the CDK internally.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">2</span>
+                  <span class="week-item__badge">Q2</span>
                   <div class="week-item__heading">
-                    <h4>Does the app work correctly for someone using only a keyboard, with no mouse?</h4>
+                    <h4>Why does <code>&lt;mat-error&gt;</code> need an explicit <code>invalid &amp;&amp; touched</code> check in the template?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Test this directly, per Section 4 — don't rely on an automated score alone. Every core flow from your scope doc should be completable by keyboard, with focus landing somewhere sensible at every step.</p>
+                    <p>Material renders <code>mat-error</code> content whenever it's present and the control is invalid, but it doesn't decide the UX question of <em>when</em> that should be shown — without the touched check, every required field would show an error message before the user has even interacted with the form.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">3</span>
+                  <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>If you deleted your local build and only had the live URL, would the app still fully work?</h4>
+                    <h4>Why is an <code>effect()</code> the right bridge between a signal and <code>MatTableDataSource.data</code>?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>This is Section 5's real test — a hard refresh on a deep route, the 404 page, and view-source on a key page all need to work on the deployed version specifically, not just in local dev. A capstone that only works on <code>localhost</code> doesn't function as a portfolio piece.</p>
+                    <p><code>MatTableDataSource</code> predates signals and just holds a plain array property — it has no way to read a signal itself. An <code>effect()</code> re-runs whenever the signal it reads changes, so assigning <code>dataSource.data = this.users()</code> inside one keeps the table in sync without manual subscription management.</p>
                   </div>
                 </div>
               </details>
 
               <details class="week-item quiz-item">
                 <summary>
-                  <span class="week-item__badge">4</span>
+                  <span class="week-item__badge">Q4</span>
                   <div class="week-item__heading">
-                    <h4>Could someone who's never seen this project understand what it does and why you built it this way within the first 30 seconds of your README?</h4>
+                    <h4>Why wire <code>MatSort</code> and <code>MatPaginator</code> in <code>ngAfterViewInit</code> instead of the constructor?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Most reviewers decide whether to look further within the first screenshot and paragraph. Section 6's structure — description, visual, live link, then architecture decisions — front-loads exactly what a busy reviewer actually reads, instead of burying it after a long setup/installation section nobody needs for a live-deployed app.</p>
+                    <p>They're view-queried directives backed by real DOM elements (<code>viewChild.required()</code>), which aren't resolved yet in the constructor — same lifecycle rule as <code>@ViewChild</code> always had. Signals changed how you read <em>state</em>, not when Angular finishes rendering a view, so DOM-dependent wiring still belongs in <code>ngAfterViewInit</code>.</p>
                   </div>
                 </div>
               </details>
             </div>
           </section>
-
-          <div class="cta-banner reveal" style="margin-top:8px;">
-            <h2>That's the full 26-week curriculum.</h2>
-            <p>From modern TypeScript in Week 1 to a deployed, tested, accessible application you designed yourself. Whatever you build for this capstone is genuinely yours to show.</p>
-            <div class="cta-banner__actions">
-              <a href="../angular/index.html" class="btn btn--primary">Review the Full Curriculum</a>
-              <a href="../../index.html" class="btn btn--ghost">Explore Other Courses</a>
-            </div>
-          </div>
 
         </article>
 
@@ -601,9 +689,9 @@ that claims to have no rough edges at all.
             <span class="lesson-pager__label">← Back to</span>
             <span class="lesson-pager__title">Week 24: Micro-Frontends &amp; Advanced Architecture</span>
           </a>
-          <a href="../angular/index.html" class="lesson-pager__link lesson-pager__link--next">
-            <span class="lesson-pager__label">Course complete</span>
-            <span class="lesson-pager__title">Back to the Full Curriculum →</span>
+          <a href="week-26.html" class="lesson-pager__link lesson-pager__link--next">
+            <span class="lesson-pager__label">Up next</span>
+            <span class="lesson-pager__title">Week 26: GraphQL &amp; Apollo Angular →</span>
           </a>
         </div>
       </div>
