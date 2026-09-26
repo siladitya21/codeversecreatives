@@ -88,7 +88,8 @@
       "sql-postgresql": "database relational rdbms postgres mysql queries joins schema backend",
       "docker-kubernetes": "containers containerization orchestration devops helm kubectl docker compose infrastructure cicd gitops argocd",
       claude: "anthropic ai llm claude code cli agents prompt engineering mcp tool use api sdk assistant",
-      "ugc-net-cse": "ugc net nta jrf assistant professor lectureship computer science applications teaching research aptitude exam prep previous year papers mock test"
+      "ugc-net-cse": "ugc net nta jrf assistant professor lectureship computer science applications teaching research aptitude exam prep previous year papers mock test",
+      kannada: "kannada language karnataka script alphabet varnamale kagunita vowels consonants bengaluru mysuru vocabulary grammar conversation speaking spoken beginner"
     };
 
     var courseIndex = Array.prototype.map

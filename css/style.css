@@ -317,6 +317,15 @@ body[data-course="ugc-net-cse"],
   --accent-deep-2: #9c3049;
 }
 
+body[data-course="kannada"],
+.c-kannada {
+  --accent: #e2543f;
+  --accent-2: #ea7a63;
+  --accent-soft: rgba(226, 84, 63, 0.14);
+  --accent-deep: #b53d2c;
+  --accent-deep-2: #c74733;
+}
+
 /* Light theme: the same twenty-one hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
@@ -492,6 +501,13 @@ body[data-course="ugc-net-cse"],
   --accent: #7c2740;
   --accent-2: #8f3550;
   --accent-soft: rgba(124, 39, 64, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="kannada"],
+:root[data-theme="light"] .c-kannada {
+  --accent: #b53d2c;
+  --accent-2: #c74733;
+  --accent-soft: rgba(181, 61, 44, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */
