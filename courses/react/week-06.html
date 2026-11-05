@@ -347,13 +347,14 @@
             <p>
               The modern setup defines your routes as data — an array of route objects — and hands
               them to <code>createBrowserRouter</code>, then renders the result with
-              <code>RouterProvider</code> at your app's root:
+              <code>RouterProvider</code> at your app's root. Since React Router 8, DOM-specific pieces like <code>RouterProvider</code> are imported from <code>react-router/dom</code>; everything else comes from <code>react-router</code> (the old <code>react-router-dom</code> package no longer exists):
             </p>
 
             <div class="code-block">
               <div class="code-block__label">main.tsx</div>
               <pre><code>import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import { createBrowserRouter } from 'react-router';
+import { RouterProvider } from 'react-router/dom';
 import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import AboutPage from './pages/AboutPage';

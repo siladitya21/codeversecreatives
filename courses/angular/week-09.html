@@ -568,11 +568,12 @@ export class FeatureFlags {
 
             <div class="code-block">
               <div class="code-block__label">notification.service.spec.ts — plain instantiation</div>
-              <pre><code>import { NotificationService } from './notification.service';
+              <pre><code>import { vi } from 'vitest';
+import { NotificationService } from './notification.service';
 
 describe('NotificationService', () =&gt; {
   it('logs a message', () =&gt; {
-    const logSpy = jasmine.createSpy('log');
+    const logSpy = vi.fn();
     const service = new NotificationService({ log: logSpy } as any);
 
     service.notify('Order placed');
@@ -592,12 +593,13 @@ describe('NotificationService', () =&gt; {
             <div class="code-block">
               <div class="code-block__label">notification.service.spec.ts — TestBed</div>
               <pre><code>import { TestBed } from '@angular/core/testing';
+import { vi } from 'vitest';
 import { NotificationService } from './notification.service';
 import { NOTIFICATION_TRANSPORT } from './notification-transport.token';
 
 describe('NotificationService', () =&gt; {
   it('sends to every registered transport', () =&gt; {
-    const fakeTransport = { send: jasmine.createSpy('send') };
+    const fakeTransport = { send: vi.fn() };
 
     TestBed.configureTestingModule({
       providers: [
