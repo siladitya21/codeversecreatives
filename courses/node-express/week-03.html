@@ -526,7 +526,7 @@ export default postsRouter;
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
                 <strong>Validate query strings and params too, not just bodies</strong>
-                <p>The same <code>validateBody</code> pattern generalizes to a <code>validateQuery</code> version that parses <code>req.query</code> — genuinely useful given Week 2's observation that query values always arrive as strings. A schema like <code>z.object({ page: z.coerce.number().int().min(1).default(1) })</code> handles both the string-to-number coercion and the default value in one declarative place, replacing the manual <code>Number(req.query.page ?? 1)</code> checks from last week.</p>
+                <p>The same <code>validateBody</code> pattern generalizes to a <code>validateQuery</code> version that parses <code>req.query</code> — genuinely useful given Week 2's observation that query values always arrive as strings. A schema like <code>z.object({ page: z.coerce.number().int().min(1).default(1) })</code> handles both the string-to-number coercion and the default value in one declarative place, replacing the manual <code>Number(req.query.page ?? 1)</code> checks from last week. One Express 5 detail: <code>req.query</code> is a read-only getter, so don't assign the parsed result back to it. Store it on <code>res.locals.query</code> (or a typed property of your own) instead.</p>
               </div>
             </div>
           </section>

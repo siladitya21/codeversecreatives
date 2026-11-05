@@ -515,12 +515,18 @@ productsRouter.put("/:id", async (req, res, next) =&gt; {
 
             <div class="code-block">
               <div class="code-block__label">src/lib/prisma.ts</div>
-              <pre><code>import { PrismaClient } from "@prisma/client";
+              <pre><code>import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "../generated/prisma/client.js";
+
+// The adapter owns the pg connection pool; `max` caps its size.
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL, max: 10 });
 
 // A single shared client for the whole process -- this is the pool.
 // Never call `new PrismaClient()` inside a request handler; each
 // instance opens its own connection pool independently.
 export const prisma = new PrismaClient({
+  adapter,
   log: process.env.NODE_ENV === "development" ? ["query", "warn", "error"] : ["error"],
 });
 </code></pre>

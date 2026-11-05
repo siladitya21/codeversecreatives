@@ -336,28 +336,29 @@
             <div class="code-block">
               <div class="code-block__label">Dockerfile</div>
               <pre><code># ---- Stage 1: build ----
-FROM node:20-alpine AS builder
+FROM node:24-alpine AS builder
 WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm ci
 
-COPY tsconfig.json ./
+COPY tsconfig.json prisma.config.ts ./
 COPY prisma ./prisma
 COPY src ./src
-RUN npx prisma generate
+# generate never connects to the database; the config just needs a URL value
+RUN DATABASE_URL="postgresql://build:build@localhost:5432/build" npx prisma generate
 RUN npm run build
 
 # ---- Stage 2: runtime ----
-FROM node:20-alpine AS runtime
+FROM node:24-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
+# the generated Prisma client (src/generated) is compiled into dist/ by tsc
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY prisma ./prisma
 
 # Run as a non-root user -- never run a production container as root.
@@ -373,7 +374,7 @@ CMD ["node", "dist/main.js"]
               The <code>builder</code> stage has the full dependency tree, including
               <code>typescript</code> and <code>@types/node</code>, and produces
               <code>dist/</code>. The <code>runtime</code> stage starts completely fresh from
-              <code>node:20-alpine</code> — a minimal Linux image — installs only production
+              <code>node:24-alpine</code> — a minimal Linux image — installs only production
               dependencies with <code>npm ci --omit=dev</code>, and copies in nothing but the
               compiled JavaScript. Docker discards everything from the <code>builder</code> stage
               that wasn't explicitly copied over, so TypeScript itself never exists in the final
@@ -438,10 +439,13 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "24"
           cache: "npm"
 
       - run: npm ci
+      - run: npx prisma generate
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db
       - run: npx prisma migrate deploy
         env:
           DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test_db

@@ -605,16 +605,33 @@ app.listen(3000);
             </div>
 
             <p>
-              Inside a <em>synchronous</em> handler, Express 4 automatically catches a thrown error
-              and forwards it to your error middleware. Inside an <code>async</code> handler, it does
-              not — a rejected promise from an <code>await</code>ed call that throws will crash the
-              process unhandled unless you either wrap the call in try/catch and call
-              <code>next(err)</code> yourself, or wrap the whole handler in a small helper that does
-              it for you:
+              Express 5 (what <code>npm install express</code> gives you today) forwards errors to
+              your error middleware whether the handler is synchronous or <code>async</code>: a plain
+              <code>throw</code> and a rejected promise from an <code>await</code>ed call both reach
+              <code>errorHandler</code> with no extra code. So in this course you can write
+              <code>async</code> handlers and simply <code>throw</code>:
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">src/lib/async-handler.ts</div>
+              <div class="code-block__label">Express 5 -- async errors are forwarded automatically</div>
+              <pre><code>usersRouter.get("/:id", async (req, res) =&gt; {
+  const user = await findUser(req.params.id); // a throw/rejection here reaches errorHandler
+  if (!user) throw new NotFoundError("User");
+  res.json(user);
+});
+</code></pre>
+            </div>
+
+            <p>
+              Express 4 behaved differently, and you'll meet plenty of Express 4 code in existing
+              projects. It only caught a <em>synchronous</em> throw; a rejected promise from an
+              <code>async</code> handler went unhandled (and could crash the process) unless you
+              called <code>next(err)</code> yourself or wrapped the handler in a small helper like
+              this one:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">src/lib/async-handler.ts -- only needed on Express 4</div>
               <pre><code>import type { Request, Response, NextFunction, RequestHandler } from "express";
 
 export function asyncHandler(
@@ -636,8 +653,8 @@ export function asyncHandler(
             <div class="callout callout--tip">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
-                <strong>Express 5 fixes this automatically</strong>
-                <p>Express 5 (released as the current major version) catches rejected promises from <code>async</code> route handlers natively, so <code>asyncHandler</code> becomes unnecessary if you're on Express 5. It's still worth understanding the wrapper pattern, though — you'll see it in most existing Express 4 codebases, and the underlying reason (an unhandled rejection isn't a thrown synchronous error) is the same reasoning from Week 1's discussion of <code>main().catch(...)</code>.</p>
+                <strong>Check which Express major you're on</strong>
+                <p>Run <code>npm ls express</code>: on 5.x you don't need <code>asyncHandler</code>, and the rest of this course doesn't use it. On an Express 4 codebase, keep the wrapper (or plan the upgrade). The underlying reason it was ever needed (a rejected promise isn't a thrown synchronous error) is the same reasoning from Week 1's discussion of <code>main().catch(...)</code>. Express 5 also made <code>req.query</code> a read-only getter and tightened route-path syntax (a wildcard is now <code>/*splat</code>, not <code>*</code>), which are the two changes most likely to bite when upgrading old code.</p>
               </div>
             </div>
           </section>
@@ -711,13 +728,13 @@ export function asyncHandler(
                 <summary>
                   <span class="week-item__badge">Q3</span>
                   <div class="week-item__heading">
-                    <h4>In Express 4, why does a thrown error inside an <code>async</code> route handler need special handling that a synchronous handler doesn't?</h4>
+                    <h4>Why did a thrown error inside an <code>async</code> route handler need special handling in Express 4, and what changed in Express 5?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>Express 4's built-in try/catch around route handlers only catches a synchronous <code>throw</code>. An <code>async</code> function that throws produces a rejected promise instead, which Express 4 was never written to observe — without an explicit <code>.catch(next)</code> (or a wrapper like <code>asyncHandler</code>), that rejection goes unhandled instead of reaching your centralized error middleware.</p>
+                    <p>Express 4's built-in try/catch around route handlers only catches a synchronous <code>throw</code>. An <code>async</code> function that throws produces a rejected promise instead, which Express 4 was never written to observe — without an explicit <code>.catch(next)</code> (or a wrapper like <code>asyncHandler</code>), that rejection goes unhandled instead of reaching your centralized error middleware. Express 5 attaches a rejection handler to any promise a route handler returns and forwards the error to <code>next</code> for you, so the wrapper is no longer needed.</p>
                   </div>
                 </div>
               </details>

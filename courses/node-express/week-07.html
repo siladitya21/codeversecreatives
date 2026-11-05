@@ -571,7 +571,7 @@ app.get(
             <div class="code-block">
               <div class="code-block__label">src/main.ts — the callback route</div>
               <pre><code>import jwt from "jsonwebtoken";
-import type { User } from "@prisma/client";
+import type { User } from "./generated/prisma/client.js";
 
 app.get(
   "/auth/google/callback",

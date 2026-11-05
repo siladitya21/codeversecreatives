@@ -413,9 +413,9 @@ console.log(add(2, 3), PI);
   },
   "dependencies": {},
   "devDependencies": {
-    "typescript": "^5.5.0",
-    "tsx": "^4.16.0",
-    "@types/node": "^20.14.0"
+    "typescript": "^5.9.0",
+    "tsx": "^4.20.0",
+    "@types/node": "^24.0.0"
   }
 }
 </code></pre>
@@ -425,7 +425,7 @@ console.log(add(2, 3), PI);
               <code>"type": "module"</code> tells Node to treat <code>.js</code> files as ES modules
               by default, which matters once TypeScript compiles down to plain JavaScript.
               Dependency versions follow <strong>semantic versioning</strong>
-              (<code>MAJOR.MINOR.PATCH</code>): a caret like <code>^5.5.0</code> allows npm to
+              (<code>MAJOR.MINOR.PATCH</code>): a caret like <code>^5.9.0</code> allows npm to
               install any <code>5.x.x</code> release but never <code>6.0.0</code>, since a major
               version bump signals a breaking change by convention.
             </p>

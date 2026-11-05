@@ -329,7 +329,7 @@
 
             <div class="code-block">
               <div class="code-block__label">repositories/tasks.ts</div>
-              <pre><code>import { Prisma } from "@prisma/client";
+              <pre><code>import { Prisma } from "../generated/prisma/client.js";
 
 interface TaskSearchFilters {
   status?: string;
@@ -426,7 +426,7 @@ const enriched = await Promise.all(
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
                 <strong>Enable Prisma's query logging while you work on this section</strong>
-                <p><code>new PrismaClient({ log: ["query"] })</code> prints every generated SQL statement to the console — the extra N queries scroll by unmistakably the moment you iterate a list and fetch a relation per-item without <code>include</code>, which is a far more convincing signal than reading the code and guessing.</p>
+                <p>Adding <code>log: ["query"]</code> to the <code>PrismaClient</code> options prints every generated SQL statement to the console — the extra N queries scroll by unmistakably the moment you iterate a list and fetch a relation per-item without <code>include</code>, which is a far more convincing signal than reading the code and guessing.</p>
               </div>
             </div>
           </section>

@@ -574,7 +574,7 @@ model Enrollment {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
               <div>
                 <strong>Turn on query logging while you're learning this</strong>
-                <p>Instantiate Prisma with <code>new PrismaClient({ log: ["query"] })</code> during development and watch the terminal while you hit your endpoints. Seeing "1 query" become "21 queries" the moment you add a naive relation loop is far more convincing than any explanation — and it's the same technique you'll use in Week 11 to spot slow endpoints before optimizing them.</p>
+                <p>Add <code>log: ["query"]</code> to your <code>PrismaClient</code> options (next to the <code>adapter</code>) during development and watch the terminal while you hit your endpoints. Seeing "1 query" become "21 queries" the moment you add a naive relation loop is far more convincing than any explanation — and it's the same technique you'll use in Week 11 to spot slow endpoints before optimizing them.</p>
               </div>
             </div>
           </section>

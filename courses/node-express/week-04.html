@@ -333,28 +333,29 @@
             <div class="code-block">
               <div class="code-block__label">terminal</div>
               <pre><code>npm install prisma --save-dev
-npm install @prisma/client
-npx prisma init --datasource-provider postgresql
+npm install @prisma/client @prisma/adapter-pg dotenv
+npx prisma init --datasource-provider postgresql --output ../src/generated/prisma
 </code></pre>
             </div>
 
             <p>
-              <code>prisma init</code> creates a <code>prisma/schema.prisma</code> file and a
-              <code>.env</code> with a <code>DATABASE_URL</code> placeholder. A schema has three
-              parts: a <code>generator</code> block (what to generate — almost always the JS/TS
-              client), a <code>datasource</code> block (which database and how to connect), and one
-              or more <code>model</code> blocks (your tables):
+              <code>prisma init</code> creates a <code>prisma/schema.prisma</code> file, a
+              <code>prisma.config.ts</code> file, and a <code>.env</code> with a
+              <code>DATABASE_URL</code> placeholder. A schema has three parts: a
+              <code>generator</code> block (what to generate and where to put it), a
+              <code>datasource</code> block (which database), and one or more <code>model</code>
+              blocks (your tables):
             </p>
 
             <div class="code-block">
               <div class="code-block__label">prisma/schema.prisma</div>
               <pre><code>generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -377,6 +378,33 @@ model Post {
 }
 </code></pre>
             </div>
+
+            <p>
+              Since Prisma 7 the connection URL no longer lives in the schema. It goes in
+              <code>prisma.config.ts</code>, which the Prisma CLI reads for migrations. Prisma 7 also
+              no longer loads <code>.env</code> for you, so the config imports <code>dotenv</code>
+              itself:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">prisma.config.ts</div>
+              <pre><code>import "dotenv/config";
+import { defineConfig, env } from "prisma/config";
+
+export default defineConfig({
+  schema: "prisma/schema.prisma",
+  migrations: { path: "prisma/migrations" },
+  datasource: { url: env("DATABASE_URL") },
+});
+</code></pre>
+            </div>
+
+            <p>
+              The generated client is written to <code>src/generated/prisma</code> (not
+              <code>node_modules</code>), so it's compiled along with the rest of your code. Add
+              <code>src/generated/</code> to <code>.gitignore</code>, since it's rebuilt by
+              <code>prisma generate</code>.
+            </p>
 
             <p>
               Each field has a type (<code>String</code>, <code>Boolean</code>,
@@ -412,18 +440,20 @@ model Post {
               the database schema from one state to the next. Rather than writing that SQL by hand,
               <code>prisma migrate dev</code> diffs your current <code>schema.prisma</code> against
               the migration history, generates the SQL to make the database match, applies it to your
-              local dev database, and regenerates the Prisma client — all in one command.
+              local dev database, all in one command. Since Prisma 7 it no longer regenerates the
+              client for you, so follow it with <code>prisma generate</code>.
             </p>
 
             <div class="code-block">
               <div class="code-block__label">terminal</div>
               <pre><code>npx prisma migrate dev --name init
+npx prisma generate
 
 # Prisma will:
 # 1. Compare schema.prisma to the migration history
 # 2. Generate prisma/migrations/&lt;timestamp&gt;_init/migration.sql
-# 3. Apply it to the database configured in DATABASE_URL
-# 4. Regenerate the type-safe client in node_modules/@prisma/client
+# 3. Apply it to the database configured in DATABASE_URL (via prisma.config.ts)
+# 4. (prisma generate) Write the type-safe client to src/generated/prisma
 </code></pre>
             </div>
 
@@ -475,21 +505,26 @@ npx prisma migrate deploy
           <section id="crud">
             <h2>3. The Generated Client &amp; Basic CRUD</h2>
             <p>
-              <code>prisma generate</code> (run automatically by <code>migrate dev</code>, and
-              manually whenever you only change the schema without a full migration) produces a
+              <code>prisma generate</code> (run it after every migration or schema change) produces a
               <code>PrismaClient</code> class with a method for every model, fully typed against your
               actual schema — autocomplete knows every field name and type, and passing the wrong
-              shape is a compile error, not a runtime surprise.
+              shape is a compile error, not a runtime surprise. Since Prisma 7 the client talks to
+              Postgres through a <strong>driver adapter</strong> (here <code>@prisma/adapter-pg</code>,
+              built on the standard <code>pg</code> driver), which you pass in when you create it.
             </p>
 
             <div class="code-block">
               <div class="code-block__label">src/lib/prisma.ts</div>
-              <pre><code>import { PrismaClient } from "@prisma/client";
+              <pre><code>import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaClient } from "../generated/prisma/client.js";
+
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 
 // A single shared instance for the whole app -- creating a new
 // PrismaClient per request would exhaust the database's connection
 // pool almost immediately.
-export const prisma = new PrismaClient();
+export const prisma = new PrismaClient({ adapter });
 </code></pre>
             </div>
 
@@ -563,27 +598,27 @@ await prisma.user.delete({
             <div class="code-block">
               <div class="code-block__label">src/routes/users.ts</div>
               <pre><code>import { Router } from "express";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../generated/prisma/client.js";
 import { prisma } from "../lib/prisma.js";
 import { validateBody } from "../middleware/validate.js";
 import { createUserSchema, type CreateUserInput } from "../schemas/user.js";
 import { NotFoundError, ConflictError } from "../lib/errors.js";
-import { asyncHandler } from "../lib/async-handler.js";
 
 const usersRouter = Router();
 
-usersRouter.get("/", asyncHandler(async (req, res) =&gt; {
+// Express 5 forwards errors from async handlers to errorHandler automatically (Week 2)
+usersRouter.get("/", async (req, res) =&gt; {
   const users = await prisma.user.findMany({ orderBy: { createdAt: "desc" } });
   res.json(users);
-}));
+});
 
-usersRouter.get("/:id", asyncHandler(async (req, res) =&gt; {
+usersRouter.get("/:id", async (req, res) =&gt; {
   const user = await prisma.user.findUnique({ where: { id: req.params.id } });
   if (!user) throw new NotFoundError("User");
   res.json(user);
-}));
+});
 
-usersRouter.post("/", validateBody(createUserSchema), asyncHandler(async (req, res) =&gt; {
+usersRouter.post("/", validateBody(createUserSchema), async (req, res) =&gt; {
   const input = req.body as CreateUserInput;
 
   try {
@@ -596,7 +631,7 @@ usersRouter.post("/", validateBody(createUserSchema), asyncHandler(async (req, r
     }
     throw err;
   }
-}));
+});
 
 export default usersRouter;
 </code></pre>
@@ -644,9 +679,9 @@ process.on("SIGTERM", async () =&gt; {
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li>Run <code>prisma init --datasource-provider postgresql</code>, and define a <code>Note</code> model with <code>id</code> (<code>@id @default(uuid())</code>), <code>title</code>, <code>body</code>, <code>tags String[]</code>, and <code>createdAt</code>/<code>updatedAt</code>.</li>
-                <li>Run <code>prisma migrate dev --name init</code> against a local Postgres instance (or a free hosted Postgres of your choice) and confirm the table exists with <code>prisma studio</code>.</li>
-                <li>Create <code>src/lib/prisma.ts</code> exporting a single shared <code>PrismaClient</code> instance, and rewrite every route in <code>notesRouter</code> to use it instead of the in-memory array.</li>
+                <li>Run <code>prisma init --datasource-provider postgresql --output ../src/generated/prisma</code>, and define a <code>Note</code> model with <code>id</code> (<code>@id @default(uuid())</code>), <code>title</code>, <code>body</code>, <code>tags String[]</code>, and <code>createdAt</code>/<code>updatedAt</code>.</li>
+                <li>Run <code>prisma migrate dev --name init</code> followed by <code>prisma generate</code> against a local Postgres instance (or a free hosted Postgres of your choice) and confirm the table exists with <code>prisma studio</code>.</li>
+                <li>Create <code>src/lib/prisma.ts</code> exporting a single shared <code>PrismaClient</code> instance (with the <code>@prisma/adapter-pg</code> adapter), and rewrite every route in <code>notesRouter</code> to use it instead of the in-memory array.</li>
                 <li>Add a second migration that adds a <code>@unique</code> constraint on <code>title</code>, and update the <code>POST</code> route to catch Prisma's <code>P2002</code> error code and throw your existing <code>ConflictError</code>.</li>
                 <li>Add graceful shutdown that calls <code>prisma.$disconnect()</code> on <code>SIGTERM</code>.</li>
                 <li>Restart the server and confirm notes created before the restart are still there — the concrete proof that persistence, not just the API contract, actually changed.</li>
