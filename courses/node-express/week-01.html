@@ -541,6 +541,41 @@ npm run dev     # tsx watch src/main.ts -- recompiles and restarts on save
               14's Docker image runs the compiled <code>dist/</code> output, never <code>tsx</code>
               itself).
             </p>
+
+            <h3>What Node can now do on its own</h3>
+            <p>
+              Recent Node versions have absorbed several jobs that used to need extra packages.
+              You'll see all of these in modern projects:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal — built into Node, no packages</div>
+              <pre><code># Run a .ts file directly: Node strips the type annotations and runs the rest
+node src/main.ts
+
+# Restart on file changes (replaces nodemon)
+node --watch src/main.ts
+
+# Load environment variables from a file (replaces dotenv for your own code)
+node --env-file=.env src/main.ts
+node --env-file-if-exists=.env.local --watch src/main.ts   # optional file, combined with watch
+</code></pre>
+            </div>
+
+            <ul>
+              <li><strong>Native TypeScript</strong> is <em>type stripping</em>: Node deletes the type annotations and runs the JavaScript that's left. It doesn't type-check (run <code>tsc --noEmit</code> or rely on your editor for that), and it only supports "erasable" syntax. <code>enum</code>s, <code>namespace</code>s and constructor parameter properties need real code generated for them, so they fail. Set <code>"erasableSyntaxOnly": true</code> in <code>tsconfig.json</code> to have TypeScript flag those for you. Relative imports must use the real <code>.ts</code> extension (<code>"./config.ts"</code>), which TypeScript allows with <code>"allowImportingTsExtensions"</code> plus <code>"rewriteRelativeImportExtensions"</code> for the build.</li>
+              <li><strong><code>--watch</code></strong> restarts the process when any imported file changes.</li>
+              <li><strong><code>--env-file</code></strong> loads a <code>.env</code> file into <code>process.env</code> before your code runs. (<code>process.loadEnvFile()</code> does the same from code.) Some tools, like Prisma's CLI in Week 4, run outside your app and still need <code>dotenv</code>.</li>
+            </ul>
+
+            <p>
+              So why does this course still use <code>tsx</code>? It handles <em>all</em> TypeScript
+              syntax with no restrictions, and it accepts the <code>.js</code>-extension imports that
+              the <code>NodeNext</code> setup above produces. Both approaches are valid; choose one per
+              project and stay consistent. For a small script or a new project that avoids enums,
+              plain <code>node --watch src/main.ts</code> with zero dev dependencies is now a real
+              option.
+            </p>
           </section>
 
           <section id="first-script">

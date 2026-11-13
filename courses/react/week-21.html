@@ -329,7 +329,7 @@
       </div>
 
       <div class="phase-nav">
-        <a href="#middleware"><span>1</span> proxy.ts (formerly Middleware)</a>
+        <a href="#middleware"><span>1</span> proxy.ts &amp; Authentication</a>
         <a href="#metadata"><span>2</span> Metadata &amp; SEO</a>
         <a href="#caching-model"><span>3</span> Cache Components &amp; "use cache"</a>
         <a href="#isr"><span>4</span> Cache Lifetimes &amp; On-Demand Invalidation</a>
@@ -347,7 +347,7 @@
         <article class="lesson-article">
 
           <section id="middleware">
-            <h2>1. <code>proxy.ts</code> (formerly Middleware)</h2>
+            <h2>1. <code>proxy.ts</code> (formerly Middleware) &amp; Authentication</h2>
             <p>
               A single <code>proxy.ts</code> at the project root runs <strong>before</strong>
               a request reaches any route — Server Component, Route Handler, or Server Action
@@ -396,6 +396,91 @@ export const config = {
               <div>
                 <strong><code>proxy.ts</code> is still a fast, coarse check — not your only auth layer</strong>
                 <p>Even with full Node.js available, keep this file to cheap, fast checks — is a session cookie present at all. Still verify the session properly (Week 25) in the actual Server Component or Server Action that serves the page, where you have direct database access to confirm the session is genuinely valid, not just present.</p>
+              </div>
+            </div>
+
+            <h3>Authentication in Next.js: the Data Access Layer pattern</h3>
+            <p>
+              So where <em>does</em> the real check live? The pattern the Next.js docs recommend is a
+              small <strong>Data Access Layer</strong> (DAL): one server-only module that every page,
+              Server Action, and Route Handler calls to find out who the user is.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">lib/session.ts — create &amp; read the session cookie</div>
+              <pre><code>import 'server-only';
+import { cookies } from 'next/headers';
+import { SignJWT, jwtVerify } from 'jose';
+
+const key = new TextEncoder().encode(process.env.SESSION_SECRET);
+
+export async function createSession(userId: string) {
+  const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const token = await new SignJWT({ userId })
+    .setProtectedHeader({ alg: 'HS256' })
+    .setExpirationTime(expires)
+    .sign(key);
+
+  (await cookies()).set('session', token, {
+    httpOnly: true,                 // JavaScript in the page can't read it (XSS-safe)
+    secure: true,
+    sameSite: 'lax',
+    expires,
+    path: '/',
+  });
+}
+
+export async function readSession() {
+  const token = (await cookies()).get('session')?.value;
+  if (!token) return null;
+  try {
+    const { payload } = await jwtVerify(token, key);
+    return payload as { userId: string };
+  } catch {
+    return null;                    // expired or tampered with
+  }
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">lib/dal.ts — the one place pages and actions ask "who is this?"</div>
+              <pre><code>import 'server-only';
+import { cache } from 'react';
+import { redirect } from 'next/navigation';
+import { readSession } from './session';
+import { db } from './db';
+
+// cache(): many components can call this during one request; it only runs once
+export const verifySession = cache(async () =&gt; {
+  const session = await readSession();
+  if (!session) redirect('/login');
+  return session;
+});
+
+export const getCurrentUser = cache(async () =&gt; {
+  const { userId } = await verifySession();
+  return db.user.findUnique({
+    where: { id: userId },
+    select: { id: true, name: true, email: true, role: true }, // never the password hash
+  });
+});
+</code></pre>
+            </div>
+
+            <p>The layers now fit together like this:</p>
+            <ul>
+              <li><strong><code>proxy.ts</code>:</strong> fast, optimistic redirect when there's no cookie at all.</li>
+              <li><strong>Pages:</strong> <code>const user = await getCurrentUser()</code> at the top. If a role check fails, call <code>forbidden()</code> (Week 19) or <code>redirect()</code>.</li>
+              <li><strong>Server Actions &amp; Route Handlers:</strong> <code>await verifySession()</code> on the first line of <em>every</em> one (Week 20), plus an ownership check on the record being changed.</li>
+              <li><strong>Login / logout:</strong> Server Actions that call <code>createSession()</code> after checking the password (hash with Argon2id or bcrypt, as in the Node.js course), or <code>(await cookies()).delete('session')</code>.</li>
+            </ul>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Or use a library</strong>
+                <p>Writing this yourself once is the best way to understand it. In production, most teams use a library that adds OAuth providers, email verification, password reset, and session rotation: <strong>Auth.js</strong> (formerly NextAuth), <strong>Better Auth</strong>, or a hosted service like <strong>Clerk</strong>. All of them still fit this same shape: a quick check in <code>proxy.ts</code>, plus a real session check close to the data.</p>
               </div>
             </div>
           </section>
@@ -598,6 +683,35 @@ export default async function ProductDetailPage({ params }: { params: Promise&lt
                 <p>A product page can set <code>cacheLife('hours')</code> as a safety-net baseline (nothing is ever more than an hour stale) while an admin's "Save" button also calls <code>updateTag('products')</code> for that exact product — instant freshness on an explicit write, with the time-based profile catching anything that changed outside the app's own mutation paths.</p>
               </div>
             </div>
+
+            <h3>Per-user data: <code>'use cache: private'</code></h3>
+            <p>
+              A plain <code>'use cache'</code> result is <strong>shared</strong> between every user,
+              so it can't read <code>cookies()</code> or <code>headers()</code>: one user's
+              personalised data would be served to everyone. For data that is per-user but still
+              worth caching (a user's saved filters, their recommendations), Next.js 16 adds
+              <code>'use cache: private'</code>. It can read request data, and its results are never
+              stored in the shared server cache.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">personalised, but not shared</div>
+              <pre><code>async function getRecommendations() {
+  'use cache: private';
+  cacheLife('minutes');
+  const { userId } = await verifySession();   // reads cookies(): allowed here
+  return db.recommendation.findMany({ where: { userId } });
+}
+</code></pre>
+            </div>
+
+            <p>
+              Rule of thumb: <code>'use cache'</code> for data that's the same for everyone (product
+              catalogue, blog posts). <code>'use cache: private'</code> for per-user data that's
+              expensive to compute. No cache directive for data that must always be live (cart
+              contents, account balance). Like Cache Components in general, this is new in
+              Next.js 16, so check the docs for its current status.
+            </p>
           </section>
 
           <section id="putting-together">

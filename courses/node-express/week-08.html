@@ -447,6 +447,43 @@ npx vitest run --coverage
                 <p>The empty-cart and rounding tests above are worth more than another "normal" test would be — an empty array and a fractional cent are exactly where pricing bugs hide in production. When you write a unit test, ask what input would most likely break the function, not just what input proves it works.</p>
               </div>
             </div>
+
+            <h3>The zero-dependency alternative: <code>node:test</code></h3>
+            <p>
+              Node ships its own test runner. For a small library, a CLI tool, or a script where you
+              don't want any dev dependencies, it covers the basics: <code>describe</code>/
+              <code>it</code>, mocking, watch mode, and coverage.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">src/lib/pricing.test.ts — same test, built-in runner</div>
+              <pre><code>import { describe, it } from "node:test";
+import assert from "node:assert/strict";
+import { calculateOrderTotal } from "./pricing.ts";
+
+describe("calculateOrderTotal", () =&gt; {
+  it("returns 0 for an empty cart", () =&gt; {
+    assert.equal(calculateOrderTotal([]), 0);
+  });
+});
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>node --test                                  # finds *.test.* files and runs them
+node --test --watch
+node --test --experimental-test-coverage
+</code></pre>
+            </div>
+
+            <p>
+              This course sticks with Vitest for the app: a richer <code>expect</code> API, fast
+              TypeScript handling, a mature mocking API, and the same tool as the React course. But
+              you'll find <code>node:test</code> in many libraries, and it's worth recognising.
+              (Running <code>.ts</code> test files directly relies on Node's built-in type stripping
+              from Week 1, which is why the import above uses the <code>.ts</code> extension.)
+            </p>
           </section>
 
           <section id="integration-testing">

@@ -438,6 +438,14 @@ authRouter.post("/register", async (req, res, next) =&gt; {
                 <p>Even though it's already hashed, a leaked <code>passwordHash</code> is still a valuable target for offline cracking. Get in the habit of explicitly listing the fields you return from any route touching <code>User</code> — <code>select: { id, email, name }</code> — rather than returning the raw Prisma object and hoping nobody notices the extra field.</p>
               </div>
             </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>bcrypt vs. Argon2id</strong>
+                <p>bcrypt is still an acceptable choice and is everywhere in existing code, which is why this lesson uses it. For a new system, though, OWASP's Password Storage Cheat Sheet now lists <strong>Argon2id</strong> first. Argon2id is "memory-hard": each guess needs a chunk of RAM as well as CPU time, which makes the GPU-based cracking rigs attackers use far less effective. bcrypt also silently ignores everything after the first 72 bytes of a password. Switching is a small change: <code>npm install argon2</code>, then <code>await argon2.hash(password)</code> and <code>await argon2.verify(hash, password)</code>. Either way, never write your own hashing scheme.</p>
+              </div>
+            </div>
           </section>
 
           <section id="issuing-jwts">

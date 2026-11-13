@@ -336,8 +336,9 @@
         <a href="#correlation-ids"><span>2</span> Request Correlation IDs with AsyncLocalStorage</a>
         <a href="#health-checks"><span>3</span> Liveness &amp; Readiness Health Checks</a>
         <a href="#metrics"><span>4</span> Metrics &amp; Timing Instrumentation</a>
-        <a href="#exercise"><span>5</span> Exercise</a>
-        <a href="#quiz"><span>6</span> Knowledge Check</a>
+        <a href="#tracing"><span>5</span> Tracing with OpenTelemetry</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -638,8 +639,94 @@ metricsRouter.get("/metrics", async (_req, res) =&gt; {
             </div>
           </section>
 
+          <section id="tracing">
+            <h2>5. Distributed Tracing with OpenTelemetry</h2>
+            <p>
+              Logs tell you <em>what</em> happened, metrics tell you <em>how often and how slow</em>.
+              Neither tells you <em>where the time went</em> inside one slow request: was it the
+              Postgres query, the Redis lookup, or the call to another service? A <strong>trace</strong>
+              answers that. It's a tree of timed <strong>spans</strong>, one per operation, sharing a
+              trace ID. That ID even travels across service boundaries in a <code>traceparent</code>
+              header, so a request through Week 17's gRPC services shows up as one trace.
+            </p>
+            <p>
+              <strong>OpenTelemetry</strong> (OTel) is the vendor-neutral standard for this. You
+              instrument once, and the same data can go to Jaeger, Grafana Tempo, Honeycomb, Datadog,
+              or any other backend.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">terminal — zero-code instrumentation</div>
+              <pre><code>npm install @opentelemetry/api @opentelemetry/auto-instrumentations-node
+
+# A local trace viewer: Jaeger UI on :16686, receiving OTLP on :4318
+docker run --rm -p 16686:16686 -p 4318:4318 jaegertracing/jaeger:latest
+
+# Start the API with instrumentation loaded BEFORE any app code
+OTEL_SERVICE_NAME=blog-api \
+OTEL_TRACES_EXPORTER=otlp \
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 \
+node --import @opentelemetry/auto-instrumentations-node/register dist/main.js
+</code></pre>
+            </div>
+
+            <p>
+              With no code changes, every incoming Express request, outgoing <code>fetch</code>/HTTP
+              call, Postgres query, and Redis command now becomes a span. Open
+              <code>http://localhost:16686</code>, pick <code>blog-api</code>, and you'll see the
+              waterfall for each request. (For Prisma's own query spans, add
+              <code>@prisma/instrumentation</code>.) The pino instrumentation also adds
+              <code>trace_id</code> and <code>span_id</code> to every log line, so you can jump from a
+              log line to its trace. That's Section 2's correlation idea, standardised across services.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Why <code>--import</code>, and why first</strong>
+                <p>Auto-instrumentation works by patching libraries like <code>express</code> and <code>pg</code> as they're loaded. If your app imports them before OTel starts, they're never patched and you get no spans. That's why it's loaded with <code>--import</code> on the command line rather than imported somewhere in <code>main.ts</code>. Exact setup for ES modules has changed between OTel releases, so check the OpenTelemetry JS docs for your version if spans don't appear.</p>
+              </div>
+            </div>
+
+            <p>Auto-instrumentation covers I/O. For your own expensive logic, add a span by hand:</p>
+
+            <div class="code-block">
+              <div class="code-block__label">src/services/report.ts — a custom span</div>
+              <pre><code>import { trace, SpanStatusCode } from "@opentelemetry/api";
+
+const tracer = trace.getTracer("blog-api");
+
+export async function buildMonthlyReport(userId: string) {
+  return tracer.startActiveSpan("buildMonthlyReport", async (span) =&gt; {
+    span.setAttribute("user.id", userId);
+    try {
+      const posts = await loadPosts(userId);     // auto-instrumented DB span nests under this one
+      span.setAttribute("report.post_count", posts.length);
+      return summarise(posts);
+    } catch (err) {
+      span.recordException(err as Error);
+      span.setStatus({ code: SpanStatusCode.ERROR });
+      throw err;
+    } finally {
+      span.end();                                // always end the span, or it never gets exported
+    }
+  });
+}
+</code></pre>
+            </div>
+
+            <p>
+              In production you'd usually send data to an <strong>OpenTelemetry Collector</strong>
+              rather than straight to a vendor. The Collector batches and samples the data (for
+              example, keeping every error trace but only 10% of successful ones) and forwards it, so
+              switching vendors is a config change rather than a code change. OTel can carry your
+              metrics too. <code>prom-client</code> from Section 4 is still perfectly fine, and many
+              teams run both.
+            </p>
+          </section>
+
           <section id="exercise">
-            <h2>5. Hands-on Exercise</h2>
+            <h2>6. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
@@ -655,6 +742,7 @@ metricsRouter.get("/metrics", async (_req, res) =&gt; {
                 <li>Add <code>/healthz</code> and <code>/readyz</code> exactly as in Section 3. Manually stop your Redis or Postgres container and confirm <code>/readyz</code> returns 503 while <code>/healthz</code> still returns 200.</li>
                 <li>Add the metrics middleware and <code>/metrics</code> endpoint, hit a few routes a handful of times, and confirm <code>http_request_duration_seconds</code> shows up with per-route buckets when you curl <code>/metrics</code>.</li>
                 <li>Deliberately trigger an error in one route and confirm the resulting error log line includes the <code>requestId</code>, so you could trace it back to the exact request that caused it.</li>
+                <li>Add OpenTelemetry per Section 5, run Jaeger locally, and find the trace for a request that hits both Postgres and Redis. Then wrap one piece of your own logic in a custom span, add an artificial 300&nbsp;ms delay inside it, and confirm the Jaeger waterfall shows exactly where the time went.</li>
               </ol>
 
               <div class="callout callout--tip">
@@ -668,8 +756,8 @@ metricsRouter.get("/metrics", async (_req, res) =&gt; {
           </section>
 
           <section id="quiz">
-            <h2>6. Knowledge Check</h2>
-            <p>Four quick questions. Expand each to check your answer.</p>
+            <h2>7. Knowledge Check</h2>
+            <p>Five quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
@@ -728,6 +816,21 @@ metricsRouter.get("/metrics", async (_req, res) =&gt; {
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
                     <p>An average blends every request into a single number, so a small fraction of very slow requests (say, 1% taking 4 seconds) can be completely diluted by the other 99% being fast, leaving the average looking healthy. A histogram preserves the distribution of individual observations, so you can compute a percentile like p99 that specifically surfaces "how slow is the request at the unlucky end of the distribution" -- which is exactly the experience a meaningful slice of real users are actually having.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q5</span>
+                  <div class="week-item__heading">
+                    <h4>Your p99 latency metric jumped to 3 seconds. Why is a trace more useful than the metric or the logs for finding the cause?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>The metric tells you <em>that</em> some requests are slow, and logs tell you what each request did, but neither shows how those 3 seconds were divided up. A trace of one slow request breaks it into timed spans (Express handler, each Postgres query, each Redis call, each downstream HTTP or gRPC call), so you can see immediately that, say, 2.8 seconds went to one unindexed query. Metrics show that a problem exists; traces locate it.</p>
                   </div>
                 </div>
               </details>

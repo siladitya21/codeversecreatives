@@ -330,7 +330,7 @@
 
       <div class="phase-nav">
         <a href="#env-vars"><span>1</span> Production Builds &amp; Env Vars</a>
-        <a href="#vercel-deploy"><span>2</span> Deploying to Vercel or Netlify</a>
+        <a href="#vercel-deploy"><span>2</span> Vercel, Netlify or Self-Hosted</a>
         <a href="#preview-deployments"><span>3</span> Preview Deployments &amp; Branches</a>
         <a href="#ci-pipeline"><span>4</span> CI/CD with GitHub Actions</a>
         <a href="#monitoring"><span>5</span> Error Monitoring with Sentry</a>
@@ -504,6 +504,62 @@ Install command:   npm install
               for a file at that literal path, which doesn't exist — the host needs to be told to
               serve <code>index.html</code> for every path and let the router handle it client-side.
             </p>
+
+            <h3>Self-hosting Next.js: standalone output &amp; Docker</h3>
+            <p>
+              Vercel isn't required. A Next.js app is a Node.js server, so it runs on any platform
+              that runs containers: Cloud Run, Fly.io, Railway, AWS ECS, Kubernetes, or your own VPS.
+              One config line makes the build produce a small, self-contained server:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">next.config.ts</div>
+              <pre><code>import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
+  output: 'standalone', // .next/standalone/server.js + only the node_modules it actually needs
+};
+
+export default nextConfig;
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">Dockerfile — multi-stage</div>
+              <pre><code>FROM node:22-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
+
+FROM node:22-alpine AS run
+WORKDIR /app
+ENV NODE_ENV=production PORT=3000 HOSTNAME=0.0.0.0
+RUN addgroup -S app &amp;&amp; adduser -S app -G app
+# standalone server + the static assets it doesn't copy by itself
+COPY --from=build --chown=app:app /app/.next/standalone ./
+COPY --from=build --chown=app:app /app/.next/static ./.next/static
+COPY --from=build --chown=app:app /app/public ./public
+USER app
+EXPOSE 3000
+CMD ["node", "server.js"]
+</code></pre>
+            </div>
+
+            <p>
+              The final image contains no source code, no dev dependencies, and no build tools, and
+              it runs as a non-root user. Three things to know when self-hosting:
+            </p>
+            <ul>
+              <li><strong>The static files aren't copied for you.</strong> Forgetting the <code>.next/static</code> and <code>public</code> lines is the classic "the site loads with no CSS or images" bug.</li>
+              <li><strong><code>NEXT_PUBLIC_*</code> variables are baked in at build time</strong> (Section 1), so they must be available during <code>docker build</code>, not just at runtime. Server-only variables can be passed at <code>docker run</code>.</li>
+              <li><strong>Several instances need a shared cache.</strong> Week 21's cache lives on each server's disk by default, so <code>updateTag</code> on one instance doesn't clear the others. Behind a load balancer, configure a shared cache handler (Redis, for example) as described in Next.js's self-hosting guide.</li>
+            </ul>
           </section>
 
           <section id="preview-deployments">
@@ -727,6 +783,43 @@ Sentry.init({
               callback, wired up explicitly — is captured with a full stack trace, browser/OS
               details, and (if configured) the logged-in user, letting you reproduce and fix issues
               you'd otherwise never even know occurred.
+            </p>
+
+            <h3>Server-side hooks in Next.js: <code>instrumentation.ts</code></h3>
+            <p>
+              The Sentry wizard works by generating an <code>instrumentation.ts</code> file, and you
+              can write one yourself. Next.js calls <code>register()</code> once when the server
+              starts, which is the place to set up tracing (OpenTelemetry, as in the Node.js course's
+              Week 13). It calls <code>onRequestError()</code> for every error thrown on the server,
+              which is where you report to whichever monitoring service you use:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">instrumentation.ts — at the project root</div>
+              <pre><code>import type { Instrumentation } from 'next';
+
+export async function register() {
+  if (process.env.NEXT_RUNTIME === 'nodejs') {
+    const { registerOTel } = await import('@vercel/otel');
+    registerOTel({ serviceName: 'acme-store' }); // traces for every request, fetch &amp; render
+  }
+}
+
+export const onRequestError: Instrumentation.onRequestError = async (err, request, context) =&gt; {
+  await reportError({
+    message: (err as Error).message,
+    digest: (err as Error &amp; { digest?: string }).digest, // matches the digest error.tsx receives
+    path: request.path,
+    routeType: context.routeType,                         // 'render' | 'route' | 'action' | 'proxy'
+  });
+};
+</code></pre>
+            </div>
+
+            <p>
+              The <code>digest</code> ties the two halves together. The user sees a generic message
+              from Week 19's <code>error.tsx</code>, and you look that same digest up in your logs to
+              find the full server-side error.
             </p>
           </section>
 

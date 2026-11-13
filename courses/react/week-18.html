@@ -329,7 +329,7 @@
 
       <div class="phase-nav">
         <a href="#what-nextjs-adds"><span>1</span> What Next.js Adds</a>
-        <a href="#project-setup"><span>2</span> Project Setup &amp; File-Based Routing</a>
+        <a href="#project-setup"><span>2</span> Setup, Routing, Images &amp; Fonts</a>
         <a href="#server-components"><span>3</span> Server Components by Default</a>
         <a href="#use-client"><span>4</span> The 'use client' Directive</a>
         <a href="#choosing"><span>5</span> Choosing Server vs. Client</a>
@@ -431,6 +431,66 @@ npm run dev
                 <p>This trips up almost everyone coming from an older Next.js tutorial: <code>params</code> (and <code>searchParams</code>) must be <code>await</code>ed before you can read a segment off them. It's an async value on purpose — it lets Next.js start rendering a route's static shell before dynamic segment data is even resolved, part of the same streaming model the App Router uses everywhere. A page reading <code>params.productId</code> directly, without <code>await</code>, throws.</p>
               </div>
             </div>
+
+            <h3>Built-in optimisation: <code>next/image</code> and <code>next/font</code></h3>
+            <p>
+              Two components you'll use on almost every page. Both fix performance problems that
+              you'd otherwise have to solve by hand (Week 16's bundle work, Week 23's layout shift):
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/layout.tsx — self-hosted Google Font</div>
+              <pre><code>import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'], display: 'swap', variable: '--font-inter' });
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;html lang="en" className={inter.variable}&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              <code>next/font</code> downloads the font <strong>at build time</strong> and serves it
+              from your own domain: no request to Google from your users' browsers (better for
+              privacy and speed), and it uses fallback-font metrics so text doesn't jump when the
+              real font loads. Use <code>next/font/local</code> for your own font files.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/[productId]/page.tsx — optimised image</div>
+              <pre><code>import Image from 'next/image';
+
+&lt;Image
+  src={product.imageUrl}
+  alt={product.name}
+  width={800}
+  height={600}                      // reserves space: no layout shift while loading
+  sizes="(max-width: 768px) 100vw, 50vw"
+  preload                           // the hero image: load it early (was `priority` before Next.js 16)
+/&gt;
+</code></pre>
+            </div>
+
+            <p>
+              <code>&lt;Image&gt;</code> resizes the image for each screen, serves modern formats
+              like WebP/AVIF, and lazy-loads anything below the fold. Images from another domain must
+              be allowed in <code>next.config.ts</code> under <code>images.remotePatterns</code>, so
+              your server can't be used to optimise arbitrary images from the internet. Add
+              <code>preload</code> only to the one image that is the page's largest visible element
+              (the LCP image), not to every image.
+            </p>
+
+            <h3>Tooling worth turning on</h3>
+            <ul>
+              <li><strong>Typed routes:</strong> set <code>typedRoutes: true</code> in <code>next.config.ts</code>, and <code>&lt;Link href="/prodcuts"&gt;</code> becomes a TypeScript error instead of a 404 in production. Next.js generates types from your <code>app/</code> folder, including dynamic segments.</li>
+              <li><strong>Linting:</strong> Next.js 16 removed the <code>next lint</code> command. Run ESLint directly (<code>npx eslint .</code>) with the flat config from Week 1, adding Next's rules from <code>eslint-config-next</code>.</li>
+              <li><strong>AI assistants:</strong> like Angular's CLI, Next.js offers an MCP server (<code>next-devtools-mcp</code>) that gives coding assistants up-to-date Next.js docs and, in development, live access to your app's routes and errors. That helps keep them from suggesting outdated Pages Router or <code>getServerSideProps</code> code.</li>
+            </ul>
           </section>
 
           <section id="server-components">

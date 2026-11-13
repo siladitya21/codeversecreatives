@@ -329,8 +329,8 @@
       </div>
 
       <div class="phase-nav">
-        <a href="#route-handlers"><span>1</span> Route Handlers</a>
-        <a href="#server-actions"><span>2</span> Server Actions &amp; 'use server'</a>
+        <a href="#route-handlers"><span>1</span> Route Handlers &amp; Request APIs</a>
+        <a href="#server-actions"><span>2</span> Server Actions &amp; the Database</a>
         <a href="#calling-actions"><span>3</span> Calling Actions from Client Components</a>
         <a href="#form-status"><span>4</span> useActionState &amp; useFormStatus</a>
         <a href="#revalidating"><span>5</span> Revalidating After a Mutation</a>
@@ -403,6 +403,40 @@ export async function POST(request: NextRequest) {
                 <p>Reach for a Route Handler when you need a real, externally-callable HTTP endpoint — a webhook receiver, an endpoint a mobile app or third party also calls, or a response type other than HTML (a file download, an RSS feed). For a mutation only your own app's forms and buttons ever trigger, Section 2's Server Actions are almost always less code.</p>
               </div>
             </div>
+
+            <h3>Request-time APIs: <code>cookies()</code>, <code>headers()</code>, <code>after()</code>, <code>connection()</code></h3>
+            <p>
+              Server Components, Route Handlers, and Server Actions can all read the incoming request
+              through a few functions. Like <code>params</code>, the request readers are
+              <strong>async</strong>:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/api/track/route.ts</div>
+              <pre><code>import { cookies, headers } from 'next/headers';
+import { after } from 'next/server';
+
+export async function POST() {
+  const cookieStore = await cookies();
+  const theme = cookieStore.get('theme')?.value ?? 'light';
+  const userAgent = (await headers()).get('user-agent');
+
+  // Runs AFTER the response has been sent: the user doesn't wait for it
+  after(async () =&gt; {
+    await analytics.record({ theme, userAgent });
+  });
+
+  return Response.json({ ok: true });
+}
+</code></pre>
+            </div>
+
+            <ul>
+              <li><strong><code>cookies()</code></strong> can also <code>.set()</code> and <code>.delete()</code>, but only in Server Actions and Route Handlers. A Server Component is rendering a response that may already be streaming, so it's read-only there.</li>
+              <li><strong><code>after()</code></strong> is for work the user shouldn't wait for: logging, analytics, sending a notification, warming a cache.</li>
+              <li><strong><code>connection()</code></strong> (<code>await connection()</code>) marks a component as needing a real request, for example before reading <code>Date.now()</code> or a random number, so Next.js doesn't bake that value into a pre-rendered page at build time.</li>
+              <li>Calling <code>cookies()</code> or <code>headers()</code> makes that part of the page dynamic, because it now depends on the request. Week 21 shows how that interacts with caching.</li>
+            </ul>
           </section>
 
           <section id="server-actions">
@@ -460,6 +494,71 @@ export default function NewProductPage() {
               <code>useState</code> tracking every keystroke, because the browser's native form
               submission carries the <code>FormData</code> to the action directly.
             </p>
+
+            <h3>Where <code>db</code> comes from: a real database layer</h3>
+            <p>
+              The examples above call <code>db.product.create(...)</code>. In a Next.js app,
+              Server Components and Server Actions talk to the database <em>directly</em>, with no
+              separate API in between. Prisma (or Drizzle) is the usual choice:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">lib/db.ts</div>
+              <pre><code>import 'server-only';                  // build error if a Client Component imports this
+import { PrismaClient } from '@/generated/prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+
+const globalForPrisma = globalThis as unknown as { prisma?: PrismaClient };
+
+export const db =
+  globalForPrisma.prisma ??
+  new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL! }) });
+
+// Dev hot-reload re-runs this module; reuse one client instead of opening
+// a new connection pool on every save
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
+</code></pre>
+            </div>
+
+            <p>
+              The Prisma setup itself (schema, migrations, <code>prisma.config.ts</code>) is the same
+              as in the Node.js course's Week 4. The Next.js-specific parts are the
+              <code>server-only</code> guard and the singleton. Now the Server Action becomes safe
+              to put in production:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/products/actions.ts — validated &amp; authorised</div>
+              <pre><code>'use server';
+
+import { z } from 'zod';
+import { db } from '@/lib/db';
+import { verifySession } from '@/lib/dal';   // Week 21
+import { updateTag } from 'next/cache';
+
+const ProductInput = z.object({
+  name: z.string().min(1).max(120),
+  price: z.coerce.number().positive(),
+});
+
+export async function addProduct(formData: FormData) {
+  const { userId } = await verifySession();               // 1. who is calling?
+  const parsed = ProductInput.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { error: 'Invalid product' }; // 2. is the input valid?
+
+  await db.product.create({ data: { ...parsed.data, ownerId: userId } });
+  updateTag('products');
+}
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Every Server Action is a public endpoint</strong>
+                <p>It feels like calling a local function, but <code>'use server'</code> creates an HTTP endpoint anyone can call with any <code>FormData</code>, whether or not your form is on screen. Treat each action exactly like a Route Handler: check the session, validate the input with Zod, and check that the user is allowed to change <em>that specific</em> record, all inside the action itself. Hiding the button in the UI protects nothing.</p>
+              </div>
+            </div>
           </section>
 
           <section id="calling-actions">
@@ -627,6 +726,44 @@ export async function addProduct(formData: FormData) {
                 <p>A Server Action that writes to the database but never calls <code>updateTag</code>/<code>revalidateTag</code>/<code>revalidatePath</code> will appear to silently "not work" — the write succeeded, but every page still shows the old cached data until the cache's lifetime expires or a full reload happens to bypass it.</p>
               </div>
             </div>
+
+            <p>
+              One more tool in Next.js 16: <code>refresh()</code> (from <code>next/cache</code>),
+              called inside a Server Action, re-renders the current page with fresh data that
+              <em>isn't cached</em> at all, such as a notification count or a live status. Use
+              <code>updateTag</code>/<code>revalidateTag</code> when a cache entry is stale, and
+              <code>refresh()</code> when nothing is cached and you only need the page to re-render.
+            </p>
+
+            <h3>Navigation helpers: <code>next/form</code> &amp; <code>useLinkStatus</code></h3>
+            <p>
+              Not every form mutates data. A search box only changes the URL. For that,
+              <code>&lt;Form&gt;</code> from <code>next/form</code> turns a GET form into a
+              client-side navigation, prefetching the results page's loading UI so it appears
+              instantly:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">app/components/SearchBox.tsx</div>
+              <pre><code>import Form from 'next/form';
+
+export function SearchBox() {
+  return (
+    &lt;Form action="/search"&gt;              {/* navigates to /search?q=... with no full reload */}
+      &lt;input name="q" placeholder="Search products" /&gt;
+      &lt;button type="submit"&gt;Search&lt;/button&gt;
+    &lt;/Form&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              And when a <code>&lt;Link&gt;</code> navigation is slow, <code>useLinkStatus()</code>
+              (from <code>next/link</code>) returns <code>{ pending }</code> inside a component
+              rendered within the link, so you can show a small spinner on the link the user just
+              clicked. It's the navigation equivalent of <code>useFormStatus</code>.
+            </p>
           </section>
 
           <section id="optimistic-actions">
