@@ -119,6 +119,33 @@ body[data-course="llm-ml"],
   --accent-deep-2: #8758c1;
 }
 
+body[data-course="artificial-intelligence"],
+.c-artificial-intelligence {
+  --accent: #f47fb8;
+  --accent-2: #f89cc8;
+  --accent-soft: rgba(248, 156, 200, 0.14);
+  --accent-deep: #a8336f;
+  --accent-deep-2: #b84a82;
+}
+
+body[data-course="machine-learning"],
+.c-machine-learning {
+  --accent: #7ea2ff;
+  --accent-2: #9bb7ff;
+  --accent-soft: rgba(155, 183, 255, 0.14);
+  --accent-deep: #2f50b5;
+  --accent-deep-2: #4262c4;
+}
+
+body[data-course="data-science"],
+.c-data-science {
+  --accent: #3fd1b8;
+  --accent-2: #62dfc9;
+  --accent-soft: rgba(98, 223, 201, 0.14);
+  --accent-deep: #0b7a68;
+  --accent-deep-2: #1f8c79;
+}
+
 body[data-course="spring-boot"],
 .c-spring-boot {
   --accent: #6ec466;
@@ -326,6 +353,15 @@ body[data-course="kannada"],
   --accent-deep-2: #c74733;
 }
 
+body[data-course="distributed-systems"],
+.c-distributed-systems {
+  --accent: #2bb3c0;
+  --accent-2: #5cc9d3;
+  --accent-soft: rgba(43, 179, 192, 0.14);
+  --accent-deep: #0f7f8a;
+  --accent-deep-2: #13909c;
+}
+
 /* Light theme: the same twenty-one hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
@@ -347,6 +383,27 @@ body[data-course="kannada"],
   --accent: #8554c0;
   --accent-2: #9c6ed8;
   --accent-soft: rgba(133, 84, 192, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="artificial-intelligence"],
+:root[data-theme="light"] .c-artificial-intelligence {
+  --accent: #b5306f;
+  --accent-2: #cc4b88;
+  --accent-soft: rgba(181, 48, 111, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="machine-learning"],
+:root[data-theme="light"] .c-machine-learning {
+  --accent: #3557c4;
+  --accent-2: #4f6fd8;
+  --accent-soft: rgba(53, 87, 196, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="data-science"],
+:root[data-theme="light"] .c-data-science {
+  --accent: #0d8572;
+  --accent-2: #1d9c87;
+  --accent-soft: rgba(13, 133, 114, 0.1);
 }
 
 :root[data-theme="light"] body[data-course="spring-boot"],
@@ -508,6 +565,13 @@ body[data-course="kannada"],
   --accent: #b53d2c;
   --accent-2: #c74733;
   --accent-soft: rgba(181, 61, 44, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="distributed-systems"],
+:root[data-theme="light"] .c-distributed-systems {
+  --accent: #0b7480;
+  --accent-2: #0f8693;
+  --accent-soft: rgba(11, 116, 128, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */

@@ -97,8 +97,29 @@
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
             <span class="nav-course-card__text">
-              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__title">AI &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../artificial-intelligence/index.html" class="nav-course-card c-artificial-intelligence">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M9.5 16.5h5M3 12v3M21 12v3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Artificial Intelligence</span>
+              <span class="nav-course-card__meta">19 Weeks</span>
+            </span>
+          </a>
+          <a href="../machine-learning/index.html" class="nav-course-card c-machine-learning">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="12" r="2"/><path d="m6.5 10.5 4-4M6.5 13.5l4 4M13.5 6.5l4 4M13.5 17.5l4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Machine Learning</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
+            </span>
+          </a>
+          <a href="../data-science/index.html" class="nav-course-card c-data-science">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Data Science</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
@@ -234,6 +255,13 @@
               <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
+          <a href="../distributed-systems/index.html" class="nav-course-card c-distributed-systems">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Distributed Systems</span>
+              <span class="nav-course-card__meta">4 of 16 Weeks</span>
+            </span>
+          </a>
         </div>
       </div>
     </nav>
@@ -347,6 +375,7 @@ npm run dev
 ├── index.html
 ├── package.json
 ├── vite.config.ts
+├── eslint.config.js  ← lint rules (ESLint "flat config")
 └── src/
     ├── main.tsx      ← mounts the app into index.html
     ├── App.tsx        ← root component
@@ -373,6 +402,53 @@ createRoot(document.getElementById('root')!).render(
               over a DOM node and starts managing everything inside it. Everything else in this
               course happens inside that tree.
             </p>
+
+            <h3>Linting: <code>eslint.config.js</code></h3>
+            <p>
+              The template also sets up ESLint, which catches bugs before you run the code (most
+              importantly, broken Rules of Hooks, Week 4). It uses ESLint's current <strong>flat
+              config</strong> format: one JavaScript file exporting an array of config objects.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">eslint.config.js (roughly what the template generates)</div>
+              <pre><code>import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
+import { defineConfig, globalIgnores } from 'eslint/config';
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs.flat.recommended, // Rules of Hooks + React Compiler checks (Week 3)
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: { globals: globals.browser },
+  },
+]);
+</code></pre>
+            </div>
+
+            <p>
+              Run it with <code>npm run lint</code>. Week 22's CI pipeline runs the same command on
+              every pull request. If a tutorial or older project mentions <code>.eslintrc.json</code>
+              or <code>.eslintrc.js</code>, that's the legacy format. Flat config has been the
+              default since ESLint 9, and support for the old format is being removed.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Keep what the template generated</strong>
+                <p>Preset names (like <code>reactHooks.configs.flat.recommended</code>) change between plugin versions. If yours differs from the snippet above, trust the file Vite generated for you. The shape (imports, then <code>defineConfig([...])</code>) is what to learn here.</p>
+              </div>
+            </div>
           </section>
 
           <section id="jsx">
@@ -781,7 +857,10 @@ function Card({ title, children }: CardProps) {
           <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
           <a href="../../courses/github/index.html">Git &amp; GitHub</a>
       <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
-          <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/llm-ml/index.html">AI &amp; ML</a>
+          <a href="../../courses/artificial-intelligence/index.html">Artificial Intelligence</a>
+          <a href="../../courses/machine-learning/index.html">Machine Learning</a>
+          <a href="../../courses/data-science/index.html">Data Science</a>
           <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
           <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
           <a href="../../courses/php/index.html">PHP</a>
@@ -801,6 +880,7 @@ function Card({ title, children }: CardProps) {
           <a href="../../courses/claude/index.html">Claude</a>
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
+          <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
         </div>
       </div>
 

@@ -71,7 +71,10 @@
       github: "git version control collaboration pull requests actions",
       "javascript-typescript": "js ts fundamentals es2023 typescript programming basics",
       "spring-boot": "java backend rest api microservices spring",
-      "llm-ml": "ai machine learning deep learning genai nlp transformers data science",
+      "llm-ml": "ai machine learning deep learning genai nlp transformers data science complete path",
+      "artificial-intelligence": "ai artificial intelligence agents search a* minimax game playing csp logic planning bayesian networks reinforcement learning q-learning llm genai transformers rag",
+      "machine-learning": "ml machine learning scikit-learn regression classification clustering xgboost boosting svm neural networks pytorch cnn rnn deep learning",
+      "data-science": "data science analysis pandas numpy statistics visualization seaborn plotly sql web scraping apis time series forecasting streamlit dashboards eda",
       "node-express": "backend nodejs express api javascript server",
       aptitude: "quant math reasoning placement exam",
       php: "backend cms laravel wordpress woocommerce",
@@ -89,7 +92,8 @@
       "docker-kubernetes": "containers containerization orchestration devops helm kubectl docker compose infrastructure cicd gitops argocd",
       claude: "anthropic ai llm claude code cli agents prompt engineering mcp tool use api sdk assistant",
       "ugc-net-cse": "ugc net nta jrf assistant professor lectureship computer science applications teaching research aptitude exam prep previous year papers mock test",
-      kannada: "kannada language karnataka script alphabet varnamale kagunita vowels consonants bengaluru mysuru vocabulary grammar conversation speaking spoken beginner"
+      kannada: "kannada language karnataka script alphabet varnamale kagunita vowels consonants bengaluru mysuru vocabulary grammar conversation speaking spoken beginner",
+      "distributed-systems": "distributed computing replication consensus raft paxos clocks lamport vector clocks crdt consistency cap partitioning sharding consistent hashing idempotency retries two phase commit sagas kafka fault tolerance backend sre infrastructure"
     };
 
     var courseIndex = Array.prototype.map

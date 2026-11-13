@@ -97,8 +97,29 @@
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
             <span class="nav-course-card__text">
-              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__title">AI &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../artificial-intelligence/index.html" class="nav-course-card c-artificial-intelligence">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M9.5 16.5h5M3 12v3M21 12v3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Artificial Intelligence</span>
+              <span class="nav-course-card__meta">19 Weeks</span>
+            </span>
+          </a>
+          <a href="../machine-learning/index.html" class="nav-course-card c-machine-learning">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="12" r="2"/><path d="m6.5 10.5 4-4M6.5 13.5l4 4M13.5 6.5l4 4M13.5 17.5l4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Machine Learning</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
+            </span>
+          </a>
+          <a href="../data-science/index.html" class="nav-course-card c-data-science">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Data Science</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
@@ -234,6 +255,13 @@
               <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
+          <a href="../distributed-systems/index.html" class="nav-course-card c-distributed-systems">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Distributed Systems</span>
+              <span class="nav-course-card__meta">4 of 16 Weeks</span>
+            </span>
+          </a>
         </div>
       </div>
     </nav>
@@ -299,7 +327,7 @@
       </div>
 
       <div class="phase-nav">
-        <a href="#basics"><span>1</span> HttpClient Basics</a>
+        <a href="#basics"><span>1</span> HttpClient &amp; httpResource</a>
         <a href="#interceptors"><span>2</span> Functional Interceptors</a>
         <a href="#error-recovery"><span>3</span> Retry &amp; Error Recovery</a>
         <a href="#uploads"><span>4</span> File Uploads &amp; Progress</a>
@@ -318,7 +346,7 @@
         <article class="lesson-article">
 
           <section id="basics">
-            <h2>1. <code>HttpClient</code> Basics: Typed Requests</h2>
+            <h2>1. <code>HttpClient</code> Basics: Typed Requests &amp; <code>httpResource()</code></h2>
             <p>
               You provided <code>HttpClient</code> back in Week 3 with <code>provideHttpClient()</code>
               — this week it finally gets used. Every method returns an Observable, and every method
@@ -371,6 +399,75 @@ export class ProductsService {
               <code>toSignal()</code>/<code>rxResource()</code> in Week 16). Forgetting to subscribe
               is a real, easy-to-make bug: the request is simply never sent.
             </p>
+
+            <h3>Signal-first reads with <code>httpResource()</code></h3>
+            <p>
+              For the most common case — a component that <em>reads</em> data based on some signal
+              (a route param, a search box, a selected tab) — Angular has a signal-native shortcut
+              that skips the Observable and the subscription entirely:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">product-detail.ts</div>
+              <pre><code>import { Component, input } from '@angular/core';
+import { httpResource } from '@angular/common/http';
+import { Product } from './products.service';
+
+@Component({
+  selector: 'app-product-detail',
+  templateUrl: './product-detail.html',
+})
+export class ProductDetail {
+  id = input.required&lt;string&gt;(); // bound from the route param (Week 10)
+
+  // Re-fetches automatically whenever id() changes
+  product = httpResource&lt;Product&gt;(() =&gt; `/api/products/${this.id()}`);
+}
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">product-detail.html</div>
+              <pre><code>@if (product.isLoading()) {
+  &lt;p&gt;Loading…&lt;/p&gt;
+} @else if (product.error()) {
+  &lt;p&gt;Couldn't load this product. &lt;button (click)="product.reload()"&gt;Retry&lt;/button&gt;&lt;/p&gt;
+} @else if (product.hasValue()) {
+  &lt;h1&gt;{{ product.value().name }}&lt;/h1&gt;
+}
+</code></pre>
+            </div>
+
+            <p>
+              The function you pass is reactive, like a <code>computed()</code>: whenever a signal it
+              reads changes, the previous in-flight request is cancelled and a new one starts. Return
+              <code>undefined</code> to skip the request (for example, while a search box is empty).
+              For query params or headers, return a request object instead of a string:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">request object form</div>
+              <pre><code>results = httpResource&lt;Product[]&gt;(() =&gt;
+  this.query()
+    ? { url: '/api/products', params: { q: this.query(), page: this.page() } }
+    : undefined, // no query yet → no request
+);
+</code></pre>
+            </div>
+
+            <p>
+              Because <code>httpResource</code> is built on <code>HttpClient</code>, everything else
+              this week still applies: your interceptors (Section 2) run on these requests, and
+              <code>HttpTestingController</code> can mock them in tests.
+            </p>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Reads only</strong>
+                <p>Use <code>httpResource</code> for <em>fetching</em> data. Keep <code>POST</code>/<code>PATCH</code>/<code>DELETE</code> as explicit <code>HttpClient</code> calls triggered by a user action: a resource re-runs whenever its signals change, which is exactly what you want for a read and exactly what you don't want for "charge this credit card". Check angular.dev for the API's current stability status; it was introduced as experimental.</p>
+              </div>
+            </div>
           </section>
 
           <section id="interceptors">
@@ -625,7 +722,7 @@ private baseUrl = `${this.config.baseUrl}/${this.config.version}/products`;
 
           <section id="quiz">
             <h2>8. Knowledge Check</h2>
-            <p>Four quick questions. Expand each to check your answer.</p>
+            <p>Five quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
@@ -687,6 +784,21 @@ private baseUrl = `${this.config.baseUrl}/${this.config.version}/products`;
                   </div>
                 </div>
               </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q5</span>
+                  <div class="week-item__heading">
+                    <h4>Why is <code>httpResource()</code> a good fit for loading a product by ID, but a bad fit for submitting an order?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>A resource re-runs its request automatically whenever a signal it reads changes, and cancels the previous request. That's exactly right for a read: when the ID changes, fetch the new product and drop the stale request. For a write, it's dangerous: the request would fire whenever some unrelated signal changed, not when the user clicked "Place order". Writes should be explicit <code>HttpClient</code> calls made from an event handler.</p>
+                  </div>
+                </div>
+              </details>
             </div>
           </section>
 
@@ -727,7 +839,10 @@ private baseUrl = `${this.config.baseUrl}/${this.config.version}/products`;
           <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
           <a href="../../courses/github/index.html">Git &amp; GitHub</a>
       <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
-          <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/llm-ml/index.html">AI &amp; ML</a>
+          <a href="../../courses/artificial-intelligence/index.html">Artificial Intelligence</a>
+          <a href="../../courses/machine-learning/index.html">Machine Learning</a>
+          <a href="../../courses/data-science/index.html">Data Science</a>
           <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
           <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
           <a href="../../courses/php/index.html">PHP</a>
@@ -747,6 +862,7 @@ private baseUrl = `${this.config.baseUrl}/${this.config.version}/products`;
           <a href="../../courses/claude/index.html">Claude</a>
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
+          <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
         </div>
       </div>
 

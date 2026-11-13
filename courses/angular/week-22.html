@@ -15,7 +15,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Week 22: Animations, Accessibility &amp; Internationalization — CodeVerse Creatives</title>
-<meta name="description" content="Week 22 of the Angular curriculum: the Angular animations API, reduced-motion support, WCAG basics and accessible patterns, keyboard/focus management, Angular i18n, and auditing with Lighthouse and axe." />
+<meta name="description" content="Week 22 of the Angular curriculum: native enter/leave animations with animate.enter and animate.leave, reduced-motion support, WCAG basics and accessible patterns, keyboard/focus management, Angular i18n, and auditing with Lighthouse and axe." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -97,8 +97,29 @@
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
             <span class="nav-course-card__text">
-              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__title">AI &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../artificial-intelligence/index.html" class="nav-course-card c-artificial-intelligence">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M9.5 16.5h5M3 12v3M21 12v3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Artificial Intelligence</span>
+              <span class="nav-course-card__meta">19 Weeks</span>
+            </span>
+          </a>
+          <a href="../machine-learning/index.html" class="nav-course-card c-machine-learning">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="12" r="2"/><path d="m6.5 10.5 4-4M6.5 13.5l4 4M13.5 6.5l4 4M13.5 17.5l4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Machine Learning</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
+            </span>
+          </a>
+          <a href="../data-science/index.html" class="nav-course-card c-data-science">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Data Science</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
@@ -234,6 +255,13 @@
               <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
+          <a href="../distributed-systems/index.html" class="nav-course-card c-distributed-systems">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Distributed Systems</span>
+              <span class="nav-course-card__meta">4 of 16 Weeks</span>
+            </span>
+          </a>
         </div>
       </div>
     </nav>
@@ -299,7 +327,7 @@
       </div>
 
       <div class="phase-nav">
-        <a href="#animations"><span>1</span> Animations API</a>
+        <a href="#animations"><span>1</span> Enter/Leave Animations</a>
         <a href="#reduced-motion"><span>2</span> Reduced Motion</a>
         <a href="#wcag"><span>3</span> WCAG Basics</a>
         <a href="#focus-management"><span>4</span> Keyboard &amp; Focus</a>
@@ -318,47 +346,102 @@
         <article class="lesson-article">
 
           <section id="animations">
-            <h2>1. Angular Animations API &amp; CSS-Driven Alternatives</h2>
+            <h2>1. Native Enter/Leave Animations (<code>animate.enter</code> / <code>animate.leave</code>)</h2>
             <p>
-              Angular's animation package gives you programmatic control over enter/leave transitions
-              triggered by state changes — useful when a transition needs to know about component
-              state, not just a CSS class.
+              The hard part of animating in Angular has always been <em>leaving</em>: when an
+              <code>@if</code> turns false, the element is removed from the DOM immediately, so a CSS
+              exit transition never gets a chance to play. Modern Angular solves this in the template
+              compiler itself. You write ordinary CSS animations, and two built-in attributes tell
+              Angular when to apply them:
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">notification-toast.ts</div>
-              <pre><code>import { Component, input } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
+              <div class="code-block__label">notification-toast.html</div>
+              <pre><code>@if (visible()) {
+  &lt;div class="toast" animate.enter="toast-in" animate.leave="toast-out"&gt;
+    {{ message() }}
+  &lt;/div&gt;
+}
+</code></pre>
+            </div>
 
-@Component({
-  selector: 'app-notification-toast',
-  templateUrl: './notification-toast.html',
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translateY(-16px)', opacity: 0 }),
-        animate('200ms ease-out', style({ transform: 'translateY(0)', opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('150ms ease-in', style({ transform: 'translateY(-16px)', opacity: 0 })),
-      ]),
-    ]),
-  ],
-})
-export class NotificationToast {
-  message = input.required&lt;string&gt;();
+            <div class="code-block">
+              <div class="code-block__label">notification-toast.css</div>
+              <pre><code>.toast-in {
+  animation: slide-in 200ms ease-out;
+}
+
+.toast-out {
+  animation: slide-in 150ms ease-in reverse;
+}
+
+@keyframes slide-in {
+  from { transform: translateY(-16px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
 }
 </code></pre>
             </div>
 
             <p>
-              For simpler cases — a hover effect, a straightforward fade — plain CSS transitions
-              often do the same job with less code and no extra bundle weight from the animations
-              package at all:
+              <code>animate.enter</code> adds the class when the element is inserted and removes it
+              once the animation finishes. <code>animate.leave</code> adds its class when the element
+              is about to be removed, and Angular <strong>waits for that animation (or transition) to
+              finish</strong> before actually taking the element out of the DOM. No extra package, no
+              <code>provideAnimations()</code>, nothing in the component class:
             </p>
 
             <div class="code-block">
-              <div class="code-block__label">card.css — CSS-only alternative</div>
+              <div class="code-block__label">notification-toast.ts</div>
+              <pre><code>import { Component, input, signal } from '@angular/core';
+
+@Component({
+  selector: 'app-notification-toast',
+  templateUrl: './notification-toast.html',
+  styleUrl: './notification-toast.css',
+})
+export class NotificationToast {
+  message = input.required&lt;string&gt;();
+  visible = signal(true);
+}
+</code></pre>
+            </div>
+
+            <p>
+              Both attributes can also be <strong>bound</strong>, so the class can come from state —
+              <code>[animate.enter]="direction() === 'up' ? 'slide-up' : 'slide-down'"</code> — and
+              both work as <strong>events</strong> when you'd rather drive the animation from
+              JavaScript (the Web Animations API, or a library like GSAP). With the event form you
+              must tell Angular when you're done, or the element is never removed:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">handing the leave animation to JavaScript</div>
+              <pre><code>&lt;!-- template --&gt;
+&lt;div (animate.leave)="fadeOut($event)"&gt;...&lt;/div&gt;
+
+// component
+fadeOut(event: AnimationCallbackEvent) {
+  const anim = event.target.animate([{ opacity: 1 }, { opacity: 0 }], 150);
+  anim.onfinish = () =&gt; event.animationComplete(); // now Angular removes the element
+}
+</code></pre>
+            </div>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>What about <code>@angular/animations</code>?</strong>
+                <p>The older <code>trigger()</code>/<code>transition()</code>/<code>animate()</code> DSL was deprecated in Angular 20.2 in favour of the native API above. You'll still meet it in existing codebases, so learn to recognise it: an <code>animations: [trigger('slideIn', [transition(':enter', ...)])]</code> array on the component, plus <code>[@slideIn]</code> in the template. Don't start new code with it. Migrating is mostly mechanical: move each <code>style()</code>/<code>animate()</code> pair into a CSS <code>@keyframes</code> rule, then replace <code>[@trigger]</code> with <code>animate.enter</code>/<code>animate.leave</code>.</p>
+              </div>
+            </div>
+
+            <p>
+              For interaction-only effects — a hover lift, a focus ring — you don't need either
+              attribute; a plain CSS <code>transition</code> is still the right tool:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">card.css — CSS-only, no Angular involved</div>
               <pre><code>.card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -371,10 +454,10 @@ export class NotificationToast {
             </div>
 
             <p>
-              Reach for the animations API specifically when a transition needs to react to
-              Angular-level state (a signal changing, an element actually entering/leaving the DOM via
-              <code>@if</code>) — reach for plain CSS for anything driven purely by user interaction
-              like <code>:hover</code> or <code>:focus</code>.
+              Rule of thumb: use <code>animate.enter</code>/<code>animate.leave</code> when an element
+              actually enters or leaves the DOM (via <code>@if</code>, <code>@for</code>,
+              <code>@switch</code>, or a route change). Use plain CSS for anything driven purely by
+              <code>:hover</code>, <code>:focus</code>, or a toggled class on an element that stays put.
             </p>
           </section>
 
@@ -567,10 +650,10 @@ ng build --localize   # builds one output per configured locale
               </div>
 
               <h3>Part 2: A real Angular animation, wired to respect reduced motion</h3>
-              <p>Part 1 handled reduced motion for whatever CSS transitions already existed in the app, but never actually used Section 1's <code>@angular/animations</code> API — the two sections were never combined in one place.</p>
+              <p>Part 1 handled reduced motion for whatever CSS transitions already existed in the app, but never actually used Section 1's <code>animate.enter</code>/<code>animate.leave</code> API — the two sections were never combined in one place.</p>
               <ol>
-                <li>Add a real <code>trigger()</code>/<code>transition()</code>/<code>animate()</code> enter/leave animation (Section 1's shape) to a component whose visibility is driven by Angular state — the toast notifications from Week 9, or the <code>Modal</code> from Week 7 both work.</li>
-                <li>Make that same animation respect <code>prefers-reduced-motion</code> (Section 2) — check the media query and either skip the <code>trigger</code> definition entirely or swap in a near-instant duration when the user has the preference set, so the two techniques work together on the one animation that actually needs the programmatic API.</li>
+                <li>Add a real <code>animate.enter</code>/<code>animate.leave</code> animation backed by CSS <code>@keyframes</code> (Section 1's shape) to a component whose visibility is driven by Angular state — the toast notifications from Week 9, or the <code>Modal</code> from Week 7 both work.</li>
+                <li>Make that same animation respect <code>prefers-reduced-motion</code> (Section 2) — wrap the keyframe classes in <code>@media (prefers-reduced-motion: no-preference)</code>, or swap in a near-instant duration under <code>reduce</code>. Then confirm the toast still disappears promptly when motion is reduced: Angular only waits for an animation that actually runs, so with no animation the element should be removed at once.</li>
               </ol>
 
               <div class="callout callout--tip">
@@ -592,13 +675,13 @@ ng build --localize   # builds one output per configured locale
                 <summary>
                   <span class="week-item__badge">Q1</span>
                   <div class="week-item__heading">
-                    <h4>When should you reach for Angular's animations API instead of a plain CSS transition?</h4>
+                    <h4>Why can't a plain CSS transition animate an element leaving an <code>@if</code>, and what does <code>animate.leave</code> change?</h4>
                   </div>
                   <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>When the transition needs to react to Angular-level state changes — an element actually entering or leaving the DOM via <code>@if</code>, or a signal-driven trigger — rather than pure CSS pseudo-classes like <code>:hover</code> or <code>:focus</code>, which plain CSS handles natively with no extra bundle cost.</p>
+                    <p>When the <code>@if</code> condition turns false, Angular removes the element from the DOM straight away, so there's no element left for a CSS transition to run on. <code>animate.leave</code> adds a class first and delays the removal until that CSS animation or transition finishes (or, in the event form, until you call <code>animationComplete()</code>). For effects on elements that stay in the DOM, like <code>:hover</code> or <code>:focus</code>, plain CSS is still enough.</p>
                   </div>
                 </div>
               </details>
@@ -687,7 +770,10 @@ ng build --localize   # builds one output per configured locale
           <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
           <a href="../../courses/github/index.html">Git &amp; GitHub</a>
       <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
-          <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/llm-ml/index.html">AI &amp; ML</a>
+          <a href="../../courses/artificial-intelligence/index.html">Artificial Intelligence</a>
+          <a href="../../courses/machine-learning/index.html">Machine Learning</a>
+          <a href="../../courses/data-science/index.html">Data Science</a>
           <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
           <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
           <a href="../../courses/php/index.html">PHP</a>
@@ -707,6 +793,7 @@ ng build --localize   # builds one output per configured locale
           <a href="../../courses/claude/index.html">Claude</a>
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
+          <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
         </div>
       </div>
 

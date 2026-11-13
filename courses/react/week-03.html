@@ -97,8 +97,29 @@
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
             <span class="nav-course-card__text">
-              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__title">AI &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../artificial-intelligence/index.html" class="nav-course-card c-artificial-intelligence">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M9.5 16.5h5M3 12v3M21 12v3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Artificial Intelligence</span>
+              <span class="nav-course-card__meta">19 Weeks</span>
+            </span>
+          </a>
+          <a href="../machine-learning/index.html" class="nav-course-card c-machine-learning">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="12" r="2"/><path d="m6.5 10.5 4-4M6.5 13.5l4 4M13.5 6.5l4 4M13.5 17.5l4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Machine Learning</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
+            </span>
+          </a>
+          <a href="../data-science/index.html" class="nav-course-card c-data-science">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Data Science</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
@@ -232,6 +253,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Kannada Language</span>
               <span class="nav-course-card__meta">12 Weeks</span>
+            </span>
+          </a>
+          <a href="../distributed-systems/index.html" class="nav-course-card c-distributed-systems">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Distributed Systems</span>
+              <span class="nav-course-card__meta">4 of 16 Weeks</span>
             </span>
           </a>
         </div>
@@ -511,6 +539,47 @@ function AutoFocusInput() {
               doesn't otherwise expose.
             </p>
 
+            <h3>Passing a ref into your own component: <code>ref</code> is just a prop</h3>
+            <p>
+              What if the <code>&lt;input&gt;</code> lives inside your own <code>TextField</code>
+              component and the <em>parent</em> wants to focus it? Since React 19, function
+              components receive <code>ref</code> as a regular prop. Destructure it and pass it on:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">TextField.tsx — React 19+</div>
+              <pre><code>import type { ComponentProps } from 'react';
+
+function TextField({ label, ref, ...rest }: { label: string } &amp; ComponentProps&lt;'input'&gt;) {
+  return (
+    &lt;label&gt;
+      {label}
+      &lt;input ref={ref} {...rest} /&gt;
+    &lt;/label&gt;
+  );
+}
+
+// Parent
+function SearchBar() {
+  const inputRef = useRef&lt;HTMLInputElement&gt;(null);
+  return (
+    &lt;&gt;
+      &lt;TextField label="Search" ref={inputRef} /&gt;
+      &lt;button onClick={() =&gt; inputRef.current?.focus()}&gt;Focus search&lt;/button&gt;
+    &lt;/&gt;
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              You'll still see <code>forwardRef</code> everywhere in older code and component
+              libraries. It was the pre-19 way to do exactly this
+              (<code>const TextField = forwardRef((props, ref) =&gt; ...)</code>), and it still works,
+              but it's no longer needed, and React plans to deprecate it. In new code, a plain
+              <code>ref</code> prop is simpler and easier to type.
+            </p>
+
             <h3>Use 2: A mutable value that survives renders without causing one</h3>
             <div class="code-block">
               <div class="code-block__label">RenderCounter.tsx</div>
@@ -582,7 +651,9 @@ const doubled = count * 2;
               components and inserts memoization equivalent to what you just wrote by hand,
               automatically. Enable it (a Babel or SWC plugin — Next.js turns it on with
               <code>reactCompiler: true</code> in <code>next.config.ts</code>, covered in Week 22),
-              add its companion ESLint plugin, and code like this needs no manual memoization at all:
+              keep <code>eslint-plugin-react-hooks</code> on its latest version (since React Compiler
+              1.0, its recommended preset includes the compiler's diagnostics, so there's no separate
+              plugin to install), and code like this needs no manual memoization at all:
             </p>
 
             <div class="code-block">
@@ -658,7 +729,7 @@ const doubled = count * 2;
 
               <p><strong>Part 2 — Let the compiler do it:</strong></p>
               <ol>
-                <li>In a copy of the project, install <code>babel-plugin-react-compiler</code> and <code>eslint-plugin-react-compiler</code>, and wire the Babel plugin into your Vite config.</li>
+                <li>In a copy of the project, install <code>babel-plugin-react-compiler</code>, wire it into your Vite config (<code>react({ babel: { plugins: ['babel-plugin-react-compiler'] } })</code>), and upgrade <code>eslint-plugin-react-hooks</code> to the latest version. Its recommended preset now includes the compiler's lint rules; the older standalone <code>eslint-plugin-react-compiler</code> is deprecated.</li>
                 <li>Strip out every <code>useMemo</code>, <code>useCallback</code>, and <code>React.memo</code> you added in Part 1 — back to the plain, unmemoized version from Section 1.</li>
                 <li>Rebuild and re-run your console.log checks from Part 1, step 3 — confirm the filter no longer re-runs on an unrelated theme toggle, and <code>ProductCard</code> no longer re-renders either, purely from the compiler, with zero hooks in your source.</li>
                 <li>Deliberately break a Rule of React in one component — e.g. mutate <code>products</code> directly during render instead of deriving a new array — and confirm via the ESLint plugin that the compiler reports it bailed out for that component.</li>
@@ -778,7 +849,10 @@ const doubled = count * 2;
           <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
           <a href="../../courses/github/index.html">Git &amp; GitHub</a>
       <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
-          <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/llm-ml/index.html">AI &amp; ML</a>
+          <a href="../../courses/artificial-intelligence/index.html">Artificial Intelligence</a>
+          <a href="../../courses/machine-learning/index.html">Machine Learning</a>
+          <a href="../../courses/data-science/index.html">Data Science</a>
           <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
           <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
           <a href="../../courses/php/index.html">PHP</a>
@@ -798,6 +872,7 @@ const doubled = count * 2;
           <a href="../../courses/claude/index.html">Claude</a>
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
+          <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
         </div>
       </div>
 

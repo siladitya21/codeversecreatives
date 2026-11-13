@@ -97,8 +97,29 @@
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
             <span class="nav-course-card__text">
-              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__title">AI &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../artificial-intelligence/index.html" class="nav-course-card c-artificial-intelligence">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M9.5 16.5h5M3 12v3M21 12v3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Artificial Intelligence</span>
+              <span class="nav-course-card__meta">19 Weeks</span>
+            </span>
+          </a>
+          <a href="../machine-learning/index.html" class="nav-course-card c-machine-learning">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="12" r="2"/><path d="m6.5 10.5 4-4M6.5 13.5l4 4M13.5 6.5l4 4M13.5 17.5l4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Machine Learning</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
+            </span>
+          </a>
+          <a href="../data-science/index.html" class="nav-course-card c-data-science">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Data Science</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
@@ -232,6 +253,13 @@
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Kannada Language</span>
               <span class="nav-course-card__meta">12 Weeks</span>
+            </span>
+          </a>
+          <a href="../distributed-systems/index.html" class="nav-course-card c-distributed-systems">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Distributed Systems</span>
+              <span class="nav-course-card__meta">4 of 16 Weeks</span>
             </span>
           </a>
         </div>
@@ -383,6 +411,54 @@
               A quick heuristic for when <code>React.memo</code> is worth adding: the component
               renders often relative to how often its actual props change, and rendering it is
               measurably not free — confirmed by the Profiler, not guessed at.
+            </p>
+
+            <h3>When the props really <em>do</em> change: <code>useDeferredValue</code></h3>
+            <p>
+              <code>memo</code> can't help when the expensive child genuinely needs new props on
+              every keystroke, like a large filtered list under a search box. Typing feels laggy
+              because React has to finish re-rendering the whole list before it can show the next
+              character in the input. <code>useDeferredValue</code> splits the update in two: the
+              input updates immediately, and the expensive list re-renders with a deferred copy of the
+              value, at lower priority, which React abandons if you keep typing:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">ProductSearch.tsx</div>
+              <pre><code>import { memo, useDeferredValue, useState } from 'react';
+
+function ProductSearch({ products }: { products: Product[] }) {
+  const [query, setQuery] = useState('');
+  const deferredQuery = useDeferredValue(query); // lags behind `query` while React is busy
+  const isStale = query !== deferredQuery;
+
+  return (
+    &lt;&gt;
+      &lt;input value={query} onChange={e =&gt; setQuery(e.target.value)} /&gt; {/* always instant */}
+      &lt;div style={{ opacity: isStale ? 0.6 : 1 }}&gt;
+        &lt;ProductList products={products} query={deferredQuery} /&gt;
+      &lt;/div&gt;
+    &lt;/&gt;
+  );
+}
+
+// memo is what makes this work: with the old deferredQuery, ProductList skips re-rendering
+const ProductList = memo(function ProductList({ products, query }: { products: Product[]; query: string }) {
+  const filtered = products.filter(p =&gt; p.name.toLowerCase().includes(query.toLowerCase()));
+  return filtered.map(p =&gt; &lt;ProductCard key={p.id} product={p} /&gt;);
+});
+</code></pre>
+            </div>
+
+            <p>
+              It's the counterpart to <code>useTransition</code>, which you'll use with Server
+              Actions in Week 20.
+              <code>useTransition</code> wraps the <em>state update</em> you control
+              (<code>startTransition(() =&gt; setX(...))</code>). <code>useDeferredValue</code> wraps a
+              <em>value</em> you receive, which is handy when the state lives in a parent or the update
+              comes from a library. Neither is debouncing: there's no fixed delay, and on a fast
+              machine the deferred render happens almost immediately. Use the Profiler to confirm that
+              typing actually got faster.
             </p>
           </section>
 
@@ -673,7 +749,10 @@ export default defineConfig({
           <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
           <a href="../../courses/github/index.html">Git &amp; GitHub</a>
       <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
-          <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/llm-ml/index.html">AI &amp; ML</a>
+          <a href="../../courses/artificial-intelligence/index.html">Artificial Intelligence</a>
+          <a href="../../courses/machine-learning/index.html">Machine Learning</a>
+          <a href="../../courses/data-science/index.html">Data Science</a>
           <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
           <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
           <a href="../../courses/php/index.html">PHP</a>
@@ -693,6 +772,7 @@ export default defineConfig({
           <a href="../../courses/claude/index.html">Claude</a>
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
+          <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
         </div>
       </div>
 

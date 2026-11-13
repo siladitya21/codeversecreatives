@@ -97,8 +97,29 @@
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
             <span class="nav-course-card__text">
-              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__title">AI &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../artificial-intelligence/index.html" class="nav-course-card c-artificial-intelligence">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M9.5 16.5h5M3 12v3M21 12v3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Artificial Intelligence</span>
+              <span class="nav-course-card__meta">19 Weeks</span>
+            </span>
+          </a>
+          <a href="../machine-learning/index.html" class="nav-course-card c-machine-learning">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="12" r="2"/><path d="m6.5 10.5 4-4M6.5 13.5l4 4M13.5 6.5l4 4M13.5 17.5l4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Machine Learning</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
+            </span>
+          </a>
+          <a href="../data-science/index.html" class="nav-course-card c-data-science">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Data Science</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express" aria-current="page">
@@ -234,6 +255,13 @@
               <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
+          <a href="../distributed-systems/index.html" class="nav-course-card c-distributed-systems">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Distributed Systems</span>
+              <span class="nav-course-card__meta">4 of 16 Weeks</span>
+            </span>
+          </a>
         </div>
       </div>
     </nav>
@@ -309,8 +337,9 @@
         <a href="#require-role"><span>2</span> An Authorization Middleware</a>
         <a href="#oauth-setup"><span>3</span> OAuth with Passport.js</a>
         <a href="#oauth-callback"><span>4</span> The Callback &amp; Linking Accounts</a>
-        <a href="#exercise"><span>5</span> Exercise</a>
-        <a href="#quiz"><span>6</span> Knowledge Check</a>
+        <a href="#hardening"><span>5</span> Hardening the API</a>
+        <a href="#exercise"><span>6</span> Exercise</a>
+        <a href="#quiz"><span>7</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -637,8 +666,112 @@ if (!user) {
             </div>
           </section>
 
+          <section id="hardening">
+            <h2>5. Hardening the API: CORS, Security Headers &amp; the OWASP API Top 10</h2>
+            <p>
+              Authentication and roles control <em>who</em> can do what. A production API also has to
+              defend against requests it never expected: a malicious website calling it from a
+              victim's browser, a 50&nbsp;MB JSON body, a user changing an ID in the URL to read
+              someone else's data. None of that is handled by Express out of the box.
+            </p>
+
+            <h3>Security headers with <code>helmet</code></h3>
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>npm install helmet cors
+npm install -D @types/cors
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">src/main.ts — hardening middleware, registered first</div>
+              <pre><code>import express from "express";
+import helmet from "helmet";
+import cors from "cors";
+
+const app = express();
+
+app.set("trust proxy", 1);           // behind one load balancer: real client IP for rate limits/logs
+app.use(helmet());                    // ~a dozen security headers + removes X-Powered-By
+
+const allowedOrigins = (process.env.CORS_ORIGINS ?? "").split(",").filter(Boolean);
+app.use(
+  cors({
+    origin: allowedOrigins,           // e.g. "https://app.example.com,https://admin.example.com"
+    credentials: true,                // allow cookies / Authorization from those origins only
+  }),
+);
+
+app.use(express.json({ limit: "100kb" })); // reject oversized bodies before parsing them
+</code></pre>
+            </div>
+
+            <p>
+              <code>helmet()</code> sets headers that tell browsers to behave more safely with your
+              responses: <code>Strict-Transport-Security</code> (HTTPS only),
+              <code>X-Content-Type-Options: nosniff</code>, a default
+              <code>Content-Security-Policy</code>, and more. It also removes
+              <code>X-Powered-By: Express</code>, which advertised your stack to attackers. For a pure
+              JSON API the defaults are fine. If the same server also serves HTML pages, tune the CSP.
+            </p>
+
+            <h3>CORS: what it is and what it isn't</h3>
+            <p>
+              Browsers block a page on <code>https://evil.example</code> from reading responses from
+              your API unless your API says that origin is allowed. That's CORS. The common mistakes:
+            </p>
+            <ul>
+              <li><strong><code>app.use(cors())</code> with no options</strong> allows <em>every</em> origin. Fine for a truly public, read-only API; wrong for one that uses cookies or tokens.</li>
+              <li><strong>Thinking CORS protects the server.</strong> It's enforced by browsers only. <code>curl</code>, scripts, and other servers ignore it completely, so it's never a substitute for authentication and authorization.</li>
+              <li><strong>Hard-coding origins.</strong> Read them from an environment variable so staging and production can allow different front ends.</li>
+            </ul>
+
+            <h3>The OWASP API Security Top 10, mapped to this course</h3>
+            <p>
+              OWASP's API Security Top 10 is the standard checklist of how real APIs get breached.
+              Most of it maps onto things you've already built. The point is to check that you
+              actually applied them <em>everywhere</em>:
+            </p>
+            <ul>
+              <li><strong>API1 Broken Object Level Authorization (BOLA), the #1 API vulnerability.</strong> <code>requireRole</code> checks <em>what kind</em> of user you are, not whether <em>this</em> record is yours. <code>GET /posts/42</code> must also check ownership: <code>prisma.post.findFirst({ where: { id, authorId: req.user.id } })</code>, not just <code>findUnique({ where: { id } })</code>.</li>
+              <li><strong>API2 Broken Authentication:</strong> Week 6. Short-lived JWTs, hashed passwords, rate-limited login.</li>
+              <li><strong>API3 Broken Object Property Level Authorization:</strong> never pass <code>req.body</code> straight into <code>prisma.user.update</code>, or a user can send <code>{"role": "ADMIN"}</code>. Week 3's Zod schemas should list exactly the fields a client may set.</li>
+              <li><strong>API4 Unrestricted Resource Consumption:</strong> the body-size limit above, rate limiting (Week 16), and a maximum page size on every list endpoint.</li>
+              <li><strong>API5 Broken Function Level Authorization:</strong> Section 2's <code>requireRole</code> on every admin route, including ones that "nobody knows about".</li>
+              <li><strong>API7 Server-Side Request Forgery:</strong> if your API fetches a URL a user supplied (webhooks, image imports), validate it against an allowlist so it can't be pointed at internal services.</li>
+              <li><strong>API8 Security Misconfiguration:</strong> this section's headers and CORS, plus never returning stack traces from Week 2's error handler in production.</li>
+              <li><strong>API10 Unsafe Consumption of APIs:</strong> validate responses from third-party APIs with Zod too; don't trust them more than user input.</li>
+            </ul>
+            <p>
+              (API6, API9: sensitive business flows and API inventory, are process concerns more than
+              code; the OWASP site covers them.) Add <code>npm audit --omit=dev</code> to Week 14's CI
+              pipeline as well, so a dependency with a known vulnerability fails the build.
+            </p>
+
+            <h3>Least privilege for the process: Node's permission model</h3>
+            <p>
+              Node can also restrict what the process itself may touch, which limits the damage if a
+              dependency is compromised. With <code>--permission</code>, file-system access, child
+              processes, and worker threads are denied unless you allow them explicitly:
+            </p>
+            <div class="code-block">
+              <div class="code-block__label">terminal</div>
+              <pre><code>node --permission \
+  --allow-fs-read=/app \
+  --allow-fs-write=/app/uploads \
+  dist/main.js
+</code></pre>
+            </div>
+            <p>
+              A malicious package that tries to read <code>~/.ssh</code> or spawn a shell now gets an
+              <code>ERR_ACCESS_DENIED</code> error instead. Check <code>node --help</code> for the
+              exact flags your Node version supports, and treat this as one layer of defence (like
+              Week 14's non-root container user), not a sandbox for untrusted code.
+            </p>
+          </section>
+
           <section id="exercise">
-            <h2>5. Hands-on Exercise</h2>
+            <h2>6. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
@@ -654,6 +787,7 @@ if (!user) {
                 <li>Register a Google OAuth app in the Google Cloud Console (redirect URI <code>http://localhost:3000/auth/google/callback</code> for local dev), and wire up the strategy and routes from Sections 3–4.</li>
                 <li>Implement the find-or-link-or-create logic from Section 4's second snippet, and manually verify all three paths: a brand-new Google login, a returning Google user, and an existing password-based user logging in with Google for the first time (should link, not duplicate).</li>
                 <li>Confirm a <code>USER</code>-role account gets a 403 (not 401) from <code>POST /posts</code>, and that an unauthenticated request to the same route gets a 401.</li>
+                <li>Harden the API per Section 5: add <code>helmet()</code>, CORS restricted to origins from a <code>CORS_ORIGINS</code> env var, and a 100&nbsp;kb JSON body limit. Then hunt for BOLA: log in as user A and request user B's post by ID through every <code>GET</code>/<code>PATCH</code>/<code>DELETE</code> route. Each one must return 404 (or 403), never the data. Finally, try sending <code>{"role":"ADMIN"}</code> to any update route and confirm it's ignored.</li>
               </ol>
 
               <div class="callout callout--tip">
@@ -667,8 +801,8 @@ if (!user) {
           </section>
 
           <section id="quiz">
-            <h2>6. Knowledge Check</h2>
-            <p>Four quick questions. Expand each to check your answer.</p>
+            <h2>7. Knowledge Check</h2>
+            <p>Five quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
@@ -770,7 +904,10 @@ if (!user) {
           <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
           <a href="../../courses/github/index.html">Git &amp; GitHub</a>
       <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
-          <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/llm-ml/index.html">AI &amp; ML</a>
+          <a href="../../courses/artificial-intelligence/index.html">Artificial Intelligence</a>
+          <a href="../../courses/machine-learning/index.html">Machine Learning</a>
+          <a href="../../courses/data-science/index.html">Data Science</a>
           <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
           <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
           <a href="../../courses/php/index.html">PHP</a>
@@ -790,6 +927,7 @@ if (!user) {
           <a href="../../courses/claude/index.html">Claude</a>
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
+          <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
         </div>
       </div>
 

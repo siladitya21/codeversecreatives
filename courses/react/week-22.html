@@ -97,8 +97,29 @@
           <a href="../llm-ml/index.html" class="nav-course-card c-llm-ml">
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9z"/><path d="M4 9H2M4 15H2M22 9h-2M22 15h-2M9 4V2M15 4V2M9 22v-2M15 22v-2"/></svg></span>
             <span class="nav-course-card__text">
-              <span class="nav-course-card__title">LLM &amp; ML</span>
+              <span class="nav-course-card__title">AI &amp; ML</span>
               <span class="nav-course-card__meta">26 Weeks</span>
+            </span>
+          </a>
+          <a href="../artificial-intelligence/index.html" class="nav-course-card c-artificial-intelligence">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 8V5"/><circle cx="12" cy="4" r="1"/><circle cx="9.5" cy="13" r="1"/><circle cx="14.5" cy="13" r="1"/><path d="M9.5 16.5h5M3 12v3M21 12v3"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Artificial Intelligence</span>
+              <span class="nav-course-card__meta">19 Weeks</span>
+            </span>
+          </a>
+          <a href="../machine-learning/index.html" class="nav-course-card c-machine-learning">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="12" r="2"/><path d="m6.5 10.5 4-4M6.5 13.5l4 4M13.5 6.5l4 4M13.5 17.5l4-4"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Machine Learning</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
+            </span>
+          </a>
+          <a href="../data-science/index.html" class="nav-course-card c-data-science">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Data Science</span>
+              <span class="nav-course-card__meta">10 Weeks</span>
             </span>
           </a>
           <a href="../node-express/index.html" class="nav-course-card c-node-express">
@@ -234,6 +255,13 @@
               <span class="nav-course-card__meta">12 Weeks</span>
             </span>
           </a>
+          <a href="../distributed-systems/index.html" class="nav-course-card c-distributed-systems">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Distributed Systems</span>
+              <span class="nav-course-card__meta">4 of 16 Weeks</span>
+            </span>
+          </a>
         </div>
       </div>
     </nav>
@@ -304,7 +332,7 @@
         <a href="#env-vars"><span>1</span> Production Builds &amp; Env Vars</a>
         <a href="#vercel-deploy"><span>2</span> Deploying to Vercel or Netlify</a>
         <a href="#preview-deployments"><span>3</span> Preview Deployments &amp; Branches</a>
-        <a href="#ci-pipeline"><span>4</span> CI Pipeline with GitHub Actions</a>
+        <a href="#ci-pipeline"><span>4</span> CI/CD with GitHub Actions</a>
         <a href="#monitoring"><span>5</span> Error Monitoring with Sentry</a>
         <a href="#rollbacks"><span>6</span> Rollbacks &amp; Release Safety</a>
         <a href="#exercise"><span>7</span> Exercise</a>
@@ -520,7 +548,7 @@ Install command:   npm install
           </section>
 
           <section id="ci-pipeline">
-            <h2>4. CI Pipeline with GitHub Actions</h2>
+            <h2>4. CI/CD Pipeline with GitHub Actions</h2>
             <p>
               A host's automatic build-on-push is not the same thing as CI. It happily deploys code
               that fails your Week 14 test suite or has broken lint rules — it only knows whether
@@ -542,11 +570,11 @@ jobs:
   lint-test-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: '22'   # an active LTS line; Node 20 reached end-of-life in April 2026
           cache: 'npm'
 
       - name: Install dependencies
@@ -576,6 +604,88 @@ jobs:
               <div>
                 <strong>Fail the build, don't just warn</strong>
                 <p>A CI step that logs a warning and exits 0 anyway provides zero actual protection — nothing stops a red-but-ignorable check from merging. The entire value of CI comes from a failing step returning a genuinely non-zero exit code, which is what blocks the merge button when branch protection is configured to require it.</p>
+              </div>
+            </div>
+
+            <h3>From CI to CD: deploying only what passed</h3>
+            <p>
+              The workflow above is the <strong>CI</strong> half: it checks code but never ships it.
+              With Section 2's setup, Vercel or Netlify deploys <code>main</code> the moment it changes,
+              <em>whether or not CI passed</em>. Branch protection makes that mostly safe, but
+              "mostly" includes admin pushes, a check someone forgot to mark as required, and E2E tests
+              that never ran. <strong>Continuous Deployment</strong> closes the gap by making the
+              pipeline itself do the deploy, as the last job, only after every check is green:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">.github/workflows/ci-cd.yml — the full pipeline</div>
+              <pre><code>name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true          # a newer push cancels the older run
+
+jobs:
+  verify:                           # the lint/test/build job from above
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: '22', cache: 'npm' }
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test -- --run
+      - run: npm run build
+
+  e2e:                              # Week 15's Playwright suite, in parallel with verify
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: '22', cache: 'npm' }
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npx playwright test    # webServer in playwright.config.ts starts the app
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with: { name: playwright-report, path: playwright-report/ }
+
+  deploy:
+    needs: [verify, e2e]            # never runs unless both passed
+    if: github.event_name == 'push' &amp;&amp; github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production         # holds the secrets; can require manual approval
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: '22', cache: 'npm' }
+      - run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - run: npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+</code></pre>
+            </div>
+
+            <ul>
+              <li><strong><code>needs:</code></strong> chains the jobs. <code>verify</code> and <code>e2e</code> run in parallel (faster), and <code>deploy</code> waits for both.</li>
+              <li><strong>The <code>if:</code> condition</strong> means pull requests only run CI. Section 3's preview deployments still handle PR previews.</li>
+              <li><strong><code>vercel pull</code> → <code>build</code> → <code>deploy --prebuilt</code></strong> builds inside your pipeline and uploads the result, so the deployed bundle is built from the same commit, with the same lockfile, that just passed CI.</li>
+              <li><strong>A GitHub Environment named <code>production</code></strong> (Settings → Environments) holds <code>VERCEL_TOKEN</code> and the IDs, so workflows from PRs can't read them. It can also require a reviewer to approve each production deploy.</li>
+            </ul>
+
+            <div class="callout callout--tip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
+              <div>
+                <strong>Turn off the host's own production deploys</strong>
+                <p>If the repo is still connected through Vercel's or Netlify's Git integration, it will keep deploying <code>main</code> on its own, racing your pipeline. Keep the integration for PR previews, but disable automatic production deploys (in Vercel, set <code>git.deploymentEnabled</code> for <code>main</code> to <code>false</code> in <code>vercel.json</code>; in Netlify, stop auto-publishing). That way the only path to production is through the <code>deploy</code> job. For Netlify, the equivalent deploy step is <code>npx netlify deploy --prod --dir=dist</code> with a <code>NETLIFY_AUTH_TOKEN</code> secret.</p>
               </div>
             </div>
           </section>
@@ -679,6 +789,7 @@ Sentry.init({
                 <li>Push the app to a GitHub repository and connect it to Vercel or Netlify, confirming a production deploy succeeds and that any secret values live in the host's environment variable settings, not in the repo.</li>
                 <li>Open a pull request with a small, visible change and confirm a preview deployment URL is generated automatically for it; click through the preview to verify the change is actually live there.</li>
                 <li>Add a <code>.github/workflows/ci.yml</code> following Section 4, running lint, your Week 14 Vitest suite, and a production build on every pull request — then deliberately break a test to confirm the check goes red and (if you enable branch protection) blocks the merge.</li>
+                <li>Upgrade it to Section 4's full <code>ci-cd.yml</code>: add the Playwright <code>e2e</code> job from Week 15 and a <code>deploy</code> job with <code>needs: [verify, e2e]</code>, put the deploy secrets in a <code>production</code> GitHub Environment, and switch off the host's automatic production deploys. Merge a PR and confirm production updates <em>only</em> after the deploy job runs.</li>
                 <li>Install and initialize Sentry (or an equivalent) with a minimal client-side config, and confirm a deliberately thrown test error actually shows up in the dashboard.</li>
                 <li>Write, as a short markdown checklist inside your repo (e.g. <code>ROLLBACK.md</code>), the exact steps you'd personally take to roll back a bad deploy — from noticing the problem to production traffic pointing at the previous working deployment again.</li>
                 <li>If your app is a Next.js project, enable <code>reactCompiler: true</code>, run <code>next build</code>, and check the output for any compiler diagnostics; if it's a Vite SPA, install <code>babel-plugin-react-compiler</code> per Week 3 instead. Either way, confirm at least one component compiles cleanly with the optimization applied.</li>
@@ -696,7 +807,7 @@ Sentry.init({
 
           <section id="quiz">
             <h2>8. Knowledge Check</h2>
-            <p>Four quick questions. Expand each to check your answer.</p>
+            <p>Five quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
@@ -758,6 +869,21 @@ Sentry.init({
                   </div>
                 </div>
               </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q5</span>
+                  <div class="week-item__heading">
+                    <h4>Your repo has a green CI workflow <em>and</em> Vercel's Git integration deploying <code>main</code>. Why isn't that yet continuous deployment?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Because the two run independently. Vercel deploys <code>main</code> as soon as it changes, without knowing or caring whether CI passed, so a commit that reaches <code>main</code> with failing tests still goes live. In continuous deployment, the deploy is a step in the pipeline that depends on the checks (<code>needs: [verify, e2e]</code>), so a failing check means no deploy, by construction.</p>
+                  </div>
+                </div>
+              </details>
             </div>
           </section>
 
@@ -798,7 +924,10 @@ Sentry.init({
           <a href="../../courses/dsa-cpp/index.html">DSA in C++</a>
           <a href="../../courses/github/index.html">Git &amp; GitHub</a>
       <a href="../../courses/javascript-typescript/index.html">JavaScript &amp; TypeScript</a>
-          <a href="../../courses/llm-ml/index.html">LLM &amp; ML</a>
+          <a href="../../courses/llm-ml/index.html">AI &amp; ML</a>
+          <a href="../../courses/artificial-intelligence/index.html">Artificial Intelligence</a>
+          <a href="../../courses/machine-learning/index.html">Machine Learning</a>
+          <a href="../../courses/data-science/index.html">Data Science</a>
           <a href="../../courses/node-express/index.html">Node.js &amp; Express</a>
           <a href="../../courses/aptitude/index.html">Numerical Aptitude</a>
           <a href="../../courses/php/index.html">PHP</a>
@@ -818,6 +947,7 @@ Sentry.init({
           <a href="../../courses/claude/index.html">Claude</a>
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
+          <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
         </div>
       </div>
 
