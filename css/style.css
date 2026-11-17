@@ -362,6 +362,15 @@ body[data-course="distributed-systems"],
   --accent-deep-2: #13909c;
 }
 
+body[data-course="oracle-netsuite"],
+.c-oracle-netsuite {
+  --accent: #c74634;
+  --accent-2: #d35f4e;
+  --accent-soft: rgba(211, 95, 78, 0.14);
+  --accent-deep: #8a2f22;
+  --accent-deep-2: #9c3627;
+}
+
 /* Light theme: the same twenty-one hues, darkened to hold contrast on white. */
 
 :root[data-theme="light"] body[data-course="angular"],
@@ -572,6 +581,13 @@ body[data-course="distributed-systems"],
   --accent: #0b7480;
   --accent-2: #0f8693;
   --accent-soft: rgba(11, 116, 128, 0.1);
+}
+
+:root[data-theme="light"] body[data-course="oracle-netsuite"],
+:root[data-theme="light"] .c-oracle-netsuite {
+  --accent: #a83a2a;
+  --accent-2: #bf4836;
+  --accent-soft: rgba(168, 58, 42, 0.1);
 }
 
 /* Course pages fill solid buttons from the deep pair so white text stays legible. */

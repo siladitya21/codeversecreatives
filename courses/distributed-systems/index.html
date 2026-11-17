@@ -15,7 +15,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Distributed Systems Syllabus — CodeVerse Creatives</title>
-<meta name="description" content="A 16-week Distributed Systems syllabus — partial failure, clocks and causality, replication and partitioning, consistency models, consensus with Paxos and Raft, distributed transactions, CRDTs and stream processing, capped by building a Raft-backed key-value store. Weeks 1–4 live." />
+<meta name="description" content="A 16-week Distributed Systems syllabus — partial failure, clocks and causality, replication and partitioning, consistency models, consensus with Paxos and Raft, distributed transactions, CRDTs and stream processing, capped by building a Raft-backed key-value store. All 16 weeks live." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -56,7 +56,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Angular</span>
-              <span class="nav-course-card__meta">33 Weeks</span>
+              <span class="nav-course-card__meta">34 Weeks</span>
             </span>
           </a>
           <a href="../cybersecurity/index.html" class="nav-course-card c-cybersecurity">
@@ -259,7 +259,14 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Distributed Systems</span>
-              <span class="nav-course-card__meta">4 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
+            </span>
+          </a>
+          <a href="../oracle-netsuite/index.html" class="nav-course-card c-oracle-netsuite">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 12.5-8.58 3.9a2 2 0 0 1-1.66 0L3.18 12.5"/><path d="m22 17.5-8.58 3.9a2 2 0 0 1-1.66 0L3.18 17.5"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Oracle NetSuite</span>
+              <span class="nav-course-card__meta">1 of 26 Weeks</span>
             </span>
           </a>
         </div>
@@ -302,21 +309,21 @@
         they all wrestle with the same handful of problems: machines fail independently, networks
         lose and delay messages, and there is no shared clock. This 16-week course builds the
         theory from first principles and turns it into working code, ending with a fault-tolerant
-        key-value store running on your own Raft implementation. Module 1 (Weeks 1&ndash;4) is
-        live now; the rest of the roadmap is below.
+        key-value store running on your own Raft implementation. <strong>All 16 weeks are
+        live</strong>, start to finish.
       </p>
 
       <div class="hero__meta">
         <span class="chip chip--accent">16-Week Plan</span>
-        <span class="chip">4 Weeks Live</span>
+        <span class="chip">100% Complete</span>
         <span class="chip">Intermediate</span>
         <span class="chip">Theory + Working Code</span>
         <span class="chip">Capstone: Raft-Backed KV Store</span>
       </div>
 
       <div class="hero__actions">
-        <a href="week-01.html" class="btn btn--primary">Start Week 1</a>
-        <a href="#timeline" class="btn btn--ghost">View Full Roadmap</a>
+        <a href="#timeline" class="btn btn--primary">View Full Roadmap</a>
+        <a href="../../index.html" class="btn btn--ghost">See All Courses</a>
       </div>
 
       <div class="stats reveal">
@@ -387,7 +394,7 @@
       <div class="section-head reveal">
         <span class="section-head__eyebrow">Syllabus</span>
         <h2>The full 16-week roadmap</h2>
-        <p>Five modules: the foundations of failure, time and communication; replicating and partitioning data; consensus and coordination; transactions, CRDTs and event logs; and testing and operating it all, capped by a capstone. Weeks 1&ndash;4 are live; the rest are marked Coming Soon.</p>
+        <p>Five modules: the foundations of failure, time and communication; replicating and partitioning data; consensus and coordination; transactions, CRDTs and event logs; and testing and operating it all, capped by a capstone. All 16 weeks are live.</p>
       </div>
 
       <div class="timeline">
@@ -466,7 +473,7 @@
         </div>
 
         <!-- Module 2 · Data Across Machines -->
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">05</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 5</span>
@@ -477,11 +484,14 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Replication lag: read-your-writes &amp; monotonic reads</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Failover, split brain &amp; promoting a new leader safely</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-05.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">06</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 6</span>
@@ -492,11 +502,14 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dynamo-style quorums: N, R, W</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Read repair, anti-entropy, Merkle trees &amp; sloppy quorums</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-06.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">07</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 7</span>
@@ -507,11 +520,14 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Consistent hashing &amp; virtual nodes</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Rebalancing, secondary indexes &amp; request routing</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-07.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">08</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 8</span>
@@ -522,12 +538,15 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Eventual consistency and session guarantees</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>CAP read correctly, plus PACELC</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-08.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
         <!-- Module 3 · Agreement & Coordination -->
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">09</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 9</span>
@@ -538,11 +557,14 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Single-decree Paxos, step by step</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Multi-Paxos and the replicated state machine</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-09.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">10</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 10</span>
@@ -553,11 +575,14 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Log replication &amp; the commit index</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Safety rules, snapshots &amp; membership changes</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-10.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">11</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 11</span>
@@ -568,12 +593,15 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Leases and why distributed locks are dangerous</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Fencing tokens, leader election &amp; service discovery</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-11.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
         <!-- Module 4 · Transactions, Convergence & Streams -->
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">12</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 12</span>
@@ -584,11 +612,14 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Sagas &amp; compensating actions</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>The transactional outbox &amp; change data capture</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-12.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">13</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 13</span>
@@ -599,11 +630,14 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Counters, sets, registers &amp; sequence CRDTs</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Local-first and collaborative-editing use cases</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-13.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">14</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 14</span>
@@ -614,12 +648,15 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Consumer groups, offsets &amp; effectively-once processing</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Event time, watermarks &amp; windowing</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-14.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
         <!-- Module 5 · Operating It & Capstone -->
-        <div class="timeline-item is-disabled">
+        <div class="timeline-item">
           <div class="timeline-marker">15</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 15</span>
@@ -630,11 +667,14 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Deterministic simulation &amp; a first look at TLA+</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Distributed tracing, SLOs &amp; chaos engineering</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-15.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start this lesson
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
-        <div class="timeline-item is-disabled is-capstone">
+        <div class="timeline-item is-capstone">
           <div class="timeline-marker">16</div>
           <div class="timeline-card">
             <span class="timeline-badge">WEEK 16 · CAPSTONE</span>
@@ -645,7 +685,10 @@
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Idempotent clients, linearizable reads &amp; snapshots</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A fault-injection test suite proving it survives partitions</li>
             </ul>
-            <span class="chip">Coming Soon</span>
+            <a href="week-16.html" class="course-card__cta" style="grid-column:1 / -1;">
+              Start the capstone
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
 
@@ -658,7 +701,7 @@
     <div class="container">
       <div class="cta-banner reveal">
         <h2>Ready to stop treating the network as reliable?</h2>
-        <p>Start with Week 1 — no prior distributed-systems theory needed. Module 1 is live now, from partial failure to safe retries.</p>
+        <p>Start with Week 1 — no prior distributed-systems theory needed. All 16 weeks are live, from partial failure to a Raft-backed key-value store you build yourself.</p>
         <div class="cta-banner__actions">
           <a href="week-01.html" class="btn btn--primary">Start Week 1</a>
           <a href="../../index.html" class="btn btn--ghost">See All Courses</a>
@@ -712,6 +755,7 @@
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
           <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
+          <a href="../../courses/oracle-netsuite/index.html">Oracle NetSuite</a>
         </div>
       </div>
 

@@ -15,7 +15,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Week 17: State Management at Scale — CodeVerse Creatives</title>
-<meta name="description" content="Week 17 of the Angular curriculum: signal-based state services, NgRx Signal Store fundamentals, when to reach for Redux-style state, entity state patterns, DevTools time-travel debugging, and testing stateful services." />
+<meta name="description" content="Week 17 of the Angular curriculum: signal-based state services, NgRx Signal Store fundamentals, classic NgRx actions/reducers/effects/selectors, when to reach for each, entity state patterns, DevTools time-travel debugging, and testing stateful services." />
 <link rel="icon" href="../../assets/favicons/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="../../assets/favicons/favicon.ico" sizes="any" />
 <link rel="icon" href="../../assets/favicons/favicon-32x32.png" sizes="32x32" type="image/png" />
@@ -56,7 +56,7 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Angular</span>
-              <span class="nav-course-card__meta">33 Weeks</span>
+              <span class="nav-course-card__meta">34 Weeks</span>
             </span>
           </a>
           <a href="../cybersecurity/index.html" class="nav-course-card c-cybersecurity">
@@ -259,7 +259,14 @@
             <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M10.8 7.2 6.2 16.8M13.2 7.2l4.6 9.6M7.5 19h9"/></svg></span>
             <span class="nav-course-card__text">
               <span class="nav-course-card__title">Distributed Systems</span>
-              <span class="nav-course-card__meta">4 of 16 Weeks</span>
+              <span class="nav-course-card__meta">16 Weeks</span>
+            </span>
+          </a>
+          <a href="../oracle-netsuite/index.html" class="nav-course-card c-oracle-netsuite">
+            <span class="nav-course-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 12.5-8.58 3.9a2 2 0 0 1-1.66 0L3.18 12.5"/><path d="m22 17.5-8.58 3.9a2 2 0 0 1-1.66 0L3.18 17.5"/></svg></span>
+            <span class="nav-course-card__text">
+              <span class="nav-course-card__title">Oracle NetSuite</span>
+              <span class="nav-course-card__meta">1 of 26 Weeks</span>
             </span>
           </a>
         </div>
@@ -313,8 +320,8 @@
 
       <div class="lesson-meta">
         <span class="chip chip--accent">Phase 4 of 7</span>
-        <span class="chip">Week 17 of 26</span>
-        <span class="chip">~4 Hours</span>
+        <span class="chip">Week 17 of 34</span>
+        <span class="chip">~5 Hours</span>
         <span class="chip">Hands-on Exercise Included</span>
       </div>
 
@@ -323,6 +330,7 @@
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Design shared state that stays predictable as an app grows</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Build a typed NgRx Signal Store and know when it's actually worth reaching for</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Read and write classic NgRx actions, reducers, effects and selectors</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Test stateful services with the same confidence as any other service</li>
         </ul>
       </div>
@@ -330,12 +338,13 @@
       <div class="phase-nav">
         <a href="#state-services"><span>1</span> Signal-Based State Services</a>
         <a href="#signal-store"><span>2</span> NgRx Signal Store</a>
-        <a href="#when-to-reach"><span>3</span> When to Reach for NgRx</a>
-        <a href="#entity-state"><span>4</span> Entity State Patterns</a>
-        <a href="#devtools"><span>5</span> DevTools &amp; Time Travel</a>
-        <a href="#testing-state"><span>6</span> Testing Stateful Services</a>
-        <a href="#exercise"><span>7</span> Exercise</a>
-        <a href="#quiz"><span>8</span> Knowledge Check</a>
+        <a href="#classic-ngrx"><span>3</span> Classic NgRx</a>
+        <a href="#when-to-reach"><span>4</span> When to Reach for Which</a>
+        <a href="#entity-state"><span>5</span> Entity State Patterns</a>
+        <a href="#devtools"><span>6</span> DevTools &amp; Time Travel</a>
+        <a href="#testing-state"><span>7</span> Testing Stateful Services</a>
+        <a href="#exercise"><span>8</span> Exercise</a>
+        <a href="#quiz"><span>9</span> Knowledge Check</a>
       </div>
     </div>
   </section>
@@ -389,7 +398,7 @@ export class CartState {
 
             <p>
               This pattern alone covers the majority of real apps. Reach for something heavier only
-              once you hit a problem it doesn't solve well — Section 3 covers exactly when that
+              once you hit a problem it doesn't solve well — Section 4 covers exactly when that
               happens.
             </p>
           </section>
@@ -432,7 +441,7 @@ export const CartStore = signalStore(
             <p>
               <code>patchState()</code> is the one required way to update a Signal Store's state —
               it's a small but deliberate constraint: every state change goes through one recognizable
-              call, which is what makes the DevTools story in Section 5 possible.
+              call, which is what makes the DevTools story in Section 6 possible.
             </p>
 
             <div class="code-block">
@@ -448,23 +457,143 @@ export class CartSummary {
             </div>
           </section>
 
+          <section id="classic-ngrx">
+            <h2>3. Classic NgRx: Actions, Reducers, Effects &amp; Selectors</h2>
+            <p>
+              Before <code>@ngrx/signals</code> existed, "NgRx" meant the Redux-style pattern below —
+              and it's still what most job postings and existing large Angular codebases mean by
+              "NgRx experience." The same <code>CartState</code> from Sections 1 and 2, rebuilt the
+              classic way:
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">cart.actions.ts</div>
+              <pre><code>import { createActionGroup, props, emptyProps } from '@ngrx/store';
+
+export const CartActions = createActionGroup({
+  source: 'Cart',
+  events: {
+    'Load Cart': emptyProps(),
+    'Load Cart Failure': emptyProps(),
+    'Load Cart Success': props&lt;{ items: CartItem[] }&gt;(),
+    'Add Item': props&lt;{ item: CartItem }&gt;(),
+    'Remove Item': props&lt;{ id: string }&gt;(),
+  },
+});
+</code></pre>
+            </div>
+
+            <div class="code-block">
+              <div class="code-block__label">cart.reducer.ts</div>
+              <pre><code>import { createReducer, on } from '@ngrx/store';
+import { CartActions } from './cart.actions';
+
+interface CartState { items: CartItem[]; loading: boolean; }
+const initialState: CartState = { items: [], loading: false };
+
+export const cartReducer = createReducer(
+  initialState,
+  on(CartActions.loadCart, (state) =&gt; ({ ...state, loading: true })),
+  on(CartActions.loadCartSuccess, (state, { items }) =&gt; ({ ...state, items, loading: false })),
+  on(CartActions.addItem, (state, { item }) =&gt; ({ ...state, items: [...state.items, item] })),
+  on(CartActions.removeItem, (state, { id }) =&gt; ({
+    ...state,
+    items: state.items.filter((i) =&gt; i.id !== id),
+  }))
+);
+</code></pre>
+            </div>
+
+            <p>
+              A reducer is a pure function: given the current state and an action, it returns the
+              <em>next</em> state. It never mutates <code>state</code> directly and never performs a
+              side effect (an HTTP call, a timer) itself — that's what effects are for.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">cart.effects.ts</div>
+              <pre><code>import { Injectable, inject } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { exhaustMap, map, catchError, of } from 'rxjs'; // Week 15
+import { CartApi } from './cart-api.service';
+import { CartActions } from './cart.actions';
+
+@Injectable()
+export class CartEffects {
+  private actions$ = inject(Actions);
+  private api = inject(CartApi);
+
+  loadCart$ = createEffect(() =&gt;
+    this.actions$.pipe(
+      ofType(CartActions.loadCart),
+      exhaustMap(() =&gt;
+        this.api.fetchCart().pipe(
+          map((items) =&gt; CartActions.loadCartSuccess({ items })),
+          catchError(() =&gt; of(CartActions.loadCartFailure()))
+        )
+      )
+    )
+  );
+}
+</code></pre>
+            </div>
+
+            <p>
+              An effect listens for an action, runs the side effect (here, an HTTP call via the
+              <code>exhaustMap</code>/<code>catchError</code> operators from Week 15), and dispatches a
+              new action with the result — the reducer above then handles <em>that</em> action to
+              actually update state. This is the same RxJS you already know, applied to a specific,
+              consistent convention for where side effects live.
+            </p>
+
+            <div class="code-block">
+              <div class="code-block__label">cart.selectors.ts &amp; using it in a component</div>
+              <pre><code>import { createFeatureSelector, createSelector } from '@ngrx/store';
+
+export const selectCartState = createFeatureSelector&lt;CartState&gt;('cart');
+export const selectCartItems = createSelector(selectCartState, (state) =&gt; state.items);
+export const selectCartTotal = createSelector(selectCartItems, (items) =&gt;
+  items.reduce((sum, i) =&gt; sum + i.price * i.quantity, 0)
+);
+
+// cart-summary.ts
+export class CartSummary {
+  private store = inject(Store);
+  total = this.store.selectSignal(selectCartTotal); // selectors read as signals via selectSignal()
+  addItem(item: CartItem) {
+    this.store.dispatch(CartActions.addItem({ item }));
+  }
+}
+</code></pre>
+            </div>
+
+            <p>
+              Selectors are also memoized — <code>selectCartTotal</code> only recomputes when
+              <code>selectCartItems</code>'s output actually changes, the same performance idea as a
+              Signal Store's <code>withComputed</code>, just expressed through <code>createSelector</code>
+              instead.
+            </p>
+          </section>
+
           <section id="when-to-reach">
-            <h2>3. When (and When Not) to Reach for NgRx/Redux-Style State</h2>
-            <p>Compare directly against Section 1's plain service:</p>
+            <h2>4. When to Reach for Which Option</h2>
+            <p>Three options now, each solving a slightly different problem:</p>
             <ul>
               <li><strong>Plain signal-based service fits:</strong> most apps, most of the time. Less ceremony, no new dependency, and every technique is one you already know from Week 9.</li>
-              <li><strong>Signal Store fits:</strong> state shared across many features with a real need for consistent structure — a large team wanting every feature's state to look the same, or state complex enough that <code>withComputed</code>'s composition and a single <code>patchState</code> convention genuinely earns its keep.</li>
+              <li><strong>Signal Store fits:</strong> state shared across many features with a real need for consistent structure in a codebase that's already signals-first — a large team wanting every feature's state to look the same, or state complex enough that <code>withComputed</code>'s composition and a single <code>patchState</code> convention genuinely earns its keep.</li>
+              <li><strong>Classic NgRx (Section 3) fits:</strong> a large, existing codebase already built on it (rewriting a working action/reducer/effect architecture just to switch styles is rarely worth the churn), a team that's standardized on its action-based auditability and middleware ecosystem, or — pragmatically — a job market where "NgRx" on a job posting specifically means this pattern. Functionally, it solves the same problem as a Signal Store with more ceremony (separate actions/reducers/effects/selectors files vs. one store definition) in exchange for a longer track record and a larger plugin ecosystem.</li>
             </ul>
             <p>
-              The failure mode worth avoiding is reaching for a Signal Store (or worse, full
-              NgRx with actions/reducers/effects) for a feature with two pieces of state and one
-              component that reads them — that's Section 1's pattern, with less code and nothing lost.
-              State-management tooling should follow a real scaling problem, not precede one.
+              The failure mode worth avoiding either way is reaching for <em>any</em> of the structured
+              options — Signal Store or classic NgRx — for a feature with two pieces of state and one
+              component that reads them. That's Section 1's pattern, with less code and nothing lost.
+              State-management tooling should follow a real scaling problem (or a real codebase/team
+              constraint), not precede one.
             </p>
           </section>
 
           <section id="entity-state">
-            <h2>4. Entity State Patterns</h2>
+            <h2>5. Entity State Patterns</h2>
             <p>
               "Entity state" means storing a normalized collection — a flat map keyed by ID, rather
               than a raw array — which makes lookups, updates, and removals by ID all O(1) instead of
@@ -496,7 +625,7 @@ const orderedProducts = state.ids.map((id) =&gt; state.entities[id]);
           </section>
 
           <section id="devtools">
-            <h2>5. DevTools &amp; Time-Travel Debugging</h2>
+            <h2>6. DevTools &amp; Time-Travel Debugging</h2>
             <p>
               Because every Signal Store update goes through <code>patchState()</code>, tooling can
               intercept and log each one — Redux DevTools (originally built for Redux, and usable with
@@ -522,7 +651,7 @@ const orderedProducts = state.ids.map((id) =&gt; state.entities[id]);
           </section>
 
           <section id="testing-state">
-            <h2>6. Testing Stateful Services</h2>
+            <h2>7. Testing Stateful Services</h2>
             <p>
               Both patterns from this lesson are testable with the same technique from Week 9 — a
               plain signal-based service needs nothing special at all:
@@ -577,7 +706,7 @@ describe('CartStore', () =&gt; {
           </section>
 
           <section id="exercise">
-            <h2>7. Hands-on Exercise</h2>
+            <h2>8. Hands-on Exercise</h2>
             <div class="lesson-exercise">
               <span class="lesson-exercise__badge">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6Z"/></svg>
@@ -599,18 +728,18 @@ describe('CartStore', () =&gt; {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 0-4 12.7V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.3A7 7 0 0 0 12 2Z"/><path d="M9 21h6"/></svg>
                 <div>
                   <strong>Hint</strong>
-                  <p>Before starting, write one sentence for why this state deserves a Signal Store rather than three separate plain services — if you can't articulate a real reason beyond "the lesson said to," that's worth sitting with, since Section 3's guidance applies to your own projects just as much as this exercise.</p>
+                  <p>Before starting, write one sentence for why this state deserves a Signal Store rather than three separate plain services — if you can't articulate a real reason beyond "the lesson said to," that's worth sitting with, since Section 4's guidance applies to your own projects just as much as this exercise.</p>
                 </div>
               </div>
 
               <h3>Part 2: The plain-service alternative, entity state, and DevTools</h3>
-              <p>Part 1 jumped straight to a Signal Store without ever building Section 1's plain alternative to compare against, and never touched Sections 4 or 5.</p>
+              <p>Part 1 jumped straight to a Signal Store without ever building Section 1's plain alternative to compare against, and never touched Sections 5 or 6.</p>
 
               <p><strong>Requirements:</strong></p>
               <ol>
-                <li><strong>Plain service comparison (Sections 1 &amp; 3):</strong> implement just the <code>notifications</code> slice a second time as a plain <code>@Injectable</code> signal-based service (Section 1's <code>CartState</code> shape) — <code>.asReadonly()</code>, an <code>addNotification</code> method, and an <code>unreadCount</code> computed. Write one paragraph comparing it directly to the equivalent slice of your <code>AppStore</code>: how much code did each need, and was the Signal Store actually worth it here?</li>
-                <li><strong>Entity state (Section 4):</strong> convert <code>AppStore</code>'s <code>notifications</code> from a plain array to entity-shaped state — <code>entities: Record&lt;string, Notification&gt;</code> plus an <code>ids: string[]</code> — and rewrite <code>markAsRead(id)</code> as a single-key <code>patchState</code> write instead of an array <code>.map()</code>.</li>
-                <li><strong>DevTools (Section 5):</strong> wire up Redux DevTools (or your NgRx version's devtools integration) in a dev-only config, then click through adding a notification and marking it read in the running app. Confirm each <code>patchState</code> call shows up as its own entry in the timeline, and try time-traveling back one step.</li>
+                <li><strong>Plain service comparison (Sections 1 &amp; 4):</strong> implement just the <code>notifications</code> slice a second time as a plain <code>@Injectable</code> signal-based service (Section 1's <code>CartState</code> shape) — <code>.asReadonly()</code>, an <code>addNotification</code> method, and an <code>unreadCount</code> computed. Write one paragraph comparing it directly to the equivalent slice of your <code>AppStore</code>: how much code did each need, and was the Signal Store actually worth it here?</li>
+                <li><strong>Entity state (Section 5):</strong> convert <code>AppStore</code>'s <code>notifications</code> from a plain array to entity-shaped state — <code>entities: Record&lt;string, Notification&gt;</code> plus an <code>ids: string[]</code> — and rewrite <code>markAsRead(id)</code> as a single-key <code>patchState</code> write instead of an array <code>.map()</code>.</li>
+                <li><strong>DevTools (Section 6):</strong> wire up Redux DevTools (or your NgRx version's devtools integration) in a dev-only config, then click through adding a notification and marking it read in the running app. Confirm each <code>patchState</code> call shows up as its own entry in the timeline, and try time-traveling back one step.</li>
               </ol>
 
               <div class="callout callout--tip">
@@ -624,8 +753,8 @@ describe('CartStore', () =&gt; {
           </section>
 
           <section id="quiz">
-            <h2>8. Knowledge Check</h2>
-            <p>Four quick questions. Expand each to check your answer.</p>
+            <h2>9. Knowledge Check</h2>
+            <p>Five quick questions. Expand each to check your answer.</p>
 
             <div class="quiz-list">
               <details class="week-item quiz-item">
@@ -683,7 +812,22 @@ describe('CartStore', () =&gt; {
                 </summary>
                 <div class="week-item__body week-item__body--single">
                   <div class="week-item__col">
-                    <p>No — this is exactly the case Section 3 argues against. A plain signal-based service (or even a signal directly in the component, if it's not shared at all) handles this with less ceremony and no new dependency. Signal Store earns its complexity when state is genuinely shared across many features or a team wants enforced structural consistency — not by default for every piece of local state.</p>
+                    <p>No — this is exactly the case Section 4 argues against. A plain signal-based service (or even a signal directly in the component, if it's not shared at all) handles this with less ceremony and no new dependency. Signal Store or classic NgRx earn their complexity when state is genuinely shared across many features, a team wants enforced structural consistency, or a codebase is already built on one of them — not by default for every piece of local state.</p>
+                  </div>
+                </div>
+              </details>
+
+              <details class="week-item quiz-item">
+                <summary>
+                  <span class="week-item__badge">Q5</span>
+                  <div class="week-item__heading">
+                    <h4>In Signal Store, every update goes through <code>patchState()</code>. What's the equivalent discipline in classic NgRx (Section 3), and what's the key structural difference?</h4>
+                  </div>
+                  <span class="week-item__chevron"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+                </summary>
+                <div class="week-item__body week-item__body--single">
+                  <div class="week-item__col">
+                    <p>Classic NgRx's equivalent is dispatching an <strong>action</strong> and letting a <strong>reducer</strong> compute the next state — <code>store.dispatch(CartActions.addItem({ item }))</code> rather than a direct <code>patchState</code> call. The key difference: a Signal Store's methods (<code>addItem()</code>, etc.) call <code>patchState</code> directly and synchronously, while classic NgRx separates "what happened" (the action) from "how state changes" (the reducer) into two distinct pieces, with side effects pulled out into a third (the effect). More files and ceremony, but a stricter separation of concerns — the tradeoff named in Section 4.</p>
                   </div>
                 </div>
               </details>
@@ -751,6 +895,7 @@ describe('CartStore', () =&gt; {
           <a href="../../courses/ugc-net-cse/index.html">UGC NET Computer Science</a>
           <a href="../../courses/kannada/index.html">Kannada Language</a>
           <a href="../../courses/distributed-systems/index.html">Distributed Systems</a>
+          <a href="../../courses/oracle-netsuite/index.html">Oracle NetSuite</a>
         </div>
       </div>
 

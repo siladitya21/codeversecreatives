@@ -93,7 +93,8 @@
       claude: "anthropic ai llm claude code cli agents prompt engineering mcp tool use api sdk assistant",
       "ugc-net-cse": "ugc net nta jrf assistant professor lectureship computer science applications teaching research aptitude exam prep previous year papers mock test",
       kannada: "kannada language karnataka script alphabet varnamale kagunita vowels consonants bengaluru mysuru vocabulary grammar conversation speaking spoken beginner",
-      "distributed-systems": "distributed computing replication consensus raft paxos clocks lamport vector clocks crdt consistency cap partitioning sharding consistent hashing idempotency retries two phase commit sagas kafka fault tolerance backend sre infrastructure"
+      "distributed-systems": "distributed computing replication consensus raft paxos clocks lamport vector clocks crdt consistency cap partitioning sharding consistent hashing idempotency retries two phase commit sagas kafka fault tolerance backend sre infrastructure",
+      "oracle-netsuite": "netsuite erp crm oracle suitecloud suitescript suiteflow suitetalk suiteanalytics saved searches workflows customization bundles sdf oneworld finance accounting inventory order to cash procure to pay business administrator consultant"
     };
 
     var courseIndex = Array.prototype.map
